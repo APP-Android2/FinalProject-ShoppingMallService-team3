@@ -1,7 +1,8 @@
 ---
-name: issue template
+name: issue_template
 about: 이슈 템플릿
-title: ''
+title: "[♻️ Refactor /✨ Feature/\\U0001F6A8Bug / \\U0001F527 Fix/ \U0001F484 Style]
+  이슈 제목"
 labels: ''
 assignees: ''
 
