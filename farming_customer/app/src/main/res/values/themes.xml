@@ -3,7 +3,17 @@
     <style name="Base.Theme.Farming_customer" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        // 기본 색상 설정
+        <item name="colorPrimary">@color/green_main</item>
+
     </style>
 
     <style name="Theme.Farming_customer" parent="Base.Theme.Farming_customer" />
+
+    // Bottom Navigation font 설정
+    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
+    </style>
+
 </resources>
