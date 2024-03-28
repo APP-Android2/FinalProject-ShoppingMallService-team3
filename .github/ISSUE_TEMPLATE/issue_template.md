@@ -1,7 +1,7 @@
 ---
 name: issue_template
 about: 이슈 템플릿
-title: "[♻️ Refactor /✨ Feature/\\U0001F6A8Bug / \\U0001F527 Fix/ \U0001F484 Style]
+title: "[♻️ Refactor /✨ Feature/\U0001F6A8 Bug /\U0001F527  Fix/ \U0001F484 Style]
   이슈 제목"
 labels: ''
 assignees: ''
@@ -11,7 +11,7 @@ assignees: ''
 ---
 name: issue_template
 about: Issue 작업 사항을 입력해주세요
-title: "[♻️ Refactor /✨ Feature/\U0001F6A8Bug / \U0001F527 Fix/ 💄 Style]
+title: "[♻️ Refactor /✨ Feature/🚨 Bug /🔧  Fix/ 💄 Style]
   이슈 제목"
 labels: ''
 assignees: ''
