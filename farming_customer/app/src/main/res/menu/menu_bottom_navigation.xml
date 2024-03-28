@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItemBottomNavigation_Trade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="농산물 거래" />
+    <item
+        android:id="@+id/menuItemBottonNavigation_Board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="게시판" />
+    <item
+        android:id="@+id/menuItemBottomNavigation_Home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="홈" />
+    <item
+        android:id="@+id/menuItemBottonNavigation_Like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="좋아요" />
+    <item
+        android:id="@+id/menuItemBottonNavigation_MyPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="마이페이지" />
+</menu>
