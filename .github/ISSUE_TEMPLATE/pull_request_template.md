@@ -1,7 +1,7 @@
 ---
 name: pull_request_template
 about: pull request 템플릿
-title: ''
+title: 이모지 / 브랜치명 / [추가 설명(선택)]
 labels: ''
 assignees: ''
 
