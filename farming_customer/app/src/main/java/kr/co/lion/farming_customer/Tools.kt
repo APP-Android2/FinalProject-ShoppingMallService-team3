@@ -9,5 +9,6 @@ enum class MainFragmentName(var str : String){
     BOARD_FRAGMENT("BoardFragment"),
     HOME_FRAGMENT("HomeFragment"),
     LIKE_FRAGMENT("LikeFragment"),
-    MY_PAGE_FRAGMENT("MyPageFragment")
+    MY_PAGE_FRAGMENT("MyPageFragment"),
+    DIALOG_LOGIN_FRAGMENT("DialogLoginFragment")
 }

@@ -10,6 +10,7 @@ import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.BoardFragment
+import kr.co.lion.farming_customer.fragment.DialogLoginFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
@@ -54,7 +55,11 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
-                            replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+                            // 사용자가 로그인 한 상태인 경우
+                            // replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+
+                            // 사용자가 로그인 하지 않은 상태인 경우
+                            replaceFragment(MainFragmentName.DIALOG_LOGIN_FRAGMENT, false, false, null)
                         }
                     }
                     true
@@ -88,6 +93,9 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
+            }
+            MainFragmentName.DIALOG_LOGIN_FRAGMENT -> {
+                newFragment = DialogLoginFragment()
             }
         }
         if(data != null){
