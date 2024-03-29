@@ -11,3 +11,7 @@ enum class MainFragmentName(var str : String){
     LIKE_FRAGMENT("LikeFragment"),
     MY_PAGE_FRAGMENT("MyPageFragment")
 }
+
+enum class LoginFragmentName(var str: String){
+    LOGIN_FRAGMENT("LoginFragment"),
+}
