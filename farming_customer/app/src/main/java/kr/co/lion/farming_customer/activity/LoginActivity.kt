@@ -10,6 +10,7 @@ import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityLoginBinding
 import kr.co.lion.farming_customer.fragment.LoginFragment
+import kr.co.lion.farming_customer.fragment.RegisterFragment
 
 class LoginActivity : AppCompatActivity() {
 
@@ -42,8 +43,8 @@ class LoginActivity : AppCompatActivity() {
             LoginFragmentName.LOGIN_FRAGMENT -> {
                 newFragment = LoginFragment()
             }
-            else -> {
-
+            LoginFragmentName.REGISTER_FRAGMENT -> {
+                newFragment = RegisterFragment()
             }
         }
         if(data != null){

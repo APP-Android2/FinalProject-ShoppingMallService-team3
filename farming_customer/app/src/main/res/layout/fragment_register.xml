@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="registerViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        tools:layout_editor_absoluteX="-22dp"
+        tools:layout_editor_absoluteY="40dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarRegister"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/CustomToolbarStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleCentered="true"
+            app:titleTextColor="@color/brown_01" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="약관동의"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarRegister" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="파밍과 함께하기 위한 약관에 동의해주세요"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <CheckBox
+            android:id="@+id/checkBoxTermsAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:button="@drawable/checkbox_selector"
+            android:buttonTint="@color/green_main"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text=" 약관 전체 동의"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey_01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxTermsAll" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkBoxRegServiceTerm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:button="@drawable/checkbox_selector"
+            android:buttonTint="@color/green_main"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text=" 서비스 이용 약관 (필수)"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <Button
+            android:id="@+id/buttonRegServiceDown"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            app:icon="@drawable/polygon_down"
+            app:iconSize="14dp"
+            app:iconTint="@color/brown_01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/textViewRegServiceTerm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="TextView"
+            android:textColor="@color/brown_01"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxRegServiceTerm" />
+
+        <CheckBox
+            android:id="@+id/checkBoxRegPersonalInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:button="@drawable/checkbox_selector"
+            android:buttonTint="@color/green_main"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text=" 개인정보 수집 및 이용 안내 (필수)"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRegServiceTerm" />
+
+        <Button
+            android:id="@+id/buttonRegPersonalInfo"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            app:icon="@drawable/polygon_down"
+            app:iconSize="14dp"
+            app:iconTint="@color/brown_01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRegServiceTerm" />
+
+        <TextView
+            android:id="@+id/textViewRegPersonalInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="TextView"
+            android:textColor="@color/brown_01"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxRegPersonalInfo" />
+
+        <CheckBox
+            android:id="@+id/checkBoxRegAlertServ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:button="@drawable/checkbox_selector"
+            android:buttonTint="@color/green_main"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text=" 알림 서비스 수락 (선택)"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRegPersonalInfo" />
+
+        <Button
+            android:id="@+id/buttonRegAlertServ"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            app:icon="@drawable/polygon_down"
+            app:iconSize="14dp"
+            app:iconTint="@color/brown_01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRegPersonalInfo" />
+
+        <TextView
+            android:id="@+id/textViewRegAlertServ"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="TextView"
+            android:textColor="@color/brown_01"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxRegAlertServ" />
+
+        <Button
+            android:id="@+id/buttonRegisterNext"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="다음"
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

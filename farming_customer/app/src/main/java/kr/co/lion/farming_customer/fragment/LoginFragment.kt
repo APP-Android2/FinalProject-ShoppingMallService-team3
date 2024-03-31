@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.LoginActivity
 import kr.co.lion.farming_customer.activity.MainActivity
@@ -29,21 +30,33 @@ class LoginFragment : Fragment() {
         loginActivity = activity as LoginActivity
 
         settingButtonLogin()
+        settingButtonRegister()
         settingButtonLoginWithoutReg()
 
         return fragmentLoginBinding.root
     }
 
-    // 로그인 버튼 클릭 시
+    // 로그인 버튼 관련 함수
     fun settingButtonLogin(){
         fragmentLoginBinding.apply {
+            // 버튼 클릭 시
             buttonLoginLogin.setOnClickListener {
-
                 // 일단 홈화면으로 넘어간다.
                 val intent = Intent(loginActivity, MainActivity::class.java)
                 startActivity(intent)
                 loginActivity.finish()
                 TODO("나중엔 DB 연결")
+            }
+        }
+    }
+
+    // 회원가입 버튼 관련 함수
+    fun settingButtonRegister(){
+        fragmentLoginBinding.apply {
+            // 회원가입 버튼 클릭 시
+            buttonLoginRegister.setOnClickListener {
+                loginActivity.replaceFragment(LoginFragmentName.REGISTER_FRAGMENT,
+                    addToBackStack = true, isAnimate = true, data = null)
             }
         }
     }
