@@ -10,6 +10,14 @@
 
     <style name="Theme.Farming_customer" parent="Base.Theme.Farming_customer" />
 
+    <!-- 툴바 설정 -->
+    <style name="CustomToolbarStyle" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <!-- 제목 글씨체 설정 -->
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <!-- 제목 글씨 크기 설정 -->
+        <item name="android:textSize">20sp</item>
+    </style>
+
     // Bottom Navigation font 설정
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/pretendard_bold</item>
