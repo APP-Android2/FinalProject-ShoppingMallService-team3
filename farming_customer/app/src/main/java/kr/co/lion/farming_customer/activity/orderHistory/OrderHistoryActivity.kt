@@ -15,6 +15,8 @@ import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryFarmFragmen
 import kr.co.lion.farming_customer.fragment.orderHistory.TapDeliveryDoneFragment
 import kr.co.lion.farming_customer.fragment.orderHistory.TapDeliveryFragment
 import kr.co.lion.farming_customer.fragment.orderHistory.TapPaymentDoneFragment
+import kr.co.lion.farming_customer.fragment.orderHistory.TapReservCancleFragment
+import kr.co.lion.farming_customer.fragment.orderHistory.TapReservDoneFragment
 
 class OrderHistoryActivity : AppCompatActivity() {
     lateinit var activityOrderHistoryBinding: ActivityOrderHistoryBinding
@@ -27,7 +29,7 @@ class OrderHistoryActivity : AppCompatActivity() {
         activityOrderHistoryBinding = ActivityOrderHistoryBinding.inflate(layoutInflater)
         setContentView(activityOrderHistoryBinding.root)
 
-        replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_CROP_FRAGMENT, false, false, null)
+        replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_FARM_FRAMGNET, false, false, null)
     }
 
     fun replaceFragment(name: OrderHistoryFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container : Int = R.id.containerOrderHistory){
@@ -57,6 +59,12 @@ class OrderHistoryActivity : AppCompatActivity() {
             }
             OrderHistoryFragmentName.TAP_PAYMENT_DONE_FRAGMENT -> {
                 newFragment = TapPaymentDoneFragment()
+            }
+            OrderHistoryFragmentName.TAP_RESERV_DONE_FRAGMENT -> {
+                newFragment = TapReservDoneFragment()
+            }
+            OrderHistoryFragmentName.TAP_RESERV_CANCLE_FRAGMENT -> {
+                newFragment = TapReservCancleFragment()
             }
 
         }

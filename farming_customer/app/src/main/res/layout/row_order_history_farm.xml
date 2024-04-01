@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
-            name="rowOrderHistoryCropViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryCropViewModel" />
+            name="rowOrderHistoryFarmViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryFarmViewModel" />
     </data>
 
     <LinearLayout
@@ -31,33 +30,14 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textViewRowOrderHistoryCrop_orderDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/pretendard_regular"
-                        android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_orderDate}"
-                        android:textColor="@color/brown_01"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/buttonRowOrderHistoryCrop_label"
-                        style="@style/labelButtonStyle"
-                        android:layout_width="60dp"
-                        android:padding="0dp"
-                        android:text="@{rowOrderHistoryCropViewModel.buttonRowOrderHistoryCrop_label}"
-                        app:cornerRadius="10dp"
-                        app:layout_constraintBottom_toBottomOf="@id/textViewRowOrderHistoryCrop_orderDate"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/textViewRowOrderHistoryCrop_orderDate"
-                        tools:cornerRadius="10dp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textViewRowOrderHistoryFarm_orderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{rowOrderHistoryFarmViewModel.textViewRowOrderHistoryFarm_orderDate}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,7 +53,7 @@
                         app:cardElevation="0dp">
 
                         <ImageView
-                            android:id="@+id/imageViewOrderHistoryCrop_productImage"
+                            android:id="@+id/imageViewOrderHistoryFarm_productImage"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:background="@color/grey_02" />
@@ -87,67 +67,65 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textViewRowOrderHistoryCrop_productName"
+                            android:id="@+id/textViewRowOrderHistoryFarm_productName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendard_bold"
-                            android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_productName}"
+                            android:text="@{rowOrderHistoryFarmViewModel.textViewRowOrderHistoryFarm_productName}"
                             android:textColor="@color/brown_01"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/textViewRowOrderHistoryCrop_productOption"
+                            android:id="@+id/textViewRowOrderHistoryFarm_productOption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="3dp"
                             android:fontFamily="@font/pretendard_regular"
-                            android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_productOption}"
+                            android:text="@{rowOrderHistoryFarmViewModel.textViewRowOrderHistoryFarm_productOption}"
                             android:textColor="@color/brown_01"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/textViewRowOrderHistoryCrop_price"
+                            android:id="@+id/textViewRowOrderHistoryFarm_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="3dp"
                             android:fontFamily="@font/pretendard_regular"
-                            android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_price}"
+                            android:text="@{rowOrderHistoryFarmViewModel.textViewRowOrderHistoryFarm_price}"
                             android:textColor="@color/brown_01"
                             android:textSize="12sp" />
 
                         <Button
-                            android:id="@+id/buttonRowOrderHistoryCrop_productInside"
+                            android:id="@+id/buttonRowOrderHistoryFarm_productInside"
                             style="@style/buttonStyle_OrderHistory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="5dp"
                             android:padding="0dp"
-                            android:text="@{rowOrderHistoryCropViewModel.buttonRowOrderHistoryCrop_productInside}"
-                            android:textAppearance="@style/buttonText_OrderHistory"
+                            android:text="예약취소"
                             app:cornerRadius="10dp" />
-
 
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/divider2"
+                    android:id="@+id/divider4"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="8dp"
                     android:background="@color/grey_02" />
 
                 <Button
-                    android:id="@+id/buttonRowOrderHistoryCrop_productOutSide"
+                    android:id="@+id/buttonRowOrderHistoryFarm_productOutSide"
                     style="@style/buttonStyle_OrderHistory_filled"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:padding="0dp"
-                    android:text="@{rowOrderHistoryCropViewModel.buttonRowOrderHistoryCrop_productOutside}"
-                    android:visibility="visible"
+                    android:text="리뷰작성"
                     app:cornerRadius="10dp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
 
+    </LinearLayout>
 </layout>

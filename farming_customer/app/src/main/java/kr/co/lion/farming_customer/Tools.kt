@@ -19,5 +19,7 @@ enum class OrderHistoryFragmentName(var str:String){
     ORDER_HISTORY_ACTIVITY_FRAGMENT("OrderHistoryActivityFragment"),
     TAP_DELIVERY_DONE_FRAGMENT("TapDeliveryDoneFragment"),
     TAP_DELIVERY_FRAGMENT("TapDeliveryFragment"),
-    TAP_PAYMENT_DONE_FRAGMENT("TapPaymentDoneFragment")
+    TAP_PAYMENT_DONE_FRAGMENT("TapPaymentDoneFragment"),
+    TAP_RESERV_DONE_FRAGMENT("TapReservDoneFragment"),
+    TAP_RESERV_CANCLE_FRAGMENT("TapReservCancleFragment")
 }

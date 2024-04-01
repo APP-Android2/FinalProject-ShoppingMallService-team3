@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbarOderHistoryCrop"
+            android:id="@+id/toolbarOrderHistoryCrop"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:minHeight="?attr/actionBarSize"
@@ -40,7 +40,7 @@
             android:background="@color/grey_03" />
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tap_crop"
+            android:id="@+id/tab_crop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_tab_indicator"

@@ -33,7 +33,7 @@ class OrderHistoryCropFragment : Fragment() {
 
     private fun settingTapEvent() {
         fragmentOrderHistoryCropBinding.apply {
-            tapCrop.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            tabCrop.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
                         // 결제완료 프래그먼트
