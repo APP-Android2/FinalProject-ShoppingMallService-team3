@@ -32,6 +32,8 @@ class RegisterFragment : Fragment() {
 
         settingToolbar()
         settingCheckBox()
+        settingButton()
+        // TODO("TextView (이용약관) 설정 함수 필요")
 
         return fragmentRegisterBinding.root
     }
@@ -42,7 +44,8 @@ class RegisterFragment : Fragment() {
             toolbarRegister.apply {
                 //제목
                 title = "약관동의"
-                setNavigationIcon(R.drawable.arrow_back_24px)
+
+                setNavigationIcon(R.drawable.back)
 
                 setNavigationOnClickListener {
                     // 클릭 시 현재 프래그먼트 제거
@@ -76,6 +79,58 @@ class RegisterFragment : Fragment() {
             checkBoxRegServiceTerm.setOnCheckedChangeListener(mandatoryCheckboxListener)
 
             // 선택 체크박스는 다음 버튼 활성화 상태에 영향을 주지 않으므로 리스너 설정 생략
+        }
+    }
+
+    // 버튼 설정
+    fun settingButton(){
+        fragmentRegisterBinding.apply {
+            var isTermsVisible1 = false
+            var isTermsVisible2 = false
+            var isTermsVisible3 = false
+
+            // 버튼 클릭 시 약관을 보여주게 하고 버튼 이미지를 변경한다.
+            buttonRegServiceDown.setOnClickListener {
+                // 버튼 클릭시 상태를 변경
+                isTermsVisible1 = !isTermsVisible1
+                if (isTermsVisible1) {
+                    textViewRegServiceTerm.visibility = View.VISIBLE
+                    buttonRegServiceDown.setImageResource(R.drawable.polygon_up)
+                } else {
+                    textViewRegServiceTerm.visibility = View.GONE
+                    buttonRegServiceDown.setImageResource(R.drawable.polygon_down)
+                }
+            }
+
+            buttonRegPersonalInfo.setOnClickListener {
+                // 버튼 클릭시 상태를 변경
+                isTermsVisible2 = !isTermsVisible2
+                if (isTermsVisible2) {
+                    textViewRegPersonalInfo.visibility = View.VISIBLE
+                    buttonRegPersonalInfo.setImageResource(R.drawable.polygon_up)
+                } else {
+                    textViewRegPersonalInfo.visibility = View.GONE
+                    buttonRegPersonalInfo.setImageResource(R.drawable.polygon_down)
+                }
+            }
+
+            buttonRegAlertServ.setOnClickListener {
+                // 버튼 클릭시 상태를 변경
+                isTermsVisible3 = !isTermsVisible3
+                if (isTermsVisible3) {
+                    textViewRegAlertServ.visibility = View.VISIBLE
+                    buttonRegAlertServ.setImageResource(R.drawable.polygon_up)
+                } else {
+                    textViewRegAlertServ.visibility = View.GONE
+                    buttonRegAlertServ.setImageResource(R.drawable.polygon_down)
+                }
+            }
+
+            // 다음 버튼 클릭시 다음 프래그먼트를 보여준다.
+            buttonRegisterNext.setOnClickListener {
+                loginActivity.replaceFragment(LoginFragmentName.REGISTER2_FRAGMENT,
+                    addToBackStack = true, isAnimate = true, data = null)
+            }
         }
     }
 }

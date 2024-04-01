@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
                 val intent = Intent(loginActivity, MainActivity::class.java)
                 startActivity(intent)
                 loginActivity.finish()
-                TODO("나중엔 DB 연결")
+                // TODO("나중엔 DB 연결")
             }
         }
     }

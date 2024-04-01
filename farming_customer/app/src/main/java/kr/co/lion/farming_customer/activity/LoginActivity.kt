@@ -10,6 +10,7 @@ import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityLoginBinding
 import kr.co.lion.farming_customer.fragment.LoginFragment
+import kr.co.lion.farming_customer.fragment.Register2Fragment
 import kr.co.lion.farming_customer.fragment.RegisterFragment
 
 class LoginActivity : AppCompatActivity() {
@@ -39,12 +40,17 @@ class LoginActivity : AppCompatActivity() {
         }
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
-        when(name){
+        newFragment = when(name){
             LoginFragmentName.LOGIN_FRAGMENT -> {
-                newFragment = LoginFragment()
+                LoginFragment()
             }
+
             LoginFragmentName.REGISTER_FRAGMENT -> {
-                newFragment = RegisterFragment()
+                RegisterFragment()
+            }
+
+            LoginFragmentName.REGISTER2_FRAGMENT -> {
+                Register2Fragment()
             }
         }
         if(data != null){
