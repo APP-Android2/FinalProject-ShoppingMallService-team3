@@ -15,5 +15,6 @@ enum class MainFragmentName(var str : String){
 enum class LoginFragmentName(var str: String){
     LOGIN_FRAGMENT("LoginFragment"),
     REGISTER_FRAGMENT("RegisterFragment"),
-    REGISTER2_FRAGMENT("Register2Fragment")
+    REGISTER2_FRAGMENT("Register2Fragment"),
+    REGISTER3_FRAGMENT("Register3Fragment"),
 }

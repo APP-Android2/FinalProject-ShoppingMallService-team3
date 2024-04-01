@@ -30,6 +30,7 @@ class Register2Fragment : Fragment() {
         loginActivity = activity as LoginActivity
 
         settingToolbar()
+        settingButton()
 
         return fragmentRegister2Binding.root
     }
@@ -46,6 +47,38 @@ class Register2Fragment : Fragment() {
                 setNavigationOnClickListener {
                     loginActivity.removeFragment(LoginFragmentName.REGISTER2_FRAGMENT)
                 }
+            }
+        }
+    }
+
+    // 버튼 관련 설정
+    fun settingButton(){
+        fragmentRegister2Binding.apply {
+
+            // 닉네임 중복 확인 버튼
+            buttonReg2NickName.setOnClickListener {
+                // TODO("중복 확인 버튼 클릭 시 DB내 동일 닉네임 있는지 확인")
+            }
+
+            // 아이디 중복 확인 버튼
+            buttonReg2Id.setOnClickListener {
+                // TODO("중복 확인 버튼 클릭 시 DB내 동일 아이디 있는지 확인")
+            }
+
+            // 성별 버튼
+            // TODO("토글 버튼을 통해 성별 구분 필요")
+
+
+            // 휴대폰 본인 인증 버튼
+            buttonReg2Authorize.setOnClickListener {
+                // TODO("본인 인증 버튼 클릭 시 본인 인증 진행")
+            }
+
+            // 회원가입 버튼
+            buttonReg2Reg.setOnClickListener {
+                // TODO("회원가입 버튼 클릭 시 안쓴 필드가 있는지, 중복확인 했는지 등 확인 필요")
+                loginActivity.replaceFragment(LoginFragmentName.REGISTER3_FRAGMENT,
+                    addToBackStack = true, isAnimate = true, data = null)
             }
         }
     }

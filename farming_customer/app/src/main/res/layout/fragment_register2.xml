@@ -197,7 +197,7 @@
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/buttonReg2Authorize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -266,7 +266,7 @@
                     android:hint="휴대폰"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
-                    app:layout_constraintEnd_toStartOf="@+id/button4"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonReg2Authorize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
