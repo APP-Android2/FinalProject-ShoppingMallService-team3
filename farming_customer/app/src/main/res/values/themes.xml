@@ -10,6 +10,20 @@
 
     <style name="Theme.Farming_customer" parent="Base.Theme.Farming_customer" />
 
+    // toggleButton text custom
+    <style name="toggleButtonText" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    // toggleButton custom
+    <style name="OutlinedButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/btn_bg_selection_color_selector</item>
+        <item name="android:textColor">@color/btn_text_color_selector</item>
+        <item name="strokeColor">@color/btn_bg_stroke_color_selector</item>
+        <item name="android:textAppearance">@style/toggleButtonText</item>
+    </style>
+
     // Bottom Navigation font 설정
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/pretendard_bold</item>

@@ -12,3 +12,9 @@ enum class MainFragmentName(var str : String){
     MY_PAGE_FRAGMENT("MyPageFragment"),
     DIALOG_LOGIN_FRAGMENT("DialogLoginFragment")
 }
+
+// PointActivity에서 보여줄 프래그먼트들의 이름
+enum class PointFragmentName(var str: String) {
+    POINT_HISTORY_FRAGMENT("PointHistoryFragment"),
+    DIALOG_POINT_FRAGMENT("DialogPointFragment")
+}

@@ -9,9 +9,11 @@
         android:layout_height="match_parent"
         android:background="@color/black_transparency50">
 
-        <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="173dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/dialog_round_white"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -23,34 +25,68 @@
                 android:id="@+id/textViewDialogTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginEnd="25dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:gravity="center"
                 android:text="로그인이 필요합니다"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewDialogMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
                 android:fontFamily="@font/pretendard_regular"
                 android:gravity="center"
                 android:text="마이페이지는 로그인 후 이용 가능합니다"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDialogTitle" />
 
             <Button
                 android:id="@+id/buttonDialogLogin"
-                android:layout_width="273dp"
+                android:layout_width="150dp"
                 android:layout_height="45dp"
-                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="로그인 하러 가기"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:text="로그인"
+                android:textSize="16sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDialogMessage"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/buttonDialogCancel"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="취소"
+                android:textColor="@color/green_main"
+                android:textSize="16sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDialogMessage"
+                app:strokeColor="@color/green_main" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -30,11 +30,17 @@ class DialogLoginFragment : DialogFragment() {
     // 로그인 하러 가기 버튼 눌렀을 때
     fun buttonDialogLogin() {
         fragmentDialogLoginBinding.apply {
+            // 로그인 버튼
             buttonDialogLogin.setOnClickListener {
                 // 다이얼로그를 내린다.
                 dismiss()
                 // 로그인 화면으로 간다.
                 // TODO: 로그인 액티비티 전환
+            }
+
+            // 취소 버튼
+            buttonDialogCancel.setOnClickListener {
+                dismiss()
             }
         }
     }

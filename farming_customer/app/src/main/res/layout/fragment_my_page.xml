@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -22,11 +23,23 @@
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="마이페이지"
+                android:textColor="#413514"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="22dp" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="409dp"
             android:layout_height="0dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -85,6 +98,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
+                    android:background="@color/white"
+                    android:clickable="true"
                     app:cardCornerRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +109,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -143,7 +159,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/font_pre_semibold"
                                 android:gravity="center"
-                                android:text="TextView"
+                                android:text="@{myPageViewModel.textViewMyPageFirstPointNumber}"
                                 android:textColor="@color/green_main"
                                 android:textSize="14sp" />
 
@@ -203,7 +219,8 @@
                                 android:layout_marginTop="22dp"
                                 android:autoSizeMaxTextSize="14sp"
                                 android:fontFamily="@font/pretendard_semibold"
-                                android:text="장바구니" />
+                                android:text="장바구니"
+                                android:textColor="@color/brown_01" />
 
                             <TextView
                                 android:id="@+id/textViewMyPageFirstCrop"
@@ -213,7 +230,8 @@
                                 android:layout_marginTop="23dp"
                                 android:autoSizeMaxTextSize="14sp"
                                 android:fontFamily="@font/pretendard_semibold"
-                                android:text="농산물" />
+                                android:text="농산물"
+                                android:textColor="@color/brown_01" />
 
                             <TextView
                                 android:id="@+id/textViewMyPageFirstFarm"
@@ -223,7 +241,8 @@
                                 android:layout_marginTop="23dp"
                                 android:autoSizeMaxTextSize="14sp"
                                 android:fontFamily="@font/pretendard_semibold"
-                                android:text="주말농장" />
+                                android:text="주말농장"
+                                android:textColor="@color/brown_01" />
 
                             <TextView
                                 android:id="@+id/textViewMyPageFirstActivity"
@@ -233,7 +252,8 @@
                                 android:layout_marginTop="23dp"
                                 android:autoSizeMaxTextSize="14sp"
                                 android:fontFamily="@font/pretendard_semibold"
-                                android:text="체험활동" />
+                                android:text="체험활동"
+                                android:textColor="@color/brown_01" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -261,6 +281,7 @@
                                 android:layout_marginTop="15.5dp"
                                 android:fontFamily="@font/pretendard_semibold"
                                 android:text="리뷰 / 게시글"
+                                android:textColor="@color/brown_01"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -277,6 +298,7 @@
                                 android:layout_marginTop="22dp"
                                 android:fontFamily="@font/font_pre_semibold"
                                 android:text="리뷰내역"
+                                android:textColor="@color/brown_01"
                                 android:textSize="14sp" />
 
                             <TextView
@@ -287,6 +309,7 @@
                                 android:layout_marginTop="23dp"
                                 android:fontFamily="@font/font_pre_semibold"
                                 android:text="게시글"
+                                android:textColor="@color/brown_01"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -310,6 +333,7 @@
                             android:layout_marginTop="15.5dp"
                             android:fontFamily="@font/pretendard_semibold"
                             android:text="고객센터"
+                            android:textColor="@color/brown_01"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -332,6 +356,7 @@
                             android:layout_marginTop="15.5dp"
                             android:fontFamily="@font/font_pre_semibold"
                             android:text="설정"
+                            android:textColor="@color/brown_01"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -354,6 +379,7 @@
                             android:layout_marginTop="15.5dp"
                             android:fontFamily="@font/font_pre_semibold"
                             android:text="로그아웃"
+                            android:textColor="@color/brown_01"
                             android:textSize="16sp" />
                     </LinearLayout>
 
