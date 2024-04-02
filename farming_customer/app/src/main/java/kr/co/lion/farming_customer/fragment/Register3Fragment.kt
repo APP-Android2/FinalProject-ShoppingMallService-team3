@@ -28,6 +28,7 @@ class Register3Fragment : Fragment() {
 
         loginActivity = activity as LoginActivity
         settingButton()
+        // TODO("텍스트 뷰 관련 함수 필요")
 
         return fragmentRegister3Binding.root
     }

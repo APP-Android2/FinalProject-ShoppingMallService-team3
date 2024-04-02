@@ -32,6 +32,7 @@ class LoginFragment : Fragment() {
         settingButtonLogin()
         settingButtonRegister()
         settingButtonLoginWithoutReg()
+        settingButtonFindIdPw()
 
         return fragmentLoginBinding.root
     }
@@ -70,6 +71,18 @@ class LoginFragment : Fragment() {
                 val intent = Intent(loginActivity, MainActivity::class.java)
                 startActivity(intent)
                 loginActivity.finish()
+            }
+        }
+    }
+
+    // 아이디/비번 찾기
+    fun settingButtonFindIdPw(){
+        fragmentLoginBinding.apply {
+
+            // 버튼 클릭 시 findAccountFragment로 이동
+            buttonLoginForgetIdPw.setOnClickListener {
+                loginActivity.replaceFragment(LoginFragmentName.FIND_ACCOUNT_FRAGMENT,
+                    addToBackStack = true, isAnimate = true, data = null)
             }
         }
     }
