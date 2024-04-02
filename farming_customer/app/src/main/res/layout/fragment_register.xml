@@ -55,16 +55,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkBoxTermsAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:button="@drawable/checkbox_selector"
-                android:buttonTint="@color/green_main"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text=" 약관 전체 동의"
                 android:textSize="16sp"
+                app:buttonTint="@color/green_main"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -84,10 +84,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:button="@drawable/checkbox_selector"
-                android:buttonTint="@color/green_main"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text=" 서비스 이용 약관 (필수)"
                 android:textSize="16sp"
+                app:buttonTint="@color/green_main"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -119,16 +119,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxRegServiceTerm" />
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkBoxRegPersonalInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:button="@drawable/checkbox_selector"
-                android:buttonTint="@color/green_main"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text=" 개인정보 수집 및 이용 안내 (필수)"
                 android:textSize="16sp"
+                app:buttonTint="@color/green_main"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRegServiceTerm" />
 
@@ -160,16 +160,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxRegPersonalInfo" />
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkBoxRegAlertServ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:button="@drawable/checkbox_selector"
-                android:buttonTint="@color/green_main"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text=" 알림 서비스 수락 (선택)"
                 android:textSize="16sp"
+                app:buttonTint="@color/green_main"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRegPersonalInfo" />
 
