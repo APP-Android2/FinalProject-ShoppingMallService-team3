@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
@@ -47,7 +45,7 @@ class FindAccountFragment : Fragment() {
                 title = "아이디/비밀번호 찾기"
 
                 // 뒤로가기
-                setNavigationIcon(R.drawable.back)
+                setNavigationIcon(R.drawable.ic_back)
                 setNavigationOnClickListener {
                     loginActivity.removeFragment(LoginFragmentName.FIND_ACCOUNT_FRAGMENT)
                 }

@@ -43,7 +43,7 @@ class Register2Fragment : Fragment() {
                 title = "회원가입"
 
                 // back 버튼
-                setNavigationIcon(R.drawable.back)
+                setNavigationIcon(R.drawable.ic_back)
                 setNavigationOnClickListener {
                     loginActivity.removeFragment(LoginFragmentName.REGISTER2_FRAGMENT)
                 }

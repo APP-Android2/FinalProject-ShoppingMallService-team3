@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.LoginActivity
 import kr.co.lion.farming_customer.databinding.FragmentFindPasswordBinding
@@ -28,7 +29,17 @@ class FindPasswordFragment : Fragment() {
 
         loginActivity = activity as LoginActivity
 
+        settingButton()
+
         return fragmentFindPwBinding.root
     }
 
+    fun settingButton(){
+        fragmentFindPwBinding.apply {
+            buttonFindPw.setOnClickListener {
+                loginActivity.replaceFragment(LoginFragmentName.FIND_PW_DONE_FRAGMENT,
+                    addToBackStack = true, isAnimate = true, data = null)
+            }
+        }
+    }
 }

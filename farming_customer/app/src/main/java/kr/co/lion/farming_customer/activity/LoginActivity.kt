@@ -10,6 +10,8 @@ import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityLoginBinding
 import kr.co.lion.farming_customer.fragment.FindAccountFragment
+import kr.co.lion.farming_customer.fragment.FindIdDoneFragment
+import kr.co.lion.farming_customer.fragment.FindPwDoneFragment
 import kr.co.lion.farming_customer.fragment.LoginFragment
 import kr.co.lion.farming_customer.fragment.Register2Fragment
 import kr.co.lion.farming_customer.fragment.Register3Fragment
@@ -59,6 +61,12 @@ class LoginActivity : AppCompatActivity() {
             }
             LoginFragmentName.FIND_ACCOUNT_FRAGMENT -> {
                 FindAccountFragment()
+            }
+            LoginFragmentName.FIND_ID_DONE_FRAGMENT -> {
+                FindIdDoneFragment()
+            }
+            LoginFragmentName.FIND_PW_DONE_FRAGMENT -> {
+                FindPwDoneFragment()
             }
         }
         if(data != null){

@@ -45,7 +45,7 @@ class RegisterFragment : Fragment() {
                 //제목
                 title = "약관동의"
 
-                setNavigationIcon(R.drawable.back)
+                setNavigationIcon(R.drawable.ic_back)
 
                 setNavigationOnClickListener {
                     // 클릭 시 현재 프래그먼트 제거

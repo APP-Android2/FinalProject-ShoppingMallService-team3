@@ -18,4 +18,6 @@ enum class LoginFragmentName(var str: String){
     REGISTER2_FRAGMENT("Register2Fragment"),
     REGISTER3_FRAGMENT("Register3Fragment"),
     FIND_ACCOUNT_FRAGMENT("FindAccountFragment"),
+    FIND_ID_DONE_FRAGMENT("FindIdDoneFragment"),
+    FIND_PW_DONE_FRAGMENT("FindPwDoneFragment"),
 }

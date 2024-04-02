@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.LoginActivity
 import kr.co.lion.farming_customer.databinding.FragmentFindIdBinding
@@ -26,6 +27,17 @@ class FindIdFragment : Fragment() {
 
         loginActivity = activity as LoginActivity
 
+        settingButton()
+
         return fragmentFindIdBinding.root
+    }
+
+    fun settingButton(){
+        fragmentFindIdBinding.apply {
+            buttonFindId.setOnClickListener {
+                loginActivity.replaceFragment(LoginFragmentName.FIND_ID_DONE_FRAGMENT,
+                    addToBackStack = true, isAnimate = true, data = null)
+            }
+        }
     }
 }
