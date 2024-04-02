@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
@@ -9,25 +10,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.PointActivity
 import kr.co.lion.farming_customer.databinding.DialogYesBinding
 import kr.co.lion.farming_customer.viewmodel.CustomDialogViewModel
 
-class DialogYes : DialogFragment() {
+class DialogYes(subject: String?, content: String, content2: String?, activity: AppCompatActivity ) : DialogFragment() {
 
     lateinit var dialogYesBinding: DialogYesBinding
     lateinit var customDialogViewModel: CustomDialogViewModel
-    lateinit var pointActivity: PointActivity
+
+    var subject = subject
+    var content = content
+    var content2 = content2
+    var activity = activity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialogYesBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_yes, container, false)
         customDialogViewModel = CustomDialogViewModel()
         dialogYesBinding.customDialogViewModel = customDialogViewModel
         dialogYesBinding.lifecycleOwner = this
-
-        pointActivity = activity as PointActivity
 
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -50,15 +55,13 @@ class DialogYes : DialogFragment() {
     fun settingDialog() {
         dialogYesBinding.apply {
             // 다이얼로그 제목
-            customDialogViewModel?.textViewDialogYesSubject?.value = "포인트 이용안내"
+            customDialogViewModel?.textViewDialogYesSubject?.value = subject
 
             // 다이얼로그 내용
-            customDialogViewModel?.textViewDialogYesText?.value = "포인트 사용 기간은 적입일 이후 90일 까지이며,\n" +
-                    "90일 이후 잔여 포인트는 자동 소멸 됩니다."
+            customDialogViewModel?.textViewDialogYesText?.value = content
 
             // 다이얼로그 내용2
-            customDialogViewModel?.textViewDialogYesText2?.value = "*포인트를 사용한 상품을 포인트 기간 내에 취소하시면\n" +
-                    "환급되오나, 기간이 지난 이후 취소시 환급되지 않습니다."
+            customDialogViewModel?.textViewDialogYesText2?.value = content2
 
             // 확인 버튼
             buttonCustomDialogYes.setOnClickListener {
@@ -72,7 +75,7 @@ class DialogYes : DialogFragment() {
 
     // 디바이스 크기 구하기
     fun gettingDeviceSize() : Int {
-        val windowManager = pointActivity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val windowManager = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)

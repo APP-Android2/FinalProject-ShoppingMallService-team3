@@ -5,17 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.DialogYes
-import kr.co.lion.farming_customer.DialogYesNo
-import kr.co.lion.farming_customer.PointFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.PointActivity
 import kr.co.lion.farming_customer.databinding.FragmentPointHistoryBinding
 import kr.co.lion.farming_customer.databinding.RowPointHistoryBinding
@@ -47,9 +42,9 @@ class PointHistoryFragment : Fragment() {
     fun settingToolbar() {
         fragmentPointHistoryBinding.apply {
             toolbarPoint.apply {
-                setNavigationIcon(R.drawable.ic_launcher_background)
+                setNavigationIcon(R.drawable.back)
                 setNavigationOnClickListener {
-                    pointActivity.removeFragment(PointFragmentName.POINT_HISTORY_FRAGMENT)
+                    pointActivity.finish()
                 }
             }
         }
@@ -59,7 +54,9 @@ class PointHistoryFragment : Fragment() {
     fun settingImageViewPointHistoryCaution() {
         fragmentPointHistoryBinding.apply {
             imageViewPointHistoryCaution.setOnClickListener {
-                val dialog = DialogYes()
+                val dialog = DialogYes("포인트 이용안내", "포인트 사용 기간은 적입일 이후 90일 까지이며,\n" +
+                        "90일 이후 잔여 포인트는 자동 소멸 됩니다.", "*포인트를 사용한 상품을 포인트 기간 내에 취소하시면\n" +
+                        "환급되오나, 기간이 지난 이후 취소시 환급되지 않습니다.", pointActivity)
                 dialog.show(this@PointHistoryFragment?.parentFragmentManager!!, "DialogYes")
             }
         }
@@ -98,20 +95,25 @@ class PointHistoryFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointHistoryViewHolder {
-            val rowPointHistoryBinding = RowPointHistoryBinding.inflate(layoutInflater)
+            // val rowPointHistoryBinding = RowPointHistoryBinding.inflate(layoutInflater)
+            val rowPointHistoryBinding = DataBindingUtil.inflate<RowPointHistoryBinding>(layoutInflater,R.layout.row_point_history, parent, false)
+            val myPagePointViewModel = MyPagePointViewModel()
+            rowPointHistoryBinding.myPagePointViewModel = myPagePointViewModel
+            rowPointHistoryBinding.lifecycleOwner = this@PointHistoryFragment
+
             val pointHistoryViewHolder = PointHistoryViewHolder(rowPointHistoryBinding)
 
             return pointHistoryViewHolder
         }
 
         override fun getItemCount(): Int {
-            return 20
+            return 100
         }
 
         override fun onBindViewHolder(holder: PointHistoryViewHolder, position: Int) {
-            holder.rowPointHistoryBinding.textViewRowPointHistoryDate.text = "2024.03.01"
-            holder.rowPointHistoryBinding.textViewRowPointHistoryName.text = "농산품 이름 $position"
-            holder.rowPointHistoryBinding.textViewRowPointHistoryNumber.text = "+100P"
+            holder.rowPointHistoryBinding.myPagePointViewModel?.textViewRowPointHistoryDate?.value = "2024.03.01"
+            holder.rowPointHistoryBinding.myPagePointViewModel?.textViewRowPointHistoryName?.value = "농산품 이름 $position"
+            holder.rowPointHistoryBinding.myPagePointViewModel?.textViewRowPointHistoryNumber?.value = "+100P"
         }
     }
 

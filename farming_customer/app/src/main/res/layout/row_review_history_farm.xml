@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="myPageReviewViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.MyPageReviewViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabFarmDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabFarmDate}"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabFarmName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabFarmName}"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabFarmDate" />
+
+            <ImageView
+                android:id="@+id/imageViewRowReviewTabDetail"
+                android:layout_width="4dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                app:layout_constraintStart_toEndOf="@+id/textViewRowReviewTabFarmName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabFarmDate"
+                app:srcCompat="@drawable/next" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonReviewTabFarmDelete"
+                android:layout_width="38dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/button_round_row_review_tab"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="삭제"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewRowReviewTabFarmName" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabFarmName">
+
+
+                <ImageView
+                    android:id="@+id/imageViewRowReviewTabFarmStar1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/star_01" />
+
+                <ImageView
+                    android:id="@+id/imageViewRowReviewTabFarmStar2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/star_01" />
+
+                <ImageView
+                    android:id="@+id/imageViewRowReviewTabFarmStar3"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/star_01" />
+
+                <ImageView
+                    android:id="@+id/imageViewRowReviewTabFarmStar4"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/star_01" />
+
+                <ImageView
+                    android:id="@+id/imageViewRowReviewTabFarmStar5"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/star_01" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabFarmText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabFarmText}"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabFarmText">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:cardCornerRadius="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewRowReviewTabFarm1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_launcher_background" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="5dp"
+                        app:cardCornerRadius="10dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewRowReviewTabFarm2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_launcher_background" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="5dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewRowReviewTabFarm3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_launcher_background" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="5dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewRowReviewTabFarm4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_launcher_background" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="5dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewRowReviewTabFarm5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_launcher_background" />
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabFarmLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/label_row_review_tab"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabFarmLabel}"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</layout>
+

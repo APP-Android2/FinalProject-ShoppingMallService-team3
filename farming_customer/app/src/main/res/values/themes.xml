@@ -30,4 +30,11 @@
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
     </style>
 
+    <!-- 리뷰내역 탭 글꼴 및 사이즈 -->
+    <style name="tab_text"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

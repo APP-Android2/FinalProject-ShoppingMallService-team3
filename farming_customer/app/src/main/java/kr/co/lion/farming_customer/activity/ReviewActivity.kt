@@ -4,22 +4,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.PointFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.databinding.ActivityPointBinding
-import kr.co.lion.farming_customer.fragment.BoardFragment
-import kr.co.lion.farming_customer.fragment.DialogLoginFragment
-import kr.co.lion.farming_customer.fragment.HomeFragment
-import kr.co.lion.farming_customer.fragment.LikeFragment
-import kr.co.lion.farming_customer.fragment.MyPageFragment
+import kr.co.lion.farming_customer.ReviewFragmentName
+import kr.co.lion.farming_customer.databinding.ActivityReviewBinding
 import kr.co.lion.farming_customer.fragment.PointHistoryFragment
-import kr.co.lion.farming_customer.fragment.TradeFragment
+import kr.co.lion.farming_customer.fragment.ReviewHistoryFragment
+import kr.co.lion.farming_customer.fragment.ReviewTabActivityFragment
+import kr.co.lion.farming_customer.fragment.ReviewTabCropFragment
+import kr.co.lion.farming_customer.fragment.ReviewTabFarmFragment
 
-class PointActivity : AppCompatActivity() {
-    lateinit var activityPointBinding: ActivityPointBinding
+class ReviewActivity : AppCompatActivity() {
+    lateinit var activityReviewBinding: ActivityReviewBinding
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
@@ -28,13 +27,13 @@ class PointActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activityPointBinding = ActivityPointBinding.inflate(layoutInflater)
-        setContentView(activityPointBinding.root)
+        activityReviewBinding = ActivityReviewBinding.inflate(layoutInflater)
+        setContentView(activityReviewBinding.root)
 
-        replaceFragment(PointFragmentName.POINT_HISTORY_FRAGMENT, false, false, null)
+        replaceFragment(ReviewFragmentName.REVIEW_HISTORY_FRAGMENT, false, false, null)
     }
 
-    fun replaceFragment(name: PointFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
+    fun replaceFragment(name: ReviewFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerReview){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -45,8 +44,17 @@ class PointActivity : AppCompatActivity() {
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
         when(name){
-            PointFragmentName.POINT_HISTORY_FRAGMENT -> {
-                newFragment = PointHistoryFragment()
+            ReviewFragmentName.REVIEW_HISTORY_FRAGMENT -> {
+                newFragment = ReviewHistoryFragment()
+            }
+            ReviewFragmentName.REVIEW_TAB_CROP_FRAGMENT -> {
+                newFragment = ReviewTabCropFragment()
+            }
+            ReviewFragmentName.REVIEW_TAB_FARM_FRAGMENT -> {
+                newFragment = ReviewTabFarmFragment()
+            }
+            ReviewFragmentName.REVIEW_TAB_ACTIVITY_FRAGMENT -> {
+                newFragment = ReviewTabActivityFragment()
             }
         }
         if(data != null){
@@ -92,7 +100,7 @@ class PointActivity : AppCompatActivity() {
             // Fragment를 교체한다.(이전 Fragment가 없으면 새롭게 추가하는 역할을 수행한다)
             // 첫 번째 매개 변수 : Fragment를 배치할 FragmentContainerView의 ID
             // 두 번째 매개 변수 : 보여주고하는 Fragment 객체를
-            fragmentTransaction.replace(R.id.containerPoint, newFragment!!)
+            fragmentTransaction.replace(container, newFragment!!)
 
             // addToBackStack 변수의 값이 true면 새롭게 보여질 Fragment를 BackStack에 포함시켜 준다.
             if(addToBackStack){
@@ -104,7 +112,7 @@ class PointActivity : AppCompatActivity() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name: PointFragmentName){
+    fun removeFragment(name: ReviewFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)

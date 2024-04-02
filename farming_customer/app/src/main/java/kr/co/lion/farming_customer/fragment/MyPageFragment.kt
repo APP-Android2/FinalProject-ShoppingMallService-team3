@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.PointActivity
+import kr.co.lion.farming_customer.activity.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentMyPageBinding
 import kr.co.lion.farming_customer.viewmodel.MyPageViewModel
 
@@ -27,6 +28,7 @@ class MyPageFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingCardViewMyPageFirstPoint()
+        settingTextViewMyPageReview()
 
         return fragmentMyPageBinding.root
     }
@@ -40,6 +42,16 @@ class MyPageFragment : Fragment() {
             cardViewMyPageFirstPoint.setOnClickListener {
                 val pointIntent = Intent(mainActivity, PointActivity::class.java)
                 startActivity(pointIntent)
+            }
+        }
+    }
+
+    // 리뷰 내역
+    fun settingTextViewMyPageReview() {
+        fragmentMyPageBinding.apply {
+            textViewMyPageReview.setOnClickListener {
+                val reviewIntent = Intent(mainActivity, ReviewActivity::class.java)
+                startActivity(reviewIntent)
             }
         }
     }

@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/pretendard_bold"
                 android:text="포인트"
-                android:textColor="#413514"
+                android:textColor="@color/brown_01"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="22dp" />
@@ -72,14 +72,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageViewPointHistoryCaution"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:clickable="true"
-                    android:src="@drawable/ic_launcher_background"
+                    android:src="@drawable/point_caution"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

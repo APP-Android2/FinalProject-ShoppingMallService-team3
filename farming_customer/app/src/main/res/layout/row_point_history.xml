@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="myPagePointViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.MyPagePointViewModel" />
+    </data>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -19,7 +25,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
-                android:src="@drawable/ic_launcher_background"
+                android:src="@drawable/point_save"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_pre_regular"
-                    android:text="TextView"
+                    android:text="@{myPagePointViewModel.textViewRowPointHistoryDate}"
                     android:textColor="@color/grey_01"
                     android:textSize="10sp" />
 
@@ -45,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_pre_semibold"
-                    android:text="TextView"
+                    android:text="@{myPagePointViewModel.textViewRowPointHistoryName}"
                     android:textColor="@color/brown_01"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -57,7 +63,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:fontFamily="@font/font_pre_semibold"
-                android:text="TextView"
+                android:text="@{myPagePointViewModel.textViewRowPointHistoryNumber}"
                 android:textColor="@color/green_main"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -15,6 +15,13 @@ enum class MainFragmentName(var str : String){
 
 // PointActivity에서 보여줄 프래그먼트들의 이름
 enum class PointFragmentName(var str: String) {
-    POINT_HISTORY_FRAGMENT("PointHistoryFragment"),
-    DIALOG_POINT_FRAGMENT("DialogPointFragment")
+    POINT_HISTORY_FRAGMENT("PointHistoryFragment")
+}
+
+// ReviewActivity에서 보여줄 프래그먼트들의 이름
+enum class ReviewFragmentName(var str: String) {
+    REVIEW_HISTORY_FRAGMENT("ReviewHistoryFragment"),
+    REVIEW_TAB_CROP_FRAGMENT("ReviewTabCropFragment"),
+    REVIEW_TAB_FARM_FRAGMENT("ReviewTabFarmFragment"),
+    REVIEW_TAB_ACTIVITY_FRAGMENT("ReviewTabActivityFragment")
 }

@@ -62,11 +62,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/toolbarMyPageFirst">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageViewMyPageFirstProfile"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        app:srcCompat="@drawable/ic_launcher_background" />
+                        android:src="@drawable/profile" />
 
                     <TextView
                         android:id="@+id/textViewMyPageFirstNickName"
@@ -87,7 +87,7 @@
                         android:layout_height="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
-                        app:srcCompat="@drawable/ic_launcher_background" />
+                        app:srcCompat="@drawable/next" />
 
                 </LinearLayout>
 
@@ -124,7 +124,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginLeft="50dp"
-                                app:srcCompat="@drawable/ic_launcher_background" />
+                                app:srcCompat="@drawable/point" />
 
                             <TextView
                                 android:id="@+id/textViewMyPageFirstPoint"
@@ -169,7 +169,7 @@
                                 android:layout_height="10dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="20dp"
-                                app:srcCompat="@drawable/ic_launcher_background" />
+                                app:srcCompat="@drawable/next" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -218,6 +218,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="22dp"
                                 android:autoSizeMaxTextSize="14sp"
+                                android:clickable="true"
                                 android:fontFamily="@font/pretendard_semibold"
                                 android:text="장바구니"
                                 android:textColor="@color/brown_01" />
@@ -229,6 +230,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="23dp"
                                 android:autoSizeMaxTextSize="14sp"
+                                android:clickable="true"
                                 android:fontFamily="@font/pretendard_semibold"
                                 android:text="농산물"
                                 android:textColor="@color/brown_01" />
@@ -240,6 +242,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="23dp"
                                 android:autoSizeMaxTextSize="14sp"
+                                android:clickable="true"
                                 android:fontFamily="@font/pretendard_semibold"
                                 android:text="주말농장"
                                 android:textColor="@color/brown_01" />
@@ -251,6 +254,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="23dp"
                                 android:autoSizeMaxTextSize="14sp"
+                                android:clickable="true"
                                 android:fontFamily="@font/pretendard_semibold"
                                 android:text="체험활동"
                                 android:textColor="@color/brown_01" />
@@ -296,6 +300,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="22dp"
+                                android:clickable="true"
                                 android:fontFamily="@font/font_pre_semibold"
                                 android:text="리뷰내역"
                                 android:textColor="@color/brown_01"
@@ -307,6 +312,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="23dp"
+                                android:clickable="true"
                                 android:fontFamily="@font/font_pre_semibold"
                                 android:text="게시글"
                                 android:textColor="@color/brown_01"
@@ -331,6 +337,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15.5dp"
+                            android:clickable="true"
                             android:fontFamily="@font/pretendard_semibold"
                             android:text="고객센터"
                             android:textColor="@color/brown_01"
@@ -354,6 +361,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15.5dp"
+                            android:clickable="true"
                             android:fontFamily="@font/font_pre_semibold"
                             android:text="설정"
                             android:textColor="@color/brown_01"
@@ -377,6 +385,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15.5dp"
+                            android:clickable="true"
                             android:fontFamily="@font/font_pre_semibold"
                             android:text="로그아웃"
                             android:textColor="@color/brown_01"
@@ -389,7 +398,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="42dp"
-                    android:background="@color/grey_02"
+                    android:background="@color/F0F0F0"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -404,7 +413,7 @@
                             android:id="@+id/imageViewMyPageFirstBanner"
                             android:layout_width="87.78dp"
                             android:layout_height="90dp"
-                            app:srcCompat="@drawable/ic_launcher_background" />
+                            app:srcCompat="@drawable/logo_02" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -463,7 +472,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView24"
+                                            android:id="@+id/textViewMyPageFirstIntroduce"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
@@ -472,7 +481,7 @@
                                             android:textSize="8sp" />
 
                                         <TextView
-                                            android:id="@+id/textView25"
+                                            android:id="@+id/textViewMyPageFirstUseTerms"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
@@ -481,7 +490,7 @@
                                             android:textSize="8sp" />
 
                                         <TextView
-                                            android:id="@+id/textView26"
+                                            android:id="@+id/textViewMyPageFirstCEOInformation"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
@@ -496,7 +505,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/textView27"
+                                            android:id="@+id/textViewMyPageFirstPersonalInformation"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
@@ -505,7 +514,7 @@
                                             android:textSize="8sp" />
 
                                         <TextView
-                                            android:id="@+id/textView28"
+                                            android:id="@+id/textViewMyPageFirstElectronicFinancial"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"

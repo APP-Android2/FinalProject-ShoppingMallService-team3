@@ -9,25 +9,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.PointActivity
 import kr.co.lion.farming_customer.databinding.DialogYesnoBinding
 import kr.co.lion.farming_customer.viewmodel.CustomDialogViewModel
 
-class DialogYesNo : DialogFragment() {
+class DialogYesNo(subject: String?, content: String, activity: AppCompatActivity) : DialogFragment() {
 
     lateinit var dialogYesnoBinding: DialogYesnoBinding
     lateinit var customDialogViewModel: CustomDialogViewModel
-    lateinit var pointActivity: PointActivity
+
+    var subject = subject
+    var content = content
+    var activit = activity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialogYesnoBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_yesno, container, false)
         customDialogViewModel = CustomDialogViewModel()
         dialogYesnoBinding.customDialogViewModel = customDialogViewModel
         dialogYesnoBinding.lifecycleOwner = this
-
-        pointActivity = activity as PointActivity
 
         // 레이아웃 배경을 투명하게
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -49,11 +53,16 @@ class DialogYesNo : DialogFragment() {
     // 버튼 처리
     fun settingDialog() {
         dialogYesnoBinding.apply {
+
             // 다이얼로그 제목
-            customDialogViewModel?.textViewDialogYesNoSubject?.value = "탈퇴하기"
+            if (subject == null) {
+                textViewDialogYesNoSubject.isVisible = false
+            } else {
+                customDialogViewModel?.textViewDialogYesNoSubject?.value = subject
+            }
 
             // 다이얼로그 내용
-            customDialogViewModel?.textViewDialogYesNoText?.value = "파밍을 탈퇴하시겠습니까?"
+            customDialogViewModel?.textViewDialogYesNoText?.value = content
 
             // 확인 버튼
             buttonCustomDialogYesNoYes.setOnClickListener {
@@ -71,7 +80,7 @@ class DialogYesNo : DialogFragment() {
 
     // 디바이스 크기 구하기
     fun gettingDeviceSize() : Int {
-        val windowManager = pointActivity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val windowManager = activit.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
