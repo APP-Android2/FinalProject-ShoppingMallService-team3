@@ -72,9 +72,26 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:clickable">false</item>
-
     </style>
 
+    // ratingBar style
+    <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating</item>
+    </style>
+
+    // button text bold, 16sp
+    <style name="buttonTextBold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    // outlined button custom
+    <style name="CustomOutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/green_main</item>
+        <item name="strokeColor">@color/green_main</item>
+        <item name="android:textAppearance">@style/buttonTextBold</item>
+    </style>
 </resources>
 
 

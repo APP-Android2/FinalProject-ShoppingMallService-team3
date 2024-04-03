@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:minHeight="?attr/actionBarSize"
-            app:navigationIcon="@android:drawable/alert_dark_frame">
+            app:navigationIcon="@drawable/back">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_crop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@drawable/selector_tab_indicator"
             app:tabIndicatorFullWidth="true"
             app:tabSelectedTextColor="@color/brown_01"

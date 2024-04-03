@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
+import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.databinding.FragmentTapReservCancleBinding
@@ -73,6 +74,9 @@ class TapReservCancleFragment : Fragment() {
                     textViewRowOrderHistoryFarm_productOption.value = "이용기간\n2024.03.01 ~ 2024.11.30"
                     textViewRowOrderHistoryFarm_price.value = "10,000원 / 1구획"
                 }
+            }
+            holder.rowOrderHistoryFarmCancledBinding.root.setOnClickListener {
+                orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_RESERV_DETAIL_FRAGMENT, true, true, null)
             }
         }
     }

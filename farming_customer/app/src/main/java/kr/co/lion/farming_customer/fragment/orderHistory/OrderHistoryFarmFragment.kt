@@ -25,10 +25,21 @@ class OrderHistoryFarmFragment : Fragment() {
         fragmentOrderHistoryFarmBinding.lifecycleOwner = this
         orderHistoryActivity = activity as OrderHistoryActivity
 
+        settingToolbar()
         settingTapEvent()
         orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_RESERV_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryFarm)
 
         return fragmentOrderHistoryFarmBinding.root
+    }
+
+    private fun settingToolbar() {
+        fragmentOrderHistoryFarmBinding.apply {
+            toolbarOrderHistoryFarm.apply {
+                setNavigationOnClickListener {
+                    orderHistoryActivity.removeFragment(OrderHistoryFragmentName.ORDER_HISTORY_FARM_FRAMGNET)
+                }
+            }
+        }
     }
 
     private fun settingTapEvent() {

@@ -2,4 +2,23 @@
     <string name="app_name">farming_customer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="reserv_cancel_reason">
+        <item>단순 변심</item>
+        <item>옵션 재선택</item>
+        <item>기타</item>
+    </string-array>
+
+    <string-array name="exchange_return_type">
+        <item>교환</item>
+        <item>환불</item>
+    </string-array>
+
+    <string-array name="exchange_return_reason">
+        <item>단순 변심</item>
+        <item>배송 문제</item>
+        <item>상품 문제</item>
+        <item>기타</item>
+    </string-array>
+
 </resources>

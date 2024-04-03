@@ -3,6 +3,7 @@ package kr.co.lion.farming_customer.activity.orderHistory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
@@ -11,7 +12,12 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityOrderHistoryBinding
 import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryActivityFragment
 import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryCropFragment
+import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryExchangeReturnFragment
 import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryFarmFragment
+import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryOrderDetailFragment
+import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryReservCancleFragment
+import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryReservDetailFragment
+import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryWriteReviewFragment
 import kr.co.lion.farming_customer.fragment.orderHistory.TapDeliveryDoneFragment
 import kr.co.lion.farming_customer.fragment.orderHistory.TapDeliveryFragment
 import kr.co.lion.farming_customer.fragment.orderHistory.TapPaymentDoneFragment
@@ -28,8 +34,6 @@ class OrderHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityOrderHistoryBinding = ActivityOrderHistoryBinding.inflate(layoutInflater)
         setContentView(activityOrderHistoryBinding.root)
-
-        replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_FARM_FRAMGNET, false, false, null)
     }
 
     fun replaceFragment(name: OrderHistoryFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container : Int = R.id.containerOrderHistory){
@@ -65,6 +69,21 @@ class OrderHistoryActivity : AppCompatActivity() {
             }
             OrderHistoryFragmentName.TAP_RESERV_CANCLE_FRAGMENT -> {
                 newFragment = TapReservCancleFragment()
+            }
+            OrderHistoryFragmentName.ORDER_HISTORY_RESERV_CANCLE_FRAGMENT -> {
+                newFragment = OrderHistoryReservCancleFragment()
+            }
+            OrderHistoryFragmentName.ORDER_HISTORY_RESERV_DETAIL_FRAGMENT -> {
+                newFragment = OrderHistoryReservDetailFragment()
+            }
+            OrderHistoryFragmentName.ORDER_HISTORY_ORDER_DETAIL_FRAGMENT -> {
+                newFragment = OrderHistoryOrderDetailFragment()
+            }
+            OrderHistoryFragmentName.ORDER_HISTORY_EXCHANGE_RETURN_FRAGMENT -> {
+                newFragment = OrderHistoryExchangeReturnFragment()
+            }
+            OrderHistoryFragmentName.ORDER_HISTORY_WRITE_REVIEW_FRAGMENT -> {
+                newFragment = OrderHistoryWriteReviewFragment()
             }
 
         }

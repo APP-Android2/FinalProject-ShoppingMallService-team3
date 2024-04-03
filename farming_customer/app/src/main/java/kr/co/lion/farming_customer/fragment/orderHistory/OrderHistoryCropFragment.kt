@@ -25,10 +25,21 @@ class OrderHistoryCropFragment : Fragment() {
         fragmentOrderHistoryCropBinding.lifecycleOwner = this
         orderHistoryActivity = activity as OrderHistoryActivity
 
+        settingToolbar()
         settingTapEvent()
         orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_PAYMENT_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryCrop)
 
         return fragmentOrderHistoryCropBinding.root
+    }
+
+    private fun settingToolbar() {
+        fragmentOrderHistoryCropBinding.apply {
+            toolbarOrderHistoryCrop.apply {
+                setNavigationOnClickListener {
+                    orderHistoryActivity.removeFragment(OrderHistoryFragmentName.ORDER_HISTORY_CROP_FRAGMENT)
+                }
+            }
+        }
     }
 
     private fun settingTapEvent() {

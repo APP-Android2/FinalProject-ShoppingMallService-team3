@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.databinding.FragmentTapDeliveryDoneBinding
@@ -78,6 +79,18 @@ class TapDeliveryDoneFragment : Fragment() {
                     buttonRowOrderHistoryCrop_productOutside.value = "리뷰 작성 [D-3]"
                     buttonRowOrderHistoryCrop_label.value = "취소"
                 }
+                // 환불 / 교환
+                buttonRowOrderHistoryCropProductInside.setOnClickListener {
+                    orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_EXCHANGE_RETURN_FRAGMENT, true, true, null)
+                }
+                // 리뷰 작성
+                buttonRowOrderHistoryCropProductOutSide.setOnClickListener {
+                    orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_WRITE_REVIEW_FRAGMENT, true, true, null)
+                }
+            }
+            // 아이템 클릭 리스터
+            holder.rowOrderHistoryCropLabeledBinding.root.setOnClickListener {
+                orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_ORDER_DETAIL_FRAGMENT, true, true, null)
             }
         }
     }

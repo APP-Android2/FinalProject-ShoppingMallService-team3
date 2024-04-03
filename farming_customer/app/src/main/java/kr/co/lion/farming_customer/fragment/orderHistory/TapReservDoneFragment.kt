@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.databinding.FragmentTapReservDoneBinding
@@ -72,6 +73,18 @@ class TapReservDoneFragment : Fragment() {
                     textViewRowOrderHistoryFarm_productOption.value = "이용기간\n2024.03.01 ~ 2024.11.30"
                     textViewRowOrderHistoryFarm_price.value = "10,000원 / 1구획"
                 }
+                // 예약 취소
+                buttonRowOrderHistoryFarmProductInside.setOnClickListener {
+                    orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_RESERV_CANCLE_FRAGMENT, true, true, null)
+                }
+                // 리뷰 작성
+                buttonRowOrderHistoryFarmProductOutSide.setOnClickListener {
+                    orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_WRITE_REVIEW_FRAGMENT, true, true, null)
+                }
+            }
+            // 아이템 클릭 리스너
+            holder.rowOrderHistoryFarmBinding.root.setOnClickListener {
+                orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_RESERV_DETAIL_FRAGMENT, true, true, null)
             }
         }
     }
