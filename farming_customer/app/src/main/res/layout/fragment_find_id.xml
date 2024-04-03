@@ -19,11 +19,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout12"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="43dp"
             android:layout_marginTop="20dp"
             android:hint="이름"
             app:boxStrokeColor="@color/green_main"
             app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -32,8 +33,11 @@
                 android:id="@+id/textFieldFindIdName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/font_pre_semibold"
+                android:hint="이름을 입력해 주세요."
                 android:inputType="text|textPersonName"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/grey_01"
                 android:textSize="12sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -41,12 +45,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout13"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="43dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:hint="휴대폰"
             app:boxStrokeColor="@color/green_main"
             app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
             app:layout_constraintEnd_toStartOf="@+id/buttonFindIdAuthorize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
@@ -55,8 +60,11 @@
                 android:id="@+id/textFieldFindIdPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/font_pre_semibold"
+                android:hint="숫자로만 입력해 주세요."
                 android:inputType="text|textPersonName"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/grey_01"
                 android:textSize="12sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -64,9 +72,11 @@
         <Button
             android:id="@+id/buttonFindIdAuthorize"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/pretendard_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="본인인증"
             android:textSize="12sp"
             app:cornerRadius="10dp"
@@ -75,11 +85,12 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="43dp"
             android:layout_marginTop="10dp"
             android:hint="인증코드"
             app:boxStrokeColor="@color/green_main"
             app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
@@ -88,8 +99,11 @@
                 android:id="@+id/textFieldFindIdCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/font_pre_semibold"
+                android:hint="인증 코드를 입력해 주세요."
                 android:inputType="number"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/grey_01"
                 android:textSize="12sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -97,9 +111,11 @@
         <Button
             android:id="@+id/buttonFindId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/pretendard_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="아이디 찾기"
             android:textSize="16sp"
             app:cornerRadius="10dp"
