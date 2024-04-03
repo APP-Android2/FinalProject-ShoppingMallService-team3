@@ -16,4 +16,17 @@
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
     </style>
 
+    // Toolbar 텍스트 폰트, 사이즈, 색상 설정
+    <style name="ToolbarTitle">
+        <item name="fontFamily">@font/font_pre_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/brown_01</item>
+    </style>
+
+    // TabLayout text custom
+    <style name="CustomTablayout" parent="TextAppearance.Design.Tab">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>
