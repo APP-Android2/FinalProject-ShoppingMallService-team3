@@ -45,7 +45,7 @@ class FindAccountFragment : Fragment() {
                 title = "아이디/비밀번호 찾기"
 
                 // 뒤로가기
-                setNavigationIcon(R.drawable.ic_back)
+                setNavigationIcon(R.drawable.back)
                 setNavigationOnClickListener {
                     loginActivity.removeFragment(LoginFragmentName.FIND_ACCOUNT_FRAGMENT)
                 }

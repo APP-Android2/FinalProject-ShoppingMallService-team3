@@ -48,6 +48,7 @@
                     android:hint="닉네임"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2NickName"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -56,7 +57,8 @@
                         android:id="@+id/textFieldReg2NickName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="닉네임을 입력해 주세요."
                         android:inputType="text|textPersonName"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp" />
@@ -85,6 +87,7 @@
                     android:hint="아이디"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2Id"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -93,7 +96,8 @@
                         android:id="@+id/textFieldReg2Id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="아이디를 입력해 주세요."
                         android:inputType="text"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp" />
@@ -119,6 +123,7 @@
                     android:hint="비밀번호"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="password_toggle"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
@@ -127,7 +132,8 @@
                         android:id="@+id/textFieldReg2Pw"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                         android:inputType="text|textPassword"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp" />
@@ -143,6 +149,7 @@
                     android:hint="비밀번호 확인"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="password_toggle"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
@@ -151,7 +158,8 @@
                         android:id="@+id/textFieldReg2Pw2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                         android:inputType="text|textPassword"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp" />
@@ -216,6 +224,7 @@
                     android:hint="이름"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
@@ -224,7 +233,8 @@
                         android:id="@+id/textFieldReg2Name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="이름을 입력해 주세요."
                         android:inputType="text|textPersonName"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp"
@@ -241,6 +251,7 @@
                     android:hint="생년월일"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/toggleButtonReg2Gender"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
@@ -249,7 +260,8 @@
                         android:id="@+id/textFieldReg2Birth"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="6자리 숫자로 입력해주세요."
                         android:inputType="datetime"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp"
@@ -266,6 +278,7 @@
                     android:hint="휴대폰"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2Authorize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
@@ -274,7 +287,8 @@
                         android:id="@+id/textFieldReg2Phone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="숫자로만 입력해 주세요."
                         android:inputType="phone"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp"
@@ -290,6 +304,7 @@
                     android:hint="인증 코드"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
@@ -298,12 +313,14 @@
                         android:id="@+id/textFieldReg2Code"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="6자리 숫자로 입력해 주세요."
                         android:inputType="number"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="58dp"
                         tools:layout_editor_absoluteY="511dp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -313,7 +330,9 @@
                     android:layout_marginTop="10dp"
                     android:hint="주소 [선택]"
                     app:boxStrokeColor="@color/green_main"
-                    app:endIconMode="clear_text"
+                    app:endIconDrawable="@drawable/magnifier"
+                    app:endIconMode="custom"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
@@ -322,12 +341,14 @@
                         android:id="@+id/textFieldReg2Address"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="우편번호 검색"
                         android:inputType="text|textPostalAddress"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="58dp"
                         tools:layout_editor_absoluteY="511dp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -337,6 +358,7 @@
                     android:hint="상세 주소"
                     app:boxStrokeColor="@color/green_main"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -346,7 +368,8 @@
                         android:id="@+id/textFieldReg2Address2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="상세주소를 입력해 주세요."
                         android:inputType="text|textPostalAddress"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp"

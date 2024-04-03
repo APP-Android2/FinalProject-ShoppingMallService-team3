@@ -33,7 +33,7 @@
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginTop="30dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/profile"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,13 +42,17 @@
             app:layout_constraintTop_toBottomOf="@+id/textviewReg3Welcome" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageButtonReg3Camera"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/camera"
-            tools:layout_editor_absoluteX="206dp"
-            tools:layout_editor_absoluteY="378dp" />
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="340dp"
+            android:src="@drawable/camera_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.464"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewReg3NickName"
@@ -67,29 +71,31 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/pretendard_bold"
             android:text="건너뛰기"
             android:textColor="@color/green_main"
             android:textSize="16sp"
             app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonReg3Confirm"
             app:layout_constraintStart_toStartOf="parent"
             app:strokeColor="@color/green_main"
-            app:strokeWidth="1dp"
-            tools:layout_editor_absoluteY="658dp" />
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/buttonReg3Confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="확인"
+            android:layout_marginBottom="20dp"
             android:fontFamily="@font/pretendard_bold"
+            android:text="확인"
             android:textSize="16sp"
             app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/buttonReg3Pass"
-            tools:layout_editor_absoluteY="658dp" />
+            app:layout_constraintStart_toEndOf="@+id/buttonReg3Pass" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

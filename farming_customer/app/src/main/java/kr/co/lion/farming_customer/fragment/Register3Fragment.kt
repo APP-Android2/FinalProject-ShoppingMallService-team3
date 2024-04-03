@@ -51,7 +51,7 @@ class Register3Fragment : Fragment() {
             }
 
             // 카메라 버튼
-            imageButton.setOnClickListener{
+            imageButtonReg3Camera.setOnClickListener{
                 // TODO("앨범 연결 필요")
             }
         }
