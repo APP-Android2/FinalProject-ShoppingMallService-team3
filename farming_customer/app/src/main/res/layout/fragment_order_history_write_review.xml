@@ -97,17 +97,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RatingBar
+                <com.willy.ratingbar.BaseRatingBar
                     android:id="@+id/ratingBarWriteReview"
-                    style="@style/CustomRatingBar"
                     android:layout_width="wrap_content"
-                    android:layout_height="47dp"
-                    android:indeterminateOnly="false"
-                    android:mirrorForRtl="true"
-                    android:numStars="5"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srb_drawableEmpty="@drawable/star_02"
+                    app:srb_drawableFilled="@drawable/star_01"
+                    app:srb_starHeight="40dp"
+                    app:srb_starPadding="5dp"
+                    app:srb_starWidth="40dp" />
 
                 <LinearLayout
                     android:id="@+id/buttonWriteReview_uploadImage"

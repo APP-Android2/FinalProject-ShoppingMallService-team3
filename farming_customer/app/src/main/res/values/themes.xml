@@ -74,11 +74,6 @@
         <item name="android:clickable">false</item>
     </style>
 
-    // ratingBar style
-    <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating</item>
-    </style>
-
     // button text bold, 16sp
     <style name="buttonTextBold" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/pretendard_bold</item>
@@ -93,5 +88,3 @@
         <item name="android:textAppearance">@style/buttonTextBold</item>
     </style>
 </resources>
-
-
