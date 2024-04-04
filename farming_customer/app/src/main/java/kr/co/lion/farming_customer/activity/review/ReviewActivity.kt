@@ -1,21 +1,18 @@
-package kr.co.lion.farming_customer.activity
+package kr.co.lion.farming_customer.activity.review
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.PointFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.ReviewFragmentName
 import kr.co.lion.farming_customer.databinding.ActivityReviewBinding
-import kr.co.lion.farming_customer.fragment.PointHistoryFragment
-import kr.co.lion.farming_customer.fragment.ReviewHistoryFragment
-import kr.co.lion.farming_customer.fragment.ReviewTabActivityFragment
-import kr.co.lion.farming_customer.fragment.ReviewTabCropFragment
-import kr.co.lion.farming_customer.fragment.ReviewTabFarmFragment
+import kr.co.lion.farming_customer.fragment.review.ReviewHistoryFragment
+import kr.co.lion.farming_customer.fragment.review.ReviewTabActivityFragment
+import kr.co.lion.farming_customer.fragment.review.ReviewTabCropFragment
+import kr.co.lion.farming_customer.fragment.review.ReviewTabFarmFragment
 
 class ReviewActivity : AppCompatActivity() {
     lateinit var activityReviewBinding: ActivityReviewBinding

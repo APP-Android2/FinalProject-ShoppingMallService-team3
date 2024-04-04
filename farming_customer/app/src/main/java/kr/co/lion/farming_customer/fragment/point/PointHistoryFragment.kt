@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.point
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.DialogYes
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.PointActivity
+import kr.co.lion.farming_customer.activity.point.PointActivity
 import kr.co.lion.farming_customer.databinding.FragmentPointHistoryBinding
 import kr.co.lion.farming_customer.databinding.RowPointHistoryBinding
-import kr.co.lion.farming_customer.viewmodel.MyPagePointViewModel
+import kr.co.lion.farming_customer.viewmodel.point.MyPagePointViewModel
 
 class PointHistoryFragment : Fragment() {
     lateinit var fragmentPointHistoryBinding: FragmentPointHistoryBinding

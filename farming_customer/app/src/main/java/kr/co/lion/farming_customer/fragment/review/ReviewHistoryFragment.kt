@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.review
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.ReviewFragmentName
-import kr.co.lion.farming_customer.activity.ReviewActivity
+import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentReviewHistoryBinding
 
 class ReviewHistoryFragment : Fragment() {

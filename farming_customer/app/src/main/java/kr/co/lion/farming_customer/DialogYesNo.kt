@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.activity.PointActivity
 import kr.co.lion.farming_customer.databinding.DialogYesnoBinding
 import kr.co.lion.farming_customer.viewmodel.CustomDialogViewModel
 

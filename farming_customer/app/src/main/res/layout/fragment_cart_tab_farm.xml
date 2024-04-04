@@ -6,19 +6,20 @@
 
     <data>
         <variable
-            name="myPageReviewViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel" />
+            name="myPageCartViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.cart.MyPageCartViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionGroup="true"
-        tools:context=".fragment.review.ReviewTabCropFragment">
+        tools:context=".fragment.cart.CartTabFarmFragment">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,22 +34,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/textViewReviewTabCropCount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/pretendard_semibold"
-                        android:text="@{myPageReviewViewModel.textViewReviewTabCropCount}"
-                        android:textColor="@color/brown_01"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewReviewTabCrop"
+                        android:id="@+id/recyclerViewCartTabFarm"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -56,11 +43,12 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewReviewTabCropCount" />
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

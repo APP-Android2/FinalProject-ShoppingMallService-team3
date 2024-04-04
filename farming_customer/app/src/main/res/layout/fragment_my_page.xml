@@ -295,7 +295,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textViewMyPageReview"
+                                android:id="@+id/textViewMyPageFirstReview"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
@@ -307,7 +307,7 @@
                                 android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/textViewMyPagePost"
+                                android:id="@+id/textViewMyPageFirstPost"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"

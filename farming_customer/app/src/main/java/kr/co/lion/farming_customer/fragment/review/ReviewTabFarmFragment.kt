@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.review
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.ReviewActivity
+import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabFarmBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryFarmBinding
-import kr.co.lion.farming_customer.viewmodel.MyPageReviewViewModel
+import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
 class ReviewTabFarmFragment : Fragment() {
     lateinit var fragmentReviewTabFarmBinding: FragmentReviewTabFarmBinding

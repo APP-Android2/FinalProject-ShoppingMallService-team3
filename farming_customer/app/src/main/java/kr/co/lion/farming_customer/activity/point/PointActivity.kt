@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.activity
+package kr.co.lion.farming_customer.activity.point
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,17 +6,10 @@ import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.PointFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityPointBinding
-import kr.co.lion.farming_customer.fragment.BoardFragment
-import kr.co.lion.farming_customer.fragment.DialogLoginFragment
-import kr.co.lion.farming_customer.fragment.HomeFragment
-import kr.co.lion.farming_customer.fragment.LikeFragment
-import kr.co.lion.farming_customer.fragment.MyPageFragment
-import kr.co.lion.farming_customer.fragment.PointHistoryFragment
-import kr.co.lion.farming_customer.fragment.TradeFragment
+import kr.co.lion.farming_customer.fragment.point.PointHistoryFragment
 
 class PointActivity : AppCompatActivity() {
     lateinit var activityPointBinding: ActivityPointBinding

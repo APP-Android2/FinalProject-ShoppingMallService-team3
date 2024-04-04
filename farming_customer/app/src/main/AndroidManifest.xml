@@ -13,10 +13,16 @@
         android:theme="@style/Theme.Farming_customer"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ReviewActivity"
+            android:name=".activity.cart.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.PointActivity"
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.review.ReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.point.PointActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"

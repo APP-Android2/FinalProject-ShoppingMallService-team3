@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.activity.PointActivity
-import kr.co.lion.farming_customer.activity.ReviewActivity
+import kr.co.lion.farming_customer.activity.point.PointActivity
+import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentMyPageBinding
 import kr.co.lion.farming_customer.viewmodel.MyPageViewModel
 
@@ -28,7 +29,8 @@ class MyPageFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingCardViewMyPageFirstPoint()
-        settingTextViewMyPageReview()
+        settingTextViewMyPageFirstReview()
+        settingTextViewMyPageFirstCart()
 
         return fragmentMyPageBinding.root
     }
@@ -47,11 +49,21 @@ class MyPageFragment : Fragment() {
     }
 
     // 리뷰 내역
-    fun settingTextViewMyPageReview() {
+    fun settingTextViewMyPageFirstReview() {
         fragmentMyPageBinding.apply {
-            textViewMyPageReview.setOnClickListener {
+            textViewMyPageFirstReview.setOnClickListener {
                 val reviewIntent = Intent(mainActivity, ReviewActivity::class.java)
                 startActivity(reviewIntent)
+            }
+        }
+    }
+
+    // 장바구니
+    fun settingTextViewMyPageFirstCart() {
+        fragmentMyPageBinding.apply {
+            textViewMyPageFirstCart.setOnClickListener {
+                val cartIntent = Intent(mainActivity, CartActivity::class.java)
+                startActivity(cartIntent)
             }
         }
     }

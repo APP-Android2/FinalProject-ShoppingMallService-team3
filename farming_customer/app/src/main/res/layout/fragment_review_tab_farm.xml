@@ -7,14 +7,14 @@
     <data>
         <variable
             name="myPageReviewViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.MyPageReviewViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionGroup="true"
-        tools:context=".fragment.ReviewTabCropFragment">
+        tools:context=".fragment.review.ReviewTabCropFragment">
 
         <ScrollView
             android:layout_width="match_parent"

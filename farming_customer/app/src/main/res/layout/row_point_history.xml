@@ -7,7 +7,7 @@
     <data>
         <variable
             name="myPagePointViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.MyPagePointViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.point.MyPagePointViewModel" />
     </data>
 
     <LinearLayout

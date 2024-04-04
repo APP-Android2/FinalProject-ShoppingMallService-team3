@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.viewmodel
+package kr.co.lion.farming_customer.viewmodel.review
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

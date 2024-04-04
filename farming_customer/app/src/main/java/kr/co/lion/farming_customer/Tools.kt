@@ -25,3 +25,11 @@ enum class ReviewFragmentName(var str: String) {
     REVIEW_TAB_FARM_FRAGMENT("ReviewTabFarmFragment"),
     REVIEW_TAB_ACTIVITY_FRAGMENT("ReviewTabActivityFragment")
 }
+
+// CartActivity에서 보여줄 프래그먼트들의 이름
+enum class CartFragmentName(var str: String) {
+    CART_FRAGMENT("CartFragment"),
+    CART_TAB_CROP_FRAGMENT("CartTabCropFragment"),
+    CART_TAB_FARM_FRAGMENT("CartTabFarmFragment"),
+    CART_TAB_ACTIVITY_FRAGMENT("CartTabActivityFragment")
+}

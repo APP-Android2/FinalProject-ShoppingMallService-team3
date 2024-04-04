@@ -1,6 +1,5 @@
 package kr.co.lion.farming_customer
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
@@ -13,8 +12,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.activity.PointActivity
 import kr.co.lion.farming_customer.databinding.DialogYesBinding
 import kr.co.lion.farming_customer.viewmodel.CustomDialogViewModel
 
