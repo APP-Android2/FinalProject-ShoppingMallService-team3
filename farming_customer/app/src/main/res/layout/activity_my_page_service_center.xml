@@ -62,10 +62,11 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/my_page_service_center_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_page_service_center_tl" />
+            app:layout_constraintTop_toBottomOf="@id/my_page_service_center_tl" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

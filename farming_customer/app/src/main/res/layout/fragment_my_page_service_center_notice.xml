@@ -8,9 +8,9 @@
             type="kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterNoticeViewModel" />
     </data>
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/service_center_notice_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="공지사항 프래그먼트" />
+        android:layout_height="match_parent"/>
 
 </layout>
