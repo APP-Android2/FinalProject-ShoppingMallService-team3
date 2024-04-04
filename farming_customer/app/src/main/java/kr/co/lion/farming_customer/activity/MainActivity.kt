@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
                             replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+//                            val intent = Intent(this@MainActivity, OrderHistoryActivity::class.java)
+//                            startActivity(intent)
                         }
                     }
                     true

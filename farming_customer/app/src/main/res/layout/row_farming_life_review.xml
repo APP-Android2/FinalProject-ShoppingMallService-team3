@@ -8,7 +8,7 @@
     <data>
         <variable
             name="rowFarmingLifeReviewViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.farmingLife.rowFarmingLifeReviewViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.farmingLife.RowFarmingLifeReviewViewModel" />
 
     </data>
     <LinearLayout
@@ -64,7 +64,7 @@
                     app:srb_drawableFilled="@drawable/star_01"
                     app:srb_isIndicator="true"
                     app:srb_numStars="5"
-                    app:srb_rating="@{rowFarmingLifeReviewViewModel.rating}"
+                    app:srb_rating="3"
                     app:srb_starHeight="15dp"
                     app:srb_starPadding="3dp"
                     app:srb_starWidth="15dp" />
