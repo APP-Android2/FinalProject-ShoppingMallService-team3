@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.RowServiceCenterNoticeBinding
 
 class NoticeRVAdapter: RecyclerView.Adapter<NoticeRVAdapter.NoticeViewHolder>() {
@@ -47,6 +48,15 @@ class NoticeRVAdapter: RecyclerView.Adapter<NoticeRVAdapter.NoticeViewHolder>() 
 
         holder.binding.rowServiceCenterNoticeContentLayout.visibility =
             if (expandedPosition == position) View.VISIBLE else View.GONE
+
+        // 버튼 이미지 설정
+        if (expandedPosition == position) {
+            // 열린 상태일 때
+            holder.binding.rowServiceCenterNoticeOpenBtn.setImageResource(R.drawable.ic_notice_close_btn)
+        } else {
+            // 닫힌 상태일 때
+            holder.binding.rowServiceCenterNoticeOpenBtn.setImageResource(R.drawable.ic_notice_open_btn)
+        }
 
     }
 }
