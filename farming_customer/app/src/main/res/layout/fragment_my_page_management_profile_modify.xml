@@ -7,26 +7,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:transitionGroup="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarMyPageManagementProfileModify"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:layout_height="50dp"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+            app:navigationIcon="@drawable/back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="프로필 수정"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonMyPageManagementProfileModify_Done"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -35,17 +46,26 @@
                     android:id="@+id/buttonMyPageManagementProfileModify_ModifyProfileImage"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:src="@drawable/ic_launcher_background"
+                    android:src="@color/grey_02"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayout"
+                    android:id="@+id/textInputLayoutCheckNickName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_height="43dp"
+                    android:layout_marginTop="30dp"
+                    android:hint="닉네임"
+                    android:textColorHint="@color/btn_bg_stroke_color_selector"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                    app:boxStrokeErrorColor="@color/orange_01"
                     app:endIconMode="clear_text"
+                    app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonMyPageManagementProfileModify_ModifyProfileImage">
@@ -53,48 +73,64 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldMyPageManagementProfileModify_ModifyUserNickName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/pretendard_semibold"
                         android:gravity="center"
-                        android:hint="닉네임"
+                        android:hint="닉네임을 입력해주세요"
                         android:inputType="text"
+                        android:paddingLeft="109dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="109dp"
+                        android:paddingBottom="10dp"
+                        android:text="닉네임123"
+                        android:textColor="@color/brown_01"
                         android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageButton
                     android:id="@+id/buttonMyPageManagementProfileModify_ModifyProfileImage2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="34.26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:src="@android:drawable/btn_star"
+                    android:src="@drawable/camera_gray"
                     app:layout_constraintBottom_toBottomOf="@id/buttonMyPageManagementProfileModify_ModifyProfileImage"
                     app:layout_constraintEnd_toEndOf="@id/buttonMyPageManagementProfileModify_ModifyProfileImage" />
 
                 <Button
                     android:id="@+id/buttonMyPageManagementProfileModify_CheckUserNickName"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/pretendard_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:text="중복확인"
                     android:textSize="12sp"
+                    app:cornerRadius="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
+                    app:layout_constraintTop_toBottomOf="@id/textInputLayoutCheckNickName" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/buttonMyPageManagementProfileModify_Done"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/pretendard_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
                 android:text="확인"
                 android:textSize="16sp"
+                app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

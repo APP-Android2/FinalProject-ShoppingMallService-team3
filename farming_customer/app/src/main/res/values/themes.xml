@@ -16,4 +16,17 @@
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
     </style>
 
+    // toggleButton_Bold text custom
+    <style name="toggleButtonText_Bold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    // toggleButton_Bold custom
+    <style name="OutlinedButtonStyle_Bold" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/btn_bg_selection_color_selector</item>
+        <item name="android:textColor">@color/btn_text_color_selector</item>
+        <item name="strokeColor">@color/btn_bg_stroke_color_selector</item>
+        <item name="android:textAppearance">@style/toggleButtonText_Bold</item>
+    </style>
 </resources>
