@@ -36,7 +36,7 @@ class OrderHistoryFarmFragment : Fragment() {
         fragmentOrderHistoryFarmBinding.apply {
             toolbarOrderHistoryFarm.apply {
                 setNavigationOnClickListener {
-                    orderHistoryActivity.removeFragment(OrderHistoryFragmentName.ORDER_HISTORY_FARM_FRAMGNET)
+                    orderHistoryActivity.finish()
                 }
             }
         }

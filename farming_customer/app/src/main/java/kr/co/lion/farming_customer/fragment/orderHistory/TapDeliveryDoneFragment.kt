@@ -27,8 +27,16 @@ class TapDeliveryDoneFragment : Fragment() {
         orderHistoryActivity = activity as OrderHistoryActivity
 
         settingRecyclerView()
+        settingInit()
 
         return fragmentTapDeliveryDoneBinding.root
+    }
+
+    private fun settingInit() {
+        fragmentTapDeliveryDoneBinding.apply {
+            // 전체 버튼을 기본 값으로
+            toggleButtonAll.isChecked = true
+        }
     }
 
     private fun settingRecyclerView() {

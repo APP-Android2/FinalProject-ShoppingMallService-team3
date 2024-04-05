@@ -108,7 +108,8 @@
                     app:srb_drawableFilled="@drawable/star_01"
                     app:srb_starHeight="40dp"
                     app:srb_starPadding="5dp"
-                    app:srb_starWidth="40dp" />
+                    app:srb_starWidth="40dp"
+                    app:srb_stepSize="0.5" />
 
                 <LinearLayout
                     android:id="@+id/buttonWriteReview_uploadImage"
