@@ -16,7 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="290dp"
+            android:layout_height="300dp"
             android:orientation="vertical">
 
             <TextView
@@ -66,55 +66,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textViewRowReviewTabCropName" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout3"
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/ratingBarRowReviewHistoryCrop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:orientation="horizontal"
+                android:layout_marginTop="2dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabCropName">
-
-
-                <ImageView
-                    android:id="@+id/imageViewRowReviewTabCropStar1"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/star_01" />
-
-                <ImageView
-                    android:id="@+id/imageViewRowReviewTabCropStar2"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/star_01" />
-
-                <ImageView
-                    android:id="@+id/imageViewRowReviewTabCropStar3"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/star_01" />
-
-                <ImageView
-                    android:id="@+id/imageViewRowReviewTabCropStar4"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/star_01" />
-
-                <ImageView
-                    android:id="@+id/imageViewRowReviewTabCropStar5"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/star_01" />
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/textViewRowReviewTabCropName"
+                app:srb_drawableEmpty="@drawable/star_02"
+                app:srb_drawableFilled="@drawable/star_01"
+                app:srb_isIndicator="true"
+                app:srb_numStars="5"
+                app:srb_rating="4.5"
+                app:srb_starHeight="10dp"
+                app:srb_starPadding="2dp"
+                app:srb_starWidth="10dp"
+                app:srb_stepSize="0.5" />
 
             <TextView
                 android:id="@+id/textViewRowReviewTabCropText"
@@ -126,7 +93,7 @@
                 android:textColor="@color/brown_01"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarRowReviewHistoryCrop" />
 
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollView"

@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_Board -> {
-                            replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
+                            //replaceFragment(MainFragmentName.FARMING_LIFE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottomNavigation_Home -> {
                             replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
@@ -59,7 +59,9 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
 
                             // 사용자가 로그인 하지 않은 상태인 경우
-                            // replaceFragment(MainFragmentName.DIALOG_LOGIN_FRAGMENT, false, false, null)
+//                            val dialog = DialogYesNo("로그인이 필요합니다.", "마이페이지는 로그인 후 이용 가능합니다.", this@MainActivity)
+//                            dialog.show(this@MainActivity.supportFragmentManager, "DialogYesNo")
+
                         }
                     }
                     true
