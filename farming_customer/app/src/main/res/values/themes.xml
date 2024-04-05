@@ -40,6 +40,13 @@
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
 
+    <!-- helperText Font 설정-->
+    <style name="MyHelperTextTextAppearance" parent="Widget.Material3.MaterialTimePicker.Display.HelperText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+
+
     // Bottom Navigation font 설정
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/pretendard_bold</item>
