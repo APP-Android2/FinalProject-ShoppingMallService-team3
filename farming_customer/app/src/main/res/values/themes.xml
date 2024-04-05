@@ -87,4 +87,19 @@
         <item name="strokeColor">@color/green_main</item>
         <item name="android:textAppearance">@style/buttonTextBold</item>
     </style>
+
+    // search bar custom
+    <style name="CustomSearchTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxStrokeColor">@color/text_input_search_layout_stroke_color_selector</item>
+
+        <item name="startIconDrawable">@drawable/search</item>
+        <item name="startIconTint">@color/grey_01</item>
+        
+        <item name="android:textColorHint">@color/text_input_search_layout_stroke_color_selector</item>
+        <item name="hintTextColor">@color/text_input_search_layout_stroke_color_selector</item>
+    </style>
 </resources>

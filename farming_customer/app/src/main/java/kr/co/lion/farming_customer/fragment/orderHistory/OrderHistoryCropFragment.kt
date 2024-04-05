@@ -26,7 +26,7 @@ class OrderHistoryCropFragment : Fragment() {
         orderHistoryActivity = activity as OrderHistoryActivity
 
         settingToolbar()
-        settingTapEvent()
+        settingTabEvent()
         orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_PAYMENT_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryCrop)
 
         return fragmentOrderHistoryCropBinding.root
@@ -42,7 +42,7 @@ class OrderHistoryCropFragment : Fragment() {
         }
     }
 
-    private fun settingTapEvent() {
+    private fun settingTabEvent() {
         fragmentOrderHistoryCropBinding.apply {
             tabCrop.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {

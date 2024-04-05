@@ -112,7 +112,10 @@ enum class MainFragmentName(var str : String){
     BOARD_FRAGMENT("BoardFragment"),
     HOME_FRAGMENT("HomeFragment"),
     LIKE_FRAGMENT("LikeFragment"),
-    MY_PAGE_FRAGMENT("MyPageFragment")
+    MY_PAGE_FRAGMENT("MyPageFragment"),
+    FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT("FarmingLifeFarmAndActivityFragment"),
+    TAP_FARM_FRAGMENT("TapFarmFragment"),
+    TAP_ACTIVITY_FRAGMENT("TapActivityFragment")
 }
 
 // OrderHistoryActivity에서 보여줄 프래그먼트들의 이름
@@ -130,4 +133,8 @@ enum class OrderHistoryFragmentName(var str:String){
     ORDER_HISTORY_ORDER_DETAIL_FRAGMENT("OrderHistoryOrderDetailFragment"),
     ORDER_HISTORY_EXCHANGE_RETURN_FRAGMENT("OrderHistoryExchangeReturnFragment"),
     ORDER_HISTORY_WRITE_REVIEW_FRAGMENT("OrderHistoryWriteReviewFragment")
+}
+
+enum class FarmingLifeFragmnetName(var str:String){
+    FARMING_LIFE_SEARCH_FRAGMENT("FarmingLifeSearchFragment")
 }

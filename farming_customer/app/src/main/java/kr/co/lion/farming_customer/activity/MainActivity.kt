@@ -16,6 +16,9 @@ import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
 import kr.co.lion.farming_customer.fragment.TradeFragment
+import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmAndActivityFragment
+import kr.co.lion.farming_customer.fragment.farmingLife.TapActivityFragment
+import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -46,7 +49,8 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_Board -> {
-                            replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
+                            //replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
+                            replaceFragment(MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottomNavigation_Home -> {
                             replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
@@ -56,9 +60,9 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
-                            replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
-//                            val intent = Intent(this@MainActivity, OrderHistoryActivity::class.java)
-//                            startActivity(intent)
+                            //replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+                            val intent = Intent(this@MainActivity, OrderHistoryActivity::class.java)
+                            startActivity(intent)
                         }
                     }
                     true
@@ -67,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun replaceFragment(name:MainFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
+    fun replaceFragment(name:MainFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container : Int = R.id.containerMain){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -92,6 +96,15 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
+            }
+            MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT -> {
+                newFragment = FarmingLifeFarmAndActivityFragment()
+            }
+            MainFragmentName.TAP_FARM_FRAGMENT -> {
+                newFragment = TapFarmFragment()
+            }
+            MainFragmentName.TAP_ACTIVITY_FRAGMENT -> {
+                newFragment = TapActivityFragment()
             }
         }
         if(data != null){
@@ -137,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             // Fragment를 교체한다.(이전 Fragment가 없으면 새롭게 추가하는 역할을 수행한다)
             // 첫 번째 매개 변수 : Fragment를 배치할 FragmentContainerView의 ID
             // 두 번째 매개 변수 : 보여주고하는 Fragment 객체를
-            fragmentTransaction.replace(R.id.containerMain, newFragment!!)
+            fragmentTransaction.replace(container, newFragment!!)
 
             // addToBackStack 변수의 값이 true면 새롭게 보여질 Fragment를 BackStack에 포함시켜 준다.
             if(addToBackStack){

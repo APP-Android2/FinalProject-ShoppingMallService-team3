@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.activity.orderHistory
+package kr.co.lion.farming_customer.activity.farmingLife
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,37 +7,28 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.OrderHistoryFragmentName
+import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.databinding.ActivityOrderHistoryBinding
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryActivityFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryCropFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryExchangeReturnFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryFarmFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryOrderDetailFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryReservCancleFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryReservDetailFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.OrderHistoryWriteReviewFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.TapDeliveryDoneFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.TapDeliveryFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.TapPaymentDoneFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.TapReservCancleFragment
-import kr.co.lion.farming_customer.fragment.orderHistory.TapReservDoneFragment
+import kr.co.lion.farming_customer.databinding.ActivityFarmingLifeBinding
+import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeSearchFragment
 
-class OrderHistoryActivity : AppCompatActivity() {
-    lateinit var activityOrderHistoryBinding: ActivityOrderHistoryBinding
+class FarmingLifeActivity : AppCompatActivity() {
+    lateinit var activityFarmingLifeBinding: ActivityFarmingLifeBinding
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
     var newFragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityOrderHistoryBinding = ActivityOrderHistoryBinding.inflate(layoutInflater)
-        setContentView(activityOrderHistoryBinding.root)
-        replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_CROP_FRAGMENT, false, false, null)
+        activityFarmingLifeBinding = ActivityFarmingLifeBinding.inflate(layoutInflater)
+        setContentView(activityFarmingLifeBinding.root)
+
+        val fragmentName = intent.getSerializableExtra("fragmentName")
+        replaceFragment(fragmentName as FarmingLifeFragmnetName, false, true, null)
     }
 
-    fun replaceFragment(name: OrderHistoryFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container : Int = R.id.containerOrderHistory){
+    fun replaceFragment(name: FarmingLifeFragmnetName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
+        SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         // oldFragment에 newFragment가 가지고 있는 Fragment 객체를 담아준다.
@@ -47,46 +38,9 @@ class OrderHistoryActivity : AppCompatActivity() {
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
         when(name){
-            OrderHistoryFragmentName.ORDER_HISTORY_ACTIVITY_FRAGMENT -> {
-                newFragment = OrderHistoryActivityFragment()
+            FarmingLifeFragmnetName.FARMING_LIFE_SEARCH_FRAGMENT -> {
+                newFragment = FarmingLifeSearchFragment()
             }
-            OrderHistoryFragmentName.ORDER_HISTORY_CROP_FRAGMENT -> {
-                newFragment = OrderHistoryCropFragment()
-            }
-            OrderHistoryFragmentName.ORDER_HISTORY_FARM_FRAMGNET -> {
-                newFragment = OrderHistoryFarmFragment()
-            }
-            OrderHistoryFragmentName.TAP_DELIVERY_DONE_FRAGMENT -> {
-                newFragment = TapDeliveryDoneFragment()
-            }
-            OrderHistoryFragmentName.TAP_DELIVERY_FRAGMENT -> {
-                newFragment = TapDeliveryFragment()
-            }
-            OrderHistoryFragmentName.TAP_PAYMENT_DONE_FRAGMENT -> {
-                newFragment = TapPaymentDoneFragment()
-            }
-            OrderHistoryFragmentName.TAP_RESERV_DONE_FRAGMENT -> {
-                newFragment = TapReservDoneFragment()
-            }
-            OrderHistoryFragmentName.TAP_RESERV_CANCLE_FRAGMENT -> {
-                newFragment = TapReservCancleFragment()
-            }
-            OrderHistoryFragmentName.ORDER_HISTORY_RESERV_CANCLE_FRAGMENT -> {
-                newFragment = OrderHistoryReservCancleFragment()
-            }
-            OrderHistoryFragmentName.ORDER_HISTORY_RESERV_DETAIL_FRAGMENT -> {
-                newFragment = OrderHistoryReservDetailFragment()
-            }
-            OrderHistoryFragmentName.ORDER_HISTORY_ORDER_DETAIL_FRAGMENT -> {
-                newFragment = OrderHistoryOrderDetailFragment()
-            }
-            OrderHistoryFragmentName.ORDER_HISTORY_EXCHANGE_RETURN_FRAGMENT -> {
-                newFragment = OrderHistoryExchangeReturnFragment()
-            }
-            OrderHistoryFragmentName.ORDER_HISTORY_WRITE_REVIEW_FRAGMENT -> {
-                newFragment = OrderHistoryWriteReviewFragment()
-            }
-
         }
         if(data != null){
             newFragment?.arguments = data
@@ -131,7 +85,7 @@ class OrderHistoryActivity : AppCompatActivity() {
             // Fragment를 교체한다.(이전 Fragment가 없으면 새롭게 추가하는 역할을 수행한다)
             // 첫 번째 매개 변수 : Fragment를 배치할 FragmentContainerView의 ID
             // 두 번째 매개 변수 : 보여주고하는 Fragment 객체를
-            fragmentTransaction.replace(container, newFragment!!)
+            fragmentTransaction.replace(R.id.containerFarmingLife, newFragment!!)
 
             // addToBackStack 변수의 값이 true면 새롭게 보여질 Fragment를 BackStack에 포함시켜 준다.
             if(addToBackStack){
@@ -143,7 +97,7 @@ class OrderHistoryActivity : AppCompatActivity() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name: OrderHistoryFragmentName){
+    fun removeFragment(name:FarmingLifeFragmnetName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
