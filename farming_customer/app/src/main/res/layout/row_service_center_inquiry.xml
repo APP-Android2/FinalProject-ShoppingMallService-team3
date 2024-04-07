@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/row_service_center_inquiry_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/back_round"
+        android:fontFamily="@font/font_pre_regular"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:text="답변 라벨"
+        android:textColor="@color/green_main"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/row_service_center_inquiry_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/font_pre_semibold"
+        android:text="문의 제목"
+        android:textColor="@color/brown_01"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/row_service_center_inquiry_label"
+        app:layout_constraintTop_toBottomOf="@+id/row_service_center_inquiry_label" />
+
+    <TextView
+        android:id="@+id/row_service_center_inquiry_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/font_pre_regular"
+        android:text="글 내용입니다 글 내용입니다"
+        android:textColor="@color/brown_01"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/row_service_center_inquiry_title"
+        app:layout_constraintTop_toBottomOf="@+id/row_service_center_inquiry_title" />
+
+    <View
+        android:id="@+id/row_service_center_inquiry_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey_02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
