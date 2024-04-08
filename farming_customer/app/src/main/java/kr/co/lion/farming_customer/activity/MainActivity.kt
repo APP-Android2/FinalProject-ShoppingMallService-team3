@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -8,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.BoardFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
@@ -54,7 +56,9 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
-                            replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+                            // replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+                            val intent = Intent(context, MyPageServiceCenterActivity::class.java)
+                            startActivity(intent)
                         }
                     }
                     true
