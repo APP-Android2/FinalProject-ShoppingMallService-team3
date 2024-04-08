@@ -425,6 +425,7 @@
                         android:id="@+id/buttonMyPageManagementUserInfoModify_Done"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
+                        android:layout_marginTop="105dp"
                         android:layout_marginBottom="20dp"
                         android:fontFamily="@font/pretendard_bold"
                         android:insetTop="0dp"
@@ -437,7 +438,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPageManagementUserInfoModify_SignOut"
+                        app:layout_constraintVertical_bias="1.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
