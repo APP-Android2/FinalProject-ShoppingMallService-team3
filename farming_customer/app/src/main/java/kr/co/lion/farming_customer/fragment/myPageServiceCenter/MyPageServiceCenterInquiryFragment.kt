@@ -33,7 +33,7 @@ class MyPageServiceCenterInquiryFragment : Fragment() {
         binding.lifecycleOwner = this
         myPageServiceCenterActivity = activity as MyPageServiceCenterActivity
 
-        inquiryRVAdapter = InquiryRVAdapter()
+        inquiryRVAdapter = InquiryRVAdapter(requireContext())
         binding.serviceCenterInquiryRv.adapter = inquiryRVAdapter
         binding.serviceCenterInquiryRv.layoutManager = LinearLayoutManager(context)
 

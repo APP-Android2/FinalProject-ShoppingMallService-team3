@@ -1,11 +1,14 @@
 package kr.co.lion.farming_customer.fragment.myPageServiceCenter.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterReplyActivity
 import kr.co.lion.farming_customer.databinding.RowServiceCenterInquiryBinding
 
-class InquiryRVAdapter : RecyclerView.Adapter<InquiryRVAdapter.InquiryViewHolder>(){
+class InquiryRVAdapter(private val context: Context) : RecyclerView.Adapter<InquiryRVAdapter.InquiryViewHolder>(){
 
     inner class InquiryViewHolder(val binding: RowServiceCenterInquiryBinding): RecyclerView.ViewHolder(binding.root) {
         init {
@@ -30,5 +33,10 @@ class InquiryRVAdapter : RecyclerView.Adapter<InquiryRVAdapter.InquiryViewHolder
     override fun onBindViewHolder(holder: InquiryViewHolder, position: Int) {
         holder.binding.rowServiceCenterInquiryTitle.text = "문의 제목 $position"
         holder.binding.rowServiceCenterInquiryContent.text = "글 내용 $position"
+
+        holder.binding.root.setOnClickListener {
+            val intent = Intent(context, MyPageServiceCenterReplyActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }
