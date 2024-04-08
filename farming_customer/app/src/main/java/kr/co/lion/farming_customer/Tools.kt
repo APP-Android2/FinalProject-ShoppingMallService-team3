@@ -11,3 +11,11 @@ enum class MainFragmentName(var str : String){
     LIKE_FRAGMENT("LikeFragment"),
     MY_PAGE_FRAGMENT("MyPageFragment")
 }
+
+enum class LikeType(var str:String, var num:Int){
+    CROP("Crop",1),
+    POST("Post",2),
+    FARM("Farm",3),
+    ACTIVITY("Activity",4),
+    RENTAL("Rental",5)
+}

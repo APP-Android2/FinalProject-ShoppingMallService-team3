@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -24,6 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:text="farming"
                 android:textColor="#413514"
@@ -34,57 +36,76 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
             android:scrollbars="none">
 
             <kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
                 android:id="@+id/toggleGroupLikeType"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:selectionRequired="true"
-                app:singleSelection="true">
+                app:singleSelection="true"
+                android:checkedButtonId="@={likeViewModel.toggleLikeType}">
 
                 <Button
                     android:id="@+id/buttonLikeCrop"
                     style="@style/OutlinedButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:padding="0dp"
                     android:text="농산물"
-                    android:textAppearance="@style/toggleButtonText" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/buttonLikePost"
                     style="@style/OutlinedButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:padding="0dp"
-                    android:text="게시판" />
+                    android:text="게시판"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/buttonLikeFarm"
                     style="@style/OutlinedButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:padding="0dp"
-                    android:text="주말농장" />
+                    android:text="주말농장"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/buttonLikeActivity"
                     style="@style/OutlinedButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:padding="0dp"
-                    android:text="체험활동" />
+                    android:text="체험활동"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/buttonLikeRental"
                     style="@style/OutlinedButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:padding="0dp"
-                    android:text="농기구" />
+                    android:text="농기구"
+                    android:textSize="12sp" />
             </kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius>
         </HorizontalScrollView>
 

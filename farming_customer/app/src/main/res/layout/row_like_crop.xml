@@ -4,14 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
@@ -23,17 +22,17 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/imageViewLikeCrop"
                     android:layout_width="155dp"
                     android:layout_height="120dp"
-                    android:background="@color/grey_04"
+                    android:background="@color/grey_02"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_launcher_foreground" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLikeCancel"
+                    android:id="@+id/constraintLikeCropCancel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -42,7 +41,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/imageViewLike"
                         android:layout_width="24.52dp"
                         android:layout_height="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,15 +51,15 @@
                         app:srcCompat="@drawable/heart_01" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/textViewLikeCnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="999"
+                        android:text="999+"
                         android:textSize="8sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageViewLike"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/imageView2"
-                        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                        app:layout_constraintStart_toStartOf="@+id/imageViewLike"
+                        app:layout_constraintTop_toTopOf="@+id/imageViewLike" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -71,35 +70,43 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imageView"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewLikeCrop"
                     app:srb_drawableEmpty="@drawable/star_02"
                     app:srb_drawableFilled="@drawable/star_01"
                     app:srb_isIndicator="true"
                     app:srb_numStars="5"
                     app:srb_rating="3"
                     app:srb_starHeight="15dp"
-                    app:srb_starPadding="3dp"
+                    app:srb_starPadding="2dp"
                     app:srb_starWidth="15dp" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textViewLikeCropName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="5dp"
+                    android:fontFamily="@font/pretendard_regular"
                     android:text="TextView"
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ratingBar" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textViewLikeCropPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/pretendard_regular"
                     android:text="TextView"
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView" />
+                    app:layout_constraintTop_toBottomOf="@id/textViewLikeCropName" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
