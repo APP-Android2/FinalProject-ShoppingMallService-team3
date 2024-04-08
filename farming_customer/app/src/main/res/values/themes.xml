@@ -16,11 +16,31 @@
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
     </style>
 
+    // Toolbar 텍스트 폰트, 사이즈, 색상 설정
+    <style name="ToolbarTitle">
+        <item name="fontFamily">@font/font_pre_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/brown_01</item>
+    </style>
+
     <!-- Order History Custom. 주문 내역 부분의 커스텀 스타일입니다. -->
+
     // TabLayout text custom
     <style name="CustomTablayout" parent="TextAppearance.Design.Tab">
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    // FloatingActionButton Shape 설정
+    <style name="ShapeAppearance.FloatingActionButton" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item> <!-- 값이 클수록 동그라미가 더 커짐 -->
+    </style>
+
+    // 버튼 테두리 둥글게 설정
+    <style name="RoundButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 
     // button text custom

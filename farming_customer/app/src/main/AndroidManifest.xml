@@ -16,6 +16,15 @@
             android:name=".activity.orderHistory.OrderHistoryActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterReplyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterWriteInquiryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true" >
             <intent-filter>

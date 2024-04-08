@@ -115,6 +115,11 @@ enum class MainFragmentName(var str : String){
     MY_PAGE_FRAGMENT("MyPageFragment")
 }
 
+enum class MyPageServiceCenterFragmentName(var str: String) {
+    SERVICE_CENTER_NOTICE_FRAGMENT("MyPageServiceCenterNoticeFragment"),
+    SERVICE_CENTER_FAQ_FRAGMENT("MyPageServiceCenterFaqFragment"),
+    SERVICE_CENTER_INQUIRY_FRAGMENT("MyPageServiceCenterInquiryFragment")
+
 // OrderHistoryActivity에서 보여줄 프래그먼트들의 이름
 enum class OrderHistoryFragmentName(var str:String){
     ORDER_HISTORY_CROP_FRAGMENT("OrderHistoryCropFragment"),
