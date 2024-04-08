@@ -19,7 +19,7 @@
     </style>
 
     <!-- 토글 버튼 설정 -->
-    <style name="CustomToggleButton" parent="Widget.MaterialComponents.Button">
+    <style name="CustomToggleButton" parent="Widget.Material3.Button">
         <item name="android:textColor">@drawable/selector_button_text_color</item>
         <item name="backgroundTint">@drawable/selector_button_background</item>
         <item name="cornerRadius">10dp</item>
@@ -41,7 +41,7 @@
     </style>
 
     <!-- helperText Font 설정-->
-    <style name="MyHelperTextTextAppearance" parent="Widget.Material3.MaterialTimePicker.Display.HelperText">
+    <style name="MyHelperTextTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
@@ -51,6 +51,19 @@
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/pretendard_bold</item>
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
+    </style>
+
+    // button_Bold custom
+    <style name="buttonEnabledText_Bold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    // button enabled style
+    <style name="isEnabledButtonStyle">
+        <item name="android:background">@drawable/btn_enabled_background_1</item>
+        <item name="android:textColor">@color/btn_enabled_text_color</item>
+        <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
     </style>
 
 </resources>

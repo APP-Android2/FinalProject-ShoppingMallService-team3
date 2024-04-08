@@ -12,60 +12,82 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        tools:background="@color/white">
+        android:paddingRight="20dp">
 
-        <TextView
-            android:id="@+id/textviewReg3Welcome"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
-            android:fontFamily="@font/pretendard_bold"
-            android:text="닉네임님 파밍에 오신 것을\n 환영합니다!"
-            android:textAlignment="center"
-            android:textSize="20sp"
+            android:layout_marginBottom="40dp"
+            android:background="@color/white"
+            android:gravity="center|center_horizontal|top|center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageViewReg3"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/profile"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textviewReg3Welcome" />
+            <TextView
+                android:id="@+id/textViewReg3Nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="닉네임 님"
+                android:textColor="@color/green_main"
+                android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/imageButtonReg3Camera"
-            style="?attr/materialIconButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/camera_gray"
-            app:layout_constraintBottom_toBottomOf="@+id/imageViewReg3"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewReg3" />
+            <TextView
+                android:id="@+id/textviewReg3Welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="파밍에 오신 것을 환영합니다!"
+                android:textAlignment="center"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textViewReg3NickName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/pretendard_bold"
-            android:text="닉네임"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewReg3" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/white">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewReg3"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/profile"
+                    app:civ_border_width="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="30dp" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonReg3Camera"
+                    style="?attr/materialIconButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/camera_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageViewReg3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textViewReg3NickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="닉네임"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonReg3Pass"
-            android:layout_width="155dp"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
@@ -85,7 +107,7 @@
 
         <Button
             android:id="@+id/buttonReg3Confirm"
-            android:layout_width="155dp"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/pretendard_bold"
@@ -97,6 +119,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/buttonReg3Pass" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

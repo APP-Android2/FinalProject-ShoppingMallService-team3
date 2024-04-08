@@ -91,6 +91,9 @@ class Register2Fragment : Fragment() {
     // 텍스트 관련 설정
     fun settingText(){
         fragmentRegister2Binding.apply {
+
+
+            // 비밀번호 검사
             textFieldReg2Pw.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int
                 ) {
@@ -123,14 +126,18 @@ class Register2Fragment : Fragment() {
                     // 조건에 따라 UI 업데이트나 에러 메시지 표시
                     if (!isValidPassword){
                         // 비밀번호 조건을 충족하지 않을 시
-                        textInputLayout5.error = "비밀번호 조건을 충족하지 않습니다."
+//                        textInputLayout5.helperText = "6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
+                        textInputLayout5.error = "6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                     } else {
                         // 조건 충족
+//                        textInputLayout5.isHelperTextEnabled = false
                         textInputLayout5.error = null
+                        textInputLayout5.isErrorEnabled = false
                     }
                 }
             })
 
+            // 비밀번호 확인 검사
             textFieldReg2Pw2.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int
                 ) {
@@ -146,10 +153,16 @@ class Register2Fragment : Fragment() {
                     val confirmPassword = textFieldReg2Pw2.text.toString()
 
                     if (password != confirmPassword) {
+//                        fragmentRegister2Binding.textInputLayout6.isHelperTextEnabled = true
+//                        fragmentRegister2Binding.textInputLayout6.helperText = "비밀번호가 일치하지 않습니다."
                         fragmentRegister2Binding.textInputLayout6.error = "비밀번호가 일치하지 않습니다."
+
                     } else {
                         // 오류 제거
+//                        fragmentRegister2Binding.textInputLayout6.isHelperTextEnabled = false
+//                        fragmentRegister2Binding.textInputLayout6.helperText = null
                         fragmentRegister2Binding.textInputLayout6.error = null
+                        fragmentRegister2Binding.textInputLayout6.isErrorEnabled = false
                     }
                 }
 

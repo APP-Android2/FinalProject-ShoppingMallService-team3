@@ -46,12 +46,19 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:hint="닉네임"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2NickName"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2NickName"
@@ -62,7 +69,8 @@
                         android:inputType="text|textPersonName"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,12 +97,19 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:hint="아이디"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2Id"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Id"
@@ -105,7 +120,8 @@
                         android:inputType="text"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,26 +142,40 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout5"
                     android:layout_width="0dp"
-                    android:layout_height="43dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="비밀번호"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    app:boxStrokeErrorColor="@color/orange"
                     app:endIconMode="password_toggle"
+                    app:endIconTint="@color/brown_01"
+                    app:errorIconTint="@color/orange"
+                    app:errorTextColor="@color/orange"
                     app:expandedHintEnabled="false"
+                    app:helperTextTextAppearance="@style/MyHelperTextTextAppearance"
+                    app:helperTextTextColor="@color/orange"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Pw"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="43dp"
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                         android:inputType="text|textPassword"
+                        android:maxLength="20"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp" />
 
 
@@ -154,26 +184,40 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout6"
                     android:layout_width="0dp"
-                    android:layout_height="43dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="비밀번호 확인"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    app:boxStrokeErrorColor="@color/orange"
                     app:endIconMode="password_toggle"
+                    app:endIconTint="@color/brown_01"
+                    app:errorIconTint="@color/orange"
+                    app:errorTextColor="@color/orange"
                     app:expandedHintEnabled="false"
+                    app:helperTextTextAppearance="@style/MyHelperTextTextAppearance"
+                    app:helperTextTextColor="@color/orange"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Pw2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="43dp"
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                         android:inputType="text|textPassword"
+                        android:maxLength="20"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -183,6 +227,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_marginTop="16dp"
+                    app:checkedButton="@id/buttonReg2GenderMale"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout7"
                     app:selectionRequired="true"
@@ -200,6 +245,8 @@
                         android:textColorHint="@color/white"
                         android:textSize="12sp"
                         app:cornerRadius="10dp"
+                        app:strokeColor="@color/green_main"
+                        app:strokeWidth="1dp"
                         tools:layout_editor_absoluteX="185dp"
                         tools:layout_editor_absoluteY="245dp" />
 
@@ -214,6 +261,8 @@
                         android:textColorHighlight="@color/green_main"
                         android:textSize="12sp"
                         app:cornerRadius="10dp"
+                        app:strokeColor="@color/green_main"
+                        app:strokeWidth="1dp"
                         tools:layout_editor_absoluteX="256dp"
                         tools:layout_editor_absoluteY="245dp" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -238,12 +287,19 @@
                     android:layout_height="43dp"
                     android:layout_marginTop="40dp"
                     android:hint="이름"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Name"
@@ -254,7 +310,8 @@
                         android:inputType="text|textPersonName"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="48dp"
                         tools:layout_editor_absoluteY="348dp" />
@@ -267,12 +324,19 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:hint="생년월일"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/toggleButtonReg2Gender"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout7"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Birth"
@@ -281,9 +345,11 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="6자리 숫자로 입력해주세요."
                         android:inputType="datetime"
+                        android:maxLength="6"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="49dp"
                         tools:layout_editor_absoluteY="433dp" />
@@ -296,12 +362,19 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:hint="휴대폰"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2Authorize"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout8"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Phone"
@@ -310,9 +383,11 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="숫자로만 입력해 주세요."
                         android:inputType="phone"
+                        android:maxLength="11"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="58dp"
                         tools:layout_editor_absoluteY="511dp" />
@@ -324,12 +399,19 @@
                     android:layout_height="43dp"
                     android:layout_marginTop="10dp"
                     android:hint="인증 코드"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout9"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Code"
@@ -338,9 +420,11 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="6자리 숫자로 입력해 주세요."
                         android:inputType="number"
+                        android:maxLength="6"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="58dp"
                         tools:layout_editor_absoluteY="511dp" />
@@ -353,13 +437,20 @@
                     android:layout_height="43dp"
                     android:layout_marginTop="10dp"
                     android:hint="주소 [선택]"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconDrawable="@drawable/magnifier"
                     app:endIconMode="custom"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout10"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Address"
@@ -370,7 +461,8 @@
                         android:inputType="text|textPostalAddress"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="58dp"
                         tools:layout_editor_absoluteY="511dp" />
@@ -382,13 +474,20 @@
                     android:layout_height="43dp"
                     android:layout_marginTop="10dp"
                     android:hint="상세 주소"
-                    app:boxStrokeColor="@color/green_main"
+                    android:textColorHint="@color/green_main"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
                     app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
                     app:expandedHintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textInputLayout11">
+                    app:layout_constraintTop_toBottomOf="@id/textInputLayout11"
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Address2"
@@ -399,7 +498,8 @@
                         android:inputType="text|textPostalAddress"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/grey_01"
+                        android:textColor="@color/brown_01"
+                        android:textColorHint="@color/grey_01"
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="58dp"
                         tools:layout_editor_absoluteY="511dp" />
@@ -414,7 +514,7 @@
             android:layout_height="45dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:fontFamily="@font/pretendard_bold"
             android:insetTop="0dp"
             android:insetBottom="0dp"

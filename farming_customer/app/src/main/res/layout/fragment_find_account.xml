@@ -37,8 +37,10 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarFindAccount"
+            app:tabIndicatorFullWidth="true"
             app:tabSelectedTextAppearance="@style/MySelectedTabTextAppearance"
-            app:tabSelectedTextColor="@color/black"
+            app:tabSelectedTextColor="@color/brown_01"
+            app:tabTextAppearance="@style/MyTabTextAppearance"
             app:tabTextColor="@color/grey_01">
 
             <com.google.android.material.tabs.TabItem

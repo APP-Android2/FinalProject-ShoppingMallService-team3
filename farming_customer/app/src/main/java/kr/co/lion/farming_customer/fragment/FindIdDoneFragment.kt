@@ -30,6 +30,7 @@ class FindIdDoneFragment : Fragment() {
         loginActivity = activity as LoginActivity
 
         settingButton()
+        settingText()
 
         return fragmentFindIdDoneBinding.root
     }
@@ -42,5 +43,10 @@ class FindIdDoneFragment : Fragment() {
                     addToBackStack = false, isAnimate = false, data = null)
             }
         }
+    }
+
+    // 텍스트 설정
+    fun settingText(){
+        // TODO("아이디 부분 색상 변경 필요")
     }
 }

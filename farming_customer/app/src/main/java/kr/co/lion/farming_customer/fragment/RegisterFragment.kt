@@ -59,7 +59,7 @@ class RegisterFragment : Fragment() {
     fun settingCheckBox(){
         fragmentRegisterBinding.apply {
             // 먼저 버튼을 비활성화 상태로 만듦
-            buttonRegisterNext.isEnabled = false
+            textView8.isEnabled = false
 
             // 모두 동의 체크박스 선택 시 다른 체크 박스의 상태를 isChecked로 바꾼다.
             checkBoxTermsAll.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -67,12 +67,12 @@ class RegisterFragment : Fragment() {
                 checkBoxRegServiceTerm.isChecked = isChecked
                 checkBoxRegAlertServ.isChecked = isChecked
 
-                buttonRegisterNext.isEnabled = checkBoxRegPersonalInfo.isChecked && checkBoxRegServiceTerm.isChecked
+                textView8.isEnabled = checkBoxRegPersonalInfo.isChecked && checkBoxRegServiceTerm.isChecked
             }
 
             // 개별 필수 체크박스 상태 변경 시 다음 버튼 활성화 상태 업데이트
             val mandatoryCheckboxListener = CompoundButton.OnCheckedChangeListener { _, _ ->
-                buttonRegisterNext.isEnabled = checkBoxRegPersonalInfo.isChecked && checkBoxRegServiceTerm.isChecked
+                textView8.isEnabled = checkBoxRegPersonalInfo.isChecked && checkBoxRegServiceTerm.isChecked
             }
 
             checkBoxRegPersonalInfo.setOnCheckedChangeListener(mandatoryCheckboxListener)
@@ -127,7 +127,7 @@ class RegisterFragment : Fragment() {
             }
 
             // 다음 버튼 클릭시 다음 프래그먼트를 보여준다.
-            buttonRegisterNext.setOnClickListener {
+            textView8.setOnClickListener {
                 loginActivity.replaceFragment(LoginFragmentName.REGISTER2_FRAGMENT,
                     addToBackStack = true, isAnimate = true, data = null)
             }
