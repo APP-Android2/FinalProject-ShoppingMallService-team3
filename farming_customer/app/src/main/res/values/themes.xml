@@ -29,4 +29,17 @@
         <item name="strokeColor">@color/btn_bg_stroke_color_selector</item>
         <item name="android:textAppearance">@style/toggleButtonText_Bold</item>
     </style>
+
+    // button_Bold custom
+    <style name="buttonEnabledText_Bold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    // button enabled style
+    <style name="isEnabledButtonStyle">
+        <item name="android:background">@drawable/btn_enabled_background</item>
+        <item name="android:textColor">@color/btn_enabled_text_color</item>
+        <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
+    </style>
 </resources>
