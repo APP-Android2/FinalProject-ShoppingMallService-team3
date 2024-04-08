@@ -37,14 +37,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/font_pre_regular"
         android:text="글 내용입니다 글 내용입니다"
         android:textColor="@color/brown_01"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/row_service_center_inquiry_title"
-        app:layout_constraintTop_toBottomOf="@+id/row_service_center_inquiry_title" />
+        app:layout_constraintTop_toBottomOf="@+id/row_service_center_inquiry_title"
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/row_service_center_inquiry_line"

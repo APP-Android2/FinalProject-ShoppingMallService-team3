@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
         app:title="고객센터"
-        app:titleCentered="true"/>
+        app:titleCentered="true" />
 
     <TextView
         android:id="@+id/service_center_reply_tv1"
@@ -81,8 +81,8 @@
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusTopStart="10dp"
-        app:endIconTint="@android:color/transparent"
         app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+        app:endIconTint="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/service_center_reply_tv4"
         app:layout_constraintTop_toBottomOf="@id/service_center_reply_tv4"
@@ -92,10 +92,10 @@
             android:id="@+id/service_center_write_inquiry_type"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/font_pre_semibold"
-            android:text="선택된 유형"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:fontFamily="@font/font_pre_semibold"
+            android:text="선택된 유형"
             android:textColor="@color/brown_01"
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -119,12 +119,13 @@
             android:id="@+id/service_center_reply_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:fontFamily="@font/font_pre_semibold"
+            android:gravity="top"
             android:lines="10"
             android:maxLines="10"
             android:text="문의 내용"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
             android:textColor="@color/brown_01"
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -135,8 +136,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
         app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusTopStart="10dp"
@@ -149,12 +150,13 @@
             android:id="@+id/service_center_reply_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:fontFamily="@font/font_pre_semibold"
+            android:gravity="top"
             android:lines="10"
             android:maxLines="10"
             android:text="답변 내용"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
             android:textColor="@color/brown_01"
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>

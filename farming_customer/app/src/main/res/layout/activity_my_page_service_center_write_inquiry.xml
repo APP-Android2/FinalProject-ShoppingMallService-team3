@@ -129,6 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_pre_semibold"
+            android:gravity="top"
             android:hint="의견을 남겨주세요"
             android:lines="10"
             android:maxLines="10"
@@ -185,17 +186,17 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="20dp"
+        android:backgroundTint="@color/white"
+        android:enabled="false"
         android:fontFamily="@font/font_pre_bold"
         android:text="문의하기"
         android:textColor="@color/green_main"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/green_main"
         android:textSize="16sp"
-        android:enabled="false"
-        android:backgroundTint="@color/white"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/green_main"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
