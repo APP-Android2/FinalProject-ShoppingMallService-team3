@@ -54,8 +54,8 @@ class FindPwDone2Fragment : Fragment() {
             val greenColor = ContextCompat.getColor(loginActivity, R.color.green_main)
 
             // "비밀번호" 부분의 시작과 끝 인덱스 값을 찾음
-            val start = fullText.indexOf("비밀번호")
-            val end = start + "비밀번호".length
+            val start = fullText.indexOf("완료")
+            val end = start + "완료".length
 
             // SpannableString에 색상을 적용
             spannableString.setSpan(ForegroundColorSpan(greenColor), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

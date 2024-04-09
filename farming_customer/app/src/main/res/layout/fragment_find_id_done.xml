@@ -41,6 +41,7 @@
                 android:fontFamily="@font/pretendard_bold"
                 android:text="고객님의 정보와 일치하는 아이디는\n아이디 입니다"
                 android:textAlignment="center"
+                android:textColor="@color/brown_01"
                 android:textSize="16sp" />
         </LinearLayout>
 

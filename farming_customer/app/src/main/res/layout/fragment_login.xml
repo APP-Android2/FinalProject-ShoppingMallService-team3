@@ -33,12 +33,13 @@
             android:layout_marginBottom="10dp"
             android:hint="아이디 입력"
             android:textColorHint="@color/grey_01"
-            app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
-            app:endIconMode="clear_text"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/brown_01"
             app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -103,51 +104,47 @@
             android:text="로그인"
             android:textSize="16sp"
             app:cornerRadius="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonLoginRegister"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/buttonLoginRegister"
-            style="@style/Widget.Material3.Button.TextButton.Icon"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="회원가입"
-            android:textColor="@color/brown_01"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonLoginForgetIdPw"
-            app:layout_constraintEnd_toStartOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/buttonLoginForgetIdPw">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="|"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonLoginForgetIdPw"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonLoginLogin" />
+            <Button
+                android:id="@+id/buttonLoginRegister"
+                style="@style/Widget.Material3.Button.TextButton.Icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="회원가입"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/buttonLoginWithoutReg"
-            style="@style/Widget.Material3.Button.TextButton.Icon"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="비회원으로 시작하기"
-            android:textColor="@color/brown_01"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonLoginForgetIdPw"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="24dp"
+                android:background="?android:attr/listDivider"
+                tools:background="@color/brown_01" />
+
+            <Button
+                android:id="@+id/buttonLoginWithoutReg"
+                style="@style/Widget.Material3.Button.TextButton.Icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="비회원으로 시작하기"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonLoginForgetIdPw"

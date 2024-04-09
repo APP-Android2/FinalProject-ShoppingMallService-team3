@@ -58,7 +58,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2NickName"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2NickName"
@@ -109,7 +110,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2Id"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Id"
@@ -162,7 +164,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Pw"
@@ -204,7 +207,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Pw2"
@@ -299,7 +303,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Name"
@@ -336,7 +341,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/toggleButtonReg2Gender"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout7"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Birth"
@@ -374,7 +380,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/buttonReg2Authorize"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout8"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Phone"
@@ -411,7 +418,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout9"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Code"
@@ -450,7 +458,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout10"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Address"
@@ -487,7 +496,8 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textInputLayout11"
-                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
+                    tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                    tools:endIconTint="@color/brown_01">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldReg2Address2"
