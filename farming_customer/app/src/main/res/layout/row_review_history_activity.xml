@@ -53,18 +53,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabActivityDate"
                 app:srcCompat="@drawable/next" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <android.widget.Button
                 android:id="@+id/buttonReviewTabActivityDelete"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="38dp"
                 android:layout_height="20dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button_round_row_review_tab"
                 android:fontFamily="@font/pretendard_regular"
                 android:text="삭제"
                 android:textColor="@color/grey_01"
                 android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewRowReviewTabActivityName" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.willy.ratingbar.ScaleRatingBar
                 android:id="@+id/ratingBarRowReviewHistoryActivity"
@@ -93,82 +94,28 @@
                 android:textColor="@color/brown_01"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ratingBarRowReviewHistoryActivity" />
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarRowReviewHistoryActivity" />
 
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewRowReviewTabActivityText">
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabActivityText">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:cardCornerRadius="10dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabActivity1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp"
-                        app:cardCornerRadius="10dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabActivity2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabActivity3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabActivity4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabActivity5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewReviewImageActivity"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
                 </LinearLayout>
             </HorizontalScrollView>
 

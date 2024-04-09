@@ -22,16 +22,19 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageViewRowPointHistory"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/point_save"
+                app:layout_constraintBottom_toBottomOf="@id/linear"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/linear" />
 
             <LinearLayout
+                android:id="@+id/linear"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@+id/imageViewRowPointHistory"

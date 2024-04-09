@@ -152,9 +152,11 @@
                 android:id="@+id/buttonPointHistoryAll"
                 style="@style/OutlinedButtonStyle"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/font_pre_semibold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="전체"
                 android:textSize="12sp" />
 
@@ -162,9 +164,11 @@
                 android:id="@+id/buttonPointHistoryAccumulate"
                 style="@style/OutlinedButtonStyle"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/font_pre_semibold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="적립"
                 android:textSize="12sp" />
 
@@ -172,9 +176,11 @@
                 android:id="@+id/buttonPointHistoryUse"
                 style="@style/OutlinedButtonStyle"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/font_pre_semibold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="사용"
                 android:textSize="12sp" />
 
@@ -182,9 +188,11 @@
                 android:id="@+id/buttonPointHistoryDelete"
                 style="@style/OutlinedButtonStyle"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/font_pre_semibold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:text="삭제"
                 android:textSize="12sp" />
         </kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius>

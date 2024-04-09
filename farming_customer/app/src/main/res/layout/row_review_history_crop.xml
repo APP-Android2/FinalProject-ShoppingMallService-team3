@@ -53,19 +53,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabCropDate"
                 app:srcCompat="@drawable/next" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonReviewTabCropDelete"
-                android:layout_width="38dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/button_round_row_review_tab"
-                android:fontFamily="@font/pretendard_regular"
-                android:text="삭제"
-                android:textColor="@color/grey_01"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewRowReviewTabCropName" />
-
             <com.willy.ratingbar.ScaleRatingBar
                 android:id="@+id/ratingBarRowReviewHistoryCrop"
                 android:layout_width="wrap_content"
@@ -100,75 +87,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabCropText">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:cardCornerRadius="10dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabCrop1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp"
-                        app:cardCornerRadius="10dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabCrop2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabCrop3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabCrop4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="5dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewRowReviewTabCrop5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_launcher_background" />
-                    </com.google.android.material.card.MaterialCardView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewReviewImageCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -184,6 +117,20 @@
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+            <android.widget.Button
+                android:id="@+id/buttonReviewTabCropDelete"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="38dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_round_row_review_tab"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="삭제"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

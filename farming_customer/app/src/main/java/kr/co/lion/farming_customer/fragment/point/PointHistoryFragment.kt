@@ -32,6 +32,7 @@ class PointHistoryFragment : Fragment() {
 
         settingToolbar()
         settingImageViewPointHistoryCaution()
+        settingButtonPointHistoryAll()
         settingTextViewPointHistoryRemainPoint()
         settingRecyclerViewPointHistory()
 
@@ -59,6 +60,14 @@ class PointHistoryFragment : Fragment() {
                         "환급되오나, 기간이 지난 이후 취소시 환급되지 않습니다.", pointActivity)
                 dialog.show(this@PointHistoryFragment?.parentFragmentManager!!, "DialogYes")
             }
+        }
+    }
+
+    // 포인트 탭
+    fun settingButtonPointHistoryAll() {
+        fragmentPointHistoryBinding.apply {
+            buttonPointHistoryAll.isChecked = true
+
         }
     }
 

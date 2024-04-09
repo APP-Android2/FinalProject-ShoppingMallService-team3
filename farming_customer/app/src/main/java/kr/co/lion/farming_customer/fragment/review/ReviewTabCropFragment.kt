@@ -14,6 +14,7 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryCropBinding
+import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageCropBinding
 import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
 
@@ -21,6 +22,7 @@ class ReviewTabCropFragment : Fragment() {
     lateinit var fragmentReviewTabCropBinding: FragmentReviewTabCropBinding
     lateinit var reviewActivity: ReviewActivity
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentReviewTabCropBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_review_tab_crop, container, false)
@@ -39,6 +41,12 @@ class ReviewTabCropFragment : Fragment() {
     // 쓴 농산품 리뷰 개수
     fun settingWrittenCropReviewCount() {
         fragmentReviewTabCropBinding.myPageReviewViewModel?.textViewReviewTabCropCount?.value = "내가 쓴 리뷰 총 100개"
+    }
+
+    fun settingEventCheckBox() {
+        fragmentReviewTabCropBinding.apply {
+
+        }
     }
 
     // 리뷰 농산물 탭 리사이클러뷰 설정
@@ -66,6 +74,7 @@ class ReviewTabCropFragment : Fragment() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             }
+
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewTabCropViewHolder {
@@ -75,6 +84,13 @@ class ReviewTabCropFragment : Fragment() {
             rowReviewHistoryCropBinding.lifecycleOwner = this@ReviewTabCropFragment
 
             val reviewTabCropViewHolder = ReviewTabCropViewHolder(rowReviewHistoryCropBinding)
+
+            // 리뷰 농산물 탭 이미지 리사이클러뷰 설정
+            rowReviewHistoryCropBinding.recyclerViewReviewImageCrop.apply {
+                adapter = ReviewImageCropRecyclerViewAdapter()
+                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
+            }
+
 
             return reviewTabCropViewHolder
         }
@@ -95,6 +111,46 @@ class ReviewTabCropFragment : Fragment() {
                 dialog.show(this@ReviewTabCropFragment?.parentFragmentManager!!, "DialogYesNo")
             }
         }
+
+        // 리뷰 농산물 탭 이미지 리사이클러뷰 설정
+        inner class ReviewImageCropRecyclerViewAdapter : RecyclerView.Adapter<ReviewImageCropRecyclerViewAdapter.ReviewImageCropViewHolder>() {
+            inner class ReviewImageCropViewHolder(rowReviewHistoryImageCropBinding: RowReviewHistoryImageCropBinding) : RecyclerView.ViewHolder(rowReviewHistoryImageCropBinding.root) {
+                val rowReviewHistoryImageCropBinding: RowReviewHistoryImageCropBinding
+
+                init {
+                    this.rowReviewHistoryImageCropBinding = rowReviewHistoryImageCropBinding
+
+                    this.rowReviewHistoryImageCropBinding.root.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                }
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ReviewImageCropViewHolder {
+                val rowReviewHistoryImageCropBinding = DataBindingUtil.inflate<RowReviewHistoryImageCropBinding>(layoutInflater, R.layout.row_review_history_image_crop, parent, false)
+                val myPageReviewViewModel = MyPageReviewViewModel()
+                rowReviewHistoryImageCropBinding.myPageReviewViewModel = myPageReviewViewModel
+                rowReviewHistoryImageCropBinding.lifecycleOwner = this@ReviewTabCropFragment
+
+                val reviewImageCropViewHolder = ReviewImageCropViewHolder(rowReviewHistoryImageCropBinding)
+
+                return reviewImageCropViewHolder
+            }
+
+            override fun getItemCount(): Int {
+                return 5
+            }
+
+            override fun onBindViewHolder(holder: ReviewImageCropViewHolder, position: Int) {
+                holder.rowReviewHistoryImageCropBinding.imageViewRowReviewTabCrop.setImageResource(R.drawable.ic_launcher_background)
+            }
+        }
+
     }
+
+
+
+
 
 }

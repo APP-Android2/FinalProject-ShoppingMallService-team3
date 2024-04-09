@@ -14,6 +14,8 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabFarmBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryFarmBinding
+import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageCropBinding
+import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageFarmBinding
 import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
 class ReviewTabFarmFragment : Fragment() {
@@ -76,6 +78,12 @@ class ReviewTabFarmFragment : Fragment() {
 
             val reviewTabFarmViewHolder = ReviewTabFarmViewHolder(rowReviewHistoryFarmBinding)
 
+            // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
+            rowReviewHistoryFarmBinding.recyclerViewReviewImageFarm.apply {
+                adapter = ReviewImageFarmRecyclerViewAdapter()
+                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
+            }
+
             return reviewTabFarmViewHolder
         }
 
@@ -93,6 +101,41 @@ class ReviewTabFarmFragment : Fragment() {
                 val dialog = DialogYesNo(null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
                         "삭제하시겠습니까?", reviewActivity)
                 dialog.show(this@ReviewTabFarmFragment?.parentFragmentManager!!, "DialogYesNo")
+            }
+        }
+
+        // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
+        inner class ReviewImageFarmRecyclerViewAdapter : RecyclerView.Adapter<ReviewImageFarmRecyclerViewAdapter.ReviewImageFarmViewHolder>() {
+            inner class ReviewImageFarmViewHolder(rowReviewHistoryImageFarmBinding: RowReviewHistoryImageFarmBinding) : RecyclerView.ViewHolder(rowReviewHistoryImageFarmBinding.root) {
+                val rowReviewHistoryImageFarmBinding: RowReviewHistoryImageFarmBinding
+
+                init {
+                    this.rowReviewHistoryImageFarmBinding = rowReviewHistoryImageFarmBinding
+
+                    this.rowReviewHistoryImageFarmBinding.root.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                }
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ReviewImageFarmViewHolder {
+                val rowReviewHistoryImageFarmBinding = DataBindingUtil.inflate<RowReviewHistoryImageFarmBinding>(layoutInflater, R.layout.row_review_history_image_farm, parent, false)
+                val myPageReviewViewModel = MyPageReviewViewModel()
+                rowReviewHistoryImageFarmBinding.myPageReviewViewModel = myPageReviewViewModel
+                rowReviewHistoryImageFarmBinding.lifecycleOwner = this@ReviewTabFarmFragment
+
+                val reviewImageFarmViewHolder = ReviewImageFarmViewHolder(rowReviewHistoryImageFarmBinding)
+
+                return reviewImageFarmViewHolder
+            }
+
+            override fun getItemCount(): Int {
+                return 4
+            }
+
+            override fun onBindViewHolder(holder: ReviewImageFarmViewHolder, position: Int) {
+                holder.rowReviewHistoryImageFarmBinding.imageViewRowReviewTabFarm.setImageResource(R.drawable.ic_launcher_background)
             }
         }
     }

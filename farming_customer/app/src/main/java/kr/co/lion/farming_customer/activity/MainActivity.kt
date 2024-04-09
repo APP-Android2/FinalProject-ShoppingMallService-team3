@@ -9,8 +9,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
-import kr.co.lion.farming_customer.fragment.BoardFragment
-import kr.co.lion.farming_customer.fragment.dialog.DialogLoginFragment
+import kr.co.lion.farming_customer.fragment.FarmingLifeFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
@@ -44,8 +43,8 @@ class MainActivity : AppCompatActivity() {
                         R.id.menuItemBottomNavigation_Trade -> {
                             replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
                         }
-                        R.id.menuItemBottonNavigation_Board -> {
-                            //replaceFragment(MainFragmentName.FARMING_LIFE_FRAGMENT, false, false, null)
+                        R.id.menuItemBottonNavigation_Farming_Life -> {
+                            replaceFragment(MainFragmentName.FARMING_LIFE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottomNavigation_Home -> {
                             replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
@@ -84,8 +83,8 @@ class MainActivity : AppCompatActivity() {
             MainFragmentName.TRADE_FRAGMENT -> {
                 newFragment = TradeFragment()
             }
-            MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = BoardFragment()
+            MainFragmentName.FARMING_LIFE_FRAGMENT -> {
+                newFragment = FarmingLifeFragment()
             }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
@@ -95,9 +94,6 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
-            }
-            MainFragmentName.DIALOG_LOGIN_FRAGMENT -> {
-                newFragment = DialogLoginFragment()
             }
         }
         if(data != null){

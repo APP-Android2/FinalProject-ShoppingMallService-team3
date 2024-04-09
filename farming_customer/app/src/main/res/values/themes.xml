@@ -37,4 +37,16 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <!-- 장바구니 체크박스 색상 -->
+    <style name="checkBox_Cart" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/check_cart_tint</item>
+        <item name="buttonIconTint">@color/check_cart_icon_tint</item>
+    </style>
+
+    <!-- Tab Font 설정 -->
+    <style name="MySelectedTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+
 </resources>

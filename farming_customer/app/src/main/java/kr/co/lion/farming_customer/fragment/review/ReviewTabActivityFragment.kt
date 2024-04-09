@@ -14,6 +14,8 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabActivityBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryActivityBinding
+import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageActivityBinding
+import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageFarmBinding
 import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
 class ReviewTabActivityFragment : Fragment() {
@@ -76,6 +78,12 @@ class ReviewTabActivityFragment : Fragment() {
 
             val reviewTabActivityViewHolder = ReviewTabActivityViewHolder(rowReviewHistoryActivityBinding)
 
+            // 리뷰 체험활동 탭 이미지 리사이클러뷰 설정
+            rowReviewHistoryActivityBinding.recyclerViewReviewImageActivity.apply {
+                adapter = ReviewImageActivityRecyclerViewAdapter()
+                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
+            }
+
             return reviewTabActivityViewHolder
         }
 
@@ -93,6 +101,41 @@ class ReviewTabActivityFragment : Fragment() {
                 val dialog = DialogYesNo(null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
                         "삭제하시겠습니까?", reviewActivity)
                 dialog.show(this@ReviewTabActivityFragment?.parentFragmentManager!!, "DialogYesNo")
+            }
+        }
+
+        // 리뷰 체험활동 탭 이미지 리사이클러뷰 설정
+        inner class ReviewImageActivityRecyclerViewAdapter : RecyclerView.Adapter<ReviewImageActivityRecyclerViewAdapter.ReviewImageActivityViewHolder>() {
+            inner class ReviewImageActivityViewHolder(rowReviewHistoryImageActivityBinding: RowReviewHistoryImageActivityBinding) : RecyclerView.ViewHolder(rowReviewHistoryImageActivityBinding.root) {
+                val rowReviewHistoryImageActivityBinding: RowReviewHistoryImageActivityBinding
+
+                init {
+                    this.rowReviewHistoryImageActivityBinding = rowReviewHistoryImageActivityBinding
+
+                    this.rowReviewHistoryImageActivityBinding.root.layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                }
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ReviewImageActivityViewHolder {
+                val rowReviewHistoryImageActivityBinding = DataBindingUtil.inflate<RowReviewHistoryImageActivityBinding>(layoutInflater, R.layout.row_review_history_image_activity, parent, false)
+                val myPageReviewViewModel = MyPageReviewViewModel()
+                rowReviewHistoryImageActivityBinding.myPageReviewViewModel = myPageReviewViewModel
+                rowReviewHistoryImageActivityBinding.lifecycleOwner = this@ReviewTabActivityFragment
+
+                val reviewImageActivityViewHolder = ReviewImageActivityViewHolder(rowReviewHistoryImageActivityBinding)
+
+                return reviewImageActivityViewHolder
+            }
+
+            override fun getItemCount(): Int {
+                return 3
+            }
+
+            override fun onBindViewHolder(holder: ReviewImageActivityViewHolder, position: Int) {
+                holder.rowReviewHistoryImageActivityBinding.imageViewRowReviewTabActivity.setImageResource(R.drawable.ic_launcher_background)
             }
         }
     }
