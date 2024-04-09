@@ -36,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:scrollbars="none">
 
             <kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
@@ -43,9 +44,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:checkedButtonId="@={likeViewModel.toggleLikeType}"
                 app:selectionRequired="true"
-                app:singleSelection="true"
-                android:checkedButtonId="@={likeViewModel.toggleLikeType}">
+                app:singleSelection="true">
 
                 <Button
                     android:id="@+id/buttonLikeCrop"
@@ -113,8 +114,21 @@
             android:id="@+id/recyclerViewLike"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginTop="10dp"
+            android:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewRental"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </LinearLayout>
 
