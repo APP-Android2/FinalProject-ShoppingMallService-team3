@@ -10,6 +10,8 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
+import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
+import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.BoardFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
@@ -57,6 +59,8 @@ class MainActivity : AppCompatActivity() {
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
                             replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+//                            val intent = Intent(this@MainActivity, OrderHistoryActivity::class.java)
+//                            startActivity(intent)
                         }
                     }
                     true
