@@ -115,6 +115,7 @@ enum class MainFragmentName(var str : String){
     MY_PAGE_FRAGMENT("MyPageFragment")
 }
 
+
 // MyPageManagementActivity에서 보여줄 프래그먼트들의 이름
 enum class MyPageManagementName(var str:String){
     MY_PAGE_MANAGEMENT_MAIN("MyPageManagementMainFragment"),
@@ -147,4 +148,15 @@ enum class OrderHistoryFragmentName(var str:String){
     ORDER_HISTORY_ORDER_DETAIL_FRAGMENT("OrderHistoryOrderDetailFragment"),
     ORDER_HISTORY_EXCHANGE_RETURN_FRAGMENT("OrderHistoryExchangeReturnFragment"),
     ORDER_HISTORY_WRITE_REVIEW_FRAGMENT("OrderHistoryWriteReviewFragment")
+}
+
+enum class LoginFragmentName(var str: String){
+    LOGIN_FRAGMENT("LoginFragment"),
+    REGISTER_FRAGMENT("RegisterFragment"),
+    REGISTER2_FRAGMENT("Register2Fragment"),
+    REGISTER3_FRAGMENT("Register3Fragment"),
+    FIND_ACCOUNT_FRAGMENT("FindAccountFragment"),
+    FIND_ID_DONE_FRAGMENT("FindIdDoneFragment"),
+    FIND_PW_DONE_FRAGMENT("FindPwDoneFragment"),
+    FIND_PW_DONE2_FRAGMENT("FindPwDone2Fragment"),
 }

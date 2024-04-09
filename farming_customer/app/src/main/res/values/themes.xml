@@ -10,6 +10,34 @@
 
     <style name="Theme.Farming_customer" parent="Base.Theme.Farming_customer" />
 
+    <!-- 툴바 설정 -->
+    <style name="CustomToolbarStyle" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <!-- 제목 글씨체 설정 -->
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <!-- 제목 글씨 크기 설정 -->
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- 토글 버튼 설정 -->
+    <style name="CustomToggleButton" parent="Widget.Material3.Button">
+        <item name="android:textColor">@drawable/selector_button_text_color</item>
+        <item name="backgroundTint">@drawable/selector_button_background</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+
+    <!-- 탭 설정 -->
+    <style name="MySelectedTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+
+    <!-- helperText Font 설정-->
+    <style name="MyHelperTextTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+
+
     // Bottom Navigation font 설정
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/pretendard_bold</item>
@@ -69,6 +97,13 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    // button enabled style
+    <style name="isEnabledButtonStyle">
+        <item name="android:background">@drawable/btn_enabled_background_1</item>
+        <item name="android:textColor">@color/btn_enabled_text_color</item>
+        <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
+    </style>
+
     // button custom
     <style name="buttonStyle_OrderHistory" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="backgroundTint">@color/white</item>
@@ -125,6 +160,7 @@
         <item name="android:background">@drawable/btn_enabled_background</item>
         <item name="android:textColor">@color/btn_enabled_text_color</item>
         <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
+    </style>
 
     // outlined button custom
     <style name="CustomOutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
