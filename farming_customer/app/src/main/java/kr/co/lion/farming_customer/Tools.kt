@@ -115,6 +115,41 @@ enum class MainFragmentName(var str : String){
     MY_PAGE_FRAGMENT("MyPageFragment")
 }
 
+
+// MyPageManagementActivity에서 보여줄 프래그먼트들의 이름
+enum class MyPageManagementName(var str:String){
+    MY_PAGE_MANAGEMENT_MAIN("MyPageManagementMainFragment"),
+    MY_PAGE_MANAGEMENT_PROFILE_MODIFY("MyPageManagementProfileModifyFragment"),
+    MY_PAGE_MANAGEMENT_CHECK_USER_INFO_MODIFY("MyPageManagementCheckUserInfoModifyFragment"),
+    MY_PAGE_MANAGEMENT_USER_INFO_MODIFY("MyPageManagementUserInfoModifyFragment"),
+    MY_PAGE_MANAGEMENT_DELIVERY_ADDRESS("MyPageManagementDeliveryAddressFragment"),
+    MY_PAGE_MANAGEMENT_ADD_DELIVERY_ADDRESS("MyPageManagementAddDeliveryAddressFragment"),
+    MY_PAGE_MANAGEMENT_MODIFY_DELIVERY_ADDRESS("MyPageManagementModifyDeliveryAddressFragment")
+}
+
+enum class MyPageServiceCenterFragmentName(var str: String) {
+    SERVICE_CENTER_NOTICE_FRAGMENT("MyPageServiceCenterNoticeFragment"),
+    SERVICE_CENTER_FAQ_FRAGMENT("MyPageServiceCenterFaqFragment"),
+    SERVICE_CENTER_INQUIRY_FRAGMENT("MyPageServiceCenterInquiryFragment")
+}
+
+// OrderHistoryActivity에서 보여줄 프래그먼트들의 이름
+enum class OrderHistoryFragmentName(var str:String){
+    ORDER_HISTORY_CROP_FRAGMENT("OrderHistoryCropFragment"),
+    ORDER_HISTORY_FARM_FRAMGNET("OrderHistoryFarmFragment"),
+    ORDER_HISTORY_ACTIVITY_FRAGMENT("OrderHistoryActivityFragment"),
+    TAP_DELIVERY_DONE_FRAGMENT("TapDeliveryDoneFragment"),
+    TAP_DELIVERY_FRAGMENT("TapDeliveryFragment"),
+    TAP_PAYMENT_DONE_FRAGMENT("TapPaymentDoneFragment"),
+    TAP_RESERV_DONE_FRAGMENT("TapReservDoneFragment"),
+    TAP_RESERV_CANCLE_FRAGMENT("TapReservCancleFragment"),
+    ORDER_HISTORY_RESERV_CANCLE_FRAGMENT("OrderHistoryReservCancleFragment"),
+    ORDER_HISTORY_RESERV_DETAIL_FRAGMENT("OrderHistoryReservDetailFragment"),
+    ORDER_HISTORY_ORDER_DETAIL_FRAGMENT("OrderHistoryOrderDetailFragment"),
+    ORDER_HISTORY_EXCHANGE_RETURN_FRAGMENT("OrderHistoryExchangeReturnFragment"),
+    ORDER_HISTORY_WRITE_REVIEW_FRAGMENT("OrderHistoryWriteReviewFragment")
+}
+
 enum class LoginFragmentName(var str: String){
     LOGIN_FRAGMENT("LoginFragment"),
     REGISTER_FRAGMENT("RegisterFragment"),

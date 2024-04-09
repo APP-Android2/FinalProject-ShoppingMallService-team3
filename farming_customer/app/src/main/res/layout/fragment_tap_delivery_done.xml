@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragment.orderHistory.TapDeliveryDoneFragment"
+        tools:paddingVertical="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
+                    android:id="@+id/toggleButtonGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggleButton_all"
+                        style="@style/OutlinedButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:text="전체">
+
+                    </com.google.android.material.button.MaterialButton>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggleButton_deliveryDone"
+                        style="@style/OutlinedButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:text="배송완료">
+
+                    </com.google.android.material.button.MaterialButton>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggleButton_cancle"
+                        style="@style/OutlinedButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:text="취소">
+
+                    </com.google.android.material.button.MaterialButton>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggleButton_return"
+                        style="@style/OutlinedButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:text="반품">
+
+                    </com.google.android.material.button.MaterialButton>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggleButton_exchange"
+                        style="@style/OutlinedButtonStyle"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:text="교환">
+
+                    </com.google.android.material.button.MaterialButton>
+                </kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius>
+
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_deliveryDone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</layout>

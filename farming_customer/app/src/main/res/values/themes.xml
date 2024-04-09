@@ -44,7 +44,54 @@
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
     </style>
 
-    // button_Bold custom
+    // toggleButton_Bold text custom
+    <style name="toggleButtonText_Bold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    // Toolbar 텍스트 폰트, 사이즈, 색상 설정
+    <style name="ToolbarTitle">
+        <item name="fontFamily">@font/font_pre_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/brown_01</item>
+    </style>
+
+    <!-- Order History Custom. 주문 내역 부분의 커스텀 스타일입니다. -->
+
+    // TabLayout text custom
+    <style name="CustomTablayout" parent="TextAppearance.Design.Tab">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    // FloatingActionButton Shape 설정
+    <style name="ShapeAppearance.FloatingActionButton" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item> <!-- 값이 클수록 동그라미가 더 커짐 -->
+    </style>
+
+    // 버튼 테두리 둥글게 설정
+    <style name="RoundButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    // button text custom
+    <style name="buttonText_OrderHistory" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+        
+    // toggleButton_Bold custom
+    <style name="OutlinedButtonStyle_Bold" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/btn_bg_selection_color_selector</item>
+        <item name="android:textColor">@color/btn_text_color_selector</item>
+        <item name="strokeColor">@color/btn_bg_stroke_color_selector</item>
+        <item name="android:textAppearance">@style/toggleButtonText_Bold</item>
+    </style>
+
+    // button_enabled_Text_Bold custom
     <style name="buttonEnabledText_Bold" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/pretendard_bold</item>
         <item name="android:textSize">16sp</item>
@@ -57,4 +104,70 @@
         <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
     </style>
 
+    // button custom
+    <style name="buttonStyle_OrderHistory" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/green_main</item>
+        <item name="strokeColor">@color/green_main</item>
+        <item name="android:textAppearance">@style/buttonText_OrderHistory</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="buttonStyle_OrderHistory_filled" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/green_main</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="strokeColor">@color/green_main</item>
+        <item name="android:textAppearance">@style/buttonText_OrderHistory</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    // toggleButton text custom
+    <style name="toggleButtonText" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    // toggleButton custom
+    <style name="OutlinedButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/btn_bg_selection_color_selector</item>
+        <item name="android:textColor">@color/btn_text_color_selector</item>
+        <item name="strokeColor">@color/btn_bg_stroke_color_selector</item>
+        <item name="android:textAppearance">@style/toggleButtonText</item>
+    </style>
+
+    // label style
+    <style name="labelButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_height">0dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/orange_01</item>
+        <item name="strokeColor">@color/orange_01</item>
+        <item name="android:textAppearance">@style/toggleButtonText</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    // button text bold, 16sp
+    <style name="buttonTextBold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+        
+    // button enabled style
+    <style name="isEnabledButtonStyle">
+        <item name="android:background">@drawable/btn_enabled_background</item>
+        <item name="android:textColor">@color/btn_enabled_text_color</item>
+        <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
+    </style>
+
+    // outlined button custom
+    <style name="CustomOutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/green_main</item>
+        <item name="strokeColor">@color/green_main</item>
+        <item name="android:textAppearance">@style/buttonTextBold</item>
+
+    </style>
 </resources>
