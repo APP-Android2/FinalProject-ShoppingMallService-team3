@@ -125,6 +125,7 @@
         <item name="android:background">@drawable/btn_enabled_background</item>
         <item name="android:textColor">@color/btn_enabled_text_color</item>
         <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
+    </style>
 
     // outlined button custom
     <style name="CustomOutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
