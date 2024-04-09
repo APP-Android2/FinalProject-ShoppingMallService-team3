@@ -16,6 +16,12 @@
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
     </style>
 
+    // toggleButton_Bold text custom
+    <style name="toggleButtonText_Bold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     // Toolbar 텍스트 폰트, 사이즈, 색상 설정
     <style name="ToolbarTitle">
         <item name="fontFamily">@font/font_pre_bold</item>
@@ -47,6 +53,20 @@
     <style name="buttonText_OrderHistory" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/pretendard_bold</item>
         <item name="android:textSize">12sp</item>
+    </style>
+        
+    // toggleButton_Bold custom
+    <style name="OutlinedButtonStyle_Bold" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/btn_bg_selection_color_selector</item>
+        <item name="android:textColor">@color/btn_text_color_selector</item>
+        <item name="strokeColor">@color/btn_bg_stroke_color_selector</item>
+        <item name="android:textAppearance">@style/toggleButtonText_Bold</item>
+    </style>
+
+    // button_enabled_Text_Bold custom
+    <style name="buttonEnabledText_Bold" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     // button custom
@@ -99,6 +119,12 @@
         <item name="fontFamily">@font/pretendard_bold</item>
         <item name="android:textSize">16sp</item>
     </style>
+        
+    // button enabled style
+    <style name="isEnabledButtonStyle">
+        <item name="android:background">@drawable/btn_enabled_background</item>
+        <item name="android:textColor">@color/btn_enabled_text_color</item>
+        <item name="android:textAppearance">@style/buttonEnabledText_Bold</item>
 
     // outlined button custom
     <style name="CustomOutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
@@ -106,5 +132,6 @@
         <item name="android:textColor">@color/green_main</item>
         <item name="strokeColor">@color/green_main</item>
         <item name="android:textAppearance">@style/buttonTextBold</item>
+
     </style>
 </resources>

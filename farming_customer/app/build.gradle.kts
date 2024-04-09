@@ -51,4 +51,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.github.ome450901:SimpleRatingBar:1.5.1")
+
 }
