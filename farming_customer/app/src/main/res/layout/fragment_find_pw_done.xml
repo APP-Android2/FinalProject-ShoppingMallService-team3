@@ -59,14 +59,14 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
-                app:boxStrokeErrorColor="@color/orange"
+                app:boxStrokeErrorColor="@color/orange_01"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/brown_01"
-                app:errorIconTint="@color/orange"
-                app:errorTextColor="@color/orange"
+                app:errorIconTint="@color/orange_01"
+                app:errorTextColor="@color/orange_01"
                 app:expandedHintEnabled="false"
                 app:helperTextTextAppearance="@style/MyHelperTextTextAppearance"
-                app:helperTextTextColor="@color/orange"
+                app:helperTextTextColor="@color/orange_01"
                 tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -98,14 +98,14 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
-                app:boxStrokeErrorColor="@color/orange"
+                app:boxStrokeErrorColor="@color/orange_01"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/brown_01"
-                app:errorIconTint="@color/orange"
-                app:errorTextColor="@color/orange"
+                app:errorIconTint="@color/orange_01"
+                app:errorTextColor="@color/orange_01"
                 app:expandedHintEnabled="false"
                 app:helperTextTextAppearance="@style/MyHelperTextTextAppearance"
-                app:helperTextTextColor="@color/orange"
+                app:helperTextTextColor="@color/orange_01"
                 tools:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                 <com.google.android.material.textfield.TextInputEditText
