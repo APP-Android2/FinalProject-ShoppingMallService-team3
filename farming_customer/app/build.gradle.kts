@@ -51,5 +51,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.github.ome450901:SimpleRatingBar:1.5.1")
-
+    implementation("com.google.android.gms:play-services-maps:18.2.0") // 농기구 구글맵
+    implementation("com.google.android.gms:play-services-location:21.1.0") // 농기구 구글맵
 }
