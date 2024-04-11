@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="rowOrderHistoryCropViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryCropViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            app:strokeColor="@color/grey_02">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/textViewRowOrderHistoryCrop_orderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_orderDate}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonRowOrderHistoryCrop_label"
+                    style="@style/labelButtonStyle"
+                    android:layout_width="60dp"
+                    android:padding="0dp"
+                    android:text="@{rowOrderHistoryCropViewModel.buttonRowOrderHistoryCrop_label}"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewRowOrderHistoryCrop_orderDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textViewRowOrderHistoryCrop_orderDate"
+                    tools:cornerRadius="10dp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardview"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/buttonRowOrderHistoryCrop_productInside"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/linear">
+
+                    <ImageView
+                        android:id="@+id/imageViewOrderHistoryCrop_productImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey_02" />
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@id/buttonRowOrderHistoryCrop_productInside"
+                    app:layout_constraintStart_toStartOf="@id/buttonRowOrderHistoryCrop_productInside"
+                    app:layout_constraintTop_toBottomOf="@id/textViewRowOrderHistoryCrop_orderDate">
+
+                    <TextView
+                        android:id="@+id/textViewRowOrderHistoryCrop_productName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_productName}"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textViewRowOrderHistoryCrop_productOption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_productOption}"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textViewRowOrderHistoryCrop_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@{rowOrderHistoryCropViewModel.textViewRowOrderHistoryCrop_price}"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonRowOrderHistoryCrop_productInside"
+                    style="@style/buttonStyle_OrderHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="0dp"
+                    android:text="@{rowOrderHistoryCropViewModel.buttonRowOrderHistoryCrop_productInside}"
+                    android:textAppearance="@style/buttonText_OrderHistory"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cardview"
+                    app:layout_constraintTop_toBottomOf="@id/linear" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/grey_02"
+                    app:layout_constraintBottom_toTopOf="@id/buttonRowOrderHistoryCrop_productOutSide"
+                    app:layout_constraintTop_toBottomOf="@id/buttonRowOrderHistoryCrop_productInside"
+                    tools:layout_editor_absoluteX="20dp" />
+
+                <Button
+                    android:id="@+id/buttonRowOrderHistoryCrop_productOutSide"
+                    style="@style/buttonStyle_OrderHistory_filled"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:padding="0dp"
+                    android:text="@{rowOrderHistoryCropViewModel.buttonRowOrderHistoryCrop_productOutside}"
+                    android:visibility="visible"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+</layout>

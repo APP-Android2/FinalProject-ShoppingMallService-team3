@@ -16,7 +16,7 @@ class TradeFragment : Fragment() {
     lateinit var mainActivity: MainActivity
 
     lateinit var tradeViewModel: TradeViewModel
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentTradeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_trade, container, false)
         tradeViewModel = TradeViewModel()
         fragmentTradeBinding.tradeViewModel = tradeViewModel
