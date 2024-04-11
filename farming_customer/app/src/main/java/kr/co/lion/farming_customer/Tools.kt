@@ -115,6 +115,14 @@ enum class MainFragmentName(var str : String){
     MY_PAGE_FRAGMENT("MyPageFragment")
 }
 
+// 좋아요 타입
+enum class LikeType(var str:String, var num:Int){
+    CROP("Crop",1),
+    POST("Post",2),
+    FARM("Farm",3),
+    ACTIVITY("Activity",4),
+    RENTAL("Rental",5)
+}
 
 // MyPageManagementActivity에서 보여줄 프래그먼트들의 이름
 enum class MyPageManagementName(var str:String){
