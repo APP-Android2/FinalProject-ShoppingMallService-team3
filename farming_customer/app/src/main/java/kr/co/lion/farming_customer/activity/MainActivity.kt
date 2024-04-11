@@ -1,6 +1,5 @@
 package kr.co.lion.farming_customer.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -14,7 +13,9 @@ import kr.co.lion.farming_customer.fragment.BoardFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
-import kr.co.lion.farming_customer.fragment.TradeFragment
+import kr.co.lion.farming_customer.fragment.tradeCrop.TradeDetailFragment
+import kr.co.lion.farming_customer.fragment.tradeCrop.TradeFragment
+import kr.co.lion.farming_customer.fragment.tradeCrop.TradeSearchFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -90,6 +91,12 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
+            }
+            MainFragmentName.TRADE_SEARCH_FRAGMENT -> {
+                newFragment = TradeSearchFragment()
+            }
+            MainFragmentName.TRADE_DETAIL_FRAGMENT -> {
+                newFragment = TradeDetailFragment()
             }
         }
         if(data != null){
