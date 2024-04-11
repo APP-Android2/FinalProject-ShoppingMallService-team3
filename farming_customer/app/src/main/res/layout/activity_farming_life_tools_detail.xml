@@ -4,6 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activity.farmingLifeTools.FarmingLifeToolsDetailActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/farming_life_tools_detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back"
+        app:title="농기구"
+        app:titleCentered="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_rental_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_pre_semibold"
+                android:text="농기구점 이름"
+                android:textColor="@color/brown_01"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_phone_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/font_pre_regular"
+                android:text="010-1111-1111"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/farming_life_tools_detail_rental_tv"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_rental_tv" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/font_pre_regular"
+                android:text="농기구점 주소입니다"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/farming_life_tools_detail_phone_tv"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_phone_tv" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_explain_tv"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/font_pre_semibold"
+                android:gravity="center"
+                android:text="상세 설명"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_address_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <View
+                android:id="@+id/farming_life_tools_detail_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/green_main"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_explain_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
