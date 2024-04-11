@@ -28,7 +28,7 @@
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:text="farming"
-                android:textColor="#413514"
+                android:textColor="@color/brown_01"
                 android:textSize="20sp" />
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -128,6 +128,7 @@
             android:id="@+id/recyclerViewPost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -83,8 +83,8 @@
 
                     <ImageView
                         android:id="@+id/imageViewHeart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="31.25dp"
+                        android:layout_height="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -95,8 +95,9 @@
                         android:id="@+id/textViewHeartCnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
                         android:text="999+"
-                        android:textColor="@color/brown_01"
+                        android:textColor="@color/white"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewHeart"
                         app:layout_constraintEnd_toEndOf="@id/imageViewHeart"

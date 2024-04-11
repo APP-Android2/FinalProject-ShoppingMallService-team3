@@ -100,8 +100,8 @@
 
                     <ImageView
                         android:id="@+id/imageViewHeartFarmAndActivity"
-                        android:layout_width="24.52dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -113,8 +113,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="1dp"
+                        android:fontFamily="@font/pretendard_semibold"
                         android:text="999+"
-                        android:textColor="@color/brown_01"
+                        android:textColor="@color/white"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
