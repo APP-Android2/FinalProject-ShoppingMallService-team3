@@ -124,6 +124,7 @@ class HomeFragment : Fragment() {
             holder.rowGridItemBinding.rowGridItemViewModel!!.apply {
                 textView_likeCnt.value = "999"
                 textView_ItemName.value = "파밍이네 농장"
+                textView_location.value = "경기도 파밍시 파밍구"
                 textView_price.value = "20,000원 ~"
                 isLike.value = false
             }
