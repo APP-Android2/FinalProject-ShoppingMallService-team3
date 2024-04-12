@@ -1,6 +1,5 @@
 package kr.co.lion.farming_customer
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
@@ -10,43 +9,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.FileOutputStream
+import android.app.Activity
 import kotlin.concurrent.thread
 
 class Tools {
-    companion object {
-
-        // 뷰에 포커스를 주고 키보드를 올린다.
-        fun showSoftInput(context: Context, view: View){
-            // 뷰에 포커스를 준다.
-            view.requestFocus()
-            thread {
-                // 딜레이
-                SystemClock.sleep(200)
-                // 키보드 관리 객체를 가져온다.
-                val inputMethodManger = context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-                // 키보드를 올린다.
-                inputMethodManger.showSoftInput(view, 0)
-            }
-        }
-
-        // 키보드를 내려주고 포커스를 제거한다.
-        fun hideSoftInput(activity: Activity){
-            // 포커스를 가지고 있는 뷰가 있다면..
-            if(activity.window.currentFocus != null){
-                // 키보드 관리 객체를 가져온다.
-                val inputMethodManger = activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-                // 키보드를 내려준다.
-                inputMethodManger.hideSoftInputFromWindow(activity.window.currentFocus?.windowToken, 0)
-                // 포커스를 제거해준다.
-                activity.window.currentFocus?.clearFocus()
-            }
-        }
-
+    companion object{
         ///// 카메라, 앨범 공통 ////////
         // 사진의 회전 각도값을 반환하는 메서드
         // ExifInterface : 사진, 영상, 소리 등의 파일에 기록한 정보
@@ -138,6 +109,34 @@ class Tools {
             fileOutputStream.close()
         }
     }
+
+        // 뷰에 포커스를 주고 키보드를 올린다.
+        fun showSoftInput(context: Context, view: View){
+            // 뷰에 포커스를 준다.
+            view.requestFocus()
+            thread {
+                // 딜레이
+                SystemClock.sleep(200)
+                // 키보드 관리 객체를 가져온다.
+                val inputMethodManger = context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                // 키보드를 올린다.
+                inputMethodManger.showSoftInput(view, 0)
+            }
+        // 키보드를 내려주고 포커스를 제거한다.
+        fun hideSoftInput(activity: Activity){
+            // 포커스를 가지고 있는 뷰가 있다면..
+            if(activity.window.currentFocus != null){
+                // 키보드 관리 객체를 가져온다.
+                val inputMethodManger = activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                // 키보드를 내려준다.
+                inputMethodManger.hideSoftInputFromWindow(activity.window.currentFocus?.windowToken, 0)
+                // 포커스를 제거해준다.
+                activity.window.currentFocus?.clearFocus()
+            }
+        }
+
+
+    }
 }
 
 // MainActivity에서 보여줄 프래그먼트들의 이름
@@ -195,4 +194,73 @@ enum class CommunityAddFragmentName(var str: String) {
 // CommunitySearchActivity에서 보여줄 프래그먼트들의 이름
 enum class CommunitySearchFragmentName(var str: String) {
     COMMUNITY_SEARCH_FRAGMENT("CommunitySearchFragment")
+}
+
+// 좋아요 타입
+enum class LikeType(var str:String, var num:Int){
+    CROP("Crop",1),
+    POST("Post",2),
+    FARM("Farm",3),
+    ACTIVITY("Activity",4),
+    RENTAL("Rental",5)
+}
+
+// MyPageManagementActivity에서 보여줄 프래그먼트들의 이름
+enum class MyPageManagementName(var str:String){
+    MY_PAGE_MANAGEMENT_MAIN("MyPageManagementMainFragment"),
+    MY_PAGE_MANAGEMENT_PROFILE_MODIFY("MyPageManagementProfileModifyFragment"),
+    MY_PAGE_MANAGEMENT_CHECK_USER_INFO_MODIFY("MyPageManagementCheckUserInfoModifyFragment"),
+    MY_PAGE_MANAGEMENT_USER_INFO_MODIFY("MyPageManagementUserInfoModifyFragment"),
+    MY_PAGE_MANAGEMENT_DELIVERY_ADDRESS("MyPageManagementDeliveryAddressFragment"),
+    MY_PAGE_MANAGEMENT_ADD_DELIVERY_ADDRESS("MyPageManagementAddDeliveryAddressFragment"),
+    MY_PAGE_MANAGEMENT_MODIFY_DELIVERY_ADDRESS("MyPageManagementModifyDeliveryAddressFragment")
+}
+
+enum class MyPageServiceCenterFragmentName(var str: String) {
+    SERVICE_CENTER_NOTICE_FRAGMENT("MyPageServiceCenterNoticeFragment"),
+    SERVICE_CENTER_FAQ_FRAGMENT("MyPageServiceCenterFaqFragment"),
+    SERVICE_CENTER_INQUIRY_FRAGMENT("MyPageServiceCenterInquiryFragment")
+}
+
+// OrderHistoryActivity에서 보여줄 프래그먼트들의 이름
+enum class OrderHistoryFragmentName(var str:String){
+    ORDER_HISTORY_CROP_FRAGMENT("OrderHistoryCropFragment"),
+    ORDER_HISTORY_FARM_FRAMGNET("OrderHistoryFarmFragment"),
+    ORDER_HISTORY_ACTIVITY_FRAGMENT("OrderHistoryActivityFragment"),
+    TAP_DELIVERY_DONE_FRAGMENT("TapDeliveryDoneFragment"),
+    TAP_DELIVERY_FRAGMENT("TapDeliveryFragment"),
+    TAP_PAYMENT_DONE_FRAGMENT("TapPaymentDoneFragment"),
+    TAP_RESERV_DONE_FRAGMENT("TapReservDoneFragment"),
+    TAP_RESERV_CANCLE_FRAGMENT("TapReservCancleFragment"),
+    ORDER_HISTORY_RESERV_CANCLE_FRAGMENT("OrderHistoryReservCancleFragment"),
+    ORDER_HISTORY_RESERV_DETAIL_FRAGMENT("OrderHistoryReservDetailFragment"),
+    ORDER_HISTORY_ORDER_DETAIL_FRAGMENT("OrderHistoryOrderDetailFragment"),
+    ORDER_HISTORY_EXCHANGE_RETURN_FRAGMENT("OrderHistoryExchangeReturnFragment"),
+    ORDER_HISTORY_WRITE_REVIEW_FRAGMENT("OrderHistoryWriteReviewFragment")
+}
+
+// 농기구 프래그먼트
+enum class FarmingLifeToolsFragmentName(var str: String) {
+    FARMING_LIFE_TOOLS_MAP_FRAGMENT("FarmingLifeToolsMapFragment"),
+    FARMING_LIFE_TOOLS_LIST_FRAGMENT("FarmingLifeToolsListFragment")
+}
+
+enum class LoginFragmentName(var str: String){
+    LOGIN_FRAGMENT("LoginFragment"),
+    REGISTER_FRAGMENT("RegisterFragment"),
+    REGISTER2_FRAGMENT("Register2Fragment"),
+    REGISTER3_FRAGMENT("Register3Fragment"),
+    FIND_ACCOUNT_FRAGMENT("FindAccountFragment"),
+    FIND_ID_DONE_FRAGMENT("FindIdDoneFragment"),
+    FIND_PW_DONE_FRAGMENT("FindPwDoneFragment"),
+    FIND_PW_DONE2_FRAGMENT("FindPwDone2Fragment"),
+}
+
+// PaymentActivity에서 보여줄 프래그먼트들의 이름
+enum class PaymentFragmentName(var str:String){
+    PAYMENT_CROP_FRAGMENT("PaymentCropFragment"),
+    PAYMENT_FARM_ACTIVITY_FRAGMENT("PaymentFarmActivityFragment"),
+    PAYMENT_SUCCESS_FRAGMENT("PaymentSuccessFragment"),
+    PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
+    PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }

@@ -13,8 +13,10 @@
 
     <color name="orange_01">#F9BD5E</color>
 
+    <color name="grey_04">#D9D9D9</color>
+
     <color name="F0F0F0">#F0F0F0</color>
-    
+
     <color name="D9D9D9">#D9D9D9</color>
 
 </resources>

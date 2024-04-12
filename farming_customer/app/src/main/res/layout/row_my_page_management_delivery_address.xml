@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:transitionGroup="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewMyPageManagementDeliveryAddress_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="TextView"
+                android:textColor="@color/brown_01"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewMyPageManagementDeliveryAddress_PhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="TextView"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewMyPageManagementDeliveryAddress_Name"
+                app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementDeliveryAddress_Name" />
+
+            <TextView
+                android:id="@+id/textViewMyPageManagementDeliveryAddress_Address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="TextView"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementDeliveryAddress_Name" />
+
+            <ImageButton
+                android:id="@+id/buttonMyPageManagementDeliveryAddress_Modify"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/edit"
+                app:layout_constraintEnd_toStartOf="@id/buttonMyPageManagementDeliveryAddress_Delete"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/buttonMyPageManagementDeliveryAddress_Delete"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="#FFFFFF"
+                android:src="@drawable/delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/buttonMyPageManagementDeliveryAddress_DefaultDeliveryAddress"
+                style="@style/OutlinedButtonStyle_Bold"
+                android:layout_width="0dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="10dp"
+                android:clickable="false"
+                android:fontFamily="@font/pretendard_semibold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="60dip"
+                android:padding="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="기본 배송지"
+                android:textSize="10sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/textViewMyPageManagementDeliveryAddress_Name"
+                app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementDeliveryAddress_PhoneNumber"
+                app:layout_constraintTop_toTopOf="@id/textViewMyPageManagementDeliveryAddress_Name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

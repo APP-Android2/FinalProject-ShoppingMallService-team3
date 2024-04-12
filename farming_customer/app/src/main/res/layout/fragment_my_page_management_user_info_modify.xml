@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:transitionGroup="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarMyPageManagementUserInfoModify"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="회원정보 수정"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <ScrollView
+            android:id="@+id/ScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageViewMyPageManagementUserInfoModify_Profile"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/profile"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewMyPageManagementUserInfoModify_UserNickName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="닉네임"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageViewMyPageManagementUserInfoModify_Profile"
+                        app:layout_constraintStart_toEndOf="@id/imageViewMyPageManagementUserInfoModify_Profile"
+                        app:layout_constraintTop_toTopOf="@+id/imageViewMyPageManagementUserInfoModify_Profile" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/white"
+                        android:textColorHint="@color/btn_bg_stroke_color_selector"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imageViewMyPageManagementUserInfoModify_Profile">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldMyPageManagementUserInfoModify_UserId"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="아이디"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="아이디123"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:textColorHint="@color/btn_bg_stroke_color_selector"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutId">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldMyPageManagementUserInfoModify_UserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="이름"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="홍길동"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutName">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutBirth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:background="@color/white"
+                                android:textColorHint="@color/btn_bg_stroke_color_selector"
+                                app:boxCornerRadiusBottomEnd="10dp"
+                                app:boxCornerRadiusBottomStart="10dp"
+                                app:boxCornerRadiusTopEnd="10dp"
+                                app:boxCornerRadiusTopStart="10dp"
+                                app:boxStrokeColor="@color/btn_bg_stroke_color_selector">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textFieldMyPageManagementUserInfoModify_UserBirth"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="43dp"
+                                    android:clickable="false"
+                                    android:cursorVisible="false"
+                                    android:focusable="false"
+                                    android:fontFamily="@font/pretendard_semibold"
+                                    android:hint="생년월일"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="979797"
+                                    android:textColor="@color/brown_01"
+                                    android:textSize="12sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButtonToggleGroup
+                                android:id="@+id/toggleMyPageManagementUserInfoModify_UserGender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                app:checkedButton="@+id/toggleButtonGenderMale"
+                                app:selectionRequired="true"
+                                app:singleSelection="true">
+
+                                <Button
+                                    android:id="@+id/toggleButtonGenderMale"
+                                    style="@style/OutlinedButtonStyle_Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:insetBottom="0dp"
+                                    android:text="남"
+                                    app:cornerRadius="10dp" />
+
+                                <Button
+                                    android:id="@+id/toggleButtonGenderFemale"
+                                    style="@style/OutlinedButtonStyle_Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:insetBottom="0dp"
+                                    android:text="여"
+                                    app:cornerRadius="10dp" />
+                            </com.google.android.material.button.MaterialButtonToggleGroup>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:hint="휴대폰"
+                        android:textColorHint="@color/btn_bg_stroke_color_selector"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldMyPageManagementUserInfoModify_PhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:clickable="false"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text="010-1234-5678"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutUserPw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:hint="비밀번호"
+                        android:textColorHint="@color/btn_bg_stroke_color_selector"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:boxStrokeErrorColor="@color/orange_01"
+                        app:cursorErrorColor="@color/orange_01"
+                        app:endIconMode="password_toggle"
+                        app:endIconTint="@color/brown_01"
+                        app:errorIconTint="@color/orange_01"
+                        app:errorTextColor="@color/orange_01"
+                        app:expandedHintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhoneNumber">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldMyPageManagementUserInfoModify_UserPw"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
+                            android:inputType="text|textPassword"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutUserPw2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:hint="비밀번호 확인"
+                        android:textColorHint="@color/btn_bg_stroke_color_selector"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:boxStrokeErrorColor="@color/orange_01"
+                        app:cursorErrorColor="@color/orange_01"
+                        app:endIconMode="password_toggle"
+                        app:endIconTint="@color/brown_01"
+                        app:errorIconTint="@color/orange_01"
+                        app:errorTextColor="@color/orange_01"
+                        app:expandedHintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserPw">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldMyPageManagementUserInfoModify_CheckUserPw"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
+                            android:inputType="text|textPassword"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutCheckNickName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:hint="우편[선택]"
+                        android:textColorHint="@color/btn_bg_stroke_color_selector"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:endIconDrawable="@drawable/search"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/grey_01"
+                        app:expandedHintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserPw2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldMyPageManagementUserInfoModify_PostNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="우편번호 검색"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutDetailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:hint="상세 주소"
+                        android:textColorHint="@color/btn_bg_stroke_color_selector"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/brown_01"
+                        app:expandedHintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCheckNickName">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldMyPageManagementUserInfoModify_AddressDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="상세주소를 입력해 주세요"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayoutMyPageManagementUserInfoModify_SignOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDetailAddress">
+
+                        <TextView
+                            android:id="@+id/textViewMyPageManagementUserInfoModify_SignOut"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/pretendard_regular"
+                            android:text="탈퇴하기"
+                            android:textColor="@color/grey_01"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/buttonMyPageManagementUserInfoModify_SignOut"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageButton
+                            android:id="@+id/buttonMyPageManagementUserInfoModify_SignOut"
+                            android:layout_width="7dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/next"
+                            android:tint="@color/grey_01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <Button
+                        android:id="@+id/buttonMyPageManagementUserInfoModify_Done"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="105dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:text="완료"
+                        android:textSize="16sp"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutMyPageManagementUserInfoModify_SignOut"
+                        app:layout_constraintVertical_bias="1.0" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>
