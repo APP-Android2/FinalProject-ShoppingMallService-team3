@@ -104,12 +104,13 @@
                     android:id="@+id/textView_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{rowGridItemViewModel.textView_location}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView_ItemName"
+                    android:layout_marginStart="10dp"
                     android:fontFamily="@font/pretendard_regular"
+                    android:text="@{rowGridItemViewModel.textView_location}"
+                    android:textColor="@color/brown_01"
                     android:textSize="10sp"
-                    android:textColor="@color/brown_01"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_ItemName" />
 
                 <TextView
                     android:id="@+id/textView_price"
