@@ -36,7 +36,7 @@ class OrderHistoryActivityFragment : Fragment() {
         fragmentOrderHistoryActivityBinding.apply {
             toolbarOrderHistoryActivity.apply {
                 setNavigationOnClickListener {
-                    orderHistoryActivity.removeFragment(OrderHistoryFragmentName.ORDER_HISTORY_ACTIVITY_FRAGMENT)
+                    orderHistoryActivity.finish()
                 }
             }
         }

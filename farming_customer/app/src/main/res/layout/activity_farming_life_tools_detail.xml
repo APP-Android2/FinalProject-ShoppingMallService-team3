@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.farmingLifeTools.FarmingLifeToolsDetailActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/farming_life_tools_detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back"
+        app:title="농기구"
+        app:titleCentered="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/farming_life_tools_detail_call_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_rental_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_pre_semibold"
+                android:text="농기구점 이름"
+                android:textColor="@color/brown_01"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_phone_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/font_pre_regular"
+                android:text="010-1111-1111"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/farming_life_tools_detail_rental_tv"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_rental_tv" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/font_pre_regular"
+                android:text="농기구점 주소입니다"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/farming_life_tools_detail_phone_tv"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_phone_tv" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_explain_tv"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/font_pre_semibold"
+                android:gravity="center"
+                android:text="상세 설명"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_address_tv" />
+
+            <View
+                android:id="@+id/farming_life_tools_detail_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/green_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_explain_tv" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_explain_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/font_pre_semibold"
+                android:text="농기구점 이름"
+                android:textColor="@color/brown_01"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_line" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_explain_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_pre_regular"
+                android:text="농기구점 설명란입니다"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/farming_life_tools_detail_explain_title"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_explain_title" />
+
+            <TextView
+                android:id="@+id/farming_life_tools_detail_tool_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/font_pre_semibold"
+                android:text="보유 농기구"
+                android:textColor="@color/brown_01"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/farming_life_tools_detail_explain_content"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_explain_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/farming_life_tools_detail_tool_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/farming_life_tools_detail_tool_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/farming_life_tools_detail_heart_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/white"
+        android:src="@drawable/heart_02"
+        app:layout_constraintBottom_toBottomOf="@+id/farming_life_tools_detail_call_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/farming_life_tools_detail_call_btn" />
+
+    <ImageButton
+        android:id="@+id/farming_life_tools_detail_call_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/box_border_brown"
+        android:src="@drawable/ic_call"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/farming_life_tools_detail_heart_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

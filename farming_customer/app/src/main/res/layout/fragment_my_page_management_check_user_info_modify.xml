@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:transitionGroup="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarMyPageManagementCheckUserInfoModify"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="회원정보 수정"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementCheckUserInfoModify_Check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="회원정보 확인"
+                    android:textColor="@color/brown_01"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagemenChecktUserInfoModify_CheckReEnterPw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:gravity="center"
+                    android:text="정보를 안전하게 보호하기 위해\n비밀번호를 다시 한번 입력해주세요"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementCheckUserInfoModify_Check" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/white"
+                    android:textColorHint="@color/btn_bg_stroke_color_selector"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagemenChecktUserInfoModify_CheckReEnterPw">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldMyPageManagementCheckUserInfoModify_UserId"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="아이디"
+                        android:inputType="text"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="아이디123"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutCheckPw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/white"
+                    android:hint="비밀번호"
+                    android:textColorHint="@color/btn_bg_stroke_color_selector"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                    app:boxStrokeErrorColor="@color/orange_01"
+                    app:cursorErrorColor="@color/orange_01"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/brown_01"
+                    app:errorIconTint="@color/orange_01"
+                    app:errorTextColor="@color/orange_01"
+                    app:expandedHintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textInputLayoutId">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldMyPageManagementCheckUserInfoModify_UserPw"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="비밀번호를 입력해 주세요"
+                        android:inputType="text|textPassword"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/buttonMyPageManagementCheckUserInfoModify_Done"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingLeft="146dp"
+                android:paddingTop="13sp"
+                android:paddingRight="146dp"
+                android:paddingBottom="13sp"
+                android:text="확인"
+                android:textSize="16sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</layout>

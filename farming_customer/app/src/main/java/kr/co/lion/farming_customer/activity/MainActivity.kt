@@ -9,7 +9,10 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
+import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.activity.payment.PaymentActivity
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.BoardFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
@@ -19,6 +22,7 @@ import kr.co.lion.farming_customer.fragment.TradeFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmAndActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
+import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
@@ -61,8 +66,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
                             replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
-//                            val intent = Intent(this@MainActivity, OrderHistoryActivity::class.java)
-//                            startActivity(intent)
+
                         }
                     }
                     true
@@ -86,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 newFragment = TradeFragment()
             }
             MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = BoardFragment()
+                newFragment = FarmingLifeToolsFragment()
             }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()

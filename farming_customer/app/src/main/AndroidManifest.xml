@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -19,10 +21,31 @@
             android:name=".activity.farmingLife.FarmingLifeActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.farmingLifeTools.FarmingLifeToolsSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.farmingLifeTools.FarmingLifeToolsDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.orderHistory.OrderHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterReplyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterWriteInquiryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageManagement.MyPageManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +53,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
+          
+            <!-- MainActivity Launcher 인텐트 필터 주석처리
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+          
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBb7t0RwxZVp0O5frRYJY_oVz_vbWhgYEQ" />
     </application>
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
