@@ -101,6 +101,17 @@
                     app:layout_constraintTop_toBottomOf="@id/ratingBar" />
 
                 <TextView
+                    android:id="@+id/textView_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{rowGridItemViewModel.textView_location}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_ItemName"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="10sp"
+                    android:textColor="@color/brown_01"/>
+
+                <TextView
                     android:id="@+id/textView_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -113,7 +124,7 @@
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView_ItemName" />
+                    app:layout_constraintTop_toBottomOf="@id/textView_location" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
