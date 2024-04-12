@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Farming_customer"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.farmingLife.FarmingLifeActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.farmingLifeTools.FarmingLifeToolsSearchActivity"
             android:exported="false" />
@@ -66,5 +71,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBb7t0RwxZVp0O5frRYJY_oVz_vbWhgYEQ" />
     </application>
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
 
 </manifest>

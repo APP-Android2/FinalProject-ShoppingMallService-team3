@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 
 class RowFarmingLifeReviewViewModel {
     val textView_name = MutableLiveData<String>()
-    val rating = MutableLiveData<Double>()
 
     val textView_reviewDate = MutableLiveData<String>()
 

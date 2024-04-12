@@ -112,7 +112,10 @@ enum class MainFragmentName(var str : String){
     BOARD_FRAGMENT("BoardFragment"),
     HOME_FRAGMENT("HomeFragment"),
     LIKE_FRAGMENT("LikeFragment"),
-    MY_PAGE_FRAGMENT("MyPageFragment")
+    MY_PAGE_FRAGMENT("MyPageFragment"),
+    FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT("FarmingLifeFarmAndActivityFragment"),
+    TAP_FARM_FRAGMENT("TapFarmFragment"),
+    TAP_ACTIVITY_FRAGMENT("TapActivityFragment")
 }
 
 // 좋아요 타입
@@ -158,6 +161,11 @@ enum class OrderHistoryFragmentName(var str:String){
     ORDER_HISTORY_WRITE_REVIEW_FRAGMENT("OrderHistoryWriteReviewFragment")
 }
 
+enum class FarmingLifeFragmnetName(var str:String){
+    FARMING_LIFE_SEARCH_FRAGMENT("FarmingLifeSearchFragment"),
+    FARMING_LIFE_FARM_DETAIL_FARMGNET("FarmingLifeFarmDetailFragment"),
+    FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT("FarmingLifeActivityDetailFragment")
+}
 // 농기구 프래그먼트
 enum class FarmingLifeToolsFragmentName(var str: String) {
     FARMING_LIFE_TOOLS_MAP_FRAGMENT("FarmingLifeToolsMapFragment"),

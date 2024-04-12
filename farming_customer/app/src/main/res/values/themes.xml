@@ -161,9 +161,9 @@
         <item name="android:textColor">@color/green_main</item>
         <item name="strokeColor">@color/green_main</item>
         <item name="android:textAppearance">@style/buttonTextBold</item>
-
+        <item name="cornerRadius">10dp</item>
     </style>
-
+  
     // search bar custom
     <style name="CustomSearchTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusTopStart">10dp</item>
