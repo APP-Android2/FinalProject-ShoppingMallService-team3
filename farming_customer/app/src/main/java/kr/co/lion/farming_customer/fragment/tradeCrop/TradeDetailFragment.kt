@@ -1,22 +1,19 @@
 package kr.co.lion.farming_customer.fragment.tradeCrop
 
-import android.content.Context
 import android.os.Bundle
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
-import kr.co.lion.farming_customer.Tools.Companion.dpToPx
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentTradeDetailBinding
 import kr.co.lion.farming_customer.databinding.RowCropImageBinding
@@ -48,6 +45,7 @@ class TradeDetailFragment : Fragment() {
         setTab()
         setButton()
         setImageAdapter()
+        setRecyclerView()
 
         return fragmentTradeDetailBinding.root
     }
@@ -154,7 +152,7 @@ class TradeDetailFragment : Fragment() {
             fragmentTradeDetailBinding.circleIndicatorTradeDetail.adapterDataObserver)
     }
 
-    //
+    // 이미지 연결 어댑터
     inner class ImageAdpater(private val images: List<Int>): RecyclerView.Adapter<ImageAdpater.ImageViewHolder>(){
 
         inner class ImageViewHolder(private val binding: RowCropImageBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -176,23 +174,42 @@ class TradeDetailFragment : Fragment() {
         }
     }
 
+    // 리싸이클러 뷰 설정
+    private fun setRecyclerView(){
+        val reviews = listOf(
+            CropReview("홍길동", R.drawable.profile, 4.5, null,
+                "감자", "10kg", "2024.03.10"),
+            CropReview("김길동", R.drawable.home_01, 4.0, listOf(R.drawable.farming_mark, R.drawable.logo_01),
+                "감자", "10kg", "2024.03.11"),
+            CropReview("최길동", R.drawable.home_02, 5.0, listOf(R.drawable.farming_mark),
+                "감자", "10kg", "2024.03.10")
+        )
+        fragmentTradeDetailBinding.recyclerViewReview.layoutManager = LinearLayoutManager(context)
+        fragmentTradeDetailBinding.recyclerViewReview.adapter = ReviewAdapter(reviews)
+    }
+
+    // 리뷰 어댑터 설정
     inner class ReviewAdapter(private val reviews: List<CropReview>): RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>(){
         inner class ReviewViewHolder(private val  binding: RowReviewCropBinding): RecyclerView.ViewHolder(binding.root){
             fun bind(review: CropReview){
                 binding.apply {
                     TextViewRowLikeCropReviewer.text = review.name
                     circleImageViewRowLikeCrop.setImageResource(review.imageResourceProfile)
-                    baseRatingBar2.rating = review.rating
+                    baseRatingBar2.rating = review.rating.toFloat()
                     textViewRowReviewCropDate.text = review.date
                     textViewCropName.text = review.productName
                     textViewOptionName.text = review.optionName
 
                     // 이미지 리사이클러뷰 설정
-                    recyclerViewCropReviewImage.adapter = TODO("어댑터 연결")
+                    recyclerViewCropReviewImage.layoutManager = LinearLayoutManager(context)
+                    recyclerViewCropReviewImage.adapter = review.imageResourceIds?.let {
+                        ReviewImageAdapter(
+                            it
+                        )
+                    }
                 }
             }
         }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = RowReviewCropBinding.inflate(inflater, parent, false)
@@ -204,6 +221,30 @@ class TradeDetailFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
             holder.bind(reviews[position])
+        }
+    }
+
+    // 리뷰 내 이미지 설정
+    inner class ReviewImageAdapter(private val images: List<Int>): RecyclerView.Adapter<ReviewImageAdapter.ReviewImageViewHolder>(){
+        inner class ReviewImageViewHolder(private val  binding: RowCropImageBinding): RecyclerView.ViewHolder(binding.root){
+            fun bind(images: Int){
+                binding.apply {
+                    imageView4.setImageResource(images)
+                }
+            }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewImageViewHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            val binding = RowCropImageBinding.inflate(inflater, parent, false)
+            return ReviewImageViewHolder(binding)
+        }
+
+        override fun getItemCount(): Int = images.size
+
+
+        override fun onBindViewHolder(holder: ReviewImageViewHolder, position: Int) {
+            holder.bind(images[position])
         }
     }
 }
