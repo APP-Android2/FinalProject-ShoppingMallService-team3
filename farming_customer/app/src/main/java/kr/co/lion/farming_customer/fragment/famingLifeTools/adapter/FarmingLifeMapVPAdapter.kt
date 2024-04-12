@@ -10,33 +10,36 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
 import kr.co.lion.farming_customer.databinding.RowLikeRentalVpItemBinding
 
-class FarmingLifeListRVAdapter(val context: Context) : RecyclerView.Adapter<FarmingLifeListRVAdapter.ListViewHolder>() {
-    private var isHeartBtn : Boolean = true
+class FarmingLifeMapVPAdapter(val context: Context) :
+    RecyclerView.Adapter<FarmingLifeMapVPAdapter.MapViewHolder>() {
+    private var isHeartBtn: Boolean = true
 
-    inner class ListViewHolder(val rowBinding: RowLikeRentalVpItemBinding) : RecyclerView.ViewHolder(rowBinding.root) {
+    inner class MapViewHolder(val rowBinding: RowLikeRentalVpItemBinding) :
+        RecyclerView.ViewHolder(rowBinding.root) {
         init {
             rowBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT
             )
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = RowLikeRentalVpItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val listViewHolder = ListViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MapViewHolder {
+        val rowBinding =
+            RowLikeRentalVpItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val mapViewHolder = MapViewHolder(rowBinding)
 
-        return listViewHolder
+        return mapViewHolder
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return 5
     }
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.rowBinding.vpItemTextViewLikeRentalName.text = "농기구 $position"
+    override fun onBindViewHolder(holder: MapViewHolder, position: Int) {
+        holder.rowBinding.vpItemTextViewLikeRentalName.text = "농기구점 $position"
         holder.rowBinding.vpItemTextViewLikeRentalPhoneNumber.text = "010-1111-1111"
-        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = "농기구 임대점${position} 주소"
+        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = "농기구점 $position 주소"
 
         holder.rowBinding.vpItemImageViewHeart.setOnClickListener {
             if (isHeartBtn) {

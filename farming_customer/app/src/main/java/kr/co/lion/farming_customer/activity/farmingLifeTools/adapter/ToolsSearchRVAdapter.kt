@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment.famingLifeTools.adapter
+package kr.co.lion.farming_customer.activity.farmingLifeTools.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,10 +10,10 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
 import kr.co.lion.farming_customer.databinding.RowLikeRentalVpItemBinding
 
-class FarmingLifeListRVAdapter(val context: Context) : RecyclerView.Adapter<FarmingLifeListRVAdapter.ListViewHolder>() {
-    private var isHeartBtn : Boolean = true
+class ToolsSearchRVAdapter(val context: Context) : RecyclerView.Adapter<ToolsSearchRVAdapter.SearchViewHolder>(){
+    private var isHeartBtn: Boolean = true
 
-    inner class ListViewHolder(val rowBinding: RowLikeRentalVpItemBinding) : RecyclerView.ViewHolder(rowBinding.root) {
+    inner class SearchViewHolder(val rowBinding: RowLikeRentalVpItemBinding): RecyclerView.ViewHolder(rowBinding.root) {
         init {
             rowBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -22,21 +22,21 @@ class FarmingLifeListRVAdapter(val context: Context) : RecyclerView.Adapter<Farm
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = RowLikeRentalVpItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val listViewHolder = ListViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+        val rowBinding = RowLikeRentalVpItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val searchViewHolder = SearchViewHolder(rowBinding)
 
-        return listViewHolder
+        return searchViewHolder
     }
 
     override fun getItemCount(): Int {
         return 20
     }
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.rowBinding.vpItemTextViewLikeRentalName.text = "농기구 $position"
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+        holder.rowBinding.vpItemTextViewLikeRentalName.text = "농기구점 $position"
         holder.rowBinding.vpItemTextViewLikeRentalPhoneNumber.text = "010-1111-1111"
-        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = "농기구 임대점${position} 주소"
+        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = "농기구점 ${position} 주소"
 
         holder.rowBinding.vpItemImageViewHeart.setOnClickListener {
             if (isHeartBtn) {

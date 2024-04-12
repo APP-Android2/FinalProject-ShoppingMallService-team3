@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Farming_customer"
         tools:targetApi="31">
         <activity
+            android:name=".activity.farmingLifeTools.FarmingLifeToolsSearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.farmingLifeTools.FarmingLifeToolsDetailActivity"
             android:exported="false" />
         <activity

@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.famingLifeTools
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.FarmingLifeToolsFragmentName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsSearchActivity
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeToolsBinding
 
 class FarmingLifeToolsFragment : Fragment() {
@@ -55,11 +57,14 @@ class FarmingLifeToolsFragment : Fragment() {
                             farmingLifeToolsToolbar.menu.findItem(R.id.menu_item_tools_map_location).isVisible = true
                             farmingLifeToolsToolbar.menu.findItem(R.id.menu_item_tools_list).isVisible = true
                         }
-
                         R.id.menu_item_tools_map_location -> {
                             if (farmingLifeToolsMapFragment != null) {
                                 farmingLifeToolsMapFragment?.getMyLocation()
                             }
+                        }
+                        R.id.menu_item_tools_search -> {
+                            val intent = Intent(context, FarmingLifeToolsSearchActivity::class.java)
+                            startActivity(intent)
                         }
                     }
                     true

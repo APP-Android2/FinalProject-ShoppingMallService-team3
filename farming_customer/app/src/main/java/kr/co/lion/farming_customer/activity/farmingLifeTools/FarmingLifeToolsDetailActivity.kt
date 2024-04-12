@@ -39,15 +39,14 @@ class FarmingLifeToolsDetailActivity : AppCompatActivity() {
 
     fun settingHeartBtn() {
         binding.farmingLifeToolsDetailHeartBtn.setOnClickListener {
-            // 상태 변경
-            isHeartBtn = !isHeartBtn
-
             if (isHeartBtn) {
-                binding.farmingLifeToolsDetailHeartBtn.setImageResource(R.drawable.heart_02)
-            }
-            else {
                 binding.farmingLifeToolsDetailHeartBtn.setImageResource(R.drawable.heart_01)
             }
+            else {
+                binding.farmingLifeToolsDetailHeartBtn.setImageResource(R.drawable.heart_02)
+            }
+            // 상태 변경
+            isHeartBtn = !isHeartBtn
         }
     }
 }

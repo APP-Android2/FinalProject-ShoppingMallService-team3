@@ -6,14 +6,18 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -22,9 +26,11 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeToolsMapBinding
+import kr.co.lion.farming_customer.fragment.famingLifeTools.adapter.FarmingLifeMapVPAdapter
 
 class FarmingLifeToolsMapFragment() : Fragment() {
     lateinit var binding: FragmentFarmingLifeToolsMapBinding
+    lateinit var mapVPAdapter: FarmingLifeMapVPAdapter
 
     // 위치 정보를 관리하는 객체
     lateinit var locationManager: LocationManager
@@ -56,8 +62,15 @@ class FarmingLifeToolsMapFragment() : Fragment() {
         requestPermissions(permissionList, 0)
 
         settingGoogleMap()
+        settingMapAdapter()
 
         return binding.root
+    }
+
+    fun settingMapAdapter() {
+        mapVPAdapter = FarmingLifeMapVPAdapter(requireContext())
+        binding.farmingLifeToolsMapVp.adapter = mapVPAdapter
+        binding.farmingLifeToolsMapVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
     }
 
     // 구글 지도 셋팅
