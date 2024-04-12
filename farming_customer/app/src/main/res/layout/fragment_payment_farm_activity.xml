@@ -51,10 +51,10 @@
                 <View
                     android:id="@+id/divider112"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginBottom="5dp"
-                    android:background="?android:attr/listDivider" />
+                    android:background="@color/grey_03" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -147,10 +147,10 @@
                 <View
                     android:id="@+id/divider113"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="10dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
-                    android:background="?android:attr/listDivider" />
+                    android:background="@color/grey_03" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -253,10 +253,10 @@
                 <View
                     android:id="@+id/divider114"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="10dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
-                    android:background="?android:attr/listDivider" />
+                    android:background="@color/grey_03" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -374,10 +374,10 @@
                 <View
                     android:id="@+id/divider115"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="10dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
-                    android:background="?android:attr/listDivider" />
+                    android:background="@color/grey_03" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -475,10 +475,10 @@
                 <View
                     android:id="@+id/divider116"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="10dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
-                    android:background="?android:attr/listDivider" />
+                    android:background="@color/grey_03" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

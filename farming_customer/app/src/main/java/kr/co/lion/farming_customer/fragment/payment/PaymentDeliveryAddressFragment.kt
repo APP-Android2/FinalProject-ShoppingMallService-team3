@@ -29,10 +29,21 @@ class PaymentDeliveryAddressFragment : Fragment() {
         paymentActivity = activity as PaymentActivity
 
         settingPaymentDeliveryAddressRecyclerView()
+        settingToolbar()
 
         return fragmentPaymentDeliveryAddressBinding.root
     }
 
+    // 툴바 설정
+    fun settingToolbar(){
+        fragmentPaymentDeliveryAddressBinding.apply {
+            toolbarPaymentDeliveryAddress.apply {
+                setNavigationOnClickListener {
+                    paymentActivity.removeFragment(PaymentFragmentName.PAYMENT_DELIVERY_ADDRESS_FRAGMENT)
+                }
+            }
+        }
+    }
     // 농산품 배송지 선택 RecyclerView 설정
     fun settingPaymentDeliveryAddressRecyclerView(){
         fragmentPaymentDeliveryAddressBinding.apply {
