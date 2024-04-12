@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
@@ -108,20 +109,21 @@ class Tools {
             fileOutputStream.flush()
             fileOutputStream.close()
         }
-    }
-
         // 뷰에 포커스를 주고 키보드를 올린다.
-        fun showSoftInput(context: Context, view: View){
+        fun showSoftInput(context: Context, view: View) {
             // 뷰에 포커스를 준다.
             view.requestFocus()
             thread {
                 // 딜레이
                 SystemClock.sleep(200)
                 // 키보드 관리 객체를 가져온다.
-                val inputMethodManger = context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                val inputMethodManger =
+                    context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
                 // 키보드를 올린다.
                 inputMethodManger.showSoftInput(view, 0)
             }
+        }
+
         // 키보드를 내려주고 포커스를 제거한다.
         fun hideSoftInput(activity: Activity){
             // 포커스를 가지고 있는 뷰가 있다면..
@@ -134,9 +136,8 @@ class Tools {
                 activity.window.currentFocus?.clearFocus()
             }
         }
-
-
     }
+
 }
 
 // MainActivity에서 보여줄 프래그먼트들의 이름

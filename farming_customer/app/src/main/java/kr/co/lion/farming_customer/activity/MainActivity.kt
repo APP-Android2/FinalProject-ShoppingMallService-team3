@@ -90,9 +90,9 @@ class MainActivity : AppCompatActivity() {
             MainFragmentName.TRADE_FRAGMENT -> {
                 newFragment = TradeFragment()
             }
-            MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = FarmingLifeToolsFragment()
-            }
+//            MainFragmentName.BOARD_FRAGMENT -> {
+//                newFragment = FarmingLifeToolsFragment()
+//            }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
             }
