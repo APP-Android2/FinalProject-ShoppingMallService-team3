@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".fragment.cart.CartFragment">
+
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="장바구니"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="22dp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutCart"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_tab_indicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarCart"
+            app:tabIndicatorFullWidth="true"
+            app:tabSelectedTextColor="@color/brown_01"
+            app:tabTextAppearance="@style/MySelectedTabTextAppearance"
+            app:tabTextColor="@color/grey_02">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemCartCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="농산물" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemCartFarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주말농장" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemCartActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체험활동" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/containerCartTab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tabLayoutCart"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayoutCart" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

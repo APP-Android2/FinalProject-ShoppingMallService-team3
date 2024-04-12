@@ -7,9 +7,15 @@ import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
+import android.os.SystemClock
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.FileOutputStream
+import android.app.Activity
+import kotlin.concurrent.thread
 
 class Tools {
     companion object{
@@ -103,19 +109,95 @@ class Tools {
             fileOutputStream.flush()
             fileOutputStream.close()
         }
+        // 뷰에 포커스를 주고 키보드를 올린다.
+        fun showSoftInput(context: Context, view: View) {
+            // 뷰에 포커스를 준다.
+            view.requestFocus()
+            thread {
+                // 딜레이
+                SystemClock.sleep(200)
+                // 키보드 관리 객체를 가져온다.
+                val inputMethodManger =
+                    context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                // 키보드를 올린다.
+                inputMethodManger.showSoftInput(view, 0)
+            }
+        }
+
+        // 키보드를 내려주고 포커스를 제거한다.
+        fun hideSoftInput(activity: Activity){
+            // 포커스를 가지고 있는 뷰가 있다면..
+            if(activity.window.currentFocus != null){
+                // 키보드 관리 객체를 가져온다.
+                val inputMethodManger = activity.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                // 키보드를 내려준다.
+                inputMethodManger.hideSoftInputFromWindow(activity.window.currentFocus?.windowToken, 0)
+                // 포커스를 제거해준다.
+                activity.window.currentFocus?.clearFocus()
+            }
+        }
     }
+
 }
 
 // MainActivity에서 보여줄 프래그먼트들의 이름
 enum class MainFragmentName(var str : String){
     TRADE_FRAGMENT("TradeFragment"),
-    BOARD_FRAGMENT("BoardFragment"),
     HOME_FRAGMENT("HomeFragment"),
     LIKE_FRAGMENT("LikeFragment"),
     MY_PAGE_FRAGMENT("MyPageFragment"),
+    COMMUNITY_FRAGMENT("CommunityFragment"),
+    FARM_ACTIVITY_FRAGMENT("FarmActivityFragment"),
+    RENTAL_FRAGMENT("RentalFragment"),
     FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT("FarmingLifeFarmAndActivityFragment"),
     TAP_FARM_FRAGMENT("TapFarmFragment"),
     TAP_ACTIVITY_FRAGMENT("TapActivityFragment")
+}
+
+// PointActivity에서 보여줄 프래그먼트들의 이름
+enum class PointFragmentName(var str: String) {
+    POINT_HISTORY_FRAGMENT("PointHistoryFragment")
+}
+
+// ReviewActivity에서 보여줄 프래그먼트들의 이름
+enum class ReviewFragmentName(var str: String) {
+    REVIEW_HISTORY_FRAGMENT("ReviewHistoryFragment"),
+    REVIEW_TAB_CROP_FRAGMENT("ReviewTabCropFragment"),
+    REVIEW_TAB_FARM_FRAGMENT("ReviewTabFarmFragment"),
+    REVIEW_TAB_ACTIVITY_FRAGMENT("ReviewTabActivityFragment")
+}
+
+// CartActivity에서 보여줄 프래그먼트들의 이름
+enum class CartFragmentName(var str: String) {
+    CART_FRAGMENT("CartFragment"),
+    CART_TAB_CROP_FRAGMENT("CartTabCropFragment"),
+    CART_TAB_FARM_FRAGMENT("CartTabFarmFragment"),
+    CART_TAB_ACTIVITY_FRAGMENT("CartTabActivityFragment")
+}
+
+
+// CommunityFragment에서 보여줄 프래그먼트들의 이름
+enum class CommunityTabFragmentName(var str: String) {
+    COMMUNITY_TAB_ALL_FRAGMENT("CommunityTabAllFragment"),
+    COMMUNITY_TAB_INFORMATION_FRAGMENT("CommunityTabInformationFragment"),
+    COMMUNITY_TAB_SOCIAL_FRAGMENT("CommunityTabSocialFragment"),
+    COMMUNITY_TAB_JOB_FRAGMENT("CommunityTabJobFragment")
+}
+
+// CommunityActivity에서 보여줄 프래그먼트들의 이름
+enum class CommunityFragmentName(var str: String) {
+    COMMUNITY_READ_FRAGMENT("CommunityReadFragment"),
+    COMMUNITY_MODIFY_FRAGMENT("CommunityModifyFragment")
+}
+
+// CommunityAddActivity에서 보여줄 프래그먼트들의 이름
+enum class CommunityAddFragmentName(var str: String) {
+    COMMUNITY_ADD_FRAGMENT("CommunityAddFragment")
+}
+
+// CommunitySearchActivity에서 보여줄 프래그먼트들의 이름
+enum class CommunitySearchFragmentName(var str: String) {
+    COMMUNITY_SEARCH_FRAGMENT("CommunitySearchFragment")
 }
 
 // 좋아요 타입

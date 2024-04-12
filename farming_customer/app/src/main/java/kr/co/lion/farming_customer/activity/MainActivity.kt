@@ -14,11 +14,13 @@ import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCen
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.activity.payment.PaymentActivity
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
-import kr.co.lion.farming_customer.fragment.BoardFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
 import kr.co.lion.farming_customer.fragment.TradeFragment
+import kr.co.lion.farming_customer.fragment.community.CommunityFragment
+import kr.co.lion.farming_customer.fragment.community.FarmActivityFragment
+import kr.co.lion.farming_customer.fragment.community.RentalFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmAndActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
@@ -53,10 +54,10 @@ class MainActivity : AppCompatActivity() {
                         R.id.menuItemBottomNavigation_Trade -> {
                             replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
                         }
-                        R.id.menuItemBottonNavigation_Board -> {
-                            replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
-//                            replaceFragment(MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT, false, false, null)
+                        R.id.menuItemBottonNavigation_Farming_Life -> {
+                            replaceFragment(MainFragmentName.COMMUNITY_FRAGMENT, false, false, null)
                         }
+
                         R.id.menuItemBottomNavigation_Home -> {
                             replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
 
@@ -65,7 +66,12 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
+                            // 사용자가 로그인 한 상태인 경우
                             replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+
+                            // 사용자가 로그인 하지 않은 상태인 경우
+//                            val dialog = DialogYesNo("로그인이 필요합니다.", "마이페이지는 로그인 후 이용 가능합니다.", this@MainActivity)
+//                            dialog.show(this@MainActivity.supportFragmentManager, "DialogYesNo")
 
                         }
                     }
@@ -89,9 +95,9 @@ class MainActivity : AppCompatActivity() {
             MainFragmentName.TRADE_FRAGMENT -> {
                 newFragment = TradeFragment()
             }
-            MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = FarmingLifeToolsFragment()
-            }
+//            MainFragmentName.BOARD_FRAGMENT -> {
+//                newFragment = FarmingLifeToolsFragment()
+//            }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
             }
@@ -100,6 +106,15 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
+            }
+            MainFragmentName.COMMUNITY_FRAGMENT -> {
+                newFragment = CommunityFragment()
+            }
+            MainFragmentName.FARM_ACTIVITY_FRAGMENT -> {
+                newFragment = FarmActivityFragment()
+            }
+            MainFragmentName.RENTAL_FRAGMENT -> {
+                newFragment = RentalFragment()
             }
             MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT -> {
                 newFragment = FarmingLifeFarmAndActivityFragment()
