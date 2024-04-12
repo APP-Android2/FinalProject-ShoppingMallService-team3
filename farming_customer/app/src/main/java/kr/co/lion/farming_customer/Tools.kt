@@ -136,5 +136,7 @@ enum class OrderHistoryFragmentName(var str:String){
 }
 
 enum class FarmingLifeFragmnetName(var str:String){
-    FARMING_LIFE_SEARCH_FRAGMENT("FarmingLifeSearchFragment")
+    FARMING_LIFE_SEARCH_FRAGMENT("FarmingLifeSearchFragment"),
+    FARMING_LIFE_FARM_DETAIL_FARMGNET("FarmingLifeFarmDetailFragment"),
+    FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT("FarmingLifeActivityDetailFragment")
 }

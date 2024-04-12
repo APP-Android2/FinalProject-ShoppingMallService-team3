@@ -10,6 +10,8 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityFarmingLifeBinding
+import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeActivityDetailFragment
+import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmDetailFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeSearchFragment
 
 class FarmingLifeActivity : AppCompatActivity() {
@@ -40,6 +42,12 @@ class FarmingLifeActivity : AppCompatActivity() {
         when(name){
             FarmingLifeFragmnetName.FARMING_LIFE_SEARCH_FRAGMENT -> {
                 newFragment = FarmingLifeSearchFragment()
+            }
+            FarmingLifeFragmnetName.FARMING_LIFE_FARM_DETAIL_FARMGNET -> {
+                newFragment = FarmingLifeFarmDetailFragment()
+            }
+            FarmingLifeFragmnetName.FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT -> {
+                newFragment = FarmingLifeActivityDetailFragment()
             }
         }
         if(data != null){

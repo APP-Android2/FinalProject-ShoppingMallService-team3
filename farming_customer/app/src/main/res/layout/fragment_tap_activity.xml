@@ -6,9 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="15dp"
-        android:paddingTop="10dp"
-        tools:context=".fragment.farmingLife.TapActivityFragment" >
+        android:paddingTop="5dp"
+        tools:context=".fragment.farmingLife.TapActivityFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_TapActivity"

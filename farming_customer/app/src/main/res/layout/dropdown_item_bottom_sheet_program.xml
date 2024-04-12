@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="dropDownItemBottomSheetProgramViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.farmingLife.DropdownItemBottmSheetProgramViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingHorizontal="20dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/dropDownItem_programName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@{dropDownItemBottomSheetProgramViewModel.dropDownItem_programName}"
+            android:textColor="@color/brown_01"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dropDownItem_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{dropDownItemBottomSheetProgramViewModel.dropDownItem_price}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
