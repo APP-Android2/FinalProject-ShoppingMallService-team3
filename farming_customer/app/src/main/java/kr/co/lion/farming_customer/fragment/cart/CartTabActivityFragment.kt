@@ -9,14 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.databinding.FragmentCartTabActivityBinding
 import kr.co.lion.farming_customer.databinding.RowCartActivityBinding
-import kr.co.lion.farming_customer.databinding.RowCartCropBinding
 import kr.co.lion.farming_customer.viewmodel.cart.MyPageCartViewModel
 
-class CartTabActivityFragment : Fragment() {
+class CartTabActivityFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentCartTabActivityBinding: FragmentCartTabActivityBinding
     lateinit var cartActivity: CartActivity
     lateinit var myPageCartViewModel: MyPageCartViewModel
@@ -83,7 +83,13 @@ class CartTabActivityFragment : Fragment() {
             holder.rowCartActivityBinding.myPageCartViewModel?.textViewRowCartTabActivityPrice?.value = "10,000원"
 
             holder.rowCartActivityBinding.imageViewRowCartTabActivityDelete.setOnClickListener {
-                val dialog = DialogYesNo(null, "장바구니에서 빼시겠습니까?", cartActivity)
+                val dialog = DialogYesNo(
+                    this@CartTabActivityFragment,
+                    null,
+                    "장바구니에서 빼시겠습니까?",
+                    cartActivity,
+                    position
+                )
                 dialog.show(this@CartTabActivityFragment?.parentFragmentManager!!, "DialogYesNo")
             }
 
@@ -101,9 +107,19 @@ class CartTabActivityFragment : Fragment() {
             }
 
             holder.rowCartActivityBinding.buttonRowCartTabActivityReservation.setOnClickListener {
-                val dialog = DialogYesNo(null, "예약하시겠습니까?", cartActivity)
+                val dialog = DialogYesNo(
+                    this@CartTabActivityFragment,
+                    null,
+                    "예약하시겠습니까?",
+                    cartActivity,
+                    position
+                )
                 dialog.show(this@CartTabActivityFragment?.parentFragmentManager!!, "DialogYesNo")
             }
         }
+    }
+
+    override fun onYesButtonClick(id: Int) {
+        // 결제 화면으로 넘어가기
     }
 }

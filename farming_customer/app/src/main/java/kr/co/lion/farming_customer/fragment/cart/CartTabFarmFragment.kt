@@ -9,13 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.databinding.FragmentCartTabFarmBinding
 import kr.co.lion.farming_customer.databinding.RowCartFarmBinding
 import kr.co.lion.farming_customer.viewmodel.cart.MyPageCartViewModel
 
-class CartTabFarmFragment : Fragment() {
+class CartTabFarmFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentCartTabFarmBinding: FragmentCartTabFarmBinding
     lateinit var cartActivity: CartActivity
     lateinit var myPageCartViewModel: MyPageCartViewModel
@@ -80,15 +81,31 @@ class CartTabFarmFragment : Fragment() {
             holder.rowCartFarmBinding.myPageCartViewModel?.textViewRowCartTabFarmPrice?.value = "10,000원"
 
             holder.rowCartFarmBinding.imageViewRowCartTabFarmDelete.setOnClickListener {
-                val dialog = DialogYesNo(null, "장바구니에서 빼시겠습니까?", cartActivity)
+                val dialog = DialogYesNo(
+                    this@CartTabFarmFragment,
+                    null,
+                    "장바구니에서 빼시겠습니까?",
+                    cartActivity,
+                    position
+                )
                 dialog.show(this@CartTabFarmFragment?.parentFragmentManager!!, "DialogYesNo")
             }
 
             holder.rowCartFarmBinding.buttonRowCartTabFarmReservation.setOnClickListener {
-                val dialog = DialogYesNo(null, "예약하시겠습니까?", cartActivity)
+                val dialog = DialogYesNo(
+                    this@CartTabFarmFragment,
+                    null,
+                    "예약하시겠습니까?",
+                    cartActivity,
+                    position
+                )
                 dialog.show(this@CartTabFarmFragment?.parentFragmentManager!!, "DialogYesNo")
             }
         }
+    }
+
+    override fun onYesButtonClick(id: Int) {
+        // 결제 화면으로 넘어가기
     }
 
 }

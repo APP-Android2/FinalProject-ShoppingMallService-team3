@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabFarmBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryFarmBinding
-import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageFarmBinding
 import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
-class ReviewTabFarmFragment : Fragment() {
+class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentReviewTabFarmBinding: FragmentReviewTabFarmBinding
     lateinit var reviewActivity: ReviewActivity
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
@@ -98,8 +98,10 @@ class ReviewTabFarmFragment : Fragment() {
             holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmLabel?.value = "파밍이네 감자 10kg"
 
             holder.rowReviewHistoryFarmBinding.buttonReviewTabFarmDelete.setOnClickListener {
-                val dialog = DialogYesNo(null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
-                        "삭제하시겠습니까?", reviewActivity)
+                val dialog = DialogYesNo(
+                    this@ReviewTabFarmFragment, null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
+                            "삭제하시겠습니까?", reviewActivity, position
+                )
                 dialog.show(this@ReviewTabFarmFragment?.parentFragmentManager!!, "DialogYesNo")
             }
         }
@@ -138,5 +140,9 @@ class ReviewTabFarmFragment : Fragment() {
                 holder.rowReviewHistoryImageFarmBinding.imageViewRowReviewTabFarm.setImageResource(R.drawable.ic_launcher_background)
             }
         }
+    }
+
+    override fun onYesButtonClick(id: Int) {
+        fragmentReviewTabFarmBinding.recyclerViewReviewTabFarm.adapter!!.notifyItemRemoved(id)
     }
 }

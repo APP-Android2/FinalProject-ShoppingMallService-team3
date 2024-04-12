@@ -9,11 +9,13 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
-import kr.co.lion.farming_customer.fragment.FarmingLifeFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
 import kr.co.lion.farming_customer.fragment.TradeFragment
+import kr.co.lion.farming_customer.fragment.community.CommunityFragment
+import kr.co.lion.farming_customer.fragment.community.FarmActivityFragment
+import kr.co.lion.farming_customer.fragment.community.RentalFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_Farming_Life -> {
-                            replaceFragment(MainFragmentName.FARMING_LIFE_FRAGMENT, false, false, null)
+                            replaceFragment(MainFragmentName.COMMUNITY_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottomNavigation_Home -> {
                             replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
@@ -83,9 +85,6 @@ class MainActivity : AppCompatActivity() {
             MainFragmentName.TRADE_FRAGMENT -> {
                 newFragment = TradeFragment()
             }
-            MainFragmentName.FARMING_LIFE_FRAGMENT -> {
-                newFragment = FarmingLifeFragment()
-            }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
             }
@@ -94,6 +93,15 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
+            }
+            MainFragmentName.COMMUNITY_FRAGMENT -> {
+                newFragment = CommunityFragment()
+            }
+            MainFragmentName.FARM_ACTIVITY_FRAGMENT -> {
+                newFragment = FarmActivityFragment()
+            }
+            MainFragmentName.RENTAL_FRAGMENT -> {
+                newFragment = RentalFragment()
             }
         }
         if(data != null){

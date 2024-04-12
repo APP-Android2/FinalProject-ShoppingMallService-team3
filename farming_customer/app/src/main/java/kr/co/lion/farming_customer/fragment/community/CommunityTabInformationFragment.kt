@@ -34,9 +34,18 @@ class CommunityTabInformationFragment : Fragment() {
 
         mainActivity = activity as MainActivity
 
+        settingButtonCommunityTabInformationPopularity()
         settingRecyclerViewCommunityTabInformation()
 
         return fragmentCommunityTabInformationBinding.root
+    }
+
+    // 커뮤니티 정보 탭
+    fun settingButtonCommunityTabInformationPopularity() {
+        fragmentCommunityTabInformationBinding.apply {
+            buttonCommunityTabInformationPopularity.isChecked = true
+
+        }
     }
 
     // 커뮤니티 탭 정보 리사이클러뷰 설정
@@ -82,11 +91,25 @@ class CommunityTabInformationFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CommunityTabInformationViewHolder, position: Int) {
-            holder.rowCommunityTabInformationBinding.textViewTemp2.text = "임시 데이터 2"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLabelInformation?.value = "정보"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListTitleInformation?.value = "글 제목"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListContentInformation?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
+                    "글 내용입니다"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListViewCntInformation?.value = "999+"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListCommentCntInformation?.value = "999+"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListDateInformation?.value = "2024.03.01"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLikeCntInformation?.value = "999+"
 
-            holder.rowCommunityTabInformationBinding.textViewTemp2.setOnClickListener {
+            holder.rowCommunityTabInformationBinding.linearLayoutCommunityListInformation.setOnClickListener {
                 val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
                 startActivity(communityIntent)
+            }
+
+            holder.rowCommunityTabInformationBinding.apply {
+                imageViewCommunityListLikeInformation.setOnClickListener {
+                    imageViewCommunityListLikeInformation.isSelected = !imageViewCommunityListLikeInformation.isSelected
+                    textViewCommunityListLikeCntInformation.isSelected = !textViewCommunityListLikeCntInformation.isSelected
+                }
             }
         }
     }

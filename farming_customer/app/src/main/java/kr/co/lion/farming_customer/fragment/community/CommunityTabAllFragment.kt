@@ -4,13 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
-import kr.co.lion.farming_customer.DataBinderMapperImpl
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
@@ -36,9 +36,18 @@ class CommunityTabAllFragment : Fragment() {
 
         mainActivity = activity as MainActivity
 
+        settingButtonCommunityTabAllPopularity()
         settingRecyclerViewCommunityTabAll()
 
         return fragmentCommunityTabAllBinding.root
+    }
+
+    // 커뮤니티 전체 탭
+    fun settingButtonCommunityTabAllPopularity() {
+        fragmentCommunityTabAllBinding.apply {
+            buttonCommunityTabAllPopularity.isChecked = true
+
+        }
     }
 
     // 커뮤니티 탭 전체 리사이클러뷰 설정
@@ -84,12 +93,27 @@ class CommunityTabAllFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CommunityTabAllViewHolder, position: Int) {
-            holder.rowCommunityTabAllBinding.textViewTemp1.text = "임시 데이터 1"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListLabelAll?.value = "정보"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListTitleAll?.value = "글 제목"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListContentAll?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
+                    "글 내용입니다"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListViewCntAll?.value = "999+"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListCommentCntAll?.value = "999+"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListDateAll?.value = "2024.03.01"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListLikeCntAll?.value = "999+"
 
-            holder.rowCommunityTabAllBinding.textViewTemp1.setOnClickListener {
+            holder.rowCommunityTabAllBinding.linearLayoutCommunityListAll.setOnClickListener {
                 val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
                 startActivity(communityIntent)
             }
+
+            holder.rowCommunityTabAllBinding.apply {
+                imageViewCommunityListLikeAll.setOnClickListener {
+                    imageViewCommunityListLikeAll.isSelected = !imageViewCommunityListLikeAll.isSelected
+                    textViewCommunityListLikeCntAll.isSelected = !textViewCommunityListLikeCntAll.isSelected
+                }
+            }
+
         }
     }
 }

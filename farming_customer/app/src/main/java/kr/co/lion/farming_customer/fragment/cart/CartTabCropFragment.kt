@@ -9,18 +9,24 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.databinding.FragmentCartTabCropBinding
 import kr.co.lion.farming_customer.databinding.RowCartCropBinding
 import kr.co.lion.farming_customer.viewmodel.cart.MyPageCartViewModel
 
-class CartTabCropFragment : Fragment() {
+class CartTabCropFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentCartTabCropBinding: FragmentCartTabCropBinding
     lateinit var cartActivity: CartActivity
     lateinit var myPageCartViewModel: MyPageCartViewModel
 
     var buyCountCrop:Int = 1
+
+    // 항목 갯수만큼 리스트 만들어야 함!!!!
+    val checkBoxList = MutableList(100){
+        false
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentCartTabCropBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart_tab_crop, container, false)
@@ -79,9 +85,20 @@ class CartTabCropFragment : Fragment() {
             holder.rowCartCropBinding.myPageCartViewModel?.textViewRowCartTabCropName?.value = "파밍이네 감자"
             holder.rowCartCropBinding.myPageCartViewModel?.textViewRowCartTabCropOption?.value = "못난이 감자 5kg"
             holder.rowCartCropBinding.myPageCartViewModel?.textViewRowCartTabCropPrice?.value = "10,000원"
+            holder.rowCartCropBinding.myPageCartViewModel?.checkBoxRowCartTabCrop?.value = checkBoxList[position]
+
+            holder.rowCartCropBinding.checkBoxRowCartTabCrop.setOnCheckedChangeListener { buttonView, isChecked ->
+                checkBoxList[position] = isChecked
+            }
 
             holder.rowCartCropBinding.imageViewRowCartTabCropDelete.setOnClickListener {
-                val dialog = DialogYesNo(null, "장바구니에서 빼시겠습니까?", cartActivity)
+                val dialog = DialogYesNo(
+                    this@CartTabCropFragment,
+                    null,
+                    "장바구니에서 빼시겠습니까?",
+                    cartActivity,
+                    position
+                )
                 dialog.show(this@CartTabCropFragment?.parentFragmentManager!!, "DialogYesNo")
             }
 
@@ -98,5 +115,9 @@ class CartTabCropFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onYesButtonClick(id: Int) {
+        fragmentCartTabCropBinding.recyclerViewCartTabCrop.adapter!!.notifyItemRemoved(id)
     }
 }

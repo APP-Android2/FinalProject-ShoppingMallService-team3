@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutRowReviewCrop"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:orientation="vertical">

@@ -12,6 +12,8 @@ class MyPageCartViewModel : ViewModel() {
     val textViewRowCartTabCropPrice = MutableLiveData<String>()
     // 장바구니 농산물 구매 개수
     val textViewRowCartTabCropBuyCount = MutableLiveData<String>()
+    // 체크박스
+    val checkBoxRowCartTabCrop = MutableLiveData<Boolean>()
 
     // 장바구니 주말농장 이름
     val textViewRowCartTabFarmName = MutableLiveData<String>()

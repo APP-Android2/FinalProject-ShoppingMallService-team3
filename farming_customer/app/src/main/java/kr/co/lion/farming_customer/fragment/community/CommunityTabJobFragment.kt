@@ -33,9 +33,18 @@ class CommunityTabJobFragment : Fragment() {
 
         mainActivity = activity as MainActivity
 
+        settingButtonCommunityTabJobPopularity()
         settingRecyclerViewCommunityTabJob()
 
         return fragmentCommunityTabJobBinding.root
+    }
+
+    // 커뮤니티 구인구직 탭
+    fun settingButtonCommunityTabJobPopularity() {
+        fragmentCommunityTabJobBinding.apply {
+            buttonCommunityTabJobPopularity.isChecked = true
+
+        }
     }
 
     // 커뮤니티 탭 소통 리사이클러뷰 설정
@@ -81,11 +90,25 @@ class CommunityTabJobFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CommunityTabJobViewHolder, position: Int) {
-            holder.rowCommunityTabJobBinding.textViewTemp4.text = "임시 데이터 4"
+            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListLabelJob?.value = "구인구직"
+            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListTitleJob?.value = "글 제목"
+            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListContentJob?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
+                    "글 내용입니다"
+            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListViewCntJob?.value = "999+"
+            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListCommentCntJob?.value = "999+"
+            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListDateJob?.value = "2024.03.01"
+            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListLikeCntJob?.value = "999+"
 
-            holder.rowCommunityTabJobBinding.textViewTemp4.setOnClickListener {
+            holder.rowCommunityTabJobBinding.linearLayoutCommunityListJob.setOnClickListener {
                 val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
                 startActivity(communityIntent)
+            }
+
+            holder.rowCommunityTabJobBinding.apply {
+                imageViewCommunityListLikeJob.setOnClickListener {
+                    imageViewCommunityListLikeJob.isSelected = !imageViewCommunityListLikeJob.isSelected
+                    textViewCommunityListLikeCntJob.isSelected = !textViewCommunityListLikeCntJob.isSelected
+                }
             }
         }
     }

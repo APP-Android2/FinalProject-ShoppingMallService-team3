@@ -1,8 +1,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 선택되지 않은 상태일 때 텍스트 색상 -->
-    <item android:state_selected="false">
-        <color android:color="@color/brown_01"/>
-    </item>
-    <!-- 선택된 상태일 때 텍스트 색상 -->
-    <item android:color="@color/white" android:state_selected="true"/>
+    <item android:state_selected="true" android:color="@color/white"/>
+    <item android:color="@color/brown_01"/>
 </selector>

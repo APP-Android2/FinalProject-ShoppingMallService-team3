@@ -16,7 +16,13 @@ import androidx.fragment.app.DialogFragment
 import kr.co.lion.farming_customer.databinding.DialogYesnoBinding
 import kr.co.lion.farming_customer.viewmodel.CustomDialogViewModel
 
-class DialogYesNo(subject: String?, content: String, activity: AppCompatActivity) : DialogFragment() {
+class DialogYesNo(
+    dialogYesNoInterface: DialogYesNoInterface,
+    subject: String?,
+    content: String,
+    activity: AppCompatActivity,
+    position: Int
+) : DialogFragment() {
 
     lateinit var dialogYesnoBinding: DialogYesnoBinding
     lateinit var customDialogViewModel: CustomDialogViewModel
@@ -24,6 +30,9 @@ class DialogYesNo(subject: String?, content: String, activity: AppCompatActivity
     var subject = subject
     var content = content
     var activit = activity
+    var dialogYesNoInterface = dialogYesNoInterface
+    var position = position
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialogYesnoBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_yesno, container, false)
@@ -64,8 +73,8 @@ class DialogYesNo(subject: String?, content: String, activity: AppCompatActivity
 
             // 확인 버튼
             buttonCustomDialogYesNoYes.setOnClickListener {
+                dialogYesNoInterface?.onYesButtonClick(position)
                 dismiss()
-                // Todo : 회원 탈퇴 / 리뷰 삭제 등등
             }
 
             // 취소 버튼
@@ -85,4 +94,8 @@ class DialogYesNo(subject: String?, content: String, activity: AppCompatActivity
 
         return size.x
     }
+}
+
+interface DialogYesNoInterface {
+    fun onYesButtonClick(id: Int)
 }

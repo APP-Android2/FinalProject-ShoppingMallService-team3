@@ -32,9 +32,18 @@ class CommunityTabSocialFragment : Fragment() {
 
         mainActivity = activity as MainActivity
 
+        settingButtonCommunityTabSocialPopularity()
         settingRecyclerViewCommunityTabSocial()
 
         return fragmentCommunityTabSocialBinding.root
+    }
+
+    // 커뮤니티 소통 탭
+    fun settingButtonCommunityTabSocialPopularity() {
+        fragmentCommunityTabSocialBinding.apply {
+            buttonCommunityTabSocialPopularity.isChecked = true
+
+        }
     }
 
     // 커뮤니티 탭 소통 리사이클러뷰 설정
@@ -80,11 +89,25 @@ class CommunityTabSocialFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CommunityTabSocialViewHolder, position: Int) {
-            holder.rowCommunityTabSocialBinding.textViewTemp3.text = "임시 데이터 3"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLabelSocial?.value = "소통"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListTitleSocial?.value = "글 제목"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListContentSocial?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
+                    "글 내용입니다"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListViewCntSocial?.value = "999+"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListCommentCntSocial?.value = "999+"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListDateSocial?.value = "2024.03.01"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLikeCntSocial?.value = "999+"
 
-            holder.rowCommunityTabSocialBinding.textViewTemp3.setOnClickListener {
+            holder.rowCommunityTabSocialBinding.linearLayoutCommunityListSocial.setOnClickListener {
                 val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
                 startActivity(communityIntent)
+            }
+
+            holder.rowCommunityTabSocialBinding.apply {
+                imageViewCommunityListLikeSocial.setOnClickListener {
+                    imageViewCommunityListLikeSocial.isSelected = !imageViewCommunityListLikeSocial.isSelected
+                    textViewCommunityListLikeCntSocial.isSelected = !textViewCommunityListLikeCntSocial.isSelected
+                }
             }
         }
     }

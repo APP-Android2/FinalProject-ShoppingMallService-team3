@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- 앨범으로부터 사진을 가져오기 위한 권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,19 +16,16 @@
         android:theme="@style/Theme.Farming_customer"
         tools:targetApi="31">
         <activity
+            android:name=".activity.CommunitySearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.CommunityAddActivity"
             android:exported="false" />
         <activity
             android:name=".activity.CommunityActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.post.PostActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.cart.CartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CartActivity"
             android:exported="false" />
         <activity
             android:name=".activity.review.ReviewActivity"

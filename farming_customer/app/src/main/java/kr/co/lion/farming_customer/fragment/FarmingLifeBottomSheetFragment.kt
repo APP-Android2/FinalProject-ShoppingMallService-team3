@@ -9,24 +9,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kr.co.lion.farming_customer.FarmingLifeFragmentName
+import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeBinding
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeBottomSheetBinding
+import kr.co.lion.farming_customer.fragment.community.CommunityFragment
+import kr.co.lion.farming_customer.fragment.community.FarmActivityFragment
+import kr.co.lion.farming_customer.fragment.community.RentalFragment
 import kr.co.lion.farming_customer.viewmodel.FarmingLifeBottomSheetViewModel
 
-class FarmingLifeBottomSheetFragment(var farmingLifeFragment: FarmingLifeFragment) : BottomSheetDialogFragment() {
+class FarmingLifeBottomSheetFragment(var name: MainFragmentName) : BottomSheetDialogFragment() {
     lateinit var fragmentFarmingLifeBottomSheetBinding: FragmentFarmingLifeBottomSheetBinding
     lateinit var mainActivity: MainActivity
     lateinit var farmingLifeBottomSheetViewModel: FarmingLifeBottomSheetViewModel
 
-    var selectedButton:Int = -1
+    var fragmentName = name
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentFarmingLifeBottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_farming_life_bottom_sheet, container, false)
@@ -36,44 +40,39 @@ class FarmingLifeBottomSheetFragment(var farmingLifeFragment: FarmingLifeFragmen
 
         mainActivity = activity as MainActivity
 
-        settingInit()
-        settingFarmingLifeBottom()
-
-        if (selectedButton != -1) {
-            changeButtonState(selectedButton)
-        }
+        //settingInit()
+        //settingInitState(FarmingLifeFragmentName.COMMUNITY_FRAGMENT)
+        //settingFarmingLifeBottom()
 
         return fragmentFarmingLifeBottomSheetBinding.root
     }
 
-
-    fun settingInit() {
+    fun settingInitState(name: MainFragmentName) {
         fragmentFarmingLifeBottomSheetBinding.apply {
-            buttonFarmingLifeBottomCommunity.isSelected = true
+            when(name) {
+                MainFragmentName.COMMUNITY_FRAGMENT -> {
+                    buttonFarmingLifeBottomCommunity.apply {
+                        setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.green_main))
+                        setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+                    }
+                }
+                MainFragmentName.FARM_ACTIVITY_FRAGMENT -> {
+                    buttonFarmingLifeBottomFarmActivity.apply {
+                        setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.green_main))
+                        setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+                    }
+                }
+                MainFragmentName.RENTAL_FRAGMENT -> {
+                    buttonFarmingLifeBottomRental.apply {
+                        setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.green_main))
+                        setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+                    }
+                }
+                else -> 0
+            }
         }
     }
 
-    fun changeButtonState(buttonId: Int) {
-        selectedButton = buttonId
-
-        fragmentFarmingLifeBottomSheetBinding.apply {
-            buttonFarmingLifeBottomCommunity.isSelected = false
-            buttonFarmingLifeBottomFarmActivity.isSelected = false
-            buttonFarmingLifeBottomRental.isSelected = false
-        }
-
-        when(buttonId) {
-            R.id.buttonFarmingLifeBottomCommunity -> {
-                fragmentFarmingLifeBottomSheetBinding.buttonFarmingLifeBottomCommunity.isSelected = true
-            }
-            R.id.buttonFarmingLifeBottomFarmActivity-> {
-                fragmentFarmingLifeBottomSheetBinding.buttonFarmingLifeBottomFarmActivity.isSelected = true
-            }
-            R.id.buttonFarmingLifeBottomRental -> {
-                fragmentFarmingLifeBottomSheetBinding.buttonFarmingLifeBottomRental.isSelected = true
-            }
-        }
-    }
 
     // 파밍생활 커뮤니티 / 주말농장 및 체험활동 / 농기구 임대
     fun settingFarmingLifeBottom() {
@@ -81,21 +80,21 @@ class FarmingLifeBottomSheetFragment(var farmingLifeFragment: FarmingLifeFragmen
 
             // 커뮤니티 프래그먼트
             buttonFarmingLifeBottomCommunity.setOnClickListener {
-                changeButtonState(R.id.buttonFarmingLifeBottomCommunity)
                 dismiss()
-                farmingLifeFragment.replaceFragment(FarmingLifeFragmentName.COMMUNITY_FRAGMENT, false, false, null)
+                mainActivity.replaceFragment(MainFragmentName.COMMUNITY_FRAGMENT, false, false, null)
+                //changeButtonState(R.id.buttonFarmingLifeBottomFarmActivity)
             }
             // 주말농장 및 체험활동 프래그먼트
             buttonFarmingLifeBottomFarmActivity.setOnClickListener {
-                changeButtonState(R.id.buttonFarmingLifeBottomFarmActivity)
                 dismiss()
-
+                mainActivity.replaceFragment(MainFragmentName.FARM_ACTIVITY_FRAGMENT, false, false, null)
+                //changeButtonState(R.id.buttonFarmingLifeBottomFarmActivity)
             }
             // 농기구 임대 프래그먼트
             buttonFarmingLifeBottomRental.setOnClickListener {
-                changeButtonState(R.id.buttonFarmingLifeBottomRental)
                 dismiss()
-
+                mainActivity.replaceFragment(MainFragmentName.RENTAL_FRAGMENT, false, false, null)
+                //changeButtonState(R.id.buttonFarmingLifeBottomRental)
             }
         }
     }
@@ -110,6 +109,9 @@ class FarmingLifeBottomSheetFragment(var farmingLifeFragment: FarmingLifeFragmen
             val bottomSheetDialog = it as BottomSheetDialog
             // 높이를 설정한다.
             setBottomSheetHeight(bottomSheetDialog)
+
+            settingFarmingLifeBottom()
+            settingInitState(fragmentName)
         }
 
         return dialog
@@ -123,24 +125,9 @@ class FarmingLifeBottomSheetFragment(var farmingLifeFragment: FarmingLifeFragmen
         val behavior = BottomSheetBehavior.from(bottomSheet)
         // 높이를 설정한다.
         val layoutParams = bottomSheet.layoutParams
-        layoutParams.height = getBottomSheetDialogHeight()
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         bottomSheet.layoutParams = layoutParams
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-    }
-
-    // BottomSheet의 높이를 구한다(화면 액정의 85% 크기)
-    fun getBottomSheetDialogHeight() : Int {
-        return (getWindowHeight() * 0.19).toInt()
-    }
-
-    // 사용자 단말기 액정의 길이를 구해 반환하는 메서드
-    fun getWindowHeight() : Int {
-        // 화면 크기 정보를 담을 배열 객체
-        val displayMetrics = DisplayMetrics()
-        // 액정의 가로 세로 길이 정보를 담아준다.
-        mainActivity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        // 세로길이를 반환해준다.
-        return displayMetrics.heightPixels
     }
 }

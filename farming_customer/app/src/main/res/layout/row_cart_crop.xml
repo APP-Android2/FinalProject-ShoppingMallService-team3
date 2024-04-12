@@ -58,6 +58,7 @@
                             android:layout_height="wrap_content"
                             android:minWidth="0dp"
                             android:minHeight="0dp"
+                            android:checked="@={myPageCartViewModel.checkBoxRowCartTabCrop}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 

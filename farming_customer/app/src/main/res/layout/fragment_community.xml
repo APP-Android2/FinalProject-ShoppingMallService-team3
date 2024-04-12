@@ -9,27 +9,36 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.community.CommunityFragment">
+        tools:context=".fragment.community.CommunityFragment"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarCommunity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/green_main"
+            android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="farming"
             android:gravity="start">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="커뮤니티"
+                android:fontFamily="@font/pretendard_bold"
+                android:textSize="20sp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/brown_01"/>
+
             <ImageView
-                android:id="@+id/imageViewFarmingLife"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:id="@+id/imageViewCommunityBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:clickable="true"
-                android:src="@drawable/ic_launcher_background"
+                android:src="@drawable/bottom_triangle"
                 android:layout_gravity="start"
                 android:layout_marginStart="5dp"/>
         </com.google.android.material.appbar.MaterialToolbar>
@@ -94,7 +103,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:shapeAppearance="@style/Widget.Material3.CircularProgressIndicator"
-            app:srcCompat="@drawable/add"
+            app:srcCompat="@drawable/add_community"
             app:tint="@color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

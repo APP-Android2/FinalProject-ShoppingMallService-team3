@@ -21,8 +21,10 @@
             android:layout_width="50dp"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:layout_marginVertical="5dp"
+            android:layout_marginVertical="10dp"
             android:background="@color/grey_02" />
+
+
 
         <View
             android:id="@+id/divider9"
@@ -34,35 +36,37 @@
 
         <Button
             android:id="@+id/buttonFarmingLifeBottomCommunity"
-            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_semibold"
             android:insetTop="0dp"
             android:insetBottom="0dp"
+            android:checked="true"
             android:text="커뮤니티"
-            android:textColor="@drawable/textbutton_farming_life"
             android:textSize="18sp"
+            android:textColor="@color/brown_01"
             app:cornerRadius="0dp" />
 
-        <View
+            <View
                 android:id="@+id/divider10"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey_02" />
 
-            <Button
-                android:id="@+id/buttonFarmingLifeBottomFarmActivity"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="주말농장 및 체험활동"
-                android:textColor="@drawable/textbutton_farming_life"
-                android:textSize="18sp"
-                app:cornerRadius="0dp" />
+
+
+        <Button
+            android:id="@+id/buttonFarmingLifeBottomFarmActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:checked="true"
+            android:text="주말농장 및 체험활동"
+            android:textSize="18sp"
+            android:textColor="@color/brown_01"
+            app:cornerRadius="0dp" />
 
             <View
                 android:id="@+id/divider11"
@@ -70,24 +74,25 @@
                 android:layout_height="1dp"
                 android:background="@color/grey_02" />
 
-            <Button
-                android:id="@+id/buttonFarmingLifeBottomRental"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="농기구 임대"
-                android:textColor="@drawable/textbutton_farming_life"
-                android:textSize="18sp"
-                app:cornerRadius="0dp" />
+        <Button
+            android:id="@+id/buttonFarmingLifeBottomRental"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:checked="true"
+            android:text="농기구 임대"
+            android:textSize="18sp"
+            android:textColor="@color/brown_01"
+            app:cornerRadius="0dp" />
 
             <View
                 android:id="@+id/divider12"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey_02" />
+
 
     </LinearLayout>
 

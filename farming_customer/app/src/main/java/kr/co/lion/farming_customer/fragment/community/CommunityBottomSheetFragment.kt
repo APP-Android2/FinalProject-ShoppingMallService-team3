@@ -2,8 +2,6 @@ package kr.co.lion.farming_customer.fragment.community
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.DisplayMetrics
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,18 +11,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.DialogYesNo
-import kr.co.lion.farming_customer.FarmingLifeFragmentName
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
-import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityBottomSheetBinding
-import kr.co.lion.farming_customer.fragment.FarmingLifeBottomSheetFragment
-import kr.co.lion.farming_customer.fragment.FarmingLifeFragment
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.FarmingLifeBottomSheetViewModel
 
 
-class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragment) : BottomSheetDialogFragment() {
+class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragment) : BottomSheetDialogFragment(), DialogYesNoInterface {
     lateinit var fragmentCommunityBottomSheetBinding: FragmentCommunityBottomSheetBinding
     lateinit var communityActivity: CommunityActivity
     lateinit var communityViewModel: CommunityViewModel
@@ -54,7 +48,13 @@ class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragm
             }
             // 삭제하기
             buttonCommunityReadDelete.setOnClickListener {
-                val dialog = DialogYesNo("게시글을 삭제하시겠습니까?", "한 번 삭제한 게시물은 복원할 수 없습니다.", communityActivity)
+                val dialog = DialogYesNo(
+                    this@CommunityBottomSheetFragment,
+                    "게시글을 삭제하시겠습니까?",
+                    "한 번 삭제한 게시물은 복원할 수 없습니다.",
+                    communityActivity,
+                    0
+                )
                 dialog.show(communityActivity.supportFragmentManager, "DialogYesNo")
                 dismiss()
             }
@@ -84,25 +84,15 @@ class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragm
         val behavior = BottomSheetBehavior.from(bottomSheet)
         // 높이를 설정한다.
         val layoutParams = bottomSheet.layoutParams
-        layoutParams.height = getBottomSheetDialogHeight()
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         bottomSheet.layoutParams = layoutParams
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
     }
 
-    // BottomSheet의 높이를 구한다(화면 액정의 85% 크기)
-    fun getBottomSheetDialogHeight() : Int {
-        return (getWindowHeight() * 0.13).toInt()
+    override fun onYesButtonClick(id: Int) {
+        // 게시글 아이디로 삭제
     }
 
-    // 사용자 단말기 액정의 길이를 구해 반환하는 메서드
-    fun getWindowHeight() : Int {
-        // 화면 크기 정보를 담을 배열 객체
-        val displayMetrics = DisplayMetrics()
-        // 액정의 가로 세로 길이 정보를 담아준다.
-        communityActivity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        // 세로길이를 반환해준다.
-        return displayMetrics.heightPixels
-    }
 
 }

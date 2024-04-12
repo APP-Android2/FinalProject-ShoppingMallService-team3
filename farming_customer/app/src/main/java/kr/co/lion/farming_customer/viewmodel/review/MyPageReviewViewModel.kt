@@ -15,6 +15,7 @@ class MyPageReviewViewModel : ViewModel() {
     // 리뷰 탭 농작물 리뷰 옵션 라벨
     val textViewRowReviewTabCropLabel = MutableLiveData<String>()
 
+
     // 리뷰 탭 주말농장 리뷰 개수
     val textViewReviewTabFarmCount = MutableLiveData<String>()
     // 리뷰 탭 주말농장 리뷰 작성 날짜

@@ -10,46 +10,112 @@
             type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
+        <!--삭제 버튼 있는 레이아웃-->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="7">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewRowCommunityReadCommentProfile"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/profile" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#eeeeee"
+                android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/textViewRowCommunityReadCommentWriter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="@{communityViewModel.textViewRowCommunityReadCommentWriter}"
-                android:textColor="@color/brown_01"
-                android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:background="@color/grey_03">
+
+                <ImageView
+                    android:id="@+id/imageViewRowCommunityReadCommentModify"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/edit" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:background="@color/grey_03">
+
+                <ImageView
+                    android:id="@+id/imageViewRowCommunityReadCommentDelete"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/trash_can" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textViewRowCommunityReadCommentContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="@{communityViewModel.textViewRowCommunityReadCommentContent}"
-            android:textColor="@color/brown_01"
-            android:textSize="12sp" />
+        <!--기본 레이아웃-->
+        <LinearLayout
+            android:id="@+id/swipe_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingHorizontal="20dp"
+            android:elevation="10dp">
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageViewRowCommunityReadCommentProfile"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/profile" />
+
+                    <TextView
+                        android:id="@+id/textViewRowCommunityReadCommentWriter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="@{communityViewModel.textViewRowCommunityReadCommentWriter}"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewRowCommunityReadCommentContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{communityViewModel.textViewRowCommunityReadCommentContent}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
 </layout>

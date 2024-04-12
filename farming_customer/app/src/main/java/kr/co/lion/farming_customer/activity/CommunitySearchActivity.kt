@@ -1,53 +1,46 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.activity
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.FarmingLifeFragmentName
+import kr.co.lion.farming_customer.CommunityAddFragmentName
+import kr.co.lion.farming_customer.CommunitySearchFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeBinding
-import kr.co.lion.farming_customer.fragment.community.CommunityFragment
-import kr.co.lion.farming_customer.viewmodel.FarminglLifeViewModel
+import kr.co.lion.farming_customer.databinding.ActivityCommunityAddBinding
+import kr.co.lion.farming_customer.databinding.ActivityCommunitySearchBinding
+import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
+import kr.co.lion.farming_customer.fragment.community.CommunityAddFragment
+import kr.co.lion.farming_customer.fragment.community.CommunitySearchFragment
+import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 
-open class FarmingLifeFragment : Fragment() {
-    lateinit var fragmentFarmingLifeBinding: FragmentFarmingLifeBinding
-    lateinit var mainActivity: MainActivity
-    lateinit var farmingLifeViewModel: FarminglLifeViewModel
+class CommunitySearchActivity : AppCompatActivity() {
+    lateinit var activityCommunitySearchBinding: ActivityCommunitySearchBinding
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
     var newFragment: Fragment? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        fragmentFarmingLifeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_farming_life, container, false)
-        farmingLifeViewModel = FarminglLifeViewModel()
-        fragmentFarmingLifeBinding.farmingLifeViewModel = farmingLifeViewModel
-        fragmentFarmingLifeBinding.lifecycleOwner = this
-        mainActivity = activity as MainActivity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activityCommunitySearchBinding = ActivityCommunitySearchBinding.inflate(layoutInflater)
+        setContentView(activityCommunitySearchBinding.root)
 
-        replaceFragment(FarmingLifeFragmentName.COMMUNITY_FRAGMENT, false, false, null)
-        return fragmentFarmingLifeBinding.root
+        replaceFragment(CommunitySearchFragmentName.COMMUNITY_SEARCH_FRAGMENT, false, false, null)
     }
 
-
-    // 파밍생활 BottomSheet를 띄워준다.
-    fun showFarmingLifeBottom() {
-        val farmingLifeBottomSheetFragment = FarmingLifeBottomSheetFragment(this)
-        farmingLifeBottomSheetFragment.show(mainActivity.supportFragmentManager, "FarmingLifeBottomSheet")
-    }
-
-    fun replaceFragment(name: FarmingLifeFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerFarmingLife){
+    fun replaceFragment(name: CommunitySearchFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunitySearch){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
-        val fragmentTransaction = mainActivity.supportFragmentManager.beginTransaction()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
         // oldFragment에 newFragment가 가지고 있는 Fragment 객체를 담아준다.
         if(newFragment != null){
             oldFragment = newFragment
@@ -55,11 +48,9 @@ open class FarmingLifeFragment : Fragment() {
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
         when(name){
-            // 커뮤니티
-            FarmingLifeFragmentName.COMMUNITY_FRAGMENT -> {
-                newFragment = CommunityFragment(this)
+            CommunitySearchFragmentName.COMMUNITY_SEARCH_FRAGMENT -> {
+                newFragment = CommunitySearchFragment()
             }
-
         }
         if(data != null){
             newFragment?.arguments = data
@@ -116,9 +107,9 @@ open class FarmingLifeFragment : Fragment() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name: FarmingLifeFragmentName){
+    fun removeFragment(name: CommunitySearchFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
-        mainActivity.supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }

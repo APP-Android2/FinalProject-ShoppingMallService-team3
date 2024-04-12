@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabActivityBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryActivityBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageActivityBinding
-import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageFarmBinding
 import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
-class ReviewTabActivityFragment : Fragment() {
+class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentReviewTabActivityBinding: FragmentReviewTabActivityBinding
     lateinit var reviewActivity: ReviewActivity
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
@@ -98,8 +98,10 @@ class ReviewTabActivityFragment : Fragment() {
             holder.rowReviewHistoryActivityBinding.myPageReviewViewModel?.textViewRowReviewTabActivityLabel?.value = "파밍이네 감자 10kg"
 
             holder.rowReviewHistoryActivityBinding.buttonReviewTabActivityDelete.setOnClickListener {
-                val dialog = DialogYesNo(null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
-                        "삭제하시겠습니까?", reviewActivity)
+                val dialog = DialogYesNo(
+                    this@ReviewTabActivityFragment, null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
+                            "삭제하시겠습니까?", reviewActivity, position
+                )
                 dialog.show(this@ReviewTabActivityFragment?.parentFragmentManager!!, "DialogYesNo")
             }
         }
@@ -138,6 +140,10 @@ class ReviewTabActivityFragment : Fragment() {
                 holder.rowReviewHistoryImageActivityBinding.imageViewRowReviewTabActivity.setImageResource(R.drawable.ic_launcher_background)
             }
         }
+    }
+
+    override fun onYesButtonClick(id: Int) {
+        fragmentReviewTabActivityBinding.recyclerViewReviewTabActivity.adapter!!.notifyItemRemoved(id)
     }
 
 }

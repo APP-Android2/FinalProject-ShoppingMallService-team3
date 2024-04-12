@@ -10,6 +10,7 @@ import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.ReviewFragmentName
 import kr.co.lion.farming_customer.databinding.ActivityCommunityBinding
+import kr.co.lion.farming_customer.fragment.community.CommunityModifyFragment
 import kr.co.lion.farming_customer.fragment.community.CommunityReadFragment
 import kr.co.lion.farming_customer.fragment.review.ReviewHistoryFragment
 import kr.co.lion.farming_customer.fragment.review.ReviewTabActivityFragment
@@ -46,7 +47,7 @@ class CommunityActivity : AppCompatActivity() {
                 newFragment = CommunityReadFragment()
             }
             CommunityFragmentName.COMMUNITY_MODIFY_FRAGMENT -> {
-
+                newFragment = CommunityModifyFragment()
             }
         }
         if(data != null){

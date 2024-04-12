@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="communityViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,6 +42,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@color/white"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,42 +58,182 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewPager2CommunityAddImage"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintViewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/imageViewCommunityAdd"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:clickable="true"
-                        android:src="@drawable/add"
-                        android:tint="@color/grey_01"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/viewPager2CommunityAddImage" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <me.relex.circleindicator.CircleIndicator3
-                        android:id="@+id/circleIndicatorCommunityAdd"
-                        android:layout_width="0dp"
-                        android:layout_height="8dp"
-                        android:layout_marginBottom="10dp"
-                        app:ci_animator="@animator/scale_with_alpha"
-                        app:ci_drawable="@drawable/indicator_selected"
-                        app:ci_drawable_unselected="@drawable/indicator_unselected"
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewPager2CommunityAddImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageViewCommunityAddDefault"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@color/grey_03" />
+
+                        <ImageView
+                            android:id="@+id/imageViewCommunityAdd"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:clickable="true"
+                            android:src="@drawable/add"
+                            android:tint="@color/grey_01"
+                            app:layout_constraintBottom_toBottomOf="@id/viewPager2CommunityAddImage"
+                            app:layout_constraintEnd_toEndOf="@id/viewPager2CommunityAddImage"
+                            app:layout_constraintStart_toStartOf="@id/viewPager2CommunityAddImage"
+                            app:layout_constraintTop_toTopOf="@+id/viewPager2CommunityAddImage" />
+
+                        <me.relex.circleindicator.CircleIndicator3
+                            android:id="@+id/circleIndicatorCommunityAdd"
+                            android:layout_width="0dp"
+                            android:layout_height="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:translationZ="1dp"
+                            app:ci_animator="@animator/scale_with_alpha"
+                            app:ci_drawable="@drawable/indicator_selected"
+                            app:ci_drawable_unselected="@drawable/indicator_unselected"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutCommunityAddType"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textColorHint="@color/grey_01"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                        app:endIconMode="dropdown_menu"
+                        app:endIconTint="@android:color/transparent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/constraintViewPager"
+                        app:startIconDrawable="@drawable/ic_open_btn_grey"
+                        app:startIconScaleType="center"
+                        app:startIconTint="@color/grey_02"
+                        tools:layout_constraintEnd_toEndOf="parent">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/textViewCommunityAddType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawablePadding="0dp"
+                            android:fontFamily="@font/font_pre_semibold"
+                            android:hint="게시판 유형"
+                            android:inputType="none"
+                            android:popupBackground="@drawable/dropdown_box_border"
+                            android:text=""
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutCommunityAddSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textColorHint="@color/grey_01"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textInputLayoutCommunityAddType">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textViewCommunityAddSubject"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_pre_semibold"
+                            android:gravity="top"
+                            android:hint="글 제목 (최대 30자)"
+                            android:maxLength="30"
+                            android:text="@={communityViewModel.textViewCommunityAddSubject}"
+                            android:textColor="@color/brown_01"
+                            android:textColorHint="@color/grey_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutCommunityAddContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="@color/grey_01"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textInputLayoutCommunityAddSubject">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textViewCommunityAddContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_pre_semibold"
+                            android:gravity="top"
+                            android:hint="글 내용을 작성해주세요. (최대 2000자)"
+                            android:maxLength="2000"
+                            android:lines="30"
+                            android:maxLines="30"
+                            android:text="@={communityViewModel.textViewCommunityAddContent}"
+                            android:textColor="@color/brown_01"
+                            android:textColorHint="@color/grey_01"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonCommunityAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="180dp"
+                        android:layout_marginBottom="20dp"
+                        android:backgroundTint="@color/white"
+                        android:enabled="false"
+                        android:fontFamily="@font/font_pre_bold"
+                        android:text="등록"
+                        android:textColor="@color/green_main"
+                        android:textSize="16sp"
+                        app:cornerRadius="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCommunityAddContent"
+                        app:strokeColor="@color/green_main"
+                        app:strokeWidth="1dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
