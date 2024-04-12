@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_Board -> {
-                            //replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
-                            replaceFragment(MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT, false, false, null)
+                            replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
+//                            replaceFragment(MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottomNavigation_Home -> {
                             replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
@@ -60,9 +60,9 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
-                            //replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
-                            val intent = Intent(this@MainActivity, OrderHistoryActivity::class.java)
-                            startActivity(intent)
+                            replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+//                            val intent = Intent(this@MainActivity, OrderHistoryActivity::class.java)
+//                            startActivity(intent)
                         }
                     }
                     true
