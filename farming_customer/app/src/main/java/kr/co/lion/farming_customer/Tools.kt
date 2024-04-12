@@ -174,5 +174,6 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_CROP_FRAGMENT("PaymentCropFragment"),
     PAYMENT_FARM_ACTIVITY_FRAGMENT("PaymentFarmActivityFragment"),
     PAYMENT_SUCCESS_FRAGMENT("PaymentSuccessFragment"),
-    PAYMENT_FAIL_FRAGMENT("PaymentFailFragment")
+    PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
+    PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }

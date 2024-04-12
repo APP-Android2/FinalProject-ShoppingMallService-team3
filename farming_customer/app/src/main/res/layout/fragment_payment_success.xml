@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:transitionGroup="true">
 
         <LinearLayout
@@ -155,12 +156,16 @@
                 <Button
                     android:id="@+id/buttonPaymentSuccessGoHome"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="52dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/pretendard_semibold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
                     android:text="HOME"
                     android:textSize="20sp"
                     app:cornerRadius="10dp"
@@ -171,6 +176,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

@@ -20,6 +20,7 @@
             android:id="@+id/toolbarPaymentFarmActivity"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/white"
             android:minHeight="?attr/actionBarSize">
 
             <TextView
@@ -32,9 +33,10 @@
                 android:textSize="20sp" />
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,10 +48,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
+                <View
+                    android:id="@+id/divider112"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="?android:attr/listDivider" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="30dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/textViewPaymentFarmActivityReservation"
@@ -135,10 +144,17 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/divider113"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="?android:attr/listDivider" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="40dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/textViewPaymentFarmActivityPoint"
@@ -234,10 +250,17 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/divider114"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="?android:attr/listDivider" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="40dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/textViewPaymentFarmActivityPayMethod"
@@ -348,10 +371,17 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/divider115"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="?android:attr/listDivider" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="40dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/textViewPaymentFarmActivityPayPrice"
@@ -442,10 +472,17 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/divider116"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="?android:attr/listDivider" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="40dp">
+                    android:layout_height="match_parent">
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkBoxPaymentFarmActivityAllAgree"
@@ -455,11 +492,11 @@
                         android:layout_marginTop="20dp"
                         android:background="@drawable/checkbox_selector"
                         android:button="@android:color/transparent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxAllChanged()}"
                         android:checked="@={paymentFarmActivityViewModel.checkBoxPaymentFarmActivityAllAgree}"
-                        app:checkedState="@{paymentFarmActivityViewModel.checkBoxPaymentFarmActivityAllAgreeState}"/>
+                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxAllChanged()}"
+                        app:checkedState="@{paymentFarmActivityViewModel.checkBoxPaymentFarmActivityAllAgreeState}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkBoxPaymentFarmActivityPrivacy1"
@@ -469,10 +506,10 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/checkbox_selector"
                         android:button="@android:color/transparent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentFarmActivityAllAgree"
                         android:checked="@={paymentFarmActivityViewModel.checkBoxPaymentFarmActivityPrivacy1}"
-                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxChanged()}"/>
+                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxChanged()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentFarmActivityAllAgree" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkBoxPaymentFarmActivityPrivacy2"
@@ -482,10 +519,10 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/checkbox_selector"
                         android:button="@android:color/transparent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/checkBoxPaymentFarmActivityPrivacy1"
                         android:checked="@={paymentFarmActivityViewModel.checkBoxPaymentFarmActivityPrivacy2}"
-                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxChanged()}"/>
+                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxChanged()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPrivacyDetailContent1" />
 
                     <TextView
                         android:id="@+id/textViewPaymentFarmActivityAllAgree"
@@ -506,7 +543,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/pretendard_regular"
-                        android:text="[필수] 개인정보 수지 및 이용"
+                        android:text="[필수] 개인정보 수집 및 이용"
                         android:textColor="@color/brown_01"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/checkBoxPaymentFarmActivityPrivacy1"
@@ -540,6 +577,38 @@
                         app:layout_constraintTop_toTopOf="@+id/checkBoxPaymentFarmActivityPrivacy2" />
 
                     <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacyDetailContent1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/back_round"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:padding="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewPaymentFarmActivityPrivacyDetail1"
+                        app:layout_constraintStart_toStartOf="@+id/checkBoxPaymentFarmActivityPrivacy1"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentFarmActivityPrivacy1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacyDetailContent2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/back_round"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:padding="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewPaymentFarmActivityPrivacyDetail2"
+                        app:layout_constraintStart_toStartOf="@+id/checkBoxPaymentFarmActivityPrivacy2"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentFarmActivityPrivacy2" />
+
+                    <TextView
                         android:id="@+id/textViewPaymentFarmActivityPrivacyDetail2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -563,7 +632,7 @@
                         android:textColor="@color/orange_01"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPrivacy2" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPrivacyDetailContent2" />
 
                     <TextView
                         android:id="@+id/textViewPaymentFarmActivityDot"
@@ -610,6 +679,7 @@
                         android:layout_marginTop="36dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="20dp"
+                        android:enabled="@{paymentFarmActivityViewModel.buttonPaymentFarmActivityPayDone}"
                         android:fontFamily="@font/pretendard_bold"
                         android:gravity="center"
                         android:insetTop="0dp"
@@ -622,12 +692,11 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityDot"
-                        android:enabled="@{paymentFarmActivityViewModel.buttonPaymentFarmActivityPayDone}" />
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityDot" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 </layout>

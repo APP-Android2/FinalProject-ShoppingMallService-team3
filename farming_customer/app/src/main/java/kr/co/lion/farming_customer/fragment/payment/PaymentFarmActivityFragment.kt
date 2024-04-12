@@ -34,6 +34,7 @@ class PaymentFarmActivityFragment : Fragment() {
         settingRecyclerViewPaymentFarmActivity()
         settingCheckBoxAllAgree()
         settingButtonPayDone()
+        settingDetailButton()
 
         return fragmentPaymentFarmActivityBinding.root
     }
@@ -48,7 +49,7 @@ class PaymentFarmActivityFragment : Fragment() {
         }
     }
 
-    // 동의를 눌렀을때
+    // 동의 버튼 초기화
     fun settingCheckBoxAllAgree(){
         fragmentPaymentFarmActivityBinding.apply {
             // 결제버튼 비활성화
@@ -68,6 +69,26 @@ class PaymentFarmActivityFragment : Fragment() {
                 paymentActivity.replaceFragment(PaymentFragmentName.PAYMENT_SUCCESS_FRAGMENT,false,true,null)
             }
 
+        }
+    }
+
+    // 필수 동의 내용 버튼
+    fun settingDetailButton(){
+        fragmentPaymentFarmActivityBinding.apply {
+            textViewPaymentFarmActivityPrivacyDetail1.setOnClickListener {
+                if(textViewPaymentFarmActivityPrivacyDetailContent1.visibility == View.GONE){
+                    textViewPaymentFarmActivityPrivacyDetailContent1.visibility = View.VISIBLE
+                }else{
+                    textViewPaymentFarmActivityPrivacyDetailContent1.visibility = View.GONE
+                }
+            }
+            textViewPaymentFarmActivityPrivacyDetail2.setOnClickListener {
+                if(textViewPaymentFarmActivityPrivacyDetailContent2.visibility == View.GONE){
+                    textViewPaymentFarmActivityPrivacyDetailContent2.visibility = View.VISIBLE
+                }else{
+                    textViewPaymentFarmActivityPrivacyDetailContent2.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -92,7 +113,7 @@ class PaymentFarmActivityFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 5
+            return 15
         }
 
         override fun onBindViewHolder(holder: PaymentFarmActivityViewHolder, position: Int) {

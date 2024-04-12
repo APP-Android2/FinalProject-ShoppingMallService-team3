@@ -18,6 +18,7 @@ import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementMod
 import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementProfileModifyFragment
 import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementUserInfoModifyFragment
 import kr.co.lion.farming_customer.fragment.payment.PaymentCropFragment
+import kr.co.lion.farming_customer.fragment.payment.PaymentDeliveryAddressFragment
 import kr.co.lion.farming_customer.fragment.payment.PaymentFailFragment
 import kr.co.lion.farming_customer.fragment.payment.PaymentFarmActivityFragment
 import kr.co.lion.farming_customer.fragment.payment.PaymentSuccessFragment
@@ -34,7 +35,7 @@ class PaymentActivity : AppCompatActivity() {
 
         activityPaymentBinding = ActivityPaymentBinding.inflate(layoutInflater)
 
-        replaceFragment(PaymentFragmentName.PAYMENT_FARM_ACTIVITY_FRAGMENT,false,false,null)
+        replaceFragment(PaymentFragmentName.PAYMENT_CROP_FRAGMENT,false,false,null)
 
         setContentView(activityPaymentBinding.root)
     }
@@ -61,6 +62,9 @@ class PaymentActivity : AppCompatActivity() {
             }
             PaymentFragmentName.PAYMENT_FAIL_FRAGMENT -> {
                 newFragment = PaymentFailFragment()
+            }
+            PaymentFragmentName.PAYMENT_DELIVERY_ADDRESS_FRAGMENT -> {
+                newFragment = PaymentDeliveryAddressFragment()
             }
         }
         if(data != null){
