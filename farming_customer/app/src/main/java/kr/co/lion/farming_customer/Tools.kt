@@ -168,3 +168,11 @@ enum class LoginFragmentName(var str: String){
     FIND_PW_DONE_FRAGMENT("FindPwDoneFragment"),
     FIND_PW_DONE2_FRAGMENT("FindPwDone2Fragment"),
 }
+
+// PaymentActivity에서 보여줄 프래그먼트들의 이름
+enum class PaymentFragmentName(var str:String){
+    PAYMENT_CROP_FRAGMENT("PaymentCropFragment"),
+    PAYMENT_FARM_ACTIVITY_FRAGMENT("PaymentFarmActivityFragment"),
+    PAYMENT_SUCCESS_FRAGMENT("PaymentSuccessFragment"),
+    PAYMENT_FAIL_FRAGMENT("PaymentFailFragment")
+}

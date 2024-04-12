@@ -65,7 +65,7 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:gravity="center"
                         android:text="라벨종류"
-                        android:textColor="@color/orange"
+                        android:textColor="@color/orange_01"
                         android:textSize="12sp" />
 
                     <TextView
