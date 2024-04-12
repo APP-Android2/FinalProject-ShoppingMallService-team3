@@ -158,6 +158,12 @@ enum class OrderHistoryFragmentName(var str:String){
     ORDER_HISTORY_WRITE_REVIEW_FRAGMENT("OrderHistoryWriteReviewFragment")
 }
 
+// 농기구 프래그먼트
+enum class FarmingLifeToolsFragmentName(var str: String) {
+    FARMING_LIFE_TOOLS_MAP_FRAGMENT("FarmingLifeToolsMapFragment"),
+    FARMING_LIFE_TOOLS_LIST_FRAGMENT("FarmingLifeToolsListFragment")
+}
+
 enum class LoginFragmentName(var str: String){
     LOGIN_FRAGMENT("LoginFragment"),
     REGISTER_FRAGMENT("RegisterFragment"),

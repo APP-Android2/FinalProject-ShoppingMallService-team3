@@ -19,6 +19,7 @@ import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
 import kr.co.lion.farming_customer.fragment.TradeFragment
+import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 newFragment = TradeFragment()
             }
             MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = BoardFragment()
+                newFragment = FarmingLifeToolsFragment()
             }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
