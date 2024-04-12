@@ -52,5 +52,6 @@ dependencies {
     implementation("com.github.ome450901:SimpleRatingBar:1.5.1")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("com.github.amarjain07:StickyScrollView:1.0.3")
 
 }

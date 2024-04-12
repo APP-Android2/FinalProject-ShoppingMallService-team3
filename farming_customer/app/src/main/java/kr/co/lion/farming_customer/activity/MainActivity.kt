@@ -16,6 +16,7 @@ import kr.co.lion.farming_customer.fragment.MyPageFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeDetailFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeSearchFragment
+import kr.co.lion.farming_customer.fragment.tradeCrop.TradeTabDetailFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -97,6 +98,9 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.TRADE_DETAIL_FRAGMENT -> {
                 newFragment = TradeDetailFragment()
+            }
+            MainFragmentName.TRADE_TAB_DETAIL_FRAGMENT -> {
+                newFragment = TradeTabDetailFragment()
             }
         }
         if(data != null){

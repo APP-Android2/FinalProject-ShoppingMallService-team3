@@ -1,6 +1,19 @@
 package kr.co.lion.farming_customer
 
+import android.content.Context
+import android.util.TypedValue
+
 class Tools {
+    companion object{
+        // dp를 픽셀로 변환하는 함수
+        fun dpToPx(context: Context, dp: Int): Int {
+            return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp.toFloat(),
+                context.resources.displayMetrics
+            ).toInt()
+        }
+    }
 }
 
 // MainActivity에서 보여줄 프래그먼트들의 이름
@@ -12,6 +25,7 @@ enum class MainFragmentName(var str : String){
     MY_PAGE_FRAGMENT("MyPageFragment"),
     TRADE_SEARCH_FRAGMENT("TradeSearchFragment"),
     TRADE_DETAIL_FRAGMENT("TradeDetailFragment"),
+    TRADE_TAB_DETAIL_FRAGMENT("TradeTabDetailFragment")
 }
 
 enum class LoginFragmentName(var str: String){
