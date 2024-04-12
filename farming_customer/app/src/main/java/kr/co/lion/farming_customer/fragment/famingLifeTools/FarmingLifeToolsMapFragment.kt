@@ -6,18 +6,15 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -28,6 +25,7 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeToolsMapBinding
 import kr.co.lion.farming_customer.fragment.famingLifeTools.adapter.FarmingLifeMapVPAdapter
 
+@Suppress("DEPRECATION")
 class FarmingLifeToolsMapFragment() : Fragment() {
     lateinit var binding: FragmentFarmingLifeToolsMapBinding
     lateinit var mapVPAdapter: FarmingLifeMapVPAdapter
@@ -77,46 +75,19 @@ class FarmingLifeToolsMapFragment() : Fragment() {
     fun settingGoogleMap(){
         // MapFragment 객체를 가져온다.
         val supportMapFragment = childFragmentManager.findFragmentById(R.id.farming_life_tools_map_fragment) as SupportMapFragment
-        // 리스너를 설정한다.
-        // 구글 지도 사용이 완료되면 동작한다.
-        supportMapFragment.getMapAsync {
-            // Snackbar.make(activityMainBinding.root, "구글 지도가 나타났습니다", Snackbar.LENGTH_SHORT).show()
 
-            // 구글 지도 객체 객체를 담아준다.
+        supportMapFragment.getMapAsync {
+
             mainGoogleMap = it
 
             // 확대 축소 버튼
-            mainGoogleMap.uiSettings.isZoomControlsEnabled = true
+            mainGoogleMap.uiSettings.isZoomControlsEnabled = false
 
-            // 현재 위치로 이동시키는 버튼을 둔다.
-            // 사용자 현재 위치도 표시된다.
-            // 만약 사용자 위치를 기본 모양이 아닌 다른 모양으로 표시하고 싶다면
-            // mainGoogleMap.uiSettings.isMyLocationButtonEnabled = false 도
-            // 같이 주석처리 해주세요
-            // mainGoogleMap.isMyLocationEnabled = true
-
-            // isMyLocationEnabled 에 true를 넣어주면 현재 위치를 표시하는 것 뿐만 아니라
-            // 현재 위치로 이동하는 버튼도 표시된다.
-            // 이 버튼을 제거하겠다면...
-            // mainGoogleMap.uiSettings.isMyLocationButtonEnabled = false
-
-            // 지도의 타입
-            // 데이터 사용량 : NONE < NORMAL < TERRAIN < SATELLITE < HYBRID
-            // 지도 뜨는 시간 : HYBRID > SATELLITE > TERRAIN > NORMAL > NONE
-            // mainGoogleMap.mapType = GoogleMap.MAP_TYPE_NONE
-            // 기본
             mainGoogleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-            // mainGoogleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-            // mainGoogleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-            // mainGoogleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-
 
             // 위치 정보를 관리하는 객체를 가지고 온다.
             locationManager = requireActivity().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
-            // 위치 정보 수집에 성공하면 동작할 리스너
-            // myLocationListener = MyLocationListener()
 
-            // 단말기에 저장되어 있는 위치 값을 가져온다.
             // 위치정보 사용 권한 허용 여부 확인
             val a1 = ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
             val a2 = ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -152,9 +123,6 @@ class FarmingLifeToolsMapFragment() : Fragment() {
 
         // GPS 프로바이더 사용이 가능하다면
         if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) == true){
-            // 첫 번째 : 사용할 프로바이더
-            // 두 번째 : 리스너의 메서드가 호출 될 시간 주기(ms). 0을 넣어주면 최대한 짧은 시간 주기
-            // 세 번째 : 리스너의 메서드가 호출 될 거리 주기(m). 0을 넣어주면 최대한 짧은 거리 주기
             if(gpsLocationListener == null) {
                 gpsLocationListener = MyLocationListener()
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, gpsLocationListener!!)
@@ -164,17 +132,12 @@ class FarmingLifeToolsMapFragment() : Fragment() {
         if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) == true){
             if(networkLocationListener == null) {
                 networkLocationListener = MyLocationListener()
-                // locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0.0f, networkLocationListener!!)
             }
         }
     }
 
     // 지도의 위치를 설정하는 메서드
     fun setMyLocation(location: Location){
-        // 위도와 경도를 출력한다.
-//        Snackbar.make(binding.root, "provider : ${location.provider}, 위도 : ${location.latitude}, 경도 : ${location.longitude}",
-//            Snackbar.LENGTH_SHORT).show()
-
         // 위도와 경도를 관리하는 객체를 생성한다.
         val userLocation = LatLng(location.latitude, location.longitude)
 
@@ -183,8 +146,7 @@ class FarmingLifeToolsMapFragment() : Fragment() {
         // 두 번째 : 줌 배율
         val cameraUpdate = CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f)
 
-        // 카메라를 이동시킨다.
-        // mainGoogleMap.moveCamera(cameraUpdate)
+        // 카메라를 이동
         mainGoogleMap.animateCamera(cameraUpdate)
 
         // 현재위치를 담은 마커를 생성한다.
@@ -201,7 +163,6 @@ class FarmingLifeToolsMapFragment() : Fragment() {
         val markerBitmap = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker)
         markerOptions.icon(markerBitmap)
 
-        // 마커를 지도에 표시해준다.
         myMarker = mainGoogleMap.addMarker(markerOptions)
     }
 
