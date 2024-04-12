@@ -11,15 +11,16 @@
             type="kr.co.lion.farming_customer.viewmodel.farmingLife.RowFarmingLifeReviewViewModel" />
 
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp">
+        android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
