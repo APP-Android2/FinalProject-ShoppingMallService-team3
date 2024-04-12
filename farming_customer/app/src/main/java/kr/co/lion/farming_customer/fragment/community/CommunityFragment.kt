@@ -55,7 +55,7 @@ class CommunityFragment : Fragment() {
                 inflateMenu(R.menu.menu_farming_life)
                 setOnMenuItemClickListener {
                     when(it.itemId) {
-                        R.id.menuItemFarmingSearch -> {
+                        R.id.menuItemFarmingLife_search -> {
                             val communitySearchIntent = Intent(mainActivity, CommunitySearchActivity::class.java)
                             startActivity(communitySearchIntent)
                         }
