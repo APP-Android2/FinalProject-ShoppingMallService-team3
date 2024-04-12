@@ -1,28 +1,26 @@
 package kr.co.lion.farming_customer.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.MainFragmentName
+import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
-import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
-import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
-import kr.co.lion.farming_customer.activity.payment.PaymentActivity
-import kr.co.lion.farming_customer.databinding.ActivityMainBinding
-import kr.co.lion.farming_customer.fragment.BoardFragment
-import kr.co.lion.farming_customer.fragment.HomeFragment
-import kr.co.lion.farming_customer.fragment.LikeFragment
-import kr.co.lion.farming_customer.fragment.MyPageFragment
-import kr.co.lion.farming_customer.fragment.TradeFragment
-import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
+import kr.co.lion.farming_customer.databinding.ActivityLoginBinding
+import kr.co.lion.farming_customer.fragment.FindAccountFragment
+import kr.co.lion.farming_customer.fragment.FindIdDoneFragment
+import kr.co.lion.farming_customer.fragment.FindPwDone2Fragment
+import kr.co.lion.farming_customer.fragment.FindPwDoneFragment
+import kr.co.lion.farming_customer.fragment.LoginFragment
+import kr.co.lion.farming_customer.fragment.Register2Fragment
+import kr.co.lion.farming_customer.fragment.Register3Fragment
+import kr.co.lion.farming_customer.fragment.RegisterFragment
 
-class MainActivity : AppCompatActivity() {
-    lateinit var activityMainBinding: ActivityMainBinding
+class LoginActivity : AppCompatActivity() {
+
+    lateinit var activityLoginBinding: ActivityLoginBinding
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
@@ -31,47 +29,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(activityMainBinding.root)
+        activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(activityLoginBinding.root)
 
-        settingBottomNavigation()
-
-        replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
+        replaceFragment(LoginFragmentName.LOGIN_FRAGMENT, addToBackStack = false, isAnimate = false, data = null)
     }
 
-    // 네비게이션 세팅
-    private fun settingBottomNavigation() {
-        activityMainBinding.apply {
-            bottomNavigation.apply {
-                // 초기화면 홈으로 세팅
-                selectedItemId = R.id.menuItemBottomNavigation_Home
-                setOnItemSelectedListener {
-                    when(it.itemId){
-                        R.id.menuItemBottomNavigation_Trade -> {
-                            replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
-                        }
-                        R.id.menuItemBottonNavigation_Board -> {
-                            replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
-                        }
-                        R.id.menuItemBottomNavigation_Home -> {
-                            replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
-
-                        }
-                        R.id.menuItemBottonNavigation_Like -> {
-                            replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
-                        }
-                        R.id.menuItemBottonNavigation_MyPage -> {
-                            replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
-
-                        }
-                    }
-                    true
-                }
-            }
-        }
-    }
-
-    fun replaceFragment(name:MainFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
+    fun replaceFragment(name: LoginFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -81,21 +45,32 @@ class MainActivity : AppCompatActivity() {
         }
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
-        when(name){
-            MainFragmentName.TRADE_FRAGMENT -> {
-                newFragment = TradeFragment()
+        newFragment = when(name){
+            LoginFragmentName.LOGIN_FRAGMENT -> {
+                LoginFragment()
             }
-            MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = FarmingLifeToolsFragment()
+
+            LoginFragmentName.REGISTER_FRAGMENT -> {
+                RegisterFragment()
             }
-            MainFragmentName.HOME_FRAGMENT -> {
-                newFragment = HomeFragment()
+
+            LoginFragmentName.REGISTER2_FRAGMENT -> {
+                Register2Fragment()
             }
-            MainFragmentName.LIKE_FRAGMENT -> {
-                newFragment = LikeFragment()
+            LoginFragmentName.REGISTER3_FRAGMENT -> {
+                Register3Fragment()
             }
-            MainFragmentName.MY_PAGE_FRAGMENT -> {
-                newFragment = MyPageFragment()
+            LoginFragmentName.FIND_ACCOUNT_FRAGMENT -> {
+                FindAccountFragment()
+            }
+            LoginFragmentName.FIND_ID_DONE_FRAGMENT -> {
+                FindIdDoneFragment()
+            }
+            LoginFragmentName.FIND_PW_DONE_FRAGMENT -> {
+                FindPwDoneFragment()
+            }
+            LoginFragmentName.FIND_PW_DONE2_FRAGMENT -> {
+                FindPwDone2Fragment()
             }
         }
         if(data != null){
@@ -141,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             // Fragment를 교체한다.(이전 Fragment가 없으면 새롭게 추가하는 역할을 수행한다)
             // 첫 번째 매개 변수 : Fragment를 배치할 FragmentContainerView의 ID
             // 두 번째 매개 변수 : 보여주고하는 Fragment 객체를
-            fragmentTransaction.replace(R.id.containerMain, newFragment!!)
+            fragmentTransaction.replace(R.id.containerLogin, newFragment!!)
 
             // addToBackStack 변수의 값이 true면 새롭게 보여질 Fragment를 BackStack에 포함시켜 준다.
             if(addToBackStack){
@@ -153,7 +128,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name:MainFragmentName){
+    fun removeFragment(name: LoginFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)

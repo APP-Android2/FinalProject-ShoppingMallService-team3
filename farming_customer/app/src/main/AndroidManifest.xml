@@ -22,6 +22,9 @@
             android:name=".activity.farmingLifeTools.FarmingLifeToolsDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.orderHistory.OrderHistoryActivity"
             android:exported="false" />
         <activity
@@ -37,13 +40,26 @@
             android:name=".activity.myPageManagement.MyPageManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
+          
+            <!-- MainActivity Launcher 인텐트 필터 주석처리
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+          
         </activity>
 
         <meta-data

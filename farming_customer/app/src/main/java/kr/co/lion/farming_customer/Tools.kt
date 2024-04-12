@@ -115,6 +115,15 @@ enum class MainFragmentName(var str : String){
     MY_PAGE_FRAGMENT("MyPageFragment")
 }
 
+// 좋아요 타입
+enum class LikeType(var str:String, var num:Int){
+    CROP("Crop",1),
+    POST("Post",2),
+    FARM("Farm",3),
+    ACTIVITY("Activity",4),
+    RENTAL("Rental",5)
+}
+
 // MyPageManagementActivity에서 보여줄 프래그먼트들의 이름
 enum class MyPageManagementName(var str:String){
     MY_PAGE_MANAGEMENT_MAIN("MyPageManagementMainFragment"),
@@ -153,4 +162,24 @@ enum class OrderHistoryFragmentName(var str:String){
 enum class FarmingLifeToolsFragmentName(var str: String) {
     FARMING_LIFE_TOOLS_MAP_FRAGMENT("FarmingLifeToolsMapFragment"),
     FARMING_LIFE_TOOLS_LIST_FRAGMENT("FarmingLifeToolsListFragment")
+}
+
+enum class LoginFragmentName(var str: String){
+    LOGIN_FRAGMENT("LoginFragment"),
+    REGISTER_FRAGMENT("RegisterFragment"),
+    REGISTER2_FRAGMENT("Register2Fragment"),
+    REGISTER3_FRAGMENT("Register3Fragment"),
+    FIND_ACCOUNT_FRAGMENT("FindAccountFragment"),
+    FIND_ID_DONE_FRAGMENT("FindIdDoneFragment"),
+    FIND_PW_DONE_FRAGMENT("FindPwDoneFragment"),
+    FIND_PW_DONE2_FRAGMENT("FindPwDone2Fragment"),
+}
+
+// PaymentActivity에서 보여줄 프래그먼트들의 이름
+enum class PaymentFragmentName(var str:String){
+    PAYMENT_CROP_FRAGMENT("PaymentCropFragment"),
+    PAYMENT_FARM_ACTIVITY_FRAGMENT("PaymentFarmActivityFragment"),
+    PAYMENT_SUCCESS_FRAGMENT("PaymentSuccessFragment"),
+    PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
+    PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }

@@ -1,77 +1,46 @@
-package kr.co.lion.farming_customer.activity
+package kr.co.lion.farming_customer.activity.payment
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.MainFragmentName
+import kr.co.lion.farming_customer.MyPageManagementName
+import kr.co.lion.farming_customer.PaymentFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
-import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
-import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
-import kr.co.lion.farming_customer.activity.payment.PaymentActivity
-import kr.co.lion.farming_customer.databinding.ActivityMainBinding
-import kr.co.lion.farming_customer.fragment.BoardFragment
-import kr.co.lion.farming_customer.fragment.HomeFragment
-import kr.co.lion.farming_customer.fragment.LikeFragment
-import kr.co.lion.farming_customer.fragment.MyPageFragment
-import kr.co.lion.farming_customer.fragment.TradeFragment
-import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
+import kr.co.lion.farming_customer.databinding.ActivityPaymentBinding
+import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementAddDeliveryAddressFragment
+import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementCheckUserInfoModifyFragment
+import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementDeliveryAddressFragment
+import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementMainFragment
+import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementModifyDeliveryAddressFragment
+import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementProfileModifyFragment
+import kr.co.lion.farming_customer.fragment.myPageManagement.MyPageManagementUserInfoModifyFragment
+import kr.co.lion.farming_customer.fragment.payment.PaymentCropFragment
+import kr.co.lion.farming_customer.fragment.payment.PaymentDeliveryAddressFragment
+import kr.co.lion.farming_customer.fragment.payment.PaymentFailFragment
+import kr.co.lion.farming_customer.fragment.payment.PaymentFarmActivityFragment
+import kr.co.lion.farming_customer.fragment.payment.PaymentSuccessFragment
 
-class MainActivity : AppCompatActivity() {
-    lateinit var activityMainBinding: ActivityMainBinding
+class PaymentActivity : AppCompatActivity() {
 
-    // 프래그먼트 객체를 담을 변수
-    var oldFragment: Fragment? = null
+    lateinit var activityPaymentBinding: ActivityPaymentBinding
+
     var newFragment: Fragment? = null
+    var oldFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(activityMainBinding.root)
+        activityPaymentBinding = ActivityPaymentBinding.inflate(layoutInflater)
 
-        settingBottomNavigation()
+        replaceFragment(PaymentFragmentName.PAYMENT_CROP_FRAGMENT,false,false,null)
 
-        replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
+        setContentView(activityPaymentBinding.root)
     }
 
-    // 네비게이션 세팅
-    private fun settingBottomNavigation() {
-        activityMainBinding.apply {
-            bottomNavigation.apply {
-                // 초기화면 홈으로 세팅
-                selectedItemId = R.id.menuItemBottomNavigation_Home
-                setOnItemSelectedListener {
-                    when(it.itemId){
-                        R.id.menuItemBottomNavigation_Trade -> {
-                            replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
-                        }
-                        R.id.menuItemBottonNavigation_Board -> {
-                            replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
-                        }
-                        R.id.menuItemBottomNavigation_Home -> {
-                            replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
-
-                        }
-                        R.id.menuItemBottonNavigation_Like -> {
-                            replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
-                        }
-                        R.id.menuItemBottonNavigation_MyPage -> {
-                            replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
-
-                        }
-                    }
-                    true
-                }
-            }
-        }
-    }
-
-    fun replaceFragment(name:MainFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
+    fun replaceFragment(name: PaymentFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -82,20 +51,20 @@ class MainActivity : AppCompatActivity() {
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
         when(name){
-            MainFragmentName.TRADE_FRAGMENT -> {
-                newFragment = TradeFragment()
+            PaymentFragmentName.PAYMENT_CROP_FRAGMENT -> {
+                newFragment = PaymentCropFragment()
+           }
+            PaymentFragmentName.PAYMENT_FARM_ACTIVITY_FRAGMENT -> {
+                newFragment = PaymentFarmActivityFragment()
             }
-            MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = FarmingLifeToolsFragment()
+            PaymentFragmentName.PAYMENT_SUCCESS_FRAGMENT -> {
+                newFragment = PaymentSuccessFragment()
             }
-            MainFragmentName.HOME_FRAGMENT -> {
-                newFragment = HomeFragment()
+            PaymentFragmentName.PAYMENT_FAIL_FRAGMENT -> {
+                newFragment = PaymentFailFragment()
             }
-            MainFragmentName.LIKE_FRAGMENT -> {
-                newFragment = LikeFragment()
-            }
-            MainFragmentName.MY_PAGE_FRAGMENT -> {
-                newFragment = MyPageFragment()
+            PaymentFragmentName.PAYMENT_DELIVERY_ADDRESS_FRAGMENT -> {
+                newFragment = PaymentDeliveryAddressFragment()
             }
         }
         if(data != null){
@@ -141,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             // Fragment를 교체한다.(이전 Fragment가 없으면 새롭게 추가하는 역할을 수행한다)
             // 첫 번째 매개 변수 : Fragment를 배치할 FragmentContainerView의 ID
             // 두 번째 매개 변수 : 보여주고하는 Fragment 객체를
-            fragmentTransaction.replace(R.id.containerMain, newFragment!!)
+            fragmentTransaction.replace(R.id.containerPayment, newFragment!!)
 
             // addToBackStack 변수의 값이 true면 새롭게 보여질 Fragment를 BackStack에 포함시켜 준다.
             if(addToBackStack){
@@ -152,8 +121,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name:MainFragmentName){
+    fun removeFragment(name:PaymentFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
