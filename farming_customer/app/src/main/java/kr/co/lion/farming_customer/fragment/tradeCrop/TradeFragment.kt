@@ -45,6 +45,9 @@ class TradeFragment : Fragment() {
             toolbarTrade.apply {
                 title = "farming"
 
+                // 메뉴 등록
+                inflateMenu(R.menu.menu_trade)
+
                 // 검색 버튼 눌렀을 때
                 setOnMenuItemClickListener {
                     when(it.itemId){
@@ -91,7 +94,7 @@ class TradeFragment : Fragment() {
         fragmentTradeBinding.recyclerViewTradeNew.layoutManager = layoutManager
 
         val products = listOf(
-            ProductCard(R.drawable.farming_mark, "사과", "10,000원", 999, 1.0),
+            ProductCard(R.drawable.farming_mark, "사과", "10,000원", 999, 1.0, ),
             ProductCard(R.drawable.farming_mark, "배", "10,000원", 999, 2.0),
             ProductCard(R.drawable.farming_mark, "감자", "10,000원", 999, 3.0),
             ProductCard(R.drawable.farming_mark, "바나나", "10,000원", 999, 4.0),

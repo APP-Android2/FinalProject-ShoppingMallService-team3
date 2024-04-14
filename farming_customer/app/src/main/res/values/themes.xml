@@ -52,4 +52,29 @@
         <item name="android:textSize">12sp</item> <!-- 텍스트 크기 조절 -->
     </style>
 
+    // button text custom
+    <style name="buttonText_OrderHistory" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    // button custom
+    <style name="buttonStyle_OrderHistory" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/green_main</item>
+        <item name="strokeColor">@color/green_main</item>
+        <item name="android:textAppearance">@style/buttonText_OrderHistory</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="buttonStyle_OrderHistory_filled" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/green_main</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="strokeColor">@color/green_main</item>
+        <item name="android:textAppearance">@style/buttonText_OrderHistory</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
 </resources>

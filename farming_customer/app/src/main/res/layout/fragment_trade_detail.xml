@@ -26,6 +26,7 @@
             app:titleTextColor="@color/brown_01" />
 
         <com.amar.library.ui.StickyScrollView
+            android:id="@+id/stickyScrollViewTradeDetail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -169,6 +170,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="32dp"
                     android:background="@drawable/selector_tab_indicator"
+                    android:backgroundTint="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewTradeDetailFee"
@@ -332,9 +334,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -394,21 +397,22 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/imageButtonLike"
                 android:layout_width="42.9dp"
                 android:layout_height="35dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="13dp"
                 android:backgroundTint="@color/white"
                 android:src="@drawable/heart_02" />
 
             <Button
                 android:id="@+id/buttonTradeDetailPurchase"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="21dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"

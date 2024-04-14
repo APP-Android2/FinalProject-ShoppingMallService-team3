@@ -4,17 +4,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <GridLayout
-        android:layout_width="match_parent"
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
             style="?attr/materialCardViewFilledStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
             android:backgroundTint="@color/white"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"
             app:strokeColor="@color/grey_02">

@@ -7,5 +7,5 @@ data class CropReview(
     val imageResourceIds: List<Int>?,
     val productName: String,
     val optionName: String,
-    val date: String
+    val date: String,
 )
