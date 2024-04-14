@@ -32,7 +32,7 @@
                     android:fontFamily="@font/pretendard_bold"
                     android:text="주말농장/체험활동"
                     android:textColor="@color/brown_01"
-                    tools:textSize="20sp" />
+                    android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/imageView2"

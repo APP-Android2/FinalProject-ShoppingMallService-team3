@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,10 +12,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.GridSpaceItemDecoration
 import kr.co.lion.farming_customer.LikeType
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
 import kr.co.lion.farming_customer.databinding.FragmentLikeBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.databinding.RowLikeFarmActivityBinding
@@ -204,12 +209,19 @@ class LikeFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: LikePostViewHolder, position: Int) {
-            holder.rowLikePostBinding.textViewLikePostLabel.text = "정보"
-            holder.rowLikePostBinding.textViewLikePostTitle.text = "글 제목$position"
-            holder.rowLikePostBinding.textViewLikePostContent.text = "글 내용입니다요 $position"
-            holder.rowLikePostBinding.textViewLikePostViewCnt.text = "$position"
-            holder.rowLikePostBinding.textViewLikePostCommentCnt.text = "$position"
-            holder.rowLikePostBinding.textViewLikePostDate.text = "2024-04-09"
+            holder.rowLikePostBinding.apply {
+                textViewLikePostLabel.text = "정보"
+                textViewLikePostTitle.text = "글 제목$position"
+                textViewLikePostContent.text = "글 내용입니다요 $position"
+                textViewLikePostViewCnt.text = "$position"
+                textViewLikePostCommentCnt.text = "$position"
+                textViewLikePostDate.text = "2024-04-09"
+            }
+            // 아이템 클릭 이벤트
+            holder.rowLikePostBinding.root.setOnClickListener {
+                val intent = Intent(mainActivity, CommunityActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -237,9 +249,18 @@ class LikeFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: LikeFarmAndAcitivityViewHolder, position: Int) {
-            holder.rowLikeFarmActivityBinding.textViewLikeFarmAndActivityName.text = "농작물이름$position"
-            holder.rowLikeFarmActivityBinding.textViewLikeFarmAndActivityLocation.text = "00광역시 00구 00면 $position"
-            holder.rowLikeFarmActivityBinding.textViewLikeFarmAndActivityPrice.text = "${position}0,000원"
+            holder.rowLikeFarmActivityBinding.apply {
+                textViewLikeFarmAndActivityName.text = "주말농장 이름$position"
+                textViewLikeFarmAndActivityLocation.text = "00광역시 00구 00면 $position"
+                textViewLikeFarmAndActivityPrice.text = "${position}0,000원"
+            }
+            // 아이템 클릭 이벤트
+            holder.rowLikeFarmActivityBinding.root.setOnClickListener {
+                val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
+                intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_FARM_DETAIL_FARMGNET)
+                startActivity(intent)
+
+            }
         }
     }
 
@@ -268,10 +289,18 @@ class LikeFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: LikeRentalViewHolder, position: Int) {
-            holder.rowLikeRentalBinding.textViewLikeRentalName.text = "농기구점 이름$position"
-            holder.rowLikeRentalBinding.textViewLikeRentalPhoneNumber.text = "010-1111-111$position"
-            holder.rowLikeRentalBinding.textViewLikeRentalAddress.text = "00광역시 00구 00면 $position"
+            holder.rowLikeRentalBinding.apply {
+                textViewLikeRentalName.text = "농기구점 이름$position"
+                textViewLikeRentalPhoneNumber.text = "010-1111-111$position"
+                textViewLikeRentalAddress.text = "00광역시 00구 00면 $position"
+            }
+            // 아이템 클릭 이벤트
+            holder.rowLikeRentalBinding.root.setOnClickListener {
+                val intent = Intent(context, FarmingLifeToolsDetailActivity::class.java)
+                startActivity(intent)
+            }
         }
+
     }
 }
 

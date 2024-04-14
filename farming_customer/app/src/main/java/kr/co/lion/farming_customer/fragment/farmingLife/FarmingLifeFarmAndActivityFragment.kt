@@ -15,6 +15,7 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeFarmAndActivityBinding
+import kr.co.lion.farming_customer.fragment.FarmingLifeBottomSheetFragment
 
 class FarmingLifeFarmAndActivityFragment : Fragment() {
     lateinit var fragmentFarmingLifeFarmAndActivityBinding: FragmentFarmingLifeFarmAndActivityBinding
@@ -70,8 +71,8 @@ class FarmingLifeFarmAndActivityFragment : Fragment() {
             toolbarFarmingLife.apply {
                 // 파밍생활 유형 변경
                 buttonFarmingLifeChangeMode.setOnClickListener{
-
-
+                    val farmingLifeBottomSheetFragment = FarmingLifeBottomSheetFragment(MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT)
+                    farmingLifeBottomSheetFragment.show(mainActivity.supportFragmentManager, "FarmingLifeBottomSheet")
                 }
                 // 검색 버튼
                 setOnMenuItemClickListener {

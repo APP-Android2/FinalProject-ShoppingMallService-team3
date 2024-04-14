@@ -19,8 +19,6 @@ import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
 import kr.co.lion.farming_customer.fragment.TradeFragment
 import kr.co.lion.farming_customer.fragment.community.CommunityFragment
-import kr.co.lion.farming_customer.fragment.community.FarmActivityFragment
-import kr.co.lion.farming_customer.fragment.community.RentalFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmAndActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
@@ -95,9 +93,9 @@ class MainActivity : AppCompatActivity() {
             MainFragmentName.TRADE_FRAGMENT -> {
                 newFragment = TradeFragment()
             }
-//            MainFragmentName.BOARD_FRAGMENT -> {
-//                newFragment = FarmingLifeToolsFragment()
-//            }
+            MainFragmentName.FARMING_LIFE_TOOLS_FRAGMENT -> {
+                newFragment = FarmingLifeToolsFragment()
+            }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
             }
@@ -109,12 +107,6 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.COMMUNITY_FRAGMENT -> {
                 newFragment = CommunityFragment()
-            }
-            MainFragmentName.FARM_ACTIVITY_FRAGMENT -> {
-                newFragment = FarmActivityFragment()
-            }
-            MainFragmentName.RENTAL_FRAGMENT -> {
-                newFragment = RentalFragment()
             }
             MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT -> {
                 newFragment = FarmingLifeFarmAndActivityFragment()
