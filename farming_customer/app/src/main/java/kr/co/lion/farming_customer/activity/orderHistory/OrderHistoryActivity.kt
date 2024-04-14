@@ -34,7 +34,9 @@ class OrderHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityOrderHistoryBinding = ActivityOrderHistoryBinding.inflate(layoutInflater)
         setContentView(activityOrderHistoryBinding.root)
-        //replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_CROP_FRAGMENT, false, false, null)
+
+        val fragmentName = intent.getSerializableExtra("fragmentName")
+        replaceFragment(fragmentName as OrderHistoryFragmentName, false, false, null)
     }
 
     fun replaceFragment(name: OrderHistoryFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container : Int = R.id.containerOrderHistory){

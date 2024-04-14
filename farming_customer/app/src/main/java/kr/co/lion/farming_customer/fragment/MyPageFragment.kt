@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
+import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
+import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.activity.point.PointActivity
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentMyPageBinding
@@ -31,8 +35,29 @@ class MyPageFragment : Fragment() {
         settingCardViewMyPageFirstPoint()
         settingTextViewMyPageFirstReview()
         settingTextViewMyPageFirstCart()
+        settingMyPageManagement()
+        settingTextViewMyPageFirstCS()
+
 
         return fragmentMyPageBinding.root
+    }
+
+    private fun settingTextViewMyPageFirstCS() {
+        fragmentMyPageBinding.apply {
+            textViewMyPageFirstCS.setOnClickListener {
+                val intent = Intent(mainActivity, MyPageServiceCenterActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun settingMyPageManagement() {
+        fragmentMyPageBinding.apply {
+            imageViewMyPageFirstInformation.setOnClickListener {
+                val intent = Intent(mainActivity, MyPageManagementActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     // 포인트
@@ -64,6 +89,24 @@ class MyPageFragment : Fragment() {
             textViewMyPageFirstCart.setOnClickListener {
                 val cartIntent = Intent(mainActivity, CartActivity::class.java)
                 startActivity(cartIntent)
+            }
+            // 농산물 주문 내역
+            textViewMyPageFirstCrop.setOnClickListener {
+                val intent = Intent(mainActivity, OrderHistoryActivity::class.java)
+                intent.putExtra("fragmentName", OrderHistoryFragmentName.ORDER_HISTORY_CROP_FRAGMENT)
+                startActivity(intent)
+            }
+            // 주말농장 주문 내역
+            textViewMyPageFirstFarm.setOnClickListener {
+                val intent = Intent(mainActivity, OrderHistoryActivity::class.java)
+                intent.putExtra("fragmentName", OrderHistoryFragmentName.ORDER_HISTORY_FARM_FRAMGNET)
+                startActivity(intent)
+            }
+            //체험활동 주문 내역
+            textViewMyPageFirstActivity.setOnClickListener {
+                val intent = Intent(mainActivity, OrderHistoryActivity::class.java)
+                intent.putExtra("fragmentName", OrderHistoryFragmentName.ORDER_HISTORY_ACTIVITY_FRAGMENT)
+                startActivity(intent)
             }
         }
     }

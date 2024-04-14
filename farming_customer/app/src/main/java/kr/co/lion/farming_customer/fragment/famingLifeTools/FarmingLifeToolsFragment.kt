@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.FarmingLifeToolsFragmentName
+import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsSearchActivity
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeToolsBinding
+import kr.co.lion.farming_customer.fragment.FarmingLifeBottomSheetFragment
 
 class FarmingLifeToolsFragment : Fragment() {
     lateinit var binding: FragmentFarmingLifeToolsBinding
+    lateinit var mainActivity : MainActivity
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
@@ -28,6 +32,7 @@ class FarmingLifeToolsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFarmingLifeToolsBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
 
         settingFarmingLifeToolbar()
         replaceFragment(FarmingLifeToolsFragmentName.FARMING_LIFE_TOOLS_MAP_FRAGMENT, false, false, null)
@@ -68,6 +73,11 @@ class FarmingLifeToolsFragment : Fragment() {
                         }
                     }
                     true
+                }
+                imageButton.setOnClickListener {
+                    val farmingLifeBottomSheetFragment = FarmingLifeBottomSheetFragment(
+                        MainFragmentName.FARMING_LIFE_TOOLS_FRAGMENT)
+                    farmingLifeBottomSheetFragment.show(mainActivity.supportFragmentManager, "FarmingLifeBottomSheet")
                 }
             }
         }
