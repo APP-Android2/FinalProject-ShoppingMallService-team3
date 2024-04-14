@@ -1,6 +1,5 @@
 package kr.co.lion.farming_customer.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -9,10 +8,6 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
-import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
-import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
-import kr.co.lion.farming_customer.activity.payment.PaymentActivity
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
