@@ -13,7 +13,6 @@ import kr.co.lion.farming_customer.fragment.BoardFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
-import kr.co.lion.farming_customer.fragment.tradeCrop.TradeDetailFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeTabDetailFragment
 
@@ -91,9 +90,6 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
-            }
-            MainFragmentName.TRADE_DETAIL_FRAGMENT -> {
-                newFragment = TradeDetailFragment()
             }
             MainFragmentName.TRADE_TAB_DETAIL_FRAGMENT -> {
                 newFragment = TradeTabDetailFragment()

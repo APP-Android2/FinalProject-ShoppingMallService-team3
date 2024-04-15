@@ -208,7 +208,7 @@
                 android:textColor="@color/grey_02"
                 android:textSize="14sp"
                 app:cornerRadius="10dp"
-                app:rippleColor="@color/green_main"
+                app:rippleColor="@color/grey_03"
                 app:strokeColor="@color/grey_02"
                 tools:rippleColor="@color/green_main" />
 
@@ -246,10 +246,10 @@
                 android:textAlignment="center"
                 android:textColor="@color/grey_02"
                 android:textSize="14sp"
+                app:backgroundTint="@drawable/button_state_selector"
                 app:cornerRadius="10dp"
-                app:rippleColor="@color/green_main"
-                app:strokeColor="@color/grey_02"
-                app:backgroundTint="@drawable/button_state_selector"/>
+                app:rippleColor="@color/grey_03"
+                app:strokeColor="@color/grey_02" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <TextView

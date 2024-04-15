@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.activity.TradeSearchActivity
+import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
+import kr.co.lion.farming_customer.activity.tradeCrop.TradeSearchActivity
 import kr.co.lion.farming_customer.databinding.FragmentTradeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
@@ -142,8 +143,8 @@ class TradeFragment : Fragment() {
 
                 // 아이템 클릭 이벤트 처리
                 itemView.setOnClickListener{
-                    mainActivity.replaceFragment(MainFragmentName.TRADE_DETAIL_FRAGMENT,
-                        addToBackStack = true, isAnimate = true, data = null)
+                    val intent = Intent(mainActivity, TradeDetailActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
@@ -192,8 +193,8 @@ class TradeFragment : Fragment() {
 
                     // 아이템 클릭 이벤트 처리
                     itemView.setOnClickListener{
-                        mainActivity.replaceFragment(MainFragmentName.TRADE_DETAIL_FRAGMENT,
-                            addToBackStack = true, isAnimate = true, data = null)
+                        val intent = Intent(mainActivity, TradeDetailActivity::class.java)
+                        startActivity(intent)
                     }
                 }
             }

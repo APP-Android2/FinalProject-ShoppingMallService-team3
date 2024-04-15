@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.activity
+package kr.co.lion.farming_customer.activity.tradeCrop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

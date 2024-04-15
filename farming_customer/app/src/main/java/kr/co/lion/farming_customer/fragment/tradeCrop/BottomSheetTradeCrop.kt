@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.databinding.FragmentBottomSheetTradeCropBinding
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.BottomSheetTradeCropViewModel
 
 class BottomSheetTradeCrop : BottomSheetDialogFragment() {
 
     lateinit var binding: FragmentBottomSheetTradeCropBinding
-    private lateinit var mainActivity: MainActivity
+    private lateinit var tradeDetailActivity: TradeDetailActivity
     private lateinit var bottomSheetTradeCropViewModel: BottomSheetTradeCropViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -24,7 +23,7 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment() {
         bottomSheetTradeCropViewModel = BottomSheetTradeCropViewModel()
         binding.bottomSheetTradeCropViewModel = bottomSheetTradeCropViewModel
         binding.lifecycleOwner = this
-        mainActivity = activity as MainActivity
+        tradeDetailActivity = activity as TradeDetailActivity
 
         setButton()
 

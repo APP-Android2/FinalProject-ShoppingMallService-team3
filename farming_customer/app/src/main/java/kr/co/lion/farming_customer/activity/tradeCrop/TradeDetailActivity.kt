@@ -1,7 +1,8 @@
-package kr.co.lion.farming_customer.fragment.tradeCrop
+package kr.co.lion.farming_customer.activity.tradeCrop
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,28 +10,28 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
-import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.databinding.FragmentTradeDetailBinding
+import kr.co.lion.farming_customer.databinding.ActivityTradeDetailBinding
+import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCropImageBinding
+import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewCropImageBinding
+import kr.co.lion.farming_customer.fragment.tradeCrop.BottomSheetTradeCrop
 import kr.co.lion.farming_customer.model.CropReview
+import kr.co.lion.farming_customer.model.Product
 import kr.co.lion.farming_customer.model.ProductCard
-import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeDetailViewModel
 
-class TradeDetailFragment : Fragment() {
+class TradeDetailActivity : AppCompatActivity() {
 
-    private lateinit var fragmentTradeDetailBinding: FragmentTradeDetailBinding
-    private lateinit var mainActivity: MainActivity
-
-    private lateinit var tradeDetailViewModel: TradeDetailViewModel
+    lateinit var binding: ActivityTradeDetailBinding
 
     private val constraintSet = ConstraintSet()
 
@@ -40,13 +41,9 @@ class TradeDetailFragment : Fragment() {
     // 리뷰 더보기 버튼이 클릭된 상태인지 확인
     private var isReviewSeeMoreButtonClicked = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        fragmentTradeDetailBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_trade_detail, container, false)
-        tradeDetailViewModel = TradeDetailViewModel()
-        fragmentTradeDetailBinding.tradeDetailViewModel = tradeDetailViewModel
-        fragmentTradeDetailBinding.lifecycleOwner = this
-        mainActivity = activity as MainActivity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityTradeDetailBinding.inflate(layoutInflater)
 
         setToolbar()
         setTab()
@@ -55,12 +52,13 @@ class TradeDetailFragment : Fragment() {
         setRecyclerView()
         setRecyclerRelatedCrop()
 
-        return fragmentTradeDetailBinding.root
+        setContentView(binding.root)
     }
+
 
     // 툴바 설정
     private fun setToolbar(){
-        fragmentTradeDetailBinding.apply {
+        binding.apply {
             toolbarTradeDetail.apply {
                 // 제목
                 title = "농산물 판매"
@@ -69,7 +67,7 @@ class TradeDetailFragment : Fragment() {
 
                 setNavigationIcon(R.drawable.ic_back)
                 setNavigationOnClickListener {
-                    mainActivity.removeFragment(MainFragmentName.TRADE_DETAIL_FRAGMENT)
+                    finish()
                 }
             }
         }
@@ -77,33 +75,33 @@ class TradeDetailFragment : Fragment() {
 
     // 탭 설정
     private fun setTab(){
-        fragmentTradeDetailBinding.tabLayoutDetailAndReview.apply {
+        binding.tabLayoutDetailAndReview.apply {
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                // 탭 눌렀을 때 반응 추가
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    // 탭 눌렀을 때 반응 추가
 
-                when (tab.position) {
-                    // 상세 정보 탭
-                    0 -> {
-                        val ypos = fragmentTradeDetailBinding.tabLayoutDetailAndReview.top
-                        fragmentTradeDetailBinding.stickyScrollViewTradeDetail.smoothScrollTo(0, ypos)
-                    }
-                    // 리뷰 탭
-                    1 -> {
-                        val ypos = fragmentTradeDetailBinding.textView4.top
-                        fragmentTradeDetailBinding.stickyScrollViewTradeDetail.smoothScrollTo(0, ypos)
+                    when (tab.position) {
+                        // 상세 정보 탭
+                        0 -> {
+                            val ypos = binding.tabLayoutDetailAndReview.top
+                            binding.stickyScrollViewTradeDetail.smoothScrollTo(0, ypos)
+                        }
+                        // 리뷰 탭
+                        1 -> {
+                            val ypos = binding.textView4.top
+                            binding.stickyScrollViewTradeDetail.smoothScrollTo(0, ypos)
+                        }
                     }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                // 탭이 선택 해제될 때 필요할 경우 사용
-            }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    // 탭이 선택 해제될 때 필요할 경우 사용
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                // 이미 선택된 탭이 다시 선택될 때 필요한 경우 사용
-            }
-        })
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    // 이미 선택된 탭이 다시 선택될 때 필요한 경우 사용
+                }
+            })
         }
     }
 
@@ -113,57 +111,57 @@ class TradeDetailFragment : Fragment() {
         var buttonLikeClicked = false
 
         // 더보기 버튼 클릭
-        constraintSet.clone(fragmentTradeDetailBinding.constraintLayoutTradeDetail)
+        constraintSet.clone(binding.constraintLayoutTradeDetail)
 
-        fragmentTradeDetailBinding.buttonTradeDetailSeeMore.setOnClickListener {
+        binding.buttonTradeDetailSeeMore.setOnClickListener {
             // 버튼이 클릭 상태가 아니라면
             if (!isButtonClicked) {
                 isButtonClicked = true // 상태를 클릭 상태로 변경
                 // 버튼의 상단 제약을 textViewTradeTabDetailPolicy의 하단으로 변경
-                constraintSet.connect(fragmentTradeDetailBinding.buttonTradeDetailSeeMore.id,
-                    ConstraintSet.TOP, fragmentTradeDetailBinding.textViewTradeTabDetailPolicy.id,
+                constraintSet.connect(binding.buttonTradeDetailSeeMore.id,
+                    ConstraintSet.TOP, binding.textViewTradeTabDetailPolicy.id,
                     ConstraintSet.BOTTOM)
-                constraintSet.applyTo(fragmentTradeDetailBinding.constraintLayoutTradeDetail)
+                constraintSet.applyTo(binding.constraintLayoutTradeDetail)
 
                 // marginTop을 50으로 설정
-                val layoutParams = fragmentTradeDetailBinding.buttonTradeDetailSeeMore.layoutParams as ConstraintLayout.LayoutParams
-                layoutParams.topMargin = Tools.dpToPx(requireContext(), 50) //requireContext()는 context가 null이 아님을 증명
-                fragmentTradeDetailBinding.buttonTradeDetailSeeMore.layoutParams = layoutParams
+                val layoutParams = binding.buttonTradeDetailSeeMore.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.topMargin = Tools.dpToPx(this, 50) //requireContext()는 context가 null이 아님을 증명
+                binding.buttonTradeDetailSeeMore.layoutParams = layoutParams
 
                 //text 변경
-                fragmentTradeDetailBinding.buttonTradeDetailSeeMore.text = "접기"
+                binding.buttonTradeDetailSeeMore.text = "접기"
 
-                fragmentTradeDetailBinding.textView5.visibility = View.VISIBLE
-                fragmentTradeDetailBinding.textViewTradeTabDetailContents.visibility = View.VISIBLE
-                fragmentTradeDetailBinding.textView6.visibility = View.VISIBLE
-                fragmentTradeDetailBinding.textViewTradeTabDetailWarning.visibility = View.VISIBLE
-                fragmentTradeDetailBinding.textView7.visibility = View.VISIBLE
-                fragmentTradeDetailBinding.textViewTradeTabDetailPolicy.visibility = View.VISIBLE
+                binding.textView5.visibility = View.VISIBLE
+                binding.textViewTradeTabDetailContents.visibility = View.VISIBLE
+                binding.textView6.visibility = View.VISIBLE
+                binding.textViewTradeTabDetailWarning.visibility = View.VISIBLE
+                binding.textView7.visibility = View.VISIBLE
+                binding.textViewTradeTabDetailPolicy.visibility = View.VISIBLE
 
             } else {
                 // 버튼이 클릭 상태라면
                 isButtonClicked = false // 상태를 클릭 상태로 변경
                 // 버튼의 상단 제약을  imageViewTradeDetail 하단으로 변경
-                constraintSet.connect(fragmentTradeDetailBinding.buttonTradeDetailSeeMore.id,
-                    ConstraintSet.TOP, fragmentTradeDetailBinding.imageViewTradeDetail.id,
+                constraintSet.connect(binding.buttonTradeDetailSeeMore.id,
+                    ConstraintSet.TOP, binding.imageViewTradeDetail.id,
                     ConstraintSet.BOTTOM)
 
-                constraintSet.applyTo(fragmentTradeDetailBinding.constraintLayoutTradeDetail)
+                constraintSet.applyTo(binding.constraintLayoutTradeDetail)
 
                 //text 변경
-                fragmentTradeDetailBinding.buttonTradeDetailSeeMore.text = "더보기"
+                binding.buttonTradeDetailSeeMore.text = "더보기"
 
-                fragmentTradeDetailBinding.textView5.visibility = View.GONE
-                fragmentTradeDetailBinding.textViewTradeTabDetailContents.visibility = View.GONE
-                fragmentTradeDetailBinding.textView6.visibility = View.GONE
-                fragmentTradeDetailBinding.textViewTradeTabDetailWarning.visibility = View.GONE
-                fragmentTradeDetailBinding.textView7.visibility = View.GONE
-                fragmentTradeDetailBinding.textViewTradeTabDetailPolicy.visibility = View.GONE
+                binding.textView5.visibility = View.GONE
+                binding.textViewTradeTabDetailContents.visibility = View.GONE
+                binding.textView6.visibility = View.GONE
+                binding.textViewTradeTabDetailWarning.visibility = View.GONE
+                binding.textView7.visibility = View.GONE
+                binding.textViewTradeTabDetailPolicy.visibility = View.GONE
 
             }
         }
 
-        fragmentTradeDetailBinding.apply {
+        binding.apply {
             // 좋아요 버튼 누르면
             imageButtonLike.setOnClickListener {
                 if (!buttonLikeClicked){
@@ -179,7 +177,7 @@ class TradeDetailFragment : Fragment() {
             // 구매하기 버튼 누르면
             buttonTradeDetailPurchase.setOnClickListener {
                 val bottomSheet = BottomSheetTradeCrop()
-                bottomSheet.show(mainActivity.supportFragmentManager, bottomSheet.tag)
+                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
         }
 
@@ -191,12 +189,12 @@ class TradeDetailFragment : Fragment() {
         // TODO("DB에서 이미지 가져오는 작업 필요")
         val images = listOf(R.drawable.farming_mark, R.drawable.logo_01, R.drawable.logo_02)
         // ViewPager2에 이미지 어댑터 설정
-        fragmentTradeDetailBinding.viewPager2TradeDetail.adapter = ImageAdpater(images)
+        binding.viewPager2TradeDetail.adapter = ImageAdpater(images)
 
         // ViewPager2에 어댑터 데이터가 변경되었을 때 인디케이터를 업데이트 하도록 설정
-        fragmentTradeDetailBinding.circleIndicatorTradeDetail.setViewPager(fragmentTradeDetailBinding.viewPager2TradeDetail)
-        fragmentTradeDetailBinding.viewPager2TradeDetail.adapter?.registerAdapterDataObserver(
-            fragmentTradeDetailBinding.circleIndicatorTradeDetail.adapterDataObserver)
+        binding.circleIndicatorTradeDetail.setViewPager(binding.viewPager2TradeDetail)
+        binding.viewPager2TradeDetail.adapter?.registerAdapterDataObserver(
+            binding.circleIndicatorTradeDetail.adapterDataObserver)
     }
 
     // 이미지 연결 어댑터
@@ -233,12 +231,12 @@ class TradeDetailFragment : Fragment() {
         )
 
         val adapter = ReviewAdapter(reviews)
-        fragmentTradeDetailBinding.recyclerViewReview.layoutManager = LinearLayoutManager(context)
-        fragmentTradeDetailBinding.recyclerViewReview.adapter = adapter
+        binding.recyclerViewReview.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewReview.adapter = adapter
 
-        fragmentTradeDetailBinding.buttonTradeReviewSeeMore.setOnClickListener {
+        binding.buttonTradeReviewSeeMore.setOnClickListener {
             isReviewSeeMoreButtonClicked = !isReviewSeeMoreButtonClicked // 상태 토글
-            fragmentTradeDetailBinding.buttonTradeReviewSeeMore.text = if (isReviewSeeMoreButtonClicked) "접기" else "더보기"
+            binding.buttonTradeReviewSeeMore.text = if (isReviewSeeMoreButtonClicked) "접기" else "더보기"
             adapter.notifyDataSetChanged() // RecyclerView 갱신
         }
     }
@@ -256,7 +254,7 @@ class TradeDetailFragment : Fragment() {
                     textViewOptionName.text = review.optionName
 
                     // 이미지 리사이클러뷰 설정
-                    val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    val layoutManager = LinearLayoutManager(this@TradeDetailActivity, LinearLayoutManager.HORIZONTAL, false)
                     recyclerViewCropReviewImage.layoutManager = layoutManager
                     recyclerViewCropReviewImage.adapter = review.imageResourceIds?.let {
                         ReviewImageAdapter(
@@ -321,8 +319,8 @@ class TradeDetailFragment : Fragment() {
             ProductCard(R.drawable.farming_mark, "바나나", "10,000원", 999, 4.0),
             ProductCard(R.drawable.farming_mark, "사과", "10,000원", 999, 5.0),
         )
-        fragmentTradeDetailBinding.apply {
-            recyclerViewRelatedCrop.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.apply {
+            recyclerViewRelatedCrop.layoutManager = LinearLayoutManager(this@TradeDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             recyclerViewRelatedCrop.adapter = RelatedCropAdpter(crops)
         }
     }
@@ -345,10 +343,10 @@ class TradeDetailFragment : Fragment() {
                         crop.isLiked = !crop.isLiked // 좋아요 선택
                         if (crop.isLiked) {
                             crop.likes++ // 좋아요 상태면 좋아요 수 증가, 텍스트 흰색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeDetailActivity, R.color.white))
                         } else {
                             crop.likes-- // 좋아요 취소면 좋아요 수 감소, 텍스트 갈색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeDetailActivity, R.color.brown_01))
                         }
                         // 좋아요 수가 1000 이상이면 999+로 표기
                         binding.textViewLikeCropCnt.text = if (crop.likes >= 1000) "999+"

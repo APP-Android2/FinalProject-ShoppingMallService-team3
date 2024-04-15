@@ -23,7 +23,6 @@ enum class MainFragmentName(var str : String){
     HOME_FRAGMENT("HomeFragment"),
     LIKE_FRAGMENT("LikeFragment"),
     MY_PAGE_FRAGMENT("MyPageFragment"),
-    TRADE_DETAIL_FRAGMENT("TradeDetailFragment"),
     TRADE_TAB_DETAIL_FRAGMENT("TradeTabDetailFragment")
 }
 
