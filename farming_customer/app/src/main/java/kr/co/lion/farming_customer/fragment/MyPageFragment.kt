@@ -13,6 +13,7 @@ import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
 import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
+import kr.co.lion.farming_customer.activity.myPageSetting.MyPageSettingActivity
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.activity.point.PointActivity
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
@@ -37,6 +38,7 @@ class MyPageFragment : Fragment() {
         settingTextViewMyPageFirstCart()
         settingMyPageManagement()
         settingTextViewMyPageFirstCS()
+        settingTextViewMyPageFirstSetting()
 
 
         return fragmentMyPageBinding.root
@@ -107,6 +109,16 @@ class MyPageFragment : Fragment() {
                 val intent = Intent(mainActivity, OrderHistoryActivity::class.java)
                 intent.putExtra("fragmentName", OrderHistoryFragmentName.ORDER_HISTORY_ACTIVITY_FRAGMENT)
                 startActivity(intent)
+            }
+        }
+    }
+
+    // 설정
+    fun settingTextViewMyPageFirstSetting(){
+        fragmentMyPageBinding.apply {
+            textViewMyPageFirstSetting.setOnClickListener {
+                val settingIntent = Intent(mainActivity, MyPageSettingActivity::class.java)
+                startActivity(settingIntent)
             }
         }
     }
