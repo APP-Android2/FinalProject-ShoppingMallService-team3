@@ -52,6 +52,8 @@ class CommunityViewModel: ViewModel() {
     val textViewCommunityListDateAll = MutableLiveData<String>()
     // 커뮤니티 글 리스트 전체 탭 좋아요
     val textViewCommunityListLikeCntAll = MutableLiveData<String>()
+    // 커뮤니티 글 하트 좋아요 여부
+    var isLike = MutableLiveData<Boolean>()
 
     // 커뮤니티 글 리스트 정보 탭 라벨
     val textViewCommunityListLabelInformation = MutableLiveData<String>()

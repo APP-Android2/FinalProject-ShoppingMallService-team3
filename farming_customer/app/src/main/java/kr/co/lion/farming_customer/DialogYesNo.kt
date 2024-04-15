@@ -21,7 +21,7 @@ class DialogYesNo(
     subject: String?,
     content: String,
     activity: AppCompatActivity,
-    position: Int
+    position: Int? = null // 리사이클러뷰 삭제할 때의 아이템 포지션
 ) : DialogFragment() {
 
     lateinit var dialogYesnoBinding: DialogYesnoBinding
@@ -73,8 +73,14 @@ class DialogYesNo(
 
             // 확인 버튼
             buttonCustomDialogYesNoYes.setOnClickListener {
-                dialogYesNoInterface?.onYesButtonClick(position)
-                dismiss()
+                if(position != null){
+                    dialogYesNoInterface.onYesButtonClick(position!!)
+                    dismiss()
+                }else{
+                    dismiss()
+                    dialogYesNoInterface.onYesButtonClick(activit)
+                }
+
             }
 
             // 취소 버튼
@@ -97,5 +103,7 @@ class DialogYesNo(
 }
 
 interface DialogYesNoInterface {
-    fun onYesButtonClick(id: Int)
+    fun onYesButtonClick(id: Int) // 게시글 삭제
+
+    fun onYesButtonClick(activity: AppCompatActivity) // 그 외 확인 버튼
 }

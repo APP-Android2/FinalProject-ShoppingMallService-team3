@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -121,5 +122,9 @@ class CartTabActivityFragment : Fragment(), DialogYesNoInterface {
 
     override fun onYesButtonClick(id: Int) {
         // 결제 화면으로 넘어가기
+    }
+
+    override fun onYesButtonClick(activity: AppCompatActivity) {
+
     }
 }

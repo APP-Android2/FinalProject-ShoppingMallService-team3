@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -94,5 +95,7 @@ class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragm
         // 게시글 아이디로 삭제
     }
 
+    override fun onYesButtonClick(activity: AppCompatActivity) {
 
+    }
 }

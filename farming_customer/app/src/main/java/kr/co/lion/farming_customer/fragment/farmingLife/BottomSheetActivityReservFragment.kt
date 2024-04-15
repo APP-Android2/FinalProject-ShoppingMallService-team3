@@ -1,6 +1,7 @@
 package kr.co.lion.farming_customer.fragment.farmingLife
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.TextUtils.replace
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CalendarView
 import android.widget.CalendarView.OnDateChangeListener
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +23,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.databinding.DropdownItemBottomSheetProgramBinding
 import kr.co.lion.farming_customer.databinding.FragmentBottomSheetActivityReservBinding
@@ -37,7 +42,7 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class BottomSheetActivityReservFragment : BottomSheetDialogFragment() {
+class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYesNoInterface {
     lateinit var fragmentBottomSheetActivityReservBinding: FragmentBottomSheetActivityReservBinding
     lateinit var farmingLifeActivity : FarmingLifeActivity
     lateinit var bottomSheetActivityReservViewModel: BottomSheetActivityReservViewModel
@@ -133,11 +138,19 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment() {
                 recyclerViewDropDownMenu.visibility = View.VISIBLE
             }
 
-            // 장바구니
+            // 장바구니 버튼
             buttonActivityReservCart.setOnClickListener {
-                dismiss()
+                buttonActivityReservCart.setOnClickListener {
+                    val dialog = DialogYesNo(
+                        this@BottomSheetActivityReservFragment,
+                        "장바구니에 예약한 상품이 담겼습니다.",
+                        "장바구니로 이동하시겠습니까?",
+                        farmingLifeActivity
+                    )
+                    dialog.show(farmingLifeActivity.supportFragmentManager, "DialogYesNo")
+                }
             }
-            // 예약하기
+            // 예약하기 버튼
             buttonActivityReservReserv.setOnClickListener {
                 dismiss()
             }
@@ -368,6 +381,15 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+    }
+
+    override fun onYesButtonClick(id: Int) {
+
+    }
+
+    override fun onYesButtonClick(activity: AppCompatActivity) {
+        val intent = Intent(activity.baseContext, CartActivity::class.java)
+        startActivity(intent)
     }
 
 }

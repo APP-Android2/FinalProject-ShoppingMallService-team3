@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- 앨범으로부터 사진을 가져오기 위한 권한 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Farming_customer"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.myPageSetting.MyPageSettingActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.CommunitySearchActivity"
             android:exported="false" />
@@ -40,7 +44,7 @@
         <activity
             android:name=".activity.point.PointActivity"
             android:exported="false" />
-      <activity
+        <activity
             android:name=".activity.farmingLife.FarmingLifeActivity"
             android:exported="false" />
         <activity
@@ -80,7 +84,8 @@
             android:name=".activity.MainActivity"
             android:exported="true">
 
-            <!-- MainActivity Launcher 인텐트 필터 주석처리
+            <!--
+            MainActivity Launcher 인텐트 필터 주석처리
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -94,8 +99,5 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBb7t0RwxZVp0O5frRYJY_oVz_vbWhgYEQ" />
     </application>
-
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-
 
 </manifest>

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -238,4 +239,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         fragmentCommunityReadBinding.recyclerViewCommunityReadComment.adapter!!.notifyItemRemoved(id)
     }
 
+    override fun onYesButtonClick(activity: AppCompatActivity) {
+
+    }
 }

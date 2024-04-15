@@ -175,7 +175,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:checked="true"
-                        app:srcCompat="@drawable/community_image_like" />
+                        app:srcCompat="@drawable/heart_02" />
 
                     <TextView
                         android:id="@+id/textViewCommunityListLikeCntAll"

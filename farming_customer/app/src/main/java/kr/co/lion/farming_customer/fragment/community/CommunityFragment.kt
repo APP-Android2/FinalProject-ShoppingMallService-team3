@@ -48,6 +48,10 @@ class CommunityFragment : Fragment() {
     fun settingToolbar() {
         fragmentCommunityBinding.apply {
             toolbarCommunity.apply {
+                buttonFarmingLifeChangeMode.setOnClickListener {
+                    val farmingLifeBottomSheetFragment = FarmingLifeBottomSheetFragment(MainFragmentName.COMMUNITY_FRAGMENT)
+                    farmingLifeBottomSheetFragment.show(mainActivity.supportFragmentManager, "FarmingLifeBottomSheet")
+                }
                 imageViewCommunityBottom.setOnClickListener {
                     val farmingLifeBottomSheetFragment = FarmingLifeBottomSheetFragment(MainFragmentName.COMMUNITY_FRAGMENT)
                     farmingLifeBottomSheetFragment.show(mainActivity.supportFragmentManager, "FarmingLifeBottomSheet")

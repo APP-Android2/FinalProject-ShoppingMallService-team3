@@ -1,6 +1,5 @@
 package kr.co.lion.farming_customer.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -9,18 +8,12 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
-import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
-import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
-import kr.co.lion.farming_customer.activity.payment.PaymentActivity
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
 import kr.co.lion.farming_customer.fragment.TradeFragment
 import kr.co.lion.farming_customer.fragment.community.CommunityFragment
-import kr.co.lion.farming_customer.fragment.community.FarmActivityFragment
-import kr.co.lion.farming_customer.fragment.community.RentalFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmAndActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
@@ -95,9 +88,9 @@ class MainActivity : AppCompatActivity() {
             MainFragmentName.TRADE_FRAGMENT -> {
                 newFragment = TradeFragment()
             }
-//            MainFragmentName.BOARD_FRAGMENT -> {
-//                newFragment = FarmingLifeToolsFragment()
-//            }
+            MainFragmentName.FARMING_LIFE_TOOLS_FRAGMENT -> {
+                newFragment = FarmingLifeToolsFragment()
+            }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
             }
@@ -109,12 +102,6 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.COMMUNITY_FRAGMENT -> {
                 newFragment = CommunityFragment()
-            }
-            MainFragmentName.FARM_ACTIVITY_FRAGMENT -> {
-                newFragment = FarmActivityFragment()
-            }
-            MainFragmentName.RENTAL_FRAGMENT -> {
-                newFragment = RentalFragment()
             }
             MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT -> {
                 newFragment = FarmingLifeFarmAndActivityFragment()
