@@ -1,10 +1,12 @@
 package kr.co.lion.farming_customer.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -135,9 +137,12 @@ class HomeFragment : Fragment() {
                         if(isLike.value!!){
                             isLike.value = false
                             imageViewHeart.setImageResource(R.drawable.heart_02)
+                            textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
                         }else{
                             isLike.value = true
                             imageViewHeart.setImageResource(R.drawable.heart_01)
+                            textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                         }
                     }
                 }
@@ -170,7 +175,7 @@ class HomeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return 5
         }
 
         override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
@@ -190,9 +195,11 @@ class HomeFragment : Fragment() {
                     if(communityViewModel!!.isLike.value!!){
                         communityViewModel!!.isLike.value = false
                         imageViewCommunityListLikeAll.setImageResource(R.drawable.heart_02)
+                        textViewCommunityListLikeCntAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
                     }else{
                         communityViewModel!!.isLike.value = true
                         imageViewCommunityListLikeAll.setImageResource(R.drawable.heart_01)
+                        textViewCommunityListLikeCntAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     }
                 }
             }
