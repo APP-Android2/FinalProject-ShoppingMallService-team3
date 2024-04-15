@@ -26,7 +26,6 @@ class TradeTabDetailFragment : Fragment() {
         binding.lifecycleOwner = this
         mainActivity = activity as MainActivity
 
-
         return binding.root
     }
 

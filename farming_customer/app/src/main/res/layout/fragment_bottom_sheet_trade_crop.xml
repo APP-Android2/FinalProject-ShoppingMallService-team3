@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/bottom_sheet_stroke"
         android:paddingHorizontal="20dp"
         android:paddingBottom="20dp"
@@ -78,6 +78,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutCrop"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:visibility="gone">
@@ -88,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="34dp"
                         android:fontFamily="@font/pretendard_regular"
-                        android:text="감자 10kg"
+                        android:text="@{bottomSheetTradeCropViewModel.cropName}"
                         android:textColor="@color/brown_01"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -123,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/pretendard_bold"
-            android:text="예약하기"
+            android:text="구매하기"
             android:textSize="16sp"
             app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -159,11 +160,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="0,000원"
+            android:text="@{bottomSheetTradeCropViewModel.selectedCropPrice}"
             android:textColor="@color/brown_01"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="152dp" />
+            app:layout_constraintBottom_toBottomOf="@+id/toggleButton"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <View
             android:id="@+id/divider3"
@@ -192,6 +193,7 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="@drawable/button_state_selector"
                 android:fontFamily="@font/pretendard_regular"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
@@ -206,7 +208,9 @@
                 android:textColor="@color/grey_02"
                 android:textSize="14sp"
                 app:cornerRadius="10dp"
-                tools:strokeColor="@color/grey_02" />
+                app:rippleColor="@color/green_main"
+                app:strokeColor="@color/grey_02"
+                tools:rippleColor="@color/green_main" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/textPaymentCrop_optionCounts"
@@ -220,7 +224,8 @@
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
                 android:paddingBottom="0dp"
-                android:text="1"
+                android:text="@{bottomSheetTradeCropViewModel.optionCounts.toString()}"
+                app:strokeColor="@color/grey_02"
                 tools:strokeColor="@color/grey_02" />
 
             <com.google.android.material.button.MaterialButton
@@ -242,7 +247,9 @@
                 android:textColor="@color/grey_02"
                 android:textSize="14sp"
                 app:cornerRadius="10dp"
-                tools:strokeColor="@color/grey_02" />
+                app:rippleColor="@color/green_main"
+                app:strokeColor="@color/grey_02"
+                app:backgroundTint="@drawable/button_state_selector"/>
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <TextView
@@ -263,7 +270,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/pretendard_regular"
-            android:text="3,000원"
+            android:text="@{bottomSheetTradeCropViewModel.fee}"
             android:textColor="@color/grey_01"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -287,7 +294,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="0,000원"
+            android:text="@{bottomSheetTradeCropViewModel.totalPrice}"
             android:textColor="@color/brown_01"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"

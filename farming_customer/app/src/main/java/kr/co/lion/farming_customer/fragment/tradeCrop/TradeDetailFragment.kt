@@ -161,23 +161,25 @@ class TradeDetailFragment : Fragment() {
                 fragmentTradeDetailBinding.textViewTradeTabDetailPolicy.visibility = View.GONE
 
             }
+        }
 
-            fragmentTradeDetailBinding.apply {
-                // 좋아요 버튼 누르면
-                imageButtonLike.setOnClickListener {
-                    if (!buttonLikeClicked){
-                        imageButtonLike.setImageResource(R.drawable.heart_01)
-                        //TODO("좋아요 항목에 해당 아이템 추가, 좋아요 count 증가")
-                    } else {
-                        imageButtonLike.setImageResource(R.drawable.heart_02)
-                        //TODO("좋아요 항목에서 해당 아이템 제거, 좋아요 count 감소")
-                    }
+        fragmentTradeDetailBinding.apply {
+            // 좋아요 버튼 누르면
+            imageButtonLike.setOnClickListener {
+                if (!buttonLikeClicked){
+                    buttonLikeClicked = true
+                    imageButtonLike.setImageResource(R.drawable.heart_01)
+                    //TODO("좋아요 항목에 해당 아이템 추가, 좋아요 count 증가")
+                } else {
+                    buttonLikeClicked = false
+                    imageButtonLike.setImageResource(R.drawable.heart_02)
+                    //TODO("좋아요 항목에서 해당 아이템 제거, 좋아요 count 감소")
                 }
-                // 구매하기 버튼 누르면
-                buttonTradeDetailPurchase.setOnClickListener {
-                    // dialog fragment 출력
-
-                }
+            }
+            // 구매하기 버튼 누르면
+            buttonTradeDetailPurchase.setOnClickListener {
+                val bottomSheet = BottomSheetTradeCrop()
+                bottomSheet.show(mainActivity.supportFragmentManager, bottomSheet.tag)
             }
         }
 
