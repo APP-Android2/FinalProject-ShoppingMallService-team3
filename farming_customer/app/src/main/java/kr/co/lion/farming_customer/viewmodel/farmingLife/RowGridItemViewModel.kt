@@ -6,5 +6,6 @@ class RowGridItemViewModel {
     val textView_likeCnt = MutableLiveData<String>()
     val textView_ItemName = MutableLiveData<String>()
     val textView_price = MutableLiveData<String>()
+    val textView_location = MutableLiveData<String>()
     val isLike = MutableLiveData<Boolean>()
 }
