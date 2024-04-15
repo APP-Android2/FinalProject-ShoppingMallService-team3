@@ -283,3 +283,10 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }
+
+// 농산품 상태
+enum class CropStatus(var str:String, var num:Int){
+    NORMAL("정상", 1),
+    PAUSE("판매품 일시정지",2),
+    DELETE("판매품 삭제",3)
+}
