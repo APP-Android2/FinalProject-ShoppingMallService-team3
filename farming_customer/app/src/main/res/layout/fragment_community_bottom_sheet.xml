@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bottom_sheet_stroke"
         android:orientation="vertical"
         tools:context=".fragment.CommunityBottomSheetFragment">
 
@@ -21,22 +22,23 @@
             android:layout_width="50dp"
             android:layout_height="2dp"
             android:layout_gravity="center"
-            android:layout_marginVertical="5dp"
+            android:layout_marginVertical="10dp"
             android:background="@color/grey_02" />
 
         <View
             android:id="@+id/divider9"
-            android:layout_width="400dp"
+            android:layout_width="406dp"
             android:layout_height="1dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:background="@color/grey_02" />
 
 
         <Button
             android:id="@+id/buttonCommunityReadModify"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="match_parent"
+            android:layout_width="406dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/pretendard_semibold"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -47,15 +49,17 @@
 
         <View
             android:id="@+id/divider10"
-            android:layout_width="match_parent"
+            android:layout_width="406dp"
             android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
             android:background="@color/grey_02" />
 
         <Button
             android:id="@+id/buttonCommunityReadDelete"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="match_parent"
+            android:layout_width="406dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/pretendard_semibold"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -66,8 +70,9 @@
 
         <View
             android:id="@+id/divider11"
-            android:layout_width="match_parent"
+            android:layout_width="406dp"
             android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
             android:background="@color/grey_02" />
 
     </LinearLayout>
