@@ -403,7 +403,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="13dp"
                 android:backgroundTint="@color/white"
-                android:src="@drawable/heart_02" />
+                android:src="@drawable/heart_02"
+                style="@style/NoRippleButton"/>
 
             <Button
                 android:id="@+id/buttonTradeDetailPurchase"

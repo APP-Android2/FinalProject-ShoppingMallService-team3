@@ -15,8 +15,8 @@ import kr.co.lion.farming_customer.viewmodel.tradeCrop.BottomSheetTradeCropViewM
 class BottomSheetTradeCrop : BottomSheetDialogFragment() {
 
     lateinit var binding: FragmentBottomSheetTradeCropBinding
-    lateinit var mainActivity: MainActivity
-    lateinit var bottomSheetTradeCropViewModel: BottomSheetTradeCropViewModel
+    private lateinit var mainActivity: MainActivity
+    private lateinit var bottomSheetTradeCropViewModel: BottomSheetTradeCropViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -57,12 +57,12 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment() {
 
             // 장바구니 버튼
             buttonPaymentCropCart.setOnClickListener {
-                //TODO 장바구니 연결
+                //TODO ("장바구니 연결")
             }
 
             // 구매하기 버튼
             buttonPaymentCropReserv.setOnClickListener {
-                //TODO 구매 창 띄우기
+                //TODO 구매("창 띄우기")
             }
         }
     }

@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.tradeCrop
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.TradeSearchActivity
 import kr.co.lion.farming_customer.databinding.FragmentTradeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
@@ -52,8 +54,8 @@ class TradeFragment : Fragment() {
                 setOnMenuItemClickListener {
                     when(it.itemId){
                         R.id.menuItemTradeSearch -> {
-                            mainActivity.replaceFragment(MainFragmentName.TRADE_SEARCH_FRAGMENT,
-                                addToBackStack = true, isAnimate = true, data = null)
+                            val intent = Intent(mainActivity, TradeSearchActivity::class.java)
+                            startActivity(intent)
                         }
                     }
                     true

@@ -61,6 +61,7 @@
                         android:layout_height="10dp"
                         android:layout_marginStart="10dp"
                         android:backgroundTint="@color/white"
+                        android:clickable="true"
                         android:src="@drawable/polygon_down"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +89,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <Button
-                    android:id="@+id/buttonTradeSearch_likeDesc"
+                    android:id="@+id/buttonTradeSearchLikeDesc"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -104,7 +105,7 @@
                     android:visibility="gone" />
 
                 <Button
-                    android:id="@+id/buttonTradeSearch_priceAsc"
+                    android:id="@+id/buttonTradeSearchPriceAsc"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -120,7 +121,7 @@
                     android:visibility="gone" />
 
                 <Button
-                    android:id="@+id/buttonTradeSearch_priceDesc"
+                    android:id="@+id/buttonTradeSearchPriceDesc"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
