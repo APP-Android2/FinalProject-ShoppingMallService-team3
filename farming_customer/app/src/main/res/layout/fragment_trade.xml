@@ -7,7 +7,7 @@
     <data>
         <variable
             name="tradeViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.TradeViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

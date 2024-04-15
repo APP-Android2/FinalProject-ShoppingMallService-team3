@@ -18,6 +18,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <!-- 버튼 글씨체 설정 -->
+    <style name="CustomButtonTextStyle">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <!-- 토글 버튼 설정 -->
     <style name="CustomToggleButton" parent="Widget.Material3.Button">
         <item name="android:textColor">@drawable/selector_button_text_color</item>
@@ -157,7 +163,7 @@
         <item name="android:textAppearance">@style/buttonTextBold</item>
         <item name="cornerRadius">10dp</item>
     </style>
-  
+
     // search bar custom
     <style name="CustomSearchTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusTopStart">10dp</item>
@@ -190,6 +196,13 @@
     <style name="MySelectedTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+
+    <!-- Ripple 효과 삭제 -->
+    <style name="NoRippleButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
 </resources>

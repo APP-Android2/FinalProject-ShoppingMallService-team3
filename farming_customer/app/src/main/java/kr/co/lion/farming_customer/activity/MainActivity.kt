@@ -12,12 +12,13 @@ import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
-import kr.co.lion.farming_customer.fragment.TradeFragment
 import kr.co.lion.farming_customer.fragment.community.CommunityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmAndActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapActivityFragment
 import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
 import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
+import kr.co.lion.farming_customer.fragment.tradeCrop.TradeFragment
+import kr.co.lion.farming_customer.fragment.tradeCrop.TradeTabDetailFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -111,6 +112,9 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.TAP_ACTIVITY_FRAGMENT -> {
                 newFragment = TapActivityFragment()
+            }
+            MainFragmentName.TRADE_TAB_DETAIL_FRAGMENT -> {
+                newFragment = TradeTabDetailFragment()
             }
         }
         if(data != null){
