@@ -1,25 +1,25 @@
 package kr.co.lion.farming_customer.fragment.farmingLife
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.NonDisposableHandle.parent
+import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.databinding.FragmentBottomSheetFarmReservBinding
 import kr.co.lion.farming_customer.viewmodel.farmingLife.BottomSheetFarmReservViewModel
 
-class BottomSheetFarmReservFragment : BottomSheetDialogFragment() {
+class BottomSheetFarmReservFragment : BottomSheetDialogFragment(), DialogYesNoInterface {
     lateinit var fragmentBottomSheetDialogFragment: FragmentBottomSheetFarmReservBinding
     lateinit var farmingLifeActivity : FarmingLifeActivity
     lateinit var bottomSheetFarmReservViewModel: BottomSheetFarmReservViewModel
@@ -42,9 +42,15 @@ class BottomSheetFarmReservFragment : BottomSheetDialogFragment() {
 
     private fun settingEvent() {
         fragmentBottomSheetDialogFragment.apply {
-            // 카트 담기 버튼
+            // 장바구니 버튼
             buttonReservCart.setOnClickListener {
-                dismiss()
+                val dialog = DialogYesNo(
+                    this@BottomSheetFarmReservFragment,
+                    "장바구니에 예약한 상품이 담겼습니다.",
+                    "장바구니로 이동하시겠습니까?",
+                    farmingLifeActivity
+                )
+                dialog.show(farmingLifeActivity.supportFragmentManager, "DialogYesNo")
             }
             // 예약하기 버튼
             buttonReservReserv.setOnClickListener {
@@ -85,6 +91,15 @@ class BottomSheetFarmReservFragment : BottomSheetDialogFragment() {
         bottomSheet.layoutParams = layoutParams
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
+    }
+
+    override fun onYesButtonClick(id: Int) {
+
+    }
+
+    override fun onYesButtonClick(activity: AppCompatActivity){
+        val intent = Intent(activity.baseContext, CartActivity::class.java)
+        startActivity(intent)
     }
 
 }

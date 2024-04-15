@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,8 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
@@ -147,6 +151,13 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+            // 뷰페이저 아이템 클릭 리스너
+            holder.rowGridItemBinding.root.setOnClickListener {
+                // 주말농장인지 체험활동인지 구분해야함
+                val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
+                intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT)
+                startActivity(intent)
+            }
         }
     }
 
@@ -205,7 +216,8 @@ class HomeFragment : Fragment() {
             }
             // 아이템 클릭 리스너
             holder.rowCommunityTabAllBinding.root.setOnClickListener {
-
+                val intent = Intent(mainActivity, CommunityActivity::class.java)
+                startActivity(intent)
             }
         }
     }

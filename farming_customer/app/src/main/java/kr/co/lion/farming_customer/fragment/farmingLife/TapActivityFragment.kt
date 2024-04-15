@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -99,9 +100,11 @@ class TapActivityFragment : Fragment() {
                     if(rowGridItemViewModel!!.isLike.value!!){
                         rowGridItemViewModel!!.isLike.value = false
                         imageViewHeart.setImageResource(R.drawable.heart_02)
+                        textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
                     }else{
                         rowGridItemViewModel!!.isLike.value = true
                         imageViewHeart.setImageResource(R.drawable.heart_01)
+                        textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     }
                 }
             }

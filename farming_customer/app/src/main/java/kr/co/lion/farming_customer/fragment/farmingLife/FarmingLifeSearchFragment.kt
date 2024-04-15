@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
+import kr.co.lion.farming_customer.GridSpaceItemDecoration
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeSearchBinding
@@ -20,6 +23,9 @@ class FarmingLifeSearchFragment : Fragment() {
     lateinit var fragmentFarmingLifeSearchBinding: FragmentFarmingLifeSearchBinding
     lateinit var farmingLifeActivity : FarmingLifeActivity
 
+    lateinit var deco: MaterialDividerItemDecoration
+    lateinit var deco2: GridSpaceItemDecoration
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,6 +33,8 @@ class FarmingLifeSearchFragment : Fragment() {
         fragmentFarmingLifeSearchBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_farming_life_search, container, false)
         farmingLifeActivity = activity as FarmingLifeActivity
 
+        deco = MaterialDividerItemDecoration(farmingLifeActivity, MaterialDividerItemDecoration.VERTICAL)
+        deco2 = GridSpaceItemDecoration(2,40,-10,-10,-10)
         settingRecyclerView()
 
 
@@ -36,6 +44,10 @@ class FarmingLifeSearchFragment : Fragment() {
     private fun settingRecyclerView() {
         fragmentFarmingLifeSearchBinding.apply {
             recyclerViewSearchResult.apply {
+                removeItemDecoration(deco)
+                if(itemDecorationCount == 0){
+                    addItemDecoration(deco2)
+                }
                 adapter = SearchRecyclerViewAdapter()
                 layoutManager = GridLayoutManager(farmingLifeActivity, 2)
             }
@@ -49,7 +61,7 @@ class FarmingLifeSearchFragment : Fragment() {
                 this.rowGridItemBinding = rowGridItemBinding
 
                 rowGridItemBinding.root.layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             }
@@ -88,9 +100,11 @@ class FarmingLifeSearchFragment : Fragment() {
                     if(rowGridItemViewModel!!.isLike.value!!){
                         rowGridItemViewModel!!.isLike.value = false
                         imageViewHeart.setImageResource(R.drawable.heart_02)
+                        textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
                     }else{
                         rowGridItemViewModel!!.isLike.value = true
                         imageViewHeart.setImageResource(R.drawable.heart_01)
+                        textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     }
                 }
             }
