@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- 앨범으로부터 사진을 가져오기 위한 권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +28,54 @@
             android:exported="false" />
         <activity
             android:name=".activity.tradeCrop.TradeSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageSetting.MyPageSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CommunitySearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CommunityAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CommunityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.cart.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.review.ReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.point.PointActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.farmingLife.FarmingLifeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.farmingLifeTools.FarmingLifeToolsSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.farmingLifeTools.FarmingLifeToolsDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.orderHistory.OrderHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterReplyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterWriteInquiryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageServiceCenter.MyPageServiceCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.myPageManagement.MyPageManagementActivity"
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
@@ -39,7 +98,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             -->
+
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBb7t0RwxZVp0O5frRYJY_oVz_vbWhgYEQ" />
     </application>
 
 </manifest>

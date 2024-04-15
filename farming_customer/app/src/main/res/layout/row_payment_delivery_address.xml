@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:transitionGroup="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewPaymentDeliveryAddressName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="TextView"
+                android:textColor="@color/brown_01"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewPaymentDeliveryAddressPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="TextView"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textViewPaymentDeliveryAddressName"
+                app:layout_constraintStart_toEndOf="@id/textViewPaymentDeliveryAddressName" />
+
+            <TextView
+                android:id="@+id/textViewPaymentDeliveryAddressDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="TextView"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewPaymentDeliveryAddressName" />
+
+            <Button
+                android:id="@+id/buttonPaymentDeliveryAddressDefault"
+                style="@style/OutlinedButtonStyle_Bold"
+                android:layout_width="0dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="10dp"
+                android:clickable="false"
+                android:fontFamily="@font/pretendard_semibold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="60dip"
+                android:padding="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="기본 배송지"
+                android:textSize="10sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/textViewPaymentDeliveryAddressName"
+                app:layout_constraintStart_toEndOf="@id/textViewPaymentDeliveryAddressPhoneNumber"
+                app:layout_constraintTop_toTopOf="@id/textViewPaymentDeliveryAddressName" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

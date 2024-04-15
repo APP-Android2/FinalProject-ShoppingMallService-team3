@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="paymentCropViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.payment.PaymentCropViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarPaymentCrop"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="결제하기"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPaymentProductCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <View
+                    android:id="@+id/divider12"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropDelivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="배송지"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/imageButtonPaymentDeliveryDetail"
+                        android:layout_width="7dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="20dp"
+                        android:tint="@color/grey_01"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropDelivery"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentCropDelivery"
+                        app:srcCompat="@drawable/next" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentReceiver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="수령인"
+                        android:textColor="@color/grey_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/textViewPaymentCropDelivery"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCropDelivery" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="주소"
+                        android:textColor="@color/grey_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/textViewPaymentCropDelivery"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentReceiver" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentPhoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="연락처"
+                        android:textColor="@color/grey_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/textViewPaymentAddress"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentAddress" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentRequest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="요청사항"
+                        android:textColor="@color/grey_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/textViewPaymentPhoneNumber"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentPhoneNumber" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentReceiver2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@id/textViewPaymentRequest"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCropDelivery" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentReceiverAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/textViewPaymentReceiver2"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentReceiver2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentReceiverPhoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/textViewPaymentReceiverAddress"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentReceiverAddress" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentReceiverRequest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/textViewPaymentReceiverPhoneNumber"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentReceiverPhoneNumber" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider14"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="포인트"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropAvailablePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="사용가능 : 0P"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropPoint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentCropPoint" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropPoint">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:hint="사용 가능한 포인트"
+                                android:textColorHint="@color/btn_bg_stroke_color_selector"
+                                app:boxCornerRadiusBottomEnd="10dp"
+                                app:boxCornerRadiusBottomStart="10dp"
+                                app:boxCornerRadiusTopEnd="10dp"
+                                app:boxCornerRadiusTopStart="10dp"
+                                app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                                app:endIconMode="clear_text"
+                                app:endIconTint="@color/brown_01"
+                                app:expandedHintEnabled="false">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textFieldPaymentCropUsePoint"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="43dp"
+                                    android:fontFamily="@font/pretendard_semibold"
+                                    android:inputType="number"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="10,000"
+                                    android:textColor="@color/brown_01"
+                                    android:textSize="12sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/buttonPaymentCropUseAllPoint"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:insetBottom="0dp"
+                                android:text="전체 사용"
+                                android:textSize="12sp"
+                                app:cornerRadius="10dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider15"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPayMethod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="결제 수단"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropPayMethod">
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentCropCreditOrCheckCard"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentCropKakaoPay"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentCropNaverPay"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentCropTossPay"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+                        </RadioGroup>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textViewPaymentCropCreditOrCheckCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="신용/체크카드"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPaymentCropKakaoPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="카카오페이"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPaymentCropNaverPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="네이버페이"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPaymentCropTossPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="토스페이"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider16"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPayPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="결제 금액"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropProductPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="상품 금액"
+                        android:textColor="@color/brown_01"
+                        app:layout_constraintStart_toStartOf="@id/textViewPaymentCropPayPrice"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropPayPrice" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropProductPrice2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="100,000원"
+                        app:layout_constraintBottom_toBottomOf="@id/textViewPaymentCropProductPrice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textViewPaymentCropProductPrice" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropUsePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="포인트"
+                        android:textColor="@color/brown_01"
+                        app:layout_constraintStart_toStartOf="@id/textViewPaymentCropPayPrice"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropProductPrice" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropUsePoint2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="-10,000P"
+                        app:layout_constraintBottom_toBottomOf="@id/textViewPaymentCropUsePoint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textViewPaymentCropUsePoint" />
+
+                    <View
+                        android:id="@+id/divider13"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/dotted_line_horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropUsePoint" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropTotalPayPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="총 결제 금액"
+                        android:textColor="@color/brown_01"
+                        app:layout_constraintStart_toStartOf="@+id/textViewPaymentCropPayPrice"
+                        app:layout_constraintTop_toBottomOf="@id/divider13" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropTotalPayPrice2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="90,000원"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/textViewPaymentCropTotalPayPrice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textViewPaymentCropTotalPayPrice" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider17"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkBoxPaymentCropAllAgree"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/checkbox_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="@={paymentCropViewModel.checkBoxPaymentCropAllAgree}"
+                        android:onClickListener="@{(view) -> paymentCropViewModel.onCheckBoxAllChanged()}"
+                        app:checkedState="@{paymentCropViewModel.checkBoxPaymentCropAllAgreeState}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkBoxPaymentCropPrivacy1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/checkbox_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="@={paymentCropViewModel.checkBoxPaymentCropPrivacy1}"
+                        android:onClickListener="@{(view) -> paymentCropViewModel.onCheckBoxChanged()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCropAllAgree" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkBoxPaymentCropPrivacy2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/checkbox_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="@={paymentCropViewModel.checkBoxPaymentCropPrivacy2}"
+                        android:onClickListener="@{(view) -> paymentCropViewModel.onCheckBoxChanged()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropPrivacyDetailContent" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropAllAgree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="필수 약관 전체 동의"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPaymentCropAllAgree"
+                        app:layout_constraintStart_toEndOf="@+id/checkBoxPaymentCropAllAgree"
+                        app:layout_constraintTop_toTopOf="@+id/checkBoxPaymentCropAllAgree" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPrivacy1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="[필수] 개인정보 수집 및 이용"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPaymentCropPrivacy1"
+                        app:layout_constraintStart_toEndOf="@+id/checkBoxPaymentCropPrivacy1"
+                        app:layout_constraintTop_toTopOf="@+id/checkBoxPaymentCropPrivacy1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPrivacyDetail1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="보기"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropPrivacy1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentCropPrivacy1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPrivacyDetailContent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/back_round"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:padding="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewPaymentCropPrivacyDetail1"
+                        app:layout_constraintStart_toStartOf="@+id/checkBoxPaymentCropPrivacy1"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCropPrivacy1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPrivacy2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="[필수] 개인정보 제 3자 제공"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPaymentCropPrivacy2"
+                        app:layout_constraintStart_toEndOf="@+id/checkBoxPaymentCropPrivacy2"
+                        app:layout_constraintTop_toTopOf="@+id/checkBoxPaymentCropPrivacy2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPrivacyDetail2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="보기"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropPrivacy2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentCropPrivacy2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropPrivacyDetailContent2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/back_round"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:padding="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewPaymentCropPrivacyDetail2"
+                        app:layout_constraintStart_toStartOf="@+id/checkBoxPaymentCropPrivacy2"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCropPrivacy2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropRules"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="이용규칙"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropPrivacyDetailContent2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropDot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text=" , "
+                        android:textColor="@color/grey_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropRules"
+                        app:layout_constraintStart_toEndOf="@+id/textViewPaymentCropRules"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentCropRules" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentCropCancelAndRefundRules"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="취소 및 환불 규칙"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropRules"
+                        app:layout_constraintStart_toEndOf="@+id/textViewPaymentCropDot"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentCropRules" />
+
+                    <TextView
+                        android:id="@+id/textView42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="에 동의하실 경우 결제버튼을 클릭해주세요."
+                        android:textColor="@color/grey_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropRules"
+                        app:layout_constraintStart_toEndOf="@+id/textViewPaymentCropCancelAndRefundRules"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentCropRules" />
+
+                    <TextView
+                        android:id="@+id/buttonPaymentCropPayDone"
+                        style="@style/isEnabledButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:enabled="@{paymentCropViewModel.buttonPaymentCropPayDone}"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:gravity="center"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:text="결제"
+                        android:textAppearance="@style/buttonEnabledText_Bold"
+                        android:textSize="16sp"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropDot" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

@@ -5,7 +5,7 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
         <com.google.android.material.card.MaterialCardView
@@ -95,15 +95,15 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/heart_02" />
+                        app:srcCompat="@drawable/heart_01" />
 
                     <TextView
                         android:id="@+id/textViewLikeCropCnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="999"
-                        android:textColor="@color/brown_01"
+                        android:text="999+"
+                        android:textColor="@color/white"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewHeartCrop"
                         app:layout_constraintEnd_toEndOf="@id/imageViewHeartCrop"

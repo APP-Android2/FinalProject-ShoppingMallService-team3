@@ -12,37 +12,47 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
-            android:src="@drawable/check"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/buttonFindIdDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textViewFindIdDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/pretendard_bold"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            <ImageView
+                android:id="@+id/imageViewCheck2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/check" />
+
+            <TextView
+                android:id="@+id/textViewFindIdDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="고객님의 정보와 일치하는 아이디는\n아이디 입니다"
+                android:textAlignment="center"
+                android:textColor="@color/brown_01"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonFindIdDone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="20dp"
             android:fontFamily="@font/pretendard_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="로그인하러 가기"
             android:textSize="16sp"
             app:cornerRadius="10dp"

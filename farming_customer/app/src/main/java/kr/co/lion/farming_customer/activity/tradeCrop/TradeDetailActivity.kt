@@ -65,7 +65,7 @@ class TradeDetailActivity : AppCompatActivity() {
 
                 inflateMenu(R.menu.menu_trade_detail)
 
-                setNavigationIcon(R.drawable.ic_back)
+                setNavigationIcon(R.drawable.back)
                 setNavigationOnClickListener {
                     finish()
                 }

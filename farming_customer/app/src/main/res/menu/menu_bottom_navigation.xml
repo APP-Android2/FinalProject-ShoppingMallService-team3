@@ -9,11 +9,11 @@
         android:icon="@drawable/ic_launcher_foreground"
         android:title="농산물 거래" />
     <item
-        android:id="@+id/menuItemBottonNavigation_Board"
+        android:id="@+id/menuItemBottonNavigation_Farming_Life"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="게시판" />
+        android:title="파밍생활" />
     <item
         android:id="@+id/menuItemBottomNavigation_Home"
         android:layout_width="wrap_content"

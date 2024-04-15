@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="myPageReviewViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutRowReviewCrop"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabCropDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabCropDate}"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabCropName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabCropName}"
+                android:textColor="@color/brown_01"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabCropDate" />
+
+            <ImageView
+                android:id="@+id/imageViewRowReviewTabDetail"
+                android:layout_width="4dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="7dp"
+                app:layout_constraintStart_toEndOf="@+id/textViewRowReviewTabCropName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabCropDate"
+                app:srcCompat="@drawable/next" />
+
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/ratingBarRowReviewHistoryCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewRowReviewTabCropName"
+                app:srb_drawableEmpty="@drawable/star_02"
+                app:srb_drawableFilled="@drawable/star_01"
+                app:srb_isIndicator="true"
+                app:srb_numStars="5"
+                app:srb_rating="4.5"
+                app:srb_starHeight="10dp"
+                app:srb_starPadding="2dp"
+                app:srb_starWidth="10dp"
+                app:srb_stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabCropText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabCropText}"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBarRowReviewHistoryCrop" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRowReviewTabCropText">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewReviewImageCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/textViewRowReviewTabCropLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/label_row_review_tab"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@{myPageReviewViewModel.textViewRowReviewTabCropLabel}"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+            <android.widget.Button
+                android:id="@+id/buttonReviewTabCropDelete"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="38dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_round_row_review_tab"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="삭제"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</layout>
+

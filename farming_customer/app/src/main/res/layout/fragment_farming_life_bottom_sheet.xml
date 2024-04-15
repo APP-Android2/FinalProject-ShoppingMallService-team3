@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="farmingLifeBottomSheetViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.FarmingLifeBottomSheetViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_sheet_stroke"
+        android:orientation="vertical"
+        tools:context=".fragment.FarmingLifeBottomSheetFragment">
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="50dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="10dp"
+            android:background="@color/grey_02" />
+
+
+        <View
+            android:id="@+id/divider9"
+            android:layout_width="406dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/grey_02"
+            tools:layout_gravity="center" />
+
+
+        <Button
+            android:id="@+id/buttonFarmingLifeBottomCommunity"
+            android:layout_width="406dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="true"
+            android:fontFamily="@font/pretendard_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="커뮤니티"
+            android:textColor="@color/brown_01"
+            android:textSize="18sp"
+            app:cornerRadius="0dp" />
+
+        <View
+            android:id="@+id/divider10"
+            android:layout_width="406dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/grey_02" />
+
+
+        <Button
+            android:id="@+id/buttonFarmingLifeBottomFarmActivity"
+            android:layout_width="406dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="true"
+            android:fontFamily="@font/pretendard_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="주말농장 및 체험활동"
+            android:textColor="@color/brown_01"
+            android:textSize="18sp"
+            app:cornerRadius="0dp" />
+
+        <View
+            android:id="@+id/divider11"
+            android:layout_width="406dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/grey_02" />
+
+        <Button
+            android:id="@+id/buttonFarmingLifeBottomRental"
+            android:layout_width="406dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="true"
+            android:fontFamily="@font/pretendard_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="농기구 임대"
+            android:textColor="@color/brown_01"
+            android:textSize="18sp"
+            app:cornerRadius="0dp" />
+
+        <View
+            android:id="@+id/divider12"
+            android:layout_width="406dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/grey_02" />
+
+
+    </LinearLayout>
+
+</layout>

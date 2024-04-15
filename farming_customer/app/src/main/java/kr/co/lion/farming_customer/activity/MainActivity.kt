@@ -9,10 +9,14 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
-import kr.co.lion.farming_customer.fragment.BoardFragment
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
 import kr.co.lion.farming_customer.fragment.MyPageFragment
+import kr.co.lion.farming_customer.fragment.community.CommunityFragment
+import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeFarmAndActivityFragment
+import kr.co.lion.farming_customer.fragment.farmingLife.TapActivityFragment
+import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
+import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeTabDetailFragment
 
@@ -25,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
@@ -45,9 +48,10 @@ class MainActivity : AppCompatActivity() {
                         R.id.menuItemBottomNavigation_Trade -> {
                             replaceFragment(MainFragmentName.TRADE_FRAGMENT, false, false, null)
                         }
-                        R.id.menuItemBottonNavigation_Board -> {
-                            replaceFragment(MainFragmentName.BOARD_FRAGMENT, false, false, null)
+                        R.id.menuItemBottonNavigation_Farming_Life -> {
+                            replaceFragment(MainFragmentName.COMMUNITY_FRAGMENT, false, false, null)
                         }
+
                         R.id.menuItemBottomNavigation_Home -> {
                             replaceFragment(MainFragmentName.HOME_FRAGMENT, false, false, null)
 
@@ -56,7 +60,13 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
+                            // 사용자가 로그인 한 상태인 경우
                             replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+
+                            // 사용자가 로그인 하지 않은 상태인 경우
+//                            val dialog = DialogYesNo("로그인이 필요합니다.", "마이페이지는 로그인 후 이용 가능합니다.", this@MainActivity)
+//                            dialog.show(this@MainActivity.supportFragmentManager, "DialogYesNo")
+
                         }
                     }
                     true
@@ -65,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun replaceFragment(name:MainFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
+    fun replaceFragment(name:MainFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container : Int = R.id.containerMain){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -79,8 +89,8 @@ class MainActivity : AppCompatActivity() {
             MainFragmentName.TRADE_FRAGMENT -> {
                 newFragment = TradeFragment()
             }
-            MainFragmentName.BOARD_FRAGMENT -> {
-                newFragment = BoardFragment()
+            MainFragmentName.FARMING_LIFE_TOOLS_FRAGMENT -> {
+                newFragment = FarmingLifeToolsFragment()
             }
             MainFragmentName.HOME_FRAGMENT -> {
                 newFragment = HomeFragment()
@@ -90,6 +100,18 @@ class MainActivity : AppCompatActivity() {
             }
             MainFragmentName.MY_PAGE_FRAGMENT -> {
                 newFragment = MyPageFragment()
+            }
+            MainFragmentName.COMMUNITY_FRAGMENT -> {
+                newFragment = CommunityFragment()
+            }
+            MainFragmentName.FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT -> {
+                newFragment = FarmingLifeFarmAndActivityFragment()
+            }
+            MainFragmentName.TAP_FARM_FRAGMENT -> {
+                newFragment = TapFarmFragment()
+            }
+            MainFragmentName.TAP_ACTIVITY_FRAGMENT -> {
+                newFragment = TapActivityFragment()
             }
             MainFragmentName.TRADE_TAB_DETAIL_FRAGMENT -> {
                 newFragment = TradeTabDetailFragment()
@@ -138,7 +160,7 @@ class MainActivity : AppCompatActivity() {
             // Fragment를 교체한다.(이전 Fragment가 없으면 새롭게 추가하는 역할을 수행한다)
             // 첫 번째 매개 변수 : Fragment를 배치할 FragmentContainerView의 ID
             // 두 번째 매개 변수 : 보여주고하는 Fragment 객체를
-            fragmentTransaction.replace(R.id.containerMain, newFragment!!)
+            fragmentTransaction.replace(container, newFragment!!)
 
             // addToBackStack 변수의 값이 true면 새롭게 보여질 Fragment를 BackStack에 포함시켜 준다.
             if(addToBackStack){

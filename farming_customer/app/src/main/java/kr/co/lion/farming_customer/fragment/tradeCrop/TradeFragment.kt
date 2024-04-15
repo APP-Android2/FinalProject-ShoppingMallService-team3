@@ -10,14 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeSearchActivity
 import kr.co.lion.farming_customer.databinding.FragmentTradeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
-import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
+import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.Product
 import kr.co.lion.farming_customer.model.ProductCard
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
@@ -164,7 +163,7 @@ class TradeFragment : Fragment() {
 
     // 최신 등록 농산물 Adapter
     inner class TradeNewAdapter(private val products: List<ProductCard>): RecyclerView.Adapter<TradeNewAdapter.ViewHolder>() {
-        inner class ViewHolder(val binding: RowLikeCropBinding) : RecyclerView.ViewHolder(binding.root) {
+        inner class ViewHolder(val binding: RowRelatedCropBinding) : RecyclerView.ViewHolder(binding.root) {
             fun bind(product: ProductCard){
                 binding.apply {
                     imageViewLikeCrop.setImageResource(product.imageResourceId)
@@ -201,7 +200,7 @@ class TradeFragment : Fragment() {
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TradeNewAdapter.ViewHolder {
             val inflater = LayoutInflater.from(parent.context)
-            val binding = RowLikeCropBinding.inflate(inflater, parent, false)
+            val binding = RowRelatedCropBinding.inflate(inflater, parent, false)
             return ViewHolder(binding)
         }
 
