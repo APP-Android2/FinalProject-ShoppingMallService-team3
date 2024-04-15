@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeActivityDetailBinding
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeReviewBinding
@@ -232,6 +233,15 @@ class FarmingLifeActivityDetailFragment : Fragment() {
             toolbarFarmingLifeActivityDetail.apply {
                 setNavigationOnClickListener {
                     farmingLifeActivity.finish()
+                }
+                setOnMenuItemClickListener {
+                    when(it.itemId){
+                        R.id.menuItemFarmingLifeDetail_cart -> {
+                            val intent = Intent(farmingLifeActivity, CartActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    true
                 }
             }
         }

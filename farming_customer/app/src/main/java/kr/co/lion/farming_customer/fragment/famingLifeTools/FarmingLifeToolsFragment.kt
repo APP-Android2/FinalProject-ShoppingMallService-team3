@@ -74,11 +74,17 @@ class FarmingLifeToolsFragment : Fragment() {
                     }
                     true
                 }
-                imageButton.setOnClickListener {
+                farmingLifeToolsToolbarLayout.setOnClickListener {
                     val farmingLifeBottomSheetFragment = FarmingLifeBottomSheetFragment(
                         MainFragmentName.FARMING_LIFE_TOOLS_FRAGMENT)
                     farmingLifeBottomSheetFragment.show(mainActivity.supportFragmentManager, "FarmingLifeBottomSheet")
                 }
+                farmingLifeToolsToolbarBtn.setOnClickListener {
+                    val farmingLifeBottomSheetFragment = FarmingLifeBottomSheetFragment(
+                        MainFragmentName.FARMING_LIFE_TOOLS_FRAGMENT)
+                    farmingLifeBottomSheetFragment.show(mainActivity.supportFragmentManager, "FarmingLifeBottomSheet")
+                }
+
             }
         }
     }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -152,4 +153,7 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
         fragmentReviewTabCropBinding.recyclerViewReviewTabCrop.adapter!!.notifyItemRemoved(id)
     }
 
+    override fun onYesButtonClick(activity: AppCompatActivity) {
+
+    }
 }
