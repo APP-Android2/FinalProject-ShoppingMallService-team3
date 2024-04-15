@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "38642770741",
+    "project_id": "farming-03",
+    "storage_bucket": "farming-03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38642770741:android:81b5b001ebfc79a6b1e27c",
+        "android_client_info": {
+          "package_name": "kr.co.lion.farming_customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb7t0RwxZVp0O5frRYJY_oVz_vbWhgYEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
