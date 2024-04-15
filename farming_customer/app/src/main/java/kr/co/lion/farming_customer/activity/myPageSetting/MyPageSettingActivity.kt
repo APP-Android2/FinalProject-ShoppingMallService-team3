@@ -49,6 +49,9 @@ class MyPageSettingActivity : AppCompatActivity() {
             constraintLayoutAccessPermissionSettings.setOnClickListener {
                 appPermissionSettings()
             }
+            imageButtontextViewAccessPermissionSettings.setOnClickListener {
+                appPermissionSettings()
+            }
         }
     }
 }
