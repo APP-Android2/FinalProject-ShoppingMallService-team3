@@ -13,10 +13,12 @@
         tools:context=".fragment.farmingLife.FarmingLifeSearchFragment">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput_edit"
             style="@style/CustomSearchTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp">
+            android:layout_marginHorizontal="20dp"
+            app:startIconDrawable="@drawable/back">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textEdit_search"

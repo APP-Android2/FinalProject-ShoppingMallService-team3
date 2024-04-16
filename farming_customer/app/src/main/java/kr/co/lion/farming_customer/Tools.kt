@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.FileOutputStream
 import android.app.Activity
+import android.util.TypedValue
 import kotlin.concurrent.thread
 
 class Tools {
@@ -136,6 +137,15 @@ class Tools {
                 activity.window.currentFocus?.clearFocus()
             }
         }
+
+        // dp를 픽셀로 변환하는 함수
+        fun dpToPx(context: Context, dp: Int): Int {
+            return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp.toFloat(),
+                context.resources.displayMetrics
+            ).toInt()
+        }
     }
 
 }
@@ -146,6 +156,7 @@ enum class MainFragmentName(var str : String){
     HOME_FRAGMENT("HomeFragment"),
     LIKE_FRAGMENT("LikeFragment"),
     MY_PAGE_FRAGMENT("MyPageFragment"),
+    TRADE_TAB_DETAIL_FRAGMENT("TradeTabDetailFragment"),
     COMMUNITY_FRAGMENT("CommunityFragment"),
     FARMING_LIFE_FARM_AND_ACTIVITY_FRAGMENT("FarmingLifeFarmAndActivityFragment"),
     TAP_FARM_FRAGMENT("TapFarmFragment"),

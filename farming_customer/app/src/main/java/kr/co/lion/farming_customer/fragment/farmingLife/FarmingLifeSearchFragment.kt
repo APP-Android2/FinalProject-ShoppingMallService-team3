@@ -35,10 +35,22 @@ class FarmingLifeSearchFragment : Fragment() {
 
         deco = MaterialDividerItemDecoration(farmingLifeActivity, MaterialDividerItemDecoration.VERTICAL)
         deco2 = GridSpaceItemDecoration(2,40,-10,-10,-10)
+
         settingRecyclerView()
+        settingEvent()
 
 
         return fragmentFarmingLifeSearchBinding.root
+    }
+
+    private fun settingEvent() {
+        fragmentFarmingLifeSearchBinding.apply {
+            textinputEdit.apply {
+                setStartIconOnClickListener {
+                    farmingLifeActivity.finish()
+                }
+            }
+        }
     }
 
     private fun settingRecyclerView() {
@@ -100,7 +112,7 @@ class FarmingLifeSearchFragment : Fragment() {
                 constraintLikeCancel.setOnClickListener {
                     if(rowGridItemViewModel!!.isLike.value!!){
                         rowGridItemViewModel!!.isLike.value = false
-                        imageViewHeart.setImageResource(R.drawable.heart_02)
+                        imageViewHeart.setImageResource(R.drawable.heart_04)
                         textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
                     }else{
                         rowGridItemViewModel!!.isLike.value = true
