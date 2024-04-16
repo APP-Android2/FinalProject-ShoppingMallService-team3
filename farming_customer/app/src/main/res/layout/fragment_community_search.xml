@@ -30,7 +30,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputCommunitySearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:drawablePadding="0dp"
                 android:fontFamily="@font/pretendard_regular"
                 android:hint="게시글을 검색해보세요"
