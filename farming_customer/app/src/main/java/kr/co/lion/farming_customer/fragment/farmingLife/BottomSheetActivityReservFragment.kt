@@ -123,7 +123,7 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
                     bottomSheetActivityReservViewModel!!.textView_selectedDate.value = date
                     selectedOption.date = date
                 }
-                calendar.visibility = View.GONE
+                calendar.visibility = View.INVISIBLE
                 textinputOption.visibility = View.VISIBLE
 
             }
