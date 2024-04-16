@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,34 +31,19 @@ class TradeSearchActivity : AppCompatActivity() {
         binding.tradeSearchViewModel = tradeSearchViewModel
         binding.lifecycleOwner = this
 
-        setButton()
+        settingDropDown()
         setRecyclerView()
 
         setContentView(binding.root)
     }
 
-    private fun setButton(){
+    // 드롭다운 설정
+    private fun settingDropDown() {
         binding.apply {
-            // 정렬 드롭다운 버튼
-            imageButtonDropDown.setOnClickListener {
-                // 드롭다운 버튼이 눌리지 않았다면
-                if(!dropDownButtonClicked){
-                    dropDownButtonClicked = true
-                    // image를 변경하고 아래 버튼들을 보여준다.
-                    imageButtonDropDown.setImageResource(R.drawable.polygon_up)
-                    buttonTradeSearchLikeDesc.visibility = View.VISIBLE
-                    buttonTradeSearchPriceAsc.visibility = View.VISIBLE
-                    buttonTradeSearchPriceDesc.visibility = View.VISIBLE
-                }else {
-                    dropDownButtonClicked = false
-                    // 드롭다운 버튼이 눌린 상태라면
-                    // image를 변경하고 아래 버튼들을 숨긴다
-                    imageButtonDropDown.setImageResource(R.drawable.polygon_down)
-                    buttonTradeSearchLikeDesc.visibility = View.GONE
-                    buttonTradeSearchPriceAsc.visibility = View.GONE
-                    buttonTradeSearchPriceDesc.visibility = View.GONE
-                }
-            }
+            // 드롭다운 설정
+            val typeList = listOf("별점순", "찜순", "금액 높은순", "금액 낮은순")
+            val typeArrayAdapter = ArrayAdapter(this@TradeSearchActivity, R.layout.item_spinner_search_sort, typeList)
+            textViewTradeSearchSort.setAdapter(typeArrayAdapter)
         }
     }
 

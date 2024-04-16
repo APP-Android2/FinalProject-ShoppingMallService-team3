@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.lion.farming_customer.R
@@ -26,23 +27,23 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment() {
         tradeDetailActivity = activity as TradeDetailActivity
 
         setButton()
+        settingDropDown()
 
         return binding.root
     }
 
+
+    // 드롭다운 설정
+    private fun settingDropDown() {
+        binding.apply {
+            // 드롭다운 설정
+            val typeList = listOf("감자 10kg")
+            val typeArrayAdapter = ArrayAdapter(requireContext(), R.layout.item_spinner_crop_option, typeList)
+            textViewBottomTradeOptionName.setAdapter(typeArrayAdapter)
+        }
+    }
     private fun setButton(){
         binding.apply {
-            // 농산물 표시 버튼
-            imageButtonDropDown.setOnClickListener {
-                // visibility 변경
-                if(constraintLayoutCrop.visibility == View.GONE) {
-                    imageButtonDropDown.setImageResource(R.drawable.polygon_up)
-                    constraintLayoutCrop.visibility = View.VISIBLE
-                } else {
-                    imageButtonDropDown.setImageResource(R.drawable.polygon_down)
-                    constraintLayoutCrop.visibility = View.GONE
-                }
-            }
 
             // + 버튼
             toggleButtonPlus.setOnClickListener {
