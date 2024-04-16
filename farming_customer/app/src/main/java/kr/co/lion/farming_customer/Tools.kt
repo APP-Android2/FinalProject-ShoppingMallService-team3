@@ -283,3 +283,9 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }
+
+enum class FarmStatus(var str : String, var number : Int){
+    FARM_STATUS_NORMAL("정상", 1),
+    FARM_STATUS_PAUSE("일시중지", 2),
+    FARM_STATUS_DELETE("삭제", 3)
+}

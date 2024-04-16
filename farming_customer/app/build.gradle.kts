@@ -51,7 +51,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.github.ome450901:SimpleRatingBar:1.5.1")
     implementation ("com.github.amarjain07:StickyScrollView:1.0.3")
     implementation ("me.relex:circleindicator:2.1.6")
@@ -64,5 +63,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
     implementation("com.google.firebase:firebase-storage:20.3.0")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }

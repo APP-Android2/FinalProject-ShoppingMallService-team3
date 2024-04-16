@@ -3,6 +3,7 @@ package kr.co.lion.farming_customer.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.FarmStatus
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.dao.FarmDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
+import kr.co.lion.farming_customer.model.farminLifeFarmAndActivity.FarmModel
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
@@ -31,6 +38,9 @@ class HomeFragment : Fragment() {
     lateinit var mainActivity: MainActivity
 
     lateinit var homeViewModel: HomeViewModel
+
+    var farmList = mutableListOf<FarmModel>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentHomeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
         homeViewModel = HomeViewModel()
@@ -38,9 +48,19 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
 
+        settingData()
         settingRecyclerView()
 
         return fragmentHomeBinding.root
+    }
+
+    private fun settingData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            // 주말농장 데이터를 가져온다.
+            farmList = FarmDao.gettingFarmList()
+
+            fragmentHomeBinding.viewPagerFarm.adapter?.notifyDataSetChanged()
+        }
     }
 
     private fun settingRecyclerView() {
@@ -123,15 +143,20 @@ class HomeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 5
+            return farmList.size
         }
 
         override fun onBindViewHolder(holder: ViewPagerFarmViewHolder, position: Int) {
             holder.rowGridItemBinding.rowGridItemViewModel!!.apply {
-                textView_likeCnt.value = "999"
-                textView_ItemName.value = "파밍이네 농장"
-                textView_location.value = "경기도 파밍시 파밍구"
-                textView_price.value = "20,000원 ~"
+                textView_likeCnt.value = farmList[position].farm_like_cnt.toString()
+                textView_ItemName.value = farmList[position].farm_title
+                textView_location.value = farmList[position].farm_address
+                farmList[position].farm_option_detail.forEach{map ->
+                    if (map.containsKey("price_area")) {
+                        textView_price.value = map["price_area"] as? String
+                        return@forEach
+                    }
+                }
                 isLike.value = false
             }
             // 하트 클릭 리스너
@@ -140,7 +165,7 @@ class HomeFragment : Fragment() {
                     constraintLikeCancel.setOnClickListener {
                         if(isLike.value!!){
                             isLike.value = false
-                            imageViewHeart.setImageResource(R.drawable.heart_02)
+                            imageViewHeart.setImageResource(R.drawable.heart_04)
                             textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
 
                         }else{
@@ -157,6 +182,11 @@ class HomeFragment : Fragment() {
                 val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
                 intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT)
                 startActivity(intent)
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                holder.rowGridItemBinding.apply {
+                    FarmDao.gettingContentImage(mainActivity, farmList[position].farm_images[0], imageView)
+                }
             }
         }
     }
