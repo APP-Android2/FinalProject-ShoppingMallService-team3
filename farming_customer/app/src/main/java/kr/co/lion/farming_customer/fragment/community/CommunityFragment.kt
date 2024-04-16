@@ -38,7 +38,6 @@ class CommunityFragment : Fragment() {
 
         settingToolbar()
         settingTabLayoutCommunity()
-        settingFloatingActionButtonCommunityAdd()
 
         replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, null)
         return fragmentCommunityBinding.root
@@ -78,19 +77,19 @@ class CommunityFragment : Fragment() {
                     when(tab!!.position){
                         // 전체 탭
                         0 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 정보 탭
                         1 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_INFORMATION_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_INFORMATION_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 소통 탭
                         2 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_SOCIAL_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_SOCIAL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 구인구직 탭
                         3 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_JOB_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_JOB_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
 
                     }
@@ -107,16 +106,6 @@ class CommunityFragment : Fragment() {
         }
     }
 
-    // 커뮤니티 게시글 작성
-    fun settingFloatingActionButtonCommunityAdd() {
-        fragmentCommunityBinding.apply {
-            floatingActionButtonCommunityAdd.setOnClickListener {
-                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
-                startActivity(communityIntent)
-
-            }
-        }
-    }
 
 
     fun replaceFragment(name: CommunityTabFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunityTab){

@@ -46,15 +46,15 @@ class ReviewHistoryFragment : Fragment() {
                     when(tab!!.position){
                         // 농산물 탭
                         0 -> {
-                            reviewActivity.replaceFragment(ReviewFragmentName.REVIEW_TAB_CROP_FRAGMENT, false, true, null, R.id.containerReviewHistoryTab)
+                            reviewActivity.replaceFragment(ReviewFragmentName.REVIEW_TAB_CROP_FRAGMENT, false, false, null, R.id.containerReviewHistoryTab)
                         }
                         // 주말농장 탭
                         1 -> {
-                            reviewActivity.replaceFragment(ReviewFragmentName.REVIEW_TAB_FARM_FRAGMENT, false, true, null, R.id.containerReviewHistoryTab)
+                            reviewActivity.replaceFragment(ReviewFragmentName.REVIEW_TAB_FARM_FRAGMENT, false, false, null, R.id.containerReviewHistoryTab)
                         }
                         // 체험활동 탭
                         2 -> {
-                            reviewActivity.replaceFragment(ReviewFragmentName.REVIEW_TAB_ACTIVITY_FRAGMENT, false, true, null, R.id.containerReviewHistoryTab)
+                            reviewActivity.replaceFragment(ReviewFragmentName.REVIEW_TAB_ACTIVITY_FRAGMENT, false, false, null, R.id.containerReviewHistoryTab)
                         }
                     }
                 }
