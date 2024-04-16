@@ -1,12 +1,10 @@
-package kr.co.lion.farming_customer.model.farminLifeFarmAndActivity
-
-import java.lang.reflect.Constructor
+package kr.co.lion.farming_customer.model.farminLife
 
 data class FarmModel(
     var farm_idx : Int, // 주말농장 번호
     var farm_seller_idx : Int, // 주말농장 판매자 번호
     var farm_title : String, // 주말농장 이름
-    var farm_option_detail : MutableList<Map<String, Any>>, // 주말농장 옵션 상세
+    var farm_option_detail : Map<String, Any>, // 주말농장 옵션 상세
     var farm_address : String, // 주말농장 주소
     var farm_content_detail :String, // 주말농장 상세 내용
     var farm_content_warning :String, // 주말농장 주의 사항
@@ -16,7 +14,7 @@ data class FarmModel(
     var farm_use_date_start :String, // 주말농장 이용기간 시작
     var farm_use_date_end : String, // 주말농장 이용 기간 마감
     var farm_can_crop : MutableList<String>, // 주말 농장 생산 가능 작물
-    var farm_utility : MutableList<Map<String, Boolean>>, // 주말농장 편의시설
+    var farm_utility : Map<String, Boolean>, // 주말농장 편의시설
     var farm_like_cnt : Int, // 주말농장 좋아요 개수
     var farm_images : MutableList<String>, // 주말농장 이미지 첨부파일
     var farm_reg_dt : String, // 주말농장 등록 날짜
@@ -27,7 +25,7 @@ data class FarmModel(
         0,
         0,
         "",
-        mutableListOf(),
+        mutableMapOf(),
         "",
         "",
         "",
@@ -37,7 +35,7 @@ data class FarmModel(
         "",
         "",
         mutableListOf(),
-        mutableListOf(),
+        mutableMapOf(),
         0,
         mutableListOf(),
         "",

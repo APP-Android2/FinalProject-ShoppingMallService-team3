@@ -1,7 +1,6 @@
-package kr.co.lion.farming_customer.dao
+package kr.co.lion.farming_customer.dao.farmingLife
 
 import android.content.Context
-import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
@@ -13,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kr.co.lion.farming_customer.FarmStatus
-import kr.co.lion.farming_customer.model.farminLifeFarmAndActivity.FarmModel
+import kr.co.lion.farming_customer.model.farminLife.FarmModel
 
 class FarmDao {
     companion object{
@@ -36,7 +35,7 @@ class FarmDao {
             return farmSequence
         }
 
-        // 게시글 시퀀스 값을 업데이트 한다.
+        // 주말농장 시퀀스 값을 업데이트 한다.
         suspend fun updateFarmSequence(farmSequence:Int){
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
@@ -54,17 +53,14 @@ class FarmDao {
 
         // 주말농장 목록을 가져온다.
         suspend fun gettingFarmList():MutableList<FarmModel>{
-            // 게시글 정보를 담을 리스트
             val farmList = mutableListOf<FarmModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
                 val collectionReference = Firebase.firestore.collection("FarmData")
-                // 게시글 상태가 정상 상태이고 게시글 번호를 기준으로 내림차순 정렬되게 데이터를 가져올 수 있는
-                // Query를 생성한다.
-                // 게시글 상태가 정상 상태인 것만..
+                // 주말농장 상태가 정상 상태
                 var query = collectionReference.whereEqualTo("farm_status", FarmStatus.FARM_STATUS_NORMAL.number)
-                // 게시글 번호를 기준으로 내림 차순 정렬..
+                // 주말농장 번호를 기준으로 내림 차순 정렬
                 query = query.orderBy("farm_idx", Query.Direction.DESCENDING)
 
                 val queryShapshot = query.get().await()
@@ -82,7 +78,33 @@ class FarmDao {
             return farmList
         }
 
-        // 게시글 정보를 저장한다.
+        // 주말농장 좋아요 내림차순 정렬 목록을 가져온다.
+        suspend fun gettingFarmListOrderByLikeCnt():MutableList<FarmModel>{
+            val farmList = mutableListOf<FarmModel>()
+
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("FarmData")
+                // 주말농장 상태가 정상 상태
+                var query = collectionReference.whereEqualTo("farm_status", FarmStatus.FARM_STATUS_NORMAL.number)
+                // 좋아요 수를 기준으로 내림 차순 정렬
+                query = query.orderBy("farm_like_cnt", Query.Direction.DESCENDING)
+
+                val queryShapshot = query.get().await()
+                // 가져온 문서의 수 만큼 반복한다.
+                queryShapshot.forEach {
+                    // 현재 번째의 문서를 객체로 받아온다.
+                    val farmModel = it.toObject(FarmModel::class.java)
+                    // 객체를 리스트에 담는다.
+                    farmList.add(farmModel)
+                }
+            }
+            job1.join()
+
+            return farmList
+        }
+
+        // 주말농장 정보를 저장한다.
         suspend fun insertFarmData(farmModel: FarmModel){
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
@@ -96,7 +118,7 @@ class FarmDao {
         }
 
         // 이미지 데이터를 받아오는 메서드
-        suspend fun gettingContentImage(context: Context, imageFileName:String, imageView: ImageView){
+        suspend fun gettingFarmImage(context: Context, imageFileName:String, imageView: ImageView){
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 이미지에 접근할 수 있는 객체를 가져온다.
                 val storageRef = Firebase.storage.reference.child(imageFileName)
@@ -113,6 +135,27 @@ class FarmDao {
             // 이에, 이미지 데이터를 받아와 보여주는 코루틴을 작업이 끝날 때 까지 대기 하지 않는다.
             // 그 이유는 데이터를 받아오는데 걸리는 오랜 시간 동안 화면에 아무것도 나타나지 않을 수 있기 때문이다.
             // 따라서 이 메서드는 제일 마지막에 호출해야 한다.(다른 것들을 모두 보여준 후에...)
+        }
+
+        // 주말농장 번호를 이용해 주말농장 데이터를 가져와 반환한다.
+        suspend fun selectFarmData(farmIdx:Int):FarmModel?{
+
+            var farmModel:FarmModel? = null
+
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("FarmData")
+                // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
+                val queryShapshot = collectionReference.whereEqualTo("farm_idx", farmIdx).get().await()
+                // 가져온 글 정보를 객체에 담아서 반환 받는다.
+                // contentIdx가 같은 글은 존재할 수가 없기 때문에 첫 번째 객체를 바로 추출해서 사용한다.
+                // toObject : 지정한 클래스를 가지고 객체를 만든 다음 가져온 데이터의 필드의 이름과 동일한 이름의
+                // 프로퍼티에 필드의 값을 담아준다.
+                farmModel = queryShapshot.documents[0].toObject(FarmModel::class.java)
+            }
+            job1.join()
+
+            return farmModel
         }
     }
 }

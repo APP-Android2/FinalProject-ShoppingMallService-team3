@@ -289,3 +289,9 @@ enum class FarmStatus(var str : String, var number : Int){
     FARM_STATUS_PAUSE("일시중지", 2),
     FARM_STATUS_DELETE("삭제", 3)
 }
+
+enum class ActivityStatus(var str : String, var number : Int){
+    ACTIVITY_STATUS_NORMAL("정상", 1),
+    ACTIVITY_STATUS_PAUSE("일시중지", 2),
+    ACTIVITY_STATUS_DELETE("삭제", 3)
+}
