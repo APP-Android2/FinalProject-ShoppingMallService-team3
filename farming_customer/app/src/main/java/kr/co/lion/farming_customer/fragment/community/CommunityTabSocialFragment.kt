@@ -14,9 +14,8 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabSocialBinding
-import kr.co.lion.farming_customer.databinding.RowCommunityTabInformationBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabSocialBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 class CommunityTabSocialFragment : Fragment() {
     lateinit var fragmentCommunityTabSocialBinding: FragmentCommunityTabSocialBinding

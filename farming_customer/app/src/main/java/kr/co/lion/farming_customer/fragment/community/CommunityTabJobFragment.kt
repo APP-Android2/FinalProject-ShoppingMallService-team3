@@ -13,11 +13,9 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
-import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabJobBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabJobBinding
-import kr.co.lion.farming_customer.databinding.RowCommunityTabSocialBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 class CommunityTabJobFragment : Fragment() {
     lateinit var fragmentCommunityTabJobBinding: FragmentCommunityTabJobBinding

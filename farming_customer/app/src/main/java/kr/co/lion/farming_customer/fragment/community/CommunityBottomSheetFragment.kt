@@ -16,7 +16,7 @@ import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityBottomSheetBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 
 class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragment) : BottomSheetDialogFragment(), DialogYesNoInterface {

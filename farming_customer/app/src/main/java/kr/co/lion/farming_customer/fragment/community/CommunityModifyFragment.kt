@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,22 +15,21 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
-import kr.co.lion.farming_customer.activity.CommunityAddActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityModifyBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityModifyImageBinding
-import kr.co.lion.farming_customer.databinding.RowCommunityReadImageBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityAddModifyViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 class CommunityModifyFragment : Fragment() {
     lateinit var fragmentCommunityModifyBinding: FragmentCommunityModifyBinding
     lateinit var communityActivity: CommunityActivity
-    lateinit var communityViewModel: CommunityViewModel
+    lateinit var communityAddModifyViewModel: CommunityAddModifyViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentCommunityModifyBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_modify, container, false)
-        communityViewModel = CommunityViewModel()
-        fragmentCommunityModifyBinding.communityViewModel = communityViewModel
+        communityAddModifyViewModel = CommunityAddModifyViewModel()
+        fragmentCommunityModifyBinding.communityAddModifyViewModel = communityAddModifyViewModel
         fragmentCommunityModifyBinding.lifecycleOwner = this
         communityActivity = activity as CommunityActivity
 
@@ -59,8 +57,8 @@ class CommunityModifyFragment : Fragment() {
     // 입력요소 초기화
     fun settingInitializeInputForm() {
         fragmentCommunityModifyBinding.apply {
-            communityViewModel?.textViewCommunityModifySubject?.value = "글 제목입니다"
-            communityViewModel?.textViewCommunityModifyContent?.value = "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 \n" +
+            communityAddModifyViewModel?.textViewCommunityModifySubject?.value = "글 제목입니다"
+            communityAddModifyViewModel?.textViewCommunityModifyContent?.value = "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 \n" +
                     "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 "
         }
     }

@@ -19,12 +19,14 @@ import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityReadBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityReadCommentBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityReadImageBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityCommentViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityReadViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 class CommunityReadFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentCommunityReadBinding: FragmentCommunityReadBinding
     lateinit var communityActivity: CommunityActivity
-    lateinit var communityViewModel: CommunityViewModel
+    lateinit var communityReadViewModel: CommunityReadViewModel
 
     // 좋아요 개수
     var communityReadLikeCnt = 999
@@ -34,8 +36,8 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentCommunityReadBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_community_read, container, false)
-        communityViewModel = CommunityViewModel()
-        fragmentCommunityReadBinding.communityViewModel = communityViewModel
+        communityReadViewModel = CommunityReadViewModel()
+        fragmentCommunityReadBinding.communityReadViewModel = communityReadViewModel
         fragmentCommunityReadBinding.lifecycleOwner = this
 
         communityActivity = activity as CommunityActivity
@@ -54,7 +56,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
     fun settingToolbar() {
         fragmentCommunityReadBinding.apply {
             toolbarCommunityRead.apply {
-                communityViewModel?.textViewCommunityReadToolbarTitle?.value = "정보 게시판"
+                communityReadViewModel?.textViewCommunityReadToolbarTitle?.value = "정보 게시판"
                 setNavigationIcon(R.drawable.back)
                 setNavigationOnClickListener {
                     communityActivity.finish()
@@ -82,17 +84,17 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
     fun settingTextViewCommunityReadInput() {
         fragmentCommunityReadBinding.apply {
             // 좋아요 개수
-            communityViewModel?.textViewCommunityReadLikeCnt?.value = communityReadLikeCnt.toString()
+            communityReadViewModel?.textViewCommunityReadLikeCnt?.value = communityReadLikeCnt.toString()
             // 댓글 개수
-            communityViewModel?.textViewCommunityReadCommentCnt?.value = communityReadCommentCnt.toString()
+            communityReadViewModel?.textViewCommunityReadCommentCnt?.value = communityReadCommentCnt.toString()
             // 글 작성자
-            communityViewModel?.textViewCommunityReadWriter?.value = "글 작성자"
+            communityReadViewModel?.textViewCommunityReadWriter?.value = "글 작성자"
             // 글 제목
-            communityViewModel?.textViewCommunityReadSubject?.value = "글 제목입니다"
+            communityReadViewModel?.textViewCommunityReadSubject?.value = "글 제목입니다"
             // 글 작성날짜
-            communityViewModel?.textViewCommunityReadDate?.value = "2024.03.01"
+            communityReadViewModel?.textViewCommunityReadDate?.value = "2024.03.01"
             // 글 내용
-            communityViewModel?.textViewCommunityReadContent?.value = "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 \n" +
+            communityReadViewModel?.textViewCommunityReadContent?.value = "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 \n" +
                     "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 \n" +
                     "글 내용입니다 글 내용입니다 글 내용입니다"
         }
@@ -197,8 +199,8 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommunityReadViewHolder {
             val rowCommunityReadCommentBinding =
                 DataBindingUtil.inflate<RowCommunityReadCommentBinding>(layoutInflater, R.layout.row_community_read_comment, parent, false)
-            val communityViewModel = CommunityViewModel()
-            rowCommunityReadCommentBinding.communityViewModel = communityViewModel
+            val communityCommentViewModel = CommunityCommentViewModel()
+            rowCommunityReadCommentBinding.communityCommentViewModel = communityCommentViewModel
             rowCommunityReadCommentBinding.lifecycleOwner = this@CommunityReadFragment
 
             val communityReadImageViewHolder = CommunityReadViewHolder(rowCommunityReadCommentBinding)
@@ -211,9 +213,9 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         }
 
         override fun onBindViewHolder(holder: CommunityReadViewHolder, position: Int) {
-            holder.rowCommunityReadCommentBinding.communityViewModel?.textViewRowCommunityReadCommentWriter?.value =
+            holder.rowCommunityReadCommentBinding.communityCommentViewModel?.textViewRowCommunityReadCommentWriter?.value =
                 "댓글 작성자 $position"
-            holder.rowCommunityReadCommentBinding.communityViewModel?.textViewRowCommunityReadCommentContent?.value =
+            holder.rowCommunityReadCommentBinding.communityCommentViewModel?.textViewRowCommunityReadCommentContent?.value =
                 "댓글입니다 댓글입니다 댓글입니다 댓글입니다 $position"
 
             holder.rowCommunityReadCommentBinding.imageViewRowCommunityReadCommentModify.setOnClickListener {

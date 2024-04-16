@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            name="communityReadViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityReadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="@{communityViewModel.textViewCommunityReadToolbarTitle}"
+                android:text="@{communityReadViewModel.textViewCommunityReadToolbarTitle}"
                 android:textColor="@color/brown_01"
                 android:textSize="20sp"
                 tools:layout_editor_absoluteX="16dp"
@@ -116,7 +116,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:fontFamily="@font/pretendard_regular"
-                                android:text="@{communityViewModel.textViewCommunityReadDate}"
+                                android:text="@{communityReadViewModel.textViewCommunityReadDate}"
                                 android:textColor="@color/grey_01"
                                 android:textSize="10sp" />
 
@@ -125,7 +125,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/pretendard_semibold"
-                                android:text="@{communityViewModel.textViewCommunityReadWriter}"
+                                android:text="@{communityReadViewModel.textViewCommunityReadWriter}"
                                 android:textColor="@color/brown_01"
                                 android:textSize="12sp" />
 
@@ -159,7 +159,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:fontFamily="@font/pretendard_semibold"
-                                    android:text="@{communityViewModel.textViewCommunityReadLikeCnt}"
+                                    android:text="@{communityReadViewModel.textViewCommunityReadLikeCnt}"
                                     android:textAlignment="center"
                                     android:textColor="@color/brown_01"
                                     android:textSize="12sp" />
@@ -184,7 +184,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:fontFamily="@font/pretendard_semibold"
-                                    android:text="@{communityViewModel.textViewCommunityReadCommentCnt}"
+                                    android:text="@{communityReadViewModel.textViewCommunityReadCommentCnt}"
                                     android:textAlignment="center"
                                     android:textColor="@color/brown_01"
                                     android:textSize="12sp" />
@@ -207,7 +207,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendard_semibold"
-                            android:text="@{communityViewModel.textViewCommunityReadSubject}"
+                            android:text="@{communityReadViewModel.textViewCommunityReadSubject}"
                             android:textColor="@color/brown_01"
                             android:textSize="14sp" />
 
@@ -217,7 +217,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/pretendard_regular"
-                            android:text="@{communityViewModel.textViewCommunityReadContent}"
+                            android:text="@{communityReadViewModel.textViewCommunityReadContent}"
                             android:textColor="@color/brown_01"
                             android:textSize="12sp" />
                     </LinearLayout>

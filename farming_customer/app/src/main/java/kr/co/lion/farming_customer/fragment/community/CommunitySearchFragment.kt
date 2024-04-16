@@ -13,12 +13,9 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.CommunitySearchActivity
-import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunitySearchBinding
-import kr.co.lion.farming_customer.databinding.FragmentCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowCommunitySearchBinding
-import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 class CommunitySearchFragment : Fragment() {
     lateinit var fragmentCommunitySearchBinding: FragmentCommunitySearchBinding

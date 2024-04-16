@@ -7,7 +7,7 @@
     <data>
         <variable
             name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel" />
     </data>
 
     <LinearLayout

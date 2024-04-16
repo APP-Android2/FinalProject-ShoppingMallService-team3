@@ -16,6 +16,7 @@ import java.io.File
 import java.io.FileOutputStream
 import android.app.Activity
 import android.util.TypedValue
+import androidx.viewpager2.widget.ViewPager2
 import kotlin.concurrent.thread
 
 class Tools {
@@ -91,25 +92,7 @@ class Tools {
             return resizedBitmap
         }
 
-        // 이미지뷰의 이미지를 추출해 로컬에 저장한다.
-        fun saveImageViewData(context: Context, imageView: ImageView, fileName:String){
-            // 외부 저장소까지의 경로를 가져온다.
-            val filePath = context.getExternalFilesDir(null).toString()
-            // 이미지 뷰에서 BitmapDrawable 객체를 추출한다.
-            val bitmapDrawable = imageView.drawable as BitmapDrawable
 
-            // 로컬에 저장할 경로
-            val file = File("${filePath}/${fileName}")
-            // 스트림 추출
-            val fileOutputStream = FileOutputStream(file)
-            // 이미지를 저장한다.
-            // 첫 번째 : 이미지 데이터 포멧(JPEG, PNG, WEBP_LOSSLESS, WEBP_LOSSY)
-            // 두 번째 : 이미지의 퀄리티
-            // 세 번째 : 이미지 데이터를 저장할 파일과 연결된 스트림
-            bitmapDrawable.bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-            fileOutputStream.flush()
-            fileOutputStream.close()
-        }
         // 뷰에 포커스를 주고 키보드를 올린다.
         fun showSoftInput(context: Context, view: View) {
             // 뷰에 포커스를 준다.
@@ -258,6 +241,7 @@ enum class FarmingLifeFragmnetName(var str:String){
     FARMING_LIFE_FARM_DETAIL_FARMGNET("FarmingLifeFarmDetailFragment"),
     FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT("FarmingLifeActivityDetailFragment")
 }
+
 // 농기구 프래그먼트
 enum class FarmingLifeToolsFragmentName(var str: String) {
     FARMING_LIFE_TOOLS_MAP_FRAGMENT("FarmingLifeToolsMapFragment"),
@@ -282,4 +266,19 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_SUCCESS_FRAGMENT("PaymentSuccessFragment"),
     PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
+}
+
+// 게시판 종류를 나타내는 값을 정의한다.
+enum class PostType(var str:String, var number:Int){
+    TYPE_ALL("전체", 0),
+    TYPE_INFORMATION("정보", 1),
+    TYPE_SOCIAL("소통", 2),
+    TYPE_JOB("구인구직", 3),
+}
+
+// 게시판 상태를 나타내는 값을 정의한다.
+enum class PostStatus(var str:String, var number:Int) {
+    POST_STATUS_NORMAL("정상", 1),
+    POST_STATUS_REMOVE("샥제", 2),
+    POST_STATUS_MODIFY("수정", 3)
 }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -16,10 +15,7 @@ import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
-import kr.co.lion.farming_customer.databinding.RowPointHistoryBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.FarminglLifeViewModel
-import kr.co.lion.farming_customer.viewmodel.point.MyPagePointViewModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 
 class CommunityTabAllFragment : Fragment() {

@@ -1,26 +1,15 @@
 package kr.co.lion.farming_customer.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.transition.MaterialSharedAxis
-import kr.co.lion.farming_customer.CommunityAddFragmentName
 import kr.co.lion.farming_customer.CommunitySearchFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.databinding.ActivityCommunityAddBinding
 import kr.co.lion.farming_customer.databinding.ActivityCommunitySearchBinding
-import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
-import kr.co.lion.farming_customer.fragment.community.CommunityAddFragment
 import kr.co.lion.farming_customer.fragment.community.CommunitySearchFragment
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 
 class CommunitySearchActivity : AppCompatActivity() {
     lateinit var activityCommunitySearchBinding: ActivityCommunitySearchBinding

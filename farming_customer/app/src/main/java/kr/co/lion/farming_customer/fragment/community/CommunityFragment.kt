@@ -122,7 +122,7 @@ class CommunityFragment : Fragment() {
     fun replaceFragment(name: CommunityTabFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunityTab){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
-        val fragmentTransaction = (context as MainActivity).supportFragmentManager.beginTransaction()
+        val fragmentTransaction = mainActivity.supportFragmentManager.beginTransaction()
         // oldFragment에 newFragment가 가지고 있는 Fragment 객체를 담아준다.
         if(newFragment != null){
             oldFragment = newFragment
@@ -198,10 +198,10 @@ class CommunityFragment : Fragment() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name: MainFragmentName){
+    fun removeFragment(name: CommunityTabFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
-        (context as MainActivity).supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        mainActivity.supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
 }
