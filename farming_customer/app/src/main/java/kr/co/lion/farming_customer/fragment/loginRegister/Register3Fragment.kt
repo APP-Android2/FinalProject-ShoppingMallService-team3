@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.loginRegister
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -16,10 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
-import kr.co.lion.farming_customer.activity.LoginActivity
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentRegister3Binding
-import kr.co.lion.farming_customer.viewmodel.Register3ViewModel
+import kr.co.lion.farming_customer.viewmodel.loginRegister.Register3ViewModel
 
 class Register3Fragment : Fragment() {
 

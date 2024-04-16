@@ -6,7 +6,7 @@
     <data>
         <variable
             name="registerViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.RegisterViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.loginRegister.RegisterViewModel" />
     </data>
 
     <LinearLayout

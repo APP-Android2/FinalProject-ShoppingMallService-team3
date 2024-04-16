@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.loginRegister
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,9 +9,9 @@ import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.LoginActivity
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
 import kr.co.lion.farming_customer.databinding.FragmentRegisterBinding
-import kr.co.lion.farming_customer.viewmodel.RegisterViewModel
+import kr.co.lion.farming_customer.viewmodel.loginRegister.RegisterViewModel
 
 class RegisterFragment : Fragment() {
 

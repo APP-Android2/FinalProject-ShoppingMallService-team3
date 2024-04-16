@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.loginRegister
 
 import android.os.Bundle
 import android.text.Editable
@@ -14,11 +14,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.LoginActivity
-import kr.co.lion.farming_customer.databinding.FragmentFindIdDoneBinding
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
 import kr.co.lion.farming_customer.databinding.FragmentFindPwDoneBinding
-import kr.co.lion.farming_customer.viewmodel.FindIdDoneViewModel
-import kr.co.lion.farming_customer.viewmodel.FindPwDoneViewModel
+import kr.co.lion.farming_customer.viewmodel.loginRegister.FindPwDoneViewModel
 
 class FindPwDoneFragment : Fragment() {
 

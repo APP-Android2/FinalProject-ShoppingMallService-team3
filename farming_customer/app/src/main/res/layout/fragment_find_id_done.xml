@@ -6,7 +6,7 @@
     <data>
         <variable
             name="findIdDoneViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.FindIdDoneViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.loginRegister.FindIdDoneViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

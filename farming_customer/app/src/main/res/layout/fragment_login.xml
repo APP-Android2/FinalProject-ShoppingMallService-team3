@@ -6,7 +6,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.LoginViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.loginRegister.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
