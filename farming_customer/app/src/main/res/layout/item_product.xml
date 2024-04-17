@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="tradeViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         style="?attr/materialCardViewFilledStyle"
         android:layout_width="match_parent"
@@ -21,11 +27,11 @@
                 android:id="@+id/imageViewCropImage"
                 android:layout_width="0dp"
                 android:layout_height="140dp"
-                android:scaleType="centerCrop"
+                android:background="@color/grey_02"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewCropName"
@@ -34,7 +40,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="농작물 이름"
+                android:text="@={tradeViewModel.textViewCropName}"
                 android:textColor="@color/brown_01"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewCropImage" />
@@ -47,7 +53,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/pretendard_regular"
-                android:text="강원도 횡성군"
+                android:text="@={tradeViewModel.textViewCropLocation}"
                 android:textColor="@color/grey_01"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -65,7 +71,7 @@
                 app:srb_drawableEmpty="@drawable/star_02"
                 app:srb_drawableFilled="@drawable/star_01"
                 app:srb_isIndicator="true"
-                app:srb_minimumStars="1"
+                app:srb_minimumStars="0"
                 app:srb_numStars="5"
                 app:srb_rating="2"
                 app:srb_starHeight="12dp"
@@ -81,7 +87,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="10,000원"
+                android:text="@={tradeViewModel.textViewTradePrice}"
                 android:textColor="@color/brown_01"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -105,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="0"
+                android:text="@={tradeViewModel.textViewTradeLike}"
                 android:textColor="@color/brown_01"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="@id/imageButtonProductLike"

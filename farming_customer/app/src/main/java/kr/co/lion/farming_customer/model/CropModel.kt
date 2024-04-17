@@ -1,16 +1,17 @@
 package kr.co.lion.farming_customer.model
 
 data class CropModel(
-    var cropIdx:Int, var cropSellerIdx:Int,
-    var cropTitle:String, var cropOptionDetail:MutableList<Map<String,String>>,
-    var cropContentDetail:String, var cropContentWarning:String,
-    var cropContentPolicy:String, var cropLikeCnt:Int,
-    var cropImages:MutableList<String>, var cropContentDetailImage:MutableList<String>,
-    var cropStatus:Int) {
+    var crop_idx:Int, var crop_seller_idx:Int, var crop_address:String,
+    var crop_title:String, var crop_option_detail:MutableList<Map<String,String>>,
+    var crop_content_detail:String, var crop_content_warning:String,
+    var crop_content_policy:String, var crop_like_cnt:Int,
+    var crop_images:MutableList<String>, var crop_content_detail_image:MutableList<String>,
+    var crop_reg_dt:String,var crop_mod_dt:String,var like_state:Boolean,
+    var crop_rating:Double,var delivery_fee:String, var crop_status:Int) {
 
     constructor(): this(
-        0,0,"",
+        0,0,"","",
         mutableListOf(),"", "",
         "",0, mutableListOf(),
-        mutableListOf(), 0)
+        mutableListOf(),"","",false,0.0,"", 0)
 }

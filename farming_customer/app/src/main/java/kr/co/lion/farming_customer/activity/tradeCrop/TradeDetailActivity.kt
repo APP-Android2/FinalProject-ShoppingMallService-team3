@@ -3,6 +3,7 @@ package kr.co.lion.farming_customer.activity.tradeCrop
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +11,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
+import kr.co.lion.farming_customer.dao.crop.CropDao
 import kr.co.lion.farming_customer.databinding.ActivityTradeDetailBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCropImageBinding
@@ -25,13 +31,24 @@ import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewCropImageBinding
 import kr.co.lion.farming_customer.fragment.tradeCrop.BottomSheetTradeCrop
+import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.CropReview
 import kr.co.lion.farming_customer.model.Product
 import kr.co.lion.farming_customer.model.ProductCard
+import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeDetailViewModel
 
 class TradeDetailActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityTradeDetailBinding
+    lateinit var tradeDetailViewModel:TradeDetailViewModel
+
+    // 농산품 데이터를 담을 프로퍼티
+    var cropData: CropModel? = null
+    // 농산품 번호를 담을 프로퍼티
+    var crop_idx = 0
+
+    // position을 담을 프로퍼티
+    var position = 0
 
     private val constraintSet = ConstraintSet()
 
@@ -43,16 +60,53 @@ class TradeDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTradeDetailBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_trade_detail)
+        tradeDetailViewModel = TradeDetailViewModel()
+        binding.tradeDetailViewModel = tradeDetailViewModel
+        binding.lifecycleOwner = this
 
-        setToolbar()
-        setTab()
-        setButton()
-        setImageAdapter()
-        setRecyclerView()
-        setRecyclerRelatedCrop()
+        settingInputForm()
 
         setContentView(binding.root)
+    }
+
+    // 초기 설정
+    fun settingInputForm(){
+        crop_idx = intent.getIntExtra("crop_idx",0)
+        position = intent.getIntExtra("position",0)
+        CoroutineScope(Dispatchers.Main).launch {
+            cropData = CropDao.selectCropData(crop_idx)
+
+            setToolbar()
+            setTab()
+            setButton()
+            setImageAdapter()
+            setRecyclerView()
+            setRecyclerRelatedCrop()
+            settingTextView()
+        }
+    }
+
+    // 텍스트뷰 설정
+    fun settingTextView(){
+        binding.apply {
+            // 농작물 이름
+            tradeDetailViewModel?.textViewTradeDetailCropName?.value = cropData?.crop_title
+            // 농작물 지역
+            tradeDetailViewModel?.textViewTradeDetailLocation?.value = "지역 : ${cropData?.crop_address}"
+            // 농작물 택배비
+            tradeDetailViewModel?.textViewTradeDetailFee?.value = "택배비 : ${cropData?.delivery_fee}원"
+            // 농작물 상세내용
+            tradeDetailViewModel?.textViewTradeTabDetailContents?.value = cropData?.crop_content_detail
+            // 농작물 주의사항
+            tradeDetailViewModel?.textViewTradeTabDetailWarning?.value = cropData?.crop_content_warning
+            // 농작물 교환 및 환불 정책
+            tradeDetailViewModel?.textViewTradeTabDetailPolicy?.value = cropData?.crop_content_policy
+            // 별점
+            if(cropData?.crop_rating != null){
+                binding.baseRatingBar.rating = cropData?.crop_rating!!.toFloat()
+            }
+        }
     }
 
 
@@ -187,9 +241,17 @@ class TradeDetailActivity : AppCompatActivity() {
     private fun setImageAdapter(){
         // 임의로 이미지 리소스를 가져옴
         // TODO("DB에서 이미지 가져오는 작업 필요")
-        val images = listOf(R.drawable.farming_mark, R.drawable.logo_01, R.drawable.logo_02)
+        val image = cropData?.crop_images
+
         // ViewPager2에 이미지 어댑터 설정
-        binding.viewPager2TradeDetail.adapter = ImageAdpater(images)
+        // 사진이 있는 경우 뷰페이저를 보여주는 레이아웃
+        if (image != null) {
+            binding.viewPager2TradeDetail.visibility =View.VISIBLE
+            binding.viewPager2TradeDetail.adapter = ImageAdpater(image)
+        }
+        else{
+            binding.viewPager2TradeDetail.visibility =View.GONE
+        }
 
         // ViewPager2에 어댑터 데이터가 변경되었을 때 인디케이터를 업데이트 하도록 설정
         binding.circleIndicatorTradeDetail.setViewPager(binding.viewPager2TradeDetail)
@@ -198,11 +260,13 @@ class TradeDetailActivity : AppCompatActivity() {
     }
 
     // 이미지 연결 어댑터
-    inner class ImageAdpater(private val images: List<Int>): RecyclerView.Adapter<ImageAdpater.ImageViewHolder>(){
+    inner class ImageAdpater(private val images: MutableList<String>): RecyclerView.Adapter<ImageAdpater.ImageViewHolder>(){
 
         inner class ImageViewHolder(private val binding: RowCropImageBinding) : RecyclerView.ViewHolder(binding.root) {
-            fun bind(imageRes: Int) {
-                binding.imageView4.setImageResource(imageRes)
+            fun bind(imageRes: String) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    CropDao.gettingCropImage(this@TradeDetailActivity,imageRes,binding.imageView4)
+                }
             }
         }
 
