@@ -6,7 +6,9 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,6 +23,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -71,7 +74,7 @@ class CommunityAddFragment : Fragment() {
         settingTextInputLayoutCommunityAddType()
         settingButtonCommunityAdd()
         settingViewPager2CommunityAddImage()
-        settingImageViewCommunityAdd()
+        //settingImageViewCommunityAdd()
 
         // 권한 확인
         requestPermissions(permissionList, 0)
@@ -106,10 +109,22 @@ class CommunityAddFragment : Fragment() {
         fragmentCommunityAddBinding.viewPager2CommunityAddImage.adapter?.notifyDataSetChanged()
     }
 
+    fun getBitmapFromDrawable(): Bitmap {
+        val drawable = resources.getDrawable(R.drawable.community_add_default)
+        val canvas = Canvas()
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        canvas.setBitmap(bitmap)
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        drawable.draw(canvas)
+
+        return bitmap
+    }
+
     // 커뮤니티 글 작성 이미지 뷰페이저 설정
     fun settingViewPager2CommunityAddImage() {
         fragmentCommunityAddBinding.apply {
             viewPager2CommunityAddImage.apply {
+                imageCommunityAddList.add(getBitmapFromDrawable())
                 adapter = CommunityAddImageViewPager2Adapter()
             }
 
@@ -152,22 +167,20 @@ class CommunityAddFragment : Fragment() {
             holder.rowCommunityAddImageBinding.imageViewRowCommunityAdd.setImageBitmap(imageCommunityAddList[position])
 
             holder.rowCommunityAddImageBinding.imageButtonCommunityAddDelete.setOnClickListener {
-                imageCommunityAddList.removeAt(position)
-                updateViewPager2CommunityAddImage()
+                if(position != imageCommunityAddList.size-1){
+                    imageCommunityAddList.removeAt(position)
+                    updateViewPager2CommunityAddImage()
+                }else{
+                    imageCommunityAddList[position] = getBitmapFromDrawable()
+                    fragmentCommunityAddBinding.viewPager2CommunityAddImage.adapter?.notifyDataSetChanged()
+                }
             }
-        }
-    }
-
-    fun settingImageViewCommunityAdd() {
-        // 사진 첨부하기 버튼
-        fragmentCommunityAddBinding.apply {
-            imageViewCommunityAddDefault.setOnClickListener {
-                startAlbumLauncher()
-                imageViewCommunityAddDefault.isVisible = false
-
+            // 마지막 아이템의 경우
+            holder.rowCommunityAddImageBinding.root.setOnClickListener {
+                if(position == imageCommunityAddList.size-1){
+                    startAlbumLauncher()
+                }
             }
-
-
         }
     }
 
@@ -195,7 +208,7 @@ class CommunityAddFragment : Fragment() {
                 val uriclip = it.data?.clipData
                 uriclip?.let { clipData ->
                     for (i in 0 until uriclip!!.itemCount) {
-                        if (imageCommunityAddList.size > imageUploadPossible) {
+                        if (imageCommunityAddList.size > imageUploadPossible + 1) {
                             Snackbar.make(fragmentCommunityAddBinding.root, "사진 첨부는 최대 10장까지 가능합니다.", Snackbar.LENGTH_SHORT).show()
                             break
                         } else {
@@ -233,16 +246,27 @@ class CommunityAddFragment : Fragment() {
 
                                 // 이미지 리스트에 추가한다.
                                 imageCommunityAddList.add(bitmap3)
+
+                                if(imageCommunityAddList.size == imageUploadPossible + 1){
+                                    imageCommunityAddList.removeAt(imageCommunityAddList.size-2)
+                                    break
+                                }else{
+                                    // add_default 이미지를 리스트 마지막으로 이동
+                                    var tmp = imageCommunityAddList[imageCommunityAddList.size-2]
+                                    imageCommunityAddList[imageCommunityAddList.size-2] = bitmap3
+                                    imageCommunityAddList[imageCommunityAddList.size-1] = tmp
+                                }
+
                             }
                         }
                     }
 
-                    // 10개면 + 삭제
-                    if (imageCommunityAddList.size >= imageUploadPossible) {
-                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.GONE
-                    } else {
-                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.VISIBLE
-                    }
+//                    // 10개면 + 삭제
+//                    if (imageCommunityAddList.size >= imageUploadPossible) {
+//                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.GONE
+//                    } else {
+//                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.VISIBLE
+//                    }
                 }
                 // 리사이클러뷰 업데이트
                 updateViewPager2CommunityAddImage()
