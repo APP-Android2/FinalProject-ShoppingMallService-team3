@@ -11,7 +11,11 @@ import kr.co.lion.farming_customer.R
 class LikeViewModel {
     // 좋아요 타입
     val toggleLikeType = MutableLiveData<Int>()
-
+    val isLike = MutableLiveData<Boolean>()
+    val textView_likePostCnt = MutableLiveData<String>()
+    val textView_likeCropCnt = MutableLiveData<String>()
+    val textView_likeFarmActivityCnt = MutableLiveData<String>()
+    val textView_likeRentalCnt = MutableLiveData<String>()
     fun settingLikeType(likeType: LikeType){
         when(likeType){
             LikeType.CROP -> {
