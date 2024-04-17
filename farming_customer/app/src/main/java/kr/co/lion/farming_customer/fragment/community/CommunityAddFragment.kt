@@ -150,6 +150,7 @@ class CommunityAddFragment : Fragment() {
 
         override fun onBindViewHolder(holder: CommunityAddImageViewHolder, position: Int) {
             holder.rowCommunityAddImageBinding.imageViewRowCommunityAdd.setImageBitmap(imageCommunityAddList[position])
+
             holder.rowCommunityAddImageBinding.imageButtonCommunityAddDelete.setOnClickListener {
                 imageCommunityAddList.removeAt(position)
                 updateViewPager2CommunityAddImage()
@@ -160,7 +161,7 @@ class CommunityAddFragment : Fragment() {
     fun settingImageViewCommunityAdd() {
         // 사진 첨부하기 버튼
         fragmentCommunityAddBinding.apply {
-            imageViewCommunityAdd.setOnClickListener {
+            imageViewCommunityAddDefault.setOnClickListener {
                 startAlbumLauncher()
                 imageViewCommunityAddDefault.isVisible = false
 
@@ -238,9 +239,9 @@ class CommunityAddFragment : Fragment() {
 
                     // 10개면 + 삭제
                     if (imageCommunityAddList.size >= imageUploadPossible) {
-                        fragmentCommunityAddBinding.imageViewCommunityAdd.visibility = View.GONE
+                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.GONE
                     } else {
-                        fragmentCommunityAddBinding.imageViewCommunityAdd.visibility = View.VISIBLE
+                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.VISIBLE
                     }
                 }
                 // 리사이클러뷰 업데이트
