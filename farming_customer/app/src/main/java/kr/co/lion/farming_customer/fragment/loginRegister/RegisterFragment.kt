@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
@@ -15,16 +16,16 @@ import kr.co.lion.farming_customer.viewmodel.loginRegister.RegisterViewModel
 
 class RegisterFragment : Fragment() {
 
-    lateinit var fragmentRegisterBinding: FragmentRegisterBinding
+    private lateinit var fragmentRegisterBinding: FragmentRegisterBinding
     lateinit var loginActivity: LoginActivity
 
-    lateinit var registerViewModel: RegisterViewModel
+    private lateinit var registerViewModel: RegisterViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         fragmentRegisterBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
-        registerViewModel = RegisterViewModel()
+        registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
         fragmentRegisterBinding.registerViewModel = registerViewModel
         fragmentRegisterBinding.lifecycleOwner = this
 
@@ -56,34 +57,40 @@ class RegisterFragment : Fragment() {
     }
 
     // 체크박스 설정
-    fun settingCheckBox(){
+    private fun settingCheckBox(){
         fragmentRegisterBinding.apply {
             // 먼저 버튼을 비활성화 상태로 만듦
             textView8.isEnabled = false
 
             // 모두 동의 체크박스 선택 시 다른 체크 박스의 상태를 isChecked로 바꾼다.
-            checkBoxTermsAll.setOnCheckedChangeListener { buttonView, isChecked ->
-                checkBoxRegPersonalInfo.isChecked = isChecked
-                checkBoxRegServiceTerm.isChecked = isChecked
-                checkBoxRegAlertServ.isChecked = isChecked
-
-                textView8.isEnabled = checkBoxRegPersonalInfo.isChecked && checkBoxRegServiceTerm.isChecked
+            checkBoxTermsAll.setOnCheckedChangeListener { _, isChecked ->
+                registerViewModel?.let {registerViewModel ->
+                    registerViewModel.isServiceTermChecked.value = isChecked
+                    registerViewModel.isPersonalInfoTermChecked.value = isChecked
+                    registerViewModel.isAlertServiceTermChecked.value = isChecked
+                }
             }
 
-            // 개별 필수 체크박스 상태 변경 시 다음 버튼 활성화 상태 업데이트
-            val mandatoryCheckboxListener = CompoundButton.OnCheckedChangeListener { _, _ ->
-                textView8.isEnabled = checkBoxRegPersonalInfo.isChecked && checkBoxRegServiceTerm.isChecked
+//            // 개별 필수 체크박스 상태 변경 시 다음 버튼 활성화 상태 업데이트
+//            val mandatoryCheckboxListener = CompoundButton.OnCheckedChangeListener { _, _ ->
+//                textView8.isEnabled = checkBoxRegPersonalInfo.isChecked && checkBoxRegServiceTerm.isChecked
+//            }
+
+            // 개별 필수 체크박스 리스너
+            val mandatoryCheckboxListener = Observer<Boolean> { _ ->
+                textView8.isEnabled = registerViewModel?.isServiceTermChecked?.value == true &&
+                        registerViewModel?.isPersonalInfoTermChecked?.value == true
             }
 
-            checkBoxRegPersonalInfo.setOnCheckedChangeListener(mandatoryCheckboxListener)
-            checkBoxRegServiceTerm.setOnCheckedChangeListener(mandatoryCheckboxListener)
+            registerViewModel?.isServiceTermChecked?.observe(viewLifecycleOwner, mandatoryCheckboxListener)
+            registerViewModel?.isPersonalInfoTermChecked?.observe(viewLifecycleOwner, mandatoryCheckboxListener)
 
             // 선택 체크박스는 다음 버튼 활성화 상태에 영향을 주지 않으므로 리스너 설정 생략
         }
     }
 
     // 버튼 설정
-    fun settingButton(){
+    private fun settingButton(){
         fragmentRegisterBinding.apply {
             var isTermsVisible1 = false
             var isTermsVisible2 = false
