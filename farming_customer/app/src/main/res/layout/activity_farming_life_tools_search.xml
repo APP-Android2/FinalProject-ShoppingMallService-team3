@@ -9,28 +9,39 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/farming_life_tools_search_layout"
-        style="@style/CustomSearchTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp">
+        android:layout_marginTop="10dp"
+        android:textColorHint="@color/grey_02"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxStrokeColor="@color/text_input_search_layout_stroke_color_selector"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/brown_01"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconDrawable="@drawable/back"
+        app:startIconTint="@color/grey_02">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/farming_life_tools_search_edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="0dp"
+            android:layout_height="30dp"
             android:fontFamily="@font/pretendard_regular"
             android:hint="원하는 농기구점을 검색해보세요"
+            android:inputType="text"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:textColor="@color/brown_01"
-            android:textColorHint="@color/text_input_search_layout_stroke_color_selector"
-            android:textSize="12sp" />
-
+            android:textSize="12sp"
+            tools:textColorHint="@color/grey_02" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/farming_life_tools_search_rv"
