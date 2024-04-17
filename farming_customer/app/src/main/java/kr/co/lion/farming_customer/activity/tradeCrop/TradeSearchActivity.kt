@@ -33,6 +33,7 @@ class TradeSearchActivity : AppCompatActivity() {
 
         settingDropDown()
         setRecyclerView()
+        setBack()
 
         setContentView(binding.root)
     }
@@ -44,6 +45,16 @@ class TradeSearchActivity : AppCompatActivity() {
             val typeList = listOf("별점순", "찜순", "금액 높은순", "금액 낮은순")
             val typeArrayAdapter = ArrayAdapter(this@TradeSearchActivity, R.layout.item_spinner_search_sort, typeList)
             textViewTradeSearchSort.setAdapter(typeArrayAdapter)
+        }
+    }
+
+    // 검색창 back Button 누르면 Activity 종료
+    private fun setBack(){
+        binding.apply {
+            textInputLayout17.setStartIconOnLongClickListener {
+                finish()
+                true
+            }
         }
     }
 
