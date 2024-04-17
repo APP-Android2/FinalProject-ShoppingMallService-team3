@@ -3,7 +3,6 @@ package kr.co.lion.farming_customer.fragment.community
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +13,8 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.CommunityTabFragmentName
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.ReviewFragmentName
-import kr.co.lion.farming_customer.activity.CommunityActivity
-import kr.co.lion.farming_customer.activity.CommunityAddActivity
-import kr.co.lion.farming_customer.activity.CommunitySearchActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
+import kr.co.lion.farming_customer.activity.community.CommunitySearchActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityBinding
 import kr.co.lion.farming_customer.fragment.FarmingLifeBottomSheetFragment

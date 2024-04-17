@@ -14,7 +14,7 @@ import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityBottomSheetBinding
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 

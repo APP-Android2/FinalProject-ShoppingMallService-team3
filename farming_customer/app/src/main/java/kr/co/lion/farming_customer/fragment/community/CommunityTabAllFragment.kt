@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding

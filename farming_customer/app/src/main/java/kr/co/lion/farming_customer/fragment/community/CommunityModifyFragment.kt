@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityModifyBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityModifyImageBinding
 import kr.co.lion.farming_customer.viewmodel.community.CommunityAddModifyViewModel

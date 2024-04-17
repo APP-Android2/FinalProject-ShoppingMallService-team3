@@ -1,6 +1,8 @@
 package kr.co.lion.farming_customer.fragment.community
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +12,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.SwipeHelperCallback
 import kr.co.lion.farming_customer.Tools
-import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityReadBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityReadCommentBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityReadImageBinding
@@ -29,9 +35,16 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
     lateinit var communityReadViewModel: CommunityReadViewModel
 
     // 좋아요 개수
-    var communityReadLikeCnt = 999
+    var communityReadLikeCnt = 0
     // 댓글 개수
     var communityReadCommentCnt = 999
+
+    // 이미지 저장용 리스트
+    var imageCommunityStringList = mutableListOf<String>()
+
+
+    // 현재 글 번호를 담을 변수
+    var postIdx = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -42,10 +55,12 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
 
         communityActivity = activity as CommunityActivity
 
+        // 글 번호를 받는다.
+        postIdx = arguments?.getInt("postIdx")!!
+
         settingToolbar()
-        settingViewPager2CommunityReadImage()
-        settingImageViewCommunityReadLike()
         settingTextViewCommunityReadInput()
+        settingImageViewCommunityReadLike()
         settingRecyclerViewCommunityReadComment()
 
 
@@ -80,31 +95,18 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         communityBottomSheetFragment.show(communityActivity.supportFragmentManager, "CommunityBottomSheetFragment")
     }
 
-    // 좋아요 개수, 댓글 개수, 글 작성자, 글 내용 설정
-    fun settingTextViewCommunityReadInput() {
-        fragmentCommunityReadBinding.apply {
-            // 좋아요 개수
-            communityReadViewModel?.textViewCommunityReadLikeCnt?.value = communityReadLikeCnt.toString()
-            // 댓글 개수
-            communityReadViewModel?.textViewCommunityReadCommentCnt?.value = communityReadCommentCnt.toString()
-            // 글 작성자
-            communityReadViewModel?.textViewCommunityReadWriter?.value = "글 작성자"
-            // 글 제목
-            communityReadViewModel?.textViewCommunityReadSubject?.value = "글 제목입니다"
-            // 글 작성날짜
-            communityReadViewModel?.textViewCommunityReadDate?.value = "2024.03.01"
-            // 글 내용
-            communityReadViewModel?.textViewCommunityReadContent?.value = "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 \n" +
-                    "글 내용입니다 글 내용입니다 글 내용입니다 글 내용입니다 \n" +
-                    "글 내용입니다 글 내용입니다 글 내용입니다"
-        }
-    }
 
     // 좋아요 누르기
     fun settingImageViewCommunityReadLike() {
         fragmentCommunityReadBinding.apply {
             imageViewCommunityReadLike.setOnClickListener {
-                imageViewCommunityReadLike.isSelected = !it.isSelected
+                if (imageViewCommunityReadLike.isSelected) {
+                    communityReadLikeCnt++
+                    !it.isSelected
+                } else {
+                    communityReadLikeCnt--
+                }
+
             }
         }
     }
@@ -148,11 +150,18 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return imageCommunityStringList.size
         }
 
         override fun onBindViewHolder(holder: CommunityReadImageViewHolder, position: Int) {
-            holder.rowCommunityReadImageBinding.imageViewRowCommunityRead.setImageResource(R.color.grey_03)
+
+            CoroutineScope(Dispatchers.Main).launch {
+                // 이미지뷰를 안 보이게 한다.
+                // fragmentCommunityReadBinding.viewPager2CommunityReadImage.visibility = View.INVISIBLE
+
+                CommunityPostDao.gettingCommunityPostImage(communityActivity, imageCommunityStringList[position], holder.rowCommunityReadImageBinding.imageViewRowCommunityRead)
+                Log.d("test1234", imageCommunityStringList.toString())
+            }
         }
     }
 
@@ -243,5 +252,35 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
 
     override fun onYesButtonClick(activity: AppCompatActivity) {
 
+    }
+
+    // 입력 요소에 값을 넣어준다.
+    fun settingTextViewCommunityReadInput() {
+
+        // 입력 요소에 띄어쓰기를 넣어준다.
+        communityReadViewModel.textViewCommunityReadSubject.value = " "
+        communityReadViewModel.textViewCommunityReadContent.value = " "
+        communityReadViewModel.textViewCommunityReadDate.value = " "
+        communityReadViewModel.textViewCommunityReadWriter.value = " "
+        communityReadViewModel.textViewCommunityReadToolbarTitle.value = " "
+        communityReadViewModel.textViewCommunityReadLikeCnt.value = " "
+        communityReadViewModel.textViewCommunityReadCommentCnt.value = " "
+
+        CoroutineScope(Dispatchers.Main).launch {
+            // 현재 글 번호에 해당하는 글 데이터를 가져온다.
+            val communityPostModel = CommunityPostDao.selectCommunityPostData(postIdx)
+            imageCommunityStringList = communityPostModel?.postImages!!
+
+            // 가져온 데이터를 보여준다.
+            communityReadViewModel.textViewCommunityReadSubject.value = communityPostModel?.postTitle
+            communityReadViewModel.textViewCommunityReadContent.value = communityPostModel?.postContent
+            communityReadViewModel.textViewCommunityReadDate.value = communityPostModel?.postRegDt
+            communityReadViewModel.textViewCommunityReadWriter.value = "글 작성자" // UserDao를 받아와서 userModel의 닉네임 갖고오기
+            communityReadViewModel.textViewCommunityReadToolbarTitle.value = communityPostModel?.postType
+            communityReadViewModel.textViewCommunityReadLikeCnt.value = communityPostModel?.postLikeCnt.toString()
+            communityReadViewModel.textViewCommunityReadCommentCnt.value = communityPostModel?.postCommentCnt.toString()
+
+            settingViewPager2CommunityReadImage()
+        }
     }
 }

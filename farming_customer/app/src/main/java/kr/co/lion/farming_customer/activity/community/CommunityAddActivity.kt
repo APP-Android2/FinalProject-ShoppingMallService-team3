@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.activity
+package kr.co.lion.farming_customer.activity.community
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,19 +6,16 @@ import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
+import kr.co.lion.farming_customer.CommunityAddFragmentName
 import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.ReviewFragmentName
+import kr.co.lion.farming_customer.databinding.ActivityCommunityAddBinding
 import kr.co.lion.farming_customer.databinding.ActivityCommunityBinding
-import kr.co.lion.farming_customer.fragment.community.CommunityModifyFragment
+import kr.co.lion.farming_customer.fragment.community.CommunityAddFragment
 import kr.co.lion.farming_customer.fragment.community.CommunityReadFragment
-import kr.co.lion.farming_customer.fragment.review.ReviewHistoryFragment
-import kr.co.lion.farming_customer.fragment.review.ReviewTabActivityFragment
-import kr.co.lion.farming_customer.fragment.review.ReviewTabCropFragment
-import kr.co.lion.farming_customer.fragment.review.ReviewTabFarmFragment
 
-class CommunityActivity : AppCompatActivity() {
-    lateinit var activityCommunityBinding: ActivityCommunityBinding
+class CommunityAddActivity : AppCompatActivity() {
+    lateinit var activityCommunityAddBinding: ActivityCommunityAddBinding
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
@@ -26,13 +23,13 @@ class CommunityActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityCommunityBinding = ActivityCommunityBinding.inflate(layoutInflater)
-        setContentView(activityCommunityBinding.root)
+        activityCommunityAddBinding = ActivityCommunityAddBinding.inflate(layoutInflater)
+        setContentView(activityCommunityAddBinding.root)
 
-        replaceFragment(CommunityFragmentName.COMMUNITY_READ_FRAGMENT, false, false, null)
+        replaceFragment(CommunityAddFragmentName.COMMUNITY_ADD_FRAGMENT, false, false, null)
     }
 
-    fun replaceFragment(name: CommunityFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunity){
+    fun replaceFragment(name: CommunityAddFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunityAdd){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -43,11 +40,8 @@ class CommunityActivity : AppCompatActivity() {
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
         when(name){
-            CommunityFragmentName.COMMUNITY_READ_FRAGMENT -> {
-                newFragment = CommunityReadFragment()
-            }
-            CommunityFragmentName.COMMUNITY_MODIFY_FRAGMENT -> {
-                newFragment = CommunityModifyFragment()
+            CommunityAddFragmentName.COMMUNITY_ADD_FRAGMENT -> {
+                newFragment = CommunityAddFragment()
             }
         }
         if(data != null){
@@ -105,7 +99,7 @@ class CommunityActivity : AppCompatActivity() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name: CommunityFragmentName){
+    fun removeFragment(name: CommunityAddFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)

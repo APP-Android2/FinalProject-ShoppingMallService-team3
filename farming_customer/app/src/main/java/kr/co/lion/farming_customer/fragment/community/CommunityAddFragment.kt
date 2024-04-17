@@ -33,17 +33,15 @@ import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.PostStatus
-import kr.co.lion.farming_customer.PostType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
-import kr.co.lion.farming_customer.activity.CommunityActivity
-import kr.co.lion.farming_customer.activity.CommunityAddActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
 import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityAddBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityAddImageBinding
 import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityAddModifyViewModel
-import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -335,6 +333,7 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
 
     override fun onYesButtonClick(activity: AppCompatActivity) {
         val communityIntent = Intent(communityAddActivity, CommunityActivity::class.java)
+        communityIntent.putExtra("postIdx", model!!.postIdx)
         startActivity(communityIntent)
     }
 
@@ -376,7 +375,6 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
             communityModel.postModDt = simpleDateFormat.format(Date())
             communityModel.postStatus = PostStatus.POST_STATUS_NORMAL.number
 
-            //communityModel = CommunityModel(postIdx, postUserIdx, postType, postTitle, postContent, postLikeCnt, postCommentCnt, postRegDt, postModDt, postImages, postStatus)
         }
         job1.join()
 
