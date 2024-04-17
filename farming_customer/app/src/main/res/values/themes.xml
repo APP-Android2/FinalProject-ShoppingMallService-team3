@@ -205,4 +205,9 @@
         <item name="android:focusable">true</item>
     </style>
 
+    <style name="ToolBarTextAppearance" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">20sp</item> <!-- 텍스트 크기 조절 -->
+    </style>
+
 </resources>

@@ -103,7 +103,7 @@
 
                         <ImageView
                             android:id="@+id/imageViewCommunityListViewAll"
-                            android:layout_width="15dp"
+                            android:layout_width="17dp"
                             android:layout_height="15dp"
                             android:layout_marginRight="2dp"
                             app:srcCompat="@drawable/views_count"
@@ -119,7 +119,7 @@
 
                         <ImageView
                             android:id="@+id/imageViewCommunityListCommentAll"
-                            android:layout_width="15dp"
+                            android:layout_width="12dp"
                             android:layout_height="15dp"
                             android:layout_marginLeft="7dp"
                             android:layout_marginRight="2dp"

@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:tag="layout/item_product_1"
         app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
+        app:cardElevation="3dp"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout

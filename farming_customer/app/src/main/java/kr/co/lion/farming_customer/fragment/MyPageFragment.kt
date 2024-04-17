@@ -12,6 +12,7 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
+import kr.co.lion.farming_customer.activity.myPageMyPost.MyPageMyPostActivity
 import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
 import kr.co.lion.farming_customer.activity.myPageSetting.MyPageSettingActivity
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
@@ -39,6 +40,7 @@ class MyPageFragment : Fragment() {
         settingMyPageManagement()
         settingTextViewMyPageFirstCS()
         settingTextViewMyPageFirstSetting()
+        settingTextViewMyPageFirstPost()
 
 
         return fragmentMyPageBinding.root
@@ -81,6 +83,16 @@ class MyPageFragment : Fragment() {
             textViewMyPageFirstReview.setOnClickListener {
                 val reviewIntent = Intent(mainActivity, ReviewActivity::class.java)
                 startActivity(reviewIntent)
+            }
+        }
+    }
+
+    // 게시글 내역
+    fun settingTextViewMyPageFirstPost() {
+        fragmentMyPageBinding.apply {
+            textViewMyPageFirstPost.setOnClickListener {
+                val postIntent = Intent(mainActivity, MyPageMyPostActivity::class.java)
+                startActivity(postIntent)
             }
         }
     }
