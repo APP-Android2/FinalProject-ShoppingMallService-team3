@@ -15,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.FileOutputStream
 import android.app.Activity
+import android.content.DialogInterface
 import android.util.TypedValue
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.concurrent.thread
 
 class Tools {
@@ -145,6 +147,17 @@ class Tools {
                 dp.toFloat(),
                 context.resources.displayMetrics
             ).toInt()
+        }
+
+        // 입력 요소가 비어있을때 보여줄 다이얼로그를 구성하는 메서드
+        fun showErrorDialog(context: Context, view: View, title:String, message:String){
+            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
+            materialAlertDialogBuilder.setTitle(title)
+            materialAlertDialogBuilder.setMessage(message)
+            materialAlertDialogBuilder.setPositiveButton("확인"){ _: DialogInterface, _: Int ->
+                showSoftInput(context, view)
+            }
+            materialAlertDialogBuilder.show()
         }
     }
 
@@ -282,4 +295,10 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_SUCCESS_FRAGMENT("PaymentSuccessFragment"),
     PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
+}
+
+// 남자 또는 여자를 나타내는 값을 정의한다.
+enum class Gender(var str:String, var num:Int){
+    MALE("male", 1),
+    FEMALE("female", 2)
 }
