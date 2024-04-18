@@ -189,6 +189,8 @@
         android:backgroundTint="@color/white"
         android:enabled="false"
         android:fontFamily="@font/font_pre_bold"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:text="문의하기"
         android:textColor="@color/green_main"
         android:textSize="16sp"

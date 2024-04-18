@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".activity.myPageMyPost.MyPageMyPostActivity">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/myPageMyPostToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextAppearance="@style/ToolBarTextAppearance" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내가 쓴 글"
+            android:textAppearance="@style/ToolBarTextAppearance"
+            app:layout_constraintBottom_toBottomOf="@+id/myPageMyPostToolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/myPageMyPostTl"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_tab_indicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myPageMyPostToolbar"
+            app:tabIndicatorColor="@color/green_main"
+            app:tabIndicatorFullWidth="true"
+            app:tabSelectedTextColor="@color/brown_01"
+            app:tabTextAppearance="@style/MySelectedTabTextAppearance"
+            app:tabTextColor="@color/grey_02">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/myPageMyPostBoardItemt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="내가 쓴 글" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/myPageMyPostCommentItem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="댓글 단 글" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/myPageMyPostfragmentContainerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myPageMyPostTl"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <!-- Auto layout, variables, and unit scale are not yet supported -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

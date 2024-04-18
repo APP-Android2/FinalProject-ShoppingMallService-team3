@@ -48,13 +48,13 @@
 
                     <ImageView
                         android:id="@+id/imageView_heart"
-                        android:layout_width="wrap_content"
+                        android:layout_width="30dp"
                         android:layout_height="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/heart_02" />
+                        app:srcCompat="@drawable/heart_04" />
 
                     <TextView
                         android:id="@+id/textView_likeCnt"

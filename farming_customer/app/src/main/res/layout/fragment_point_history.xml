@@ -49,7 +49,7 @@
             android:layout_marginEnd="20dp"
             android:background="@color/white"
             app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
+            app:cardElevation="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarPoint">

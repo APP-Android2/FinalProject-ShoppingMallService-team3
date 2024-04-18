@@ -108,7 +108,7 @@
 
                         <ImageView
                             android:id="@+id/imageViewCommunityListViewAll"
-                            android:layout_width="15dp"
+                            android:layout_width="17dp"
                             android:layout_height="15dp"
                             android:layout_marginRight="2dp"
                             app:srcCompat="@drawable/views_count"
@@ -124,7 +124,7 @@
 
                         <ImageView
                             android:id="@+id/imageViewCommunityListCommentAll"
-                            android:layout_width="15dp"
+                            android:layout_width="12dp"
                             android:layout_height="15dp"
                             android:layout_marginLeft="7dp"
                             android:layout_marginRight="2dp"
@@ -165,9 +165,10 @@
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -175,21 +176,21 @@
                         android:id="@+id/imageViewCommunityListLikeAll"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:checked="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:checked="true"
-                        app:srcCompat="@drawable/heart_02" />
+                        app:srcCompat="@drawable/community_image_like" />
 
                     <TextView
                         android:id="@+id/textViewCommunityListLikeCntAll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="@{communityViewModel.textViewCommunityListLikeCntAll}"
                         android:textColor="@drawable/community_tab_like_cnt"
-                        android:checked="true"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewCommunityListLikeAll"
                         app:layout_constraintEnd_toEndOf="@id/imageViewCommunityListLikeAll"

@@ -6,8 +6,10 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.ImageDecoder
 import android.net.Uri
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,6 +25,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -125,10 +129,22 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
         fragmentCommunityAddBinding.viewPager2CommunityAddImage.adapter?.notifyDataSetChanged()
     }
 
+    fun getBitmapFromDrawable(): Bitmap {
+        val drawable = resources.getDrawable(R.drawable.community_add_default)
+        val canvas = Canvas()
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        canvas.setBitmap(bitmap)
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        drawable.draw(canvas)
+
+        return bitmap
+    }
+
     // 커뮤니티 글 작성 이미지 뷰페이저 설정
     fun settingViewPager2CommunityAddImage() {
         fragmentCommunityAddBinding.apply {
             viewPager2CommunityAddImage.apply {
+                imageCommunityAddBitmapList.add(getBitmapFromDrawable())
                 adapter = CommunityAddImageViewPager2Adapter()
             }
 
@@ -150,7 +166,6 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
             }
-
         }
 
         override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): CommunityAddImageViewHolder {
@@ -169,8 +184,19 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
         override fun onBindViewHolder(holder: CommunityAddImageViewHolder, position: Int) {
             holder.rowCommunityAddImageBinding.imageViewRowCommunityAdd.setImageBitmap(imageCommunityAddBitmapList[position])
             holder.rowCommunityAddImageBinding.imageButtonCommunityAddDelete.setOnClickListener {
-                imageCommunityAddBitmapList.removeAt(position)
-                updateViewPager2CommunityAddImage()
+                if(position != imageCommunityAddBitmapList.size-1){
+                    imageCommunityAddBitmapList.removeAt(position)
+                    updateViewPager2CommunityAddImage()
+                }else{
+                    imageCommunityAddBitmapList[position] = getBitmapFromDrawable()
+                    fragmentCommunityAddBinding.viewPager2CommunityAddImage.adapter?.notifyDataSetChanged()
+                }
+            }
+            // 마지막 아이템의 경우
+            holder.rowCommunityAddImageBinding.root.setOnClickListener {
+                if(position == imageCommunityAddBitmapList.size-1){
+                    startAlbumLauncher()
+                }
             }
         }
 
@@ -211,7 +237,7 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
                 val uriclip = it.data?.clipData
                 uriclip?.let { clipData ->
                     for (i in 0 until uriclip!!.itemCount) {
-                        if (imageCommunityAddBitmapList.size > imageUploadPossible) {
+                        if (imageCommunityAddBitmapList.size > imageUploadPossible + 1) {
                             Snackbar.make(fragmentCommunityAddBinding.root, "사진 첨부는 최대 10장까지 가능합니다.", Snackbar.LENGTH_SHORT).show()
                             break
                         } else {
@@ -252,16 +278,18 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
 
                                 // 이미지 리스트에 추가한다.
                                 imageCommunityAddBitmapList.add(bitmap3)
+                                if(imageCommunityAddBitmapList.size == imageUploadPossible + 1){
+                                    imageCommunityAddBitmapList.removeAt(imageCommunityAddBitmapList.size-2)
+                                    break
+                                }else{
+                                    // add_default 이미지를 리스트 마지막으로 이동
+                                    var tmp = imageCommunityAddBitmapList[imageCommunityAddBitmapList.size-2]
+                                    imageCommunityAddBitmapList[imageCommunityAddBitmapList.size-2] = bitmap3
+                                    imageCommunityAddBitmapList[imageCommunityAddBitmapList.size-1] = tmp
+                                }
                                 isAddPicture = true
                             }
                         }
-                    }
-
-                    // 10개면 + 삭제
-                    if (imageCommunityAddBitmapList.size >= imageUploadPossible) {
-                        fragmentCommunityAddBinding.imageViewCommunityAdd.visibility = View.GONE
-                    } else {
-                        fragmentCommunityAddBinding.imageViewCommunityAdd.visibility = View.VISIBLE
                     }
                 }
                 // 리사이클러뷰 업데이트

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,7 @@ class CommunityTabSocialFragment : Fragment() {
         settingButtonCommunityTabSocialPopularity()
         settingInitDataSocial()
         settingRecyclerViewCommunityTabSocial()
+        settingFloatingActionButtonCommunitySocialAdd()
 
         return fragmentCommunityTabSocialBinding.root
     }
@@ -47,9 +49,15 @@ class CommunityTabSocialFragment : Fragment() {
     fun settingButtonCommunityTabSocialPopularity() {
         fragmentCommunityTabSocialBinding.apply {
             buttonCommunityTabSocialPopularity.isChecked = true
-
         }
     }
+    // 커뮤니티 소통 탭 게시글 작성
+    fun settingFloatingActionButtonCommunitySocialAdd() {
+        fragmentCommunityTabSocialBinding.apply {
+            floatingActionButtonCommunitySocialAdd.setOnClickListener {
+                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
+                startActivity(communityIntent)
+            }
 
     // 데이터 받아오기
     fun settingInitDataSocial() {
@@ -122,6 +130,12 @@ class CommunityTabSocialFragment : Fragment() {
                     imageViewCommunityListLikeSocial.isSelected = !imageViewCommunityListLikeSocial.isSelected
                     textViewCommunityListLikeCntSocial.isSelected = !textViewCommunityListLikeCntSocial.isSelected
                 }
+            }
+
+            if (position == 9) {
+                fragmentCommunityTabSocialBinding.floatingActionButtonCommunitySocialAdd.isVisible = false
+            } else {
+                fragmentCommunityTabSocialBinding.floatingActionButtonCommunitySocialAdd.isVisible = true
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,7 @@ class CommunityTabInformationFragment : Fragment() {
 
         settingButtonCommunityTabInformationPopularity()
         settingInitDataInformation()
+        settingFloatingActionButtonCommunityInformationAdd()
         settingRecyclerViewCommunityTabInformation()
 
         return fragmentCommunityTabInformationBinding.root
@@ -65,6 +67,17 @@ class CommunityTabInformationFragment : Fragment() {
             arguments?.getParcelableArrayList("communityTabList", CommunityModel::class.java)
         } else {
             arguments?.getParcelableArrayList<CommunityModel>("communityTabList")
+        }
+    }
+
+    // 커뮤니티 정보 탭 게시글 작성
+    fun settingFloatingActionButtonCommunityInformationAdd() {
+        fragmentCommunityTabInformationBinding.apply {
+            floatingActionButtonCommunityInformationAdd.setOnClickListener {
+                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
+                startActivity(communityIntent)
+
+            }
         }
     }
 
@@ -130,6 +143,12 @@ class CommunityTabInformationFragment : Fragment() {
                     imageViewCommunityListLikeInformation.isSelected = !imageViewCommunityListLikeInformation.isSelected
                     textViewCommunityListLikeCntInformation.isSelected = !textViewCommunityListLikeCntInformation.isSelected
                 }
+            }
+
+            if (position == 9) {
+                fragmentCommunityTabInformationBinding.floatingActionButtonCommunityInformationAdd.isVisible = false
+            } else {
+                fragmentCommunityTabInformationBinding.floatingActionButtonCommunityInformationAdd.isVisible = true
             }
         }
     }

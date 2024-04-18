@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,7 +48,7 @@ class CommunityTabAllFragment : Fragment() {
         settingButtonCommunityTabAllPopularity()
         settingInitDataAll()
         settingRecyclerViewCommunityTabAll()
-
+        settingFloatingActionButtonCommunityAllAdd()
 
         return fragmentCommunityTabAllBinding.root
     }
@@ -70,6 +71,17 @@ class CommunityTabAllFragment : Fragment() {
     }
 
 
+
+    // 커뮤니티 전체 탭 게시글 작성
+    fun settingFloatingActionButtonCommunityAllAdd() {
+        fragmentCommunityTabAllBinding.apply {
+            floatingActionButtonCommunityAllAdd.setOnClickListener {
+                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
+                startActivity(communityIntent)
+
+            }
+        }
+    }
 
     // 커뮤니티 탭 전체 리사이클러뷰 설정
     fun settingRecyclerViewCommunityTabAll() {
@@ -139,6 +151,12 @@ class CommunityTabAllFragment : Fragment() {
                     imageViewCommunityListLikeAll.isSelected = !imageViewCommunityListLikeAll.isSelected
                     textViewCommunityListLikeCntAll.isSelected = !textViewCommunityListLikeCntAll.isSelected
                 }
+            }
+
+            if (position == 9) {
+                fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = false
+            } else {
+                fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = true
             }
 
         }

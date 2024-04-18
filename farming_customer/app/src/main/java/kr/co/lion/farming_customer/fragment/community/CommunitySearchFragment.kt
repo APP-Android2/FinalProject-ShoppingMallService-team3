@@ -31,9 +31,21 @@ class CommunitySearchFragment : Fragment() {
 
         communitySearchActivity = activity as CommunitySearchActivity
 
+        settingEvent()
         settingRecyclerViewCommunitySearch()
 
         return fragmentCommunitySearchBinding.root
+    }
+
+    // 뒤로 가기
+    private fun settingEvent() {
+        fragmentCommunitySearchBinding.apply {
+            textInputLayoutCommunitySearch.apply {
+                setStartIconOnClickListener {
+                    communitySearchActivity.finish()
+                }
+            }
+        }
     }
 
     // 커뮤니티 검색 리사이클러뷰 설정
