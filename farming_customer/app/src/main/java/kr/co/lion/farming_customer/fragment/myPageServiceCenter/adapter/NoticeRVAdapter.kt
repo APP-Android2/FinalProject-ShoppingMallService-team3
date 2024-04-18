@@ -3,11 +3,15 @@ package kr.co.lion.farming_customer.fragment.myPageServiceCenter.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.RowServiceCenterNoticeBinding
+import kr.co.lion.farming_customer.model.myPageServiceCenterModel.NoticeModel
+import kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterNoticeViewModel
 
-class NoticeRVAdapter: RecyclerView.Adapter<NoticeRVAdapter.NoticeViewHolder>() {
+class NoticeRVAdapter(private var noticeList : MutableList<NoticeModel>): RecyclerView.Adapter<NoticeRVAdapter.NoticeViewHolder>() {
     private var expandedPosition = -1
 
     inner class NoticeViewHolder(val binding: RowServiceCenterNoticeBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener{
@@ -29,22 +33,31 @@ class NoticeRVAdapter: RecyclerView.Adapter<NoticeRVAdapter.NoticeViewHolder>() 
         }
     }
 
+    // 데이터를 설정하고 어댑터를 갱신
+    fun setData(noticeList: MutableList<NoticeModel>) {
+        this.noticeList = noticeList
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
-        val binding = RowServiceCenterNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val noticeViewHolder = NoticeViewHolder(binding)
+        val rowBinding = DataBindingUtil.inflate<RowServiceCenterNoticeBinding>(LayoutInflater.from(parent.context), R.layout.row_service_center_notice, parent, false )
+        val rowNoticeViewModel = ServiceCenterNoticeViewModel()
+        rowBinding.serviceCenterNoticeViewModel = rowNoticeViewModel
+        rowBinding.lifecycleOwner = parent.context as LifecycleOwner
+        val noticeViewHolder = NoticeViewHolder(rowBinding)
 
         return noticeViewHolder
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return noticeList.size
     }
 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
-        holder.binding.rowServiceCenterNoticeTitle.text = "공지사항 $position"
-        holder.binding.rowServiceCenterNoticeContent.text = "공지사항 ${position}번 공지 내용 입니다"
-        holder.binding.rowServiceCenterNoticeDate.text = "2024.03.01"
+        holder.binding.serviceCenterNoticeViewModel?.noticeTitle?.value = noticeList[position].notice_title
+        holder.binding.serviceCenterNoticeViewModel?.noticeContent?.value = noticeList[position].notice_content
+        holder.binding.serviceCenterNoticeViewModel?.noticeRegDt?.value = noticeList[position].notice_reg_dt
 
         holder.binding.rowServiceCenterNoticeContentLayout.visibility =
             if (expandedPosition == position) View.VISIBLE else View.GONE
