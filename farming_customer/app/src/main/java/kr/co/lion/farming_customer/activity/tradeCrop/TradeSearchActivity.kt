@@ -2,17 +2,27 @@ package kr.co.lion.farming_customer.activity.tradeCrop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.dao.crop.CropDao
 import kr.co.lion.farming_customer.databinding.ActivityTradeSearchBinding
+import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
+import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.ProductCard
+import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeSearchViewModel
+import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 
 class TradeSearchActivity : AppCompatActivity() {
 
@@ -22,6 +32,12 @@ class TradeSearchActivity : AppCompatActivity() {
 
     private var dropDownButtonClicked = false
 
+    // 농산품 데이터를 담을 리스트
+    var cropAllList:List<CropModel>? = null
+
+    // 드롭다운 정렬
+    var dropDownSort = "별점순"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,98 +46,82 @@ class TradeSearchActivity : AppCompatActivity() {
         binding.tradeSearchViewModel = tradeSearchViewModel
         binding.lifecycleOwner = this
 
-        setButton()
-        setRecyclerView()
+        //setButton()
+        gettingCropData()
 
         setContentView(binding.root)
     }
 
-    private fun setButton(){
-        binding.apply {
-            // 정렬 드롭다운 버튼
-            imageButtonDropDown.setOnClickListener {
-                // 드롭다운 버튼이 눌리지 않았다면
-                if(!dropDownButtonClicked){
-                    dropDownButtonClicked = true
-                    // image를 변경하고 아래 버튼들을 보여준다.
-                    imageButtonDropDown.setImageResource(R.drawable.polygon_up)
-                    buttonTradeSearchLikeDesc.visibility = View.VISIBLE
-                    buttonTradeSearchPriceAsc.visibility = View.VISIBLE
-                    buttonTradeSearchPriceDesc.visibility = View.VISIBLE
-                }else {
-                    dropDownButtonClicked = false
-                    // 드롭다운 버튼이 눌린 상태라면
-                    // image를 변경하고 아래 버튼들을 숨긴다
-                    imageButtonDropDown.setImageResource(R.drawable.polygon_down)
-                    buttonTradeSearchLikeDesc.visibility = View.GONE
-                    buttonTradeSearchPriceAsc.visibility = View.GONE
-                    buttonTradeSearchPriceDesc.visibility = View.GONE
-                }
-            }
+    // 농산품 전체 데이터를 가져온다.
+    private fun gettingCropData(){
+        CoroutineScope(Dispatchers.Main).launch {
+            cropAllList = CropDao.gettingCropAllList()
+            setRecyclerView()
         }
     }
 
-    private fun setRecyclerView(){
-        val crops = listOf(
-            ProductCard(R.drawable.farming_mark, "사과", "10,000원", 999, 1.0),
-            ProductCard(R.drawable.farming_mark, "배", "10,000원", 999, 2.0),
-            ProductCard(R.drawable.farming_mark, "감자", "10,000원", 999, 3.0),
-            ProductCard(R.drawable.farming_mark, "바나나", "10,000원", 999, 4.0),
-            ProductCard(R.drawable.farming_mark, "사과", "10,000원", 999, 5.0),
-        )
 
-        val layoutManager = GridLayoutManager(this, 2)
-        binding.recyclerViewTradeSearch.layoutManager = layoutManager
-        binding.recyclerViewTradeSearch.adapter = CropAdapter(crops)
+    private fun setRecyclerView(){
+        binding.recyclerViewTradeSearch.apply {
+            adapter = CropAdapter()
+            layoutManager = GridLayoutManager(this@TradeSearchActivity, 2)
+        }
     }
 
 
-    inner class CropAdapter(private val crops: List<ProductCard>): RecyclerView.Adapter<CropAdapter.CropViewHolder>(){
-        inner class CropViewHolder(private val binding: RowRelatedCropBinding): RecyclerView.ViewHolder(binding.root) {
-            fun binding(crop: ProductCard) {
-                binding.apply {
-                    textViewLikeCropName.text = crop.name
-                    textViewLikeCropPrice.text = crop.price
-                    ratingBarLikeCrop.rating = crop.ratings.toFloat()
-                    imageViewLikeCrop.setImageResource(crop.imageResourceId)
-                    textViewLikeCropCnt.text = if (crop.likes > 999) "999+"
-                    else crop.likes.toString()
-                }
+    inner class CropAdapter: RecyclerView.Adapter<CropAdapter.CropViewHolder>(){
+        inner class CropViewHolder(binding: RowRelatedCropBinding): RecyclerView.ViewHolder(binding.root) {
+            val binding : RowRelatedCropBinding
 
-                binding.apply {
-                    imageViewHeartCrop.setOnClickListener {
-                        crop.isLiked = !crop.isLiked // 좋아요 선택
-                        if (crop.isLiked) {
-                            crop.likes++ // 좋아요 상태면 좋아요 수 증가, 텍스트 흰색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeSearchActivity, R.color.white))
-                        } else {
-                            crop.likes-- // 좋아요 취소면 좋아요 수 감소, 텍스트 갈색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeSearchActivity, R.color.brown_01))
-                        }
-                        // 좋아요 수가 1000 이상이면 999+로 표기
-                        binding.textViewLikeCropCnt.text = if (crop.likes >= 1000) "999+"
-                        else "${crop.likes}"
-                        binding.imageViewHeartCrop.setImageResource(
-                            if (crop.isLiked) R.drawable.heart_01 else R.drawable.heart_02
-                        )
-                    }
-                }
+            init {
+                this.binding = binding
+                binding.root.layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
             }
-
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CropViewHolder {
-            val inflater = LayoutInflater.from(parent.context)
-            val binding = RowRelatedCropBinding.inflate(inflater, parent, false)
-            return CropViewHolder(binding)
+
+            val binding = DataBindingUtil.inflate<RowRelatedCropBinding>(layoutInflater, R.layout.row_related_crop, parent, false)
+            val tradeViewModel = TradeViewModel()
+            binding.tradeViewModel = tradeViewModel
+            binding.lifecycleOwner = this@TradeSearchActivity
+
+            val cropViewHolder = CropViewHolder(binding)
+            return cropViewHolder
         }
 
 
-        override fun getItemCount(): Int = crops.size
+        override fun getItemCount(): Int = cropAllList?.size?: 0
 
 
         override fun onBindViewHolder(holder: CropViewHolder, position: Int) {
-            holder.binding(crops[position])
+            holder.binding.apply {
+                tradeViewModel!!.apply {
+                    // 좋아요 버튼 클릭 이벤트
+                    isLike.value = false
+                    constraintLikeCropCancel.setOnClickListener {
+                        if(isLike.value!!){
+                            isLike.value = false
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_02)
+                            holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeSearchActivity, R.color.brown_01))
+
+                        }else{
+                            isLike.value = true
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_01)
+                            holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeSearchActivity, R.color.white))
+                        }
+                    }
+                }
+                CoroutineScope(Dispatchers.Main).launch {
+                    CropDao.gettingCropImage(this@TradeSearchActivity,
+                        cropAllList?.get(position)?.crop_images?.get(0) ?: "", holder.binding.imageViewLikeCrop)
+                }
+                holder.binding.ratingBarLikeCrop.rating = cropAllList?.get(position)?.crop_rating?.toFloat() ?: 0F
+            }
+
         }
     }
 }

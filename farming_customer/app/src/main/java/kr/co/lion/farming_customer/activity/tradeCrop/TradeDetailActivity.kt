@@ -106,6 +106,13 @@ class TradeDetailActivity : AppCompatActivity() {
             if(cropData?.crop_rating != null){
                 binding.baseRatingBar.rating = cropData?.crop_rating!!.toFloat()
             }
+            // 좋아요 상태
+            if(cropData?.like_state == true){
+                imageButtonLike.setImageResource(R.drawable.heart_01)
+            }
+            else{
+                imageButtonLike.setImageResource(R.drawable.heart_02)
+            }
         }
     }
 
@@ -162,7 +169,7 @@ class TradeDetailActivity : AppCompatActivity() {
     // 버튼 설정
     private fun setButton(){
 
-        var buttonLikeClicked = false
+        var buttonLikeClicked = cropData?.like_state
 
         // 더보기 버튼 클릭
         constraintSet.clone(binding.constraintLayoutTradeDetail)
@@ -218,13 +225,21 @@ class TradeDetailActivity : AppCompatActivity() {
         binding.apply {
             // 좋아요 버튼 누르면
             imageButtonLike.setOnClickListener {
-                if (!buttonLikeClicked){
-                    buttonLikeClicked = true
-                    imageButtonLike.setImageResource(R.drawable.heart_01)
-                    //TODO("좋아요 항목에 해당 아이템 추가, 좋아요 count 증가")
-                } else {
+                if (buttonLikeClicked == true){
                     buttonLikeClicked = false
                     imageButtonLike.setImageResource(R.drawable.heart_02)
+                    cropData?.crop_like_cnt = cropData?.crop_like_cnt!! - 1
+                    CoroutineScope(Dispatchers.Main).launch {
+                        CropDao.updateCropLikeState(cropData!!, buttonLikeClicked!!)
+                    }
+                //TODO("좋아요 항목에 해당 아이템 추가, 좋아요 count 증가")
+                } else {
+                    buttonLikeClicked = true
+                    imageButtonLike.setImageResource(R.drawable.heart_01)
+                    cropData?.crop_like_cnt = cropData?.crop_like_cnt!! + 1
+                    CoroutineScope(Dispatchers.Main).launch {
+                        CropDao.updateCropLikeState(cropData!!, buttonLikeClicked!!)
+                    }
                     //TODO("좋아요 항목에서 해당 아이템 제거, 좋아요 count 감소")
                 }
             }

@@ -25,6 +25,7 @@ import kr.co.lion.farming_customer.databinding.FragmentTradeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.model.Product
 import kr.co.lion.farming_customer.model.ProductCard
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 import java.text.SimpleDateFormat
@@ -48,9 +49,16 @@ class TradeFragment : Fragment() {
 
 
         settingInputForm()
+        setToolbar()
 
 
         return fragmentTradeBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        settingInputForm()
+        fragmentTradeBinding.viewPagerTradeTrend.adapter?.notifyDataSetChanged()
     }
 
     // 툴바 설정
@@ -97,8 +105,6 @@ class TradeFragment : Fragment() {
             setupViewPager()
             setupViewPager2()
             setupRecyclerView()
-            setToolbar()
-
 
         }
     }
@@ -211,32 +217,33 @@ class TradeFragment : Fragment() {
 
                 binding.RatingBarTrade.rating = product.crop_rating.toFloat()
 
-                binding.imageButtonProductLike.setOnClickListener {
-                    product.like_state = !product.like_state // 좋아요 선택
-                    if (product.like_state) {
-                        product.crop_like_cnt++ // 좋아요 상태면 좋아요 수 증가, 텍스트 흰색
-                        binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        CoroutineScope(Dispatchers.Main).launch {
-                            CropDao.updateCropLikeState(product,product.like_state)
-                        }
-                    } else {
-                        product.crop_like_cnt-- // 좋아요 취소면 좋아요 수 감소, 텍스트 갈색
-                        binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
-                        CoroutineScope(Dispatchers.Main).launch {
-                            CropDao.updateCropLikeState(product,product.like_state)
-                        }
-                    }
-                    // 좋아요 수가 1000 이상이면 999+로 표기
-                    binding.textViewTradeLike.text = if (product.crop_like_cnt >= 1000) "999+"
-                    else "${product.crop_like_cnt}"
-
-
-
-
-                    binding.imageButtonProductLike.setImageResource(
-                        if (product.like_state) R.drawable.heart_01 else R.drawable.heart_02
-                    )
-                }
+//                binding.imageButtonProductLike.setOnClickListener {
+//                    product.like_state = !product.like_state // 좋아요 선택
+//
+//                    if (product.like_state) {
+//                        product.crop_like_cnt++ // 좋아요 상태면 좋아요 수 증가, 텍스트 흰색
+//                        binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+//                        CoroutineScope(Dispatchers.Main).launch {
+//                            CropDao.updateCropLikeState(product,product.like_state)
+//                        }
+//                    } else {
+//                        product.crop_like_cnt-- // 좋아요 취소면 좋아요 수 감소, 텍스트 갈색
+//                        binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+//                        CoroutineScope(Dispatchers.Main).launch {
+//                            CropDao.updateCropLikeState(product,product.like_state)
+//                        }
+//                    }
+//                    // 좋아요 수가 1000 이상이면 999+로 표기
+//                    binding.textViewTradeLike.text = if (product.crop_like_cnt >= 1000) "999+"
+//                    else "${product.crop_like_cnt}"
+//
+//
+//
+//
+//                    binding.imageButtonProductLike.setImageResource(
+//                        if (product.like_state) R.drawable.heart_01 else R.drawable.heart_02
+//                    )
+//                }
 
                 // 아이템 클릭 이벤트 처리
                 itemView.setOnClickListener {
@@ -262,6 +269,20 @@ class TradeFragment : Fragment() {
         override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
             holder.bind(products[position])
 
+            holder.binding.tradeViewModel?.isLike?.value = false
+            holder.binding.imageButtonProductLike.setOnClickListener {
+                if(holder.binding.tradeViewModel?.isLike?.value!!){
+                    holder.binding.tradeViewModel?.isLike?.value = false
+                    holder.binding.imageButtonProductLike.setImageResource(R.drawable.heart_02)
+                    holder.binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                }else{
+                    holder.binding.tradeViewModel?.isLike?.value = true
+                    holder.binding.imageButtonProductLike.setImageResource(R.drawable.heart_01)
+                    holder.binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                }
+            }
+
         }
 
         override fun getItemCount(): Int = products.size
@@ -282,28 +303,38 @@ class TradeFragment : Fragment() {
 
                     ratingBarLikeCrop.rating = product.crop_rating.toFloat()
 
-
-                    imageViewHeartCrop.setOnClickListener {
-                        product.like_state = !product.like_state // 좋아요 선택
-                        if (product.like_state) {
-                            product.crop_like_cnt++ // 좋아요 상태면 좋아요 수 증가, 텍스트 흰색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        } else {
-                            product.crop_like_cnt-- // 좋아요 취소면 좋아요 수 감소, 텍스트 갈색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
-                        }
-                        // 좋아요 수가 1000 이상이면 999+로 표기
-                        binding.textViewLikeCropCnt.text = if (product.crop_like_cnt >= 1000) "999+"
-                        else "${product.crop_like_cnt}"
-                        binding.imageViewHeartCrop.setImageResource(
-                            if (product.like_state) R.drawable.heart_01 else R.drawable.heart_02
-                        )
-                    }
+//
+//                    imageViewHeartCrop.setOnClickListener {
+//                        if (product.like_state) {
+//                            product.crop_like_cnt++ // 좋아요 상태면 좋아요 수 증가, 텍스트 흰색
+//                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+//                            CoroutineScope(Dispatchers.Main).launch {
+//                                CropDao.updateCropLikeState(product,product.like_state)
+//                            }
+//                        } else {
+//                            product.crop_like_cnt-- // 좋아요 취소면 좋아요 수 감소, 텍스트 갈색
+//                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+//                            CoroutineScope(Dispatchers.Main).launch {
+//                                CropDao.updateCropLikeState(product,product.like_state)
+//                            }
+//                        }
+//                        // 좋아요 수가 1000 이상이면 999+로 표기
+//                        binding.textViewLikeCropCnt.text = if (product.crop_like_cnt >= 1000) "999+"
+//                        else "${product.crop_like_cnt}"
+//                        binding.imageViewHeartCrop.setImageResource(
+//                            if (product.like_state) R.drawable.heart_01 else R.drawable.heart_02
+//                        )
+//                    }
 
                     // 아이템 클릭 이벤트 처리
-                    itemView.setOnClickListener{
-                        val intent = Intent(mainActivity, TradeDetailActivity::class.java)
-                        startActivity(intent)
+                    itemView.setOnClickListener {
+                        val adapterPosition = adapterPosition
+                        if (adapterPosition != RecyclerView.NO_POSITION) {
+                            val intent = Intent(itemView.context, TradeDetailActivity::class.java)
+                            intent.putExtra("crop_idx", product.crop_idx) // 상품 ID를 인텐트에 추가
+                            intent.putExtra("position", adapterPosition) // 클릭된 아이템의 포지션 추가
+                            itemView.context.startActivity(intent)
+                        }
                     }
                 }
             }
@@ -319,6 +350,25 @@ class TradeFragment : Fragment() {
         override fun onBindViewHolder(holder: TradeNewAdapter.ViewHolder, position: Int) {
             val product = products[position]
             holder.bind(product)
+
+            holder.binding.apply {
+                tradeViewModel!!.apply {
+                    isLike.value = false
+                    constraintLikeCropCancel.setOnClickListener {
+                        if(isLike.value!!){
+                            isLike.value = false
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_02)
+                            holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                        }else{
+                            isLike.value = true
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_01)
+                            holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                        }
+                    }
+
+                }
+            }
         }
 
         override fun getItemCount(): Int = products.size

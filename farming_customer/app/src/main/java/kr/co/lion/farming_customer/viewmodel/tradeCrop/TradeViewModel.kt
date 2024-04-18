@@ -13,6 +13,9 @@ class TradeViewModel:ViewModel() {
     // 좋아요 수
     val textViewTradeLike = MutableLiveData<String>()
 
+    // 좋아요 상태
+    val isLike = MutableLiveData<Boolean>()
+
     // 최신등록 농작물 이름
     val textViewLikeCropName = MutableLiveData<String>()
     // 최신등록 농작물 가격

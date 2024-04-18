@@ -153,6 +153,34 @@ class CropDao {
             }
         }
 
+        // 농산품 모든 목록을 가져온다.
+        suspend fun gettingCropAllList(): MutableList<CropModel>{
+            // 농산품 정보를 담을 리스트
+            val cropAllList = mutableListOf<CropModel>()
+
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("CropData")
+                // 농산품 상태가 정상 상태이며 게시글 번호를 기준으로 내림차순 정렬되게 데이터를 가져올 수 있는
+                // Query를 생성한다.
+                // 농산품 상태가 정상 상태인 것만..
+                var query = collectionReference.whereEqualTo("crop_status", CropStatus.NORMAL.num)
+
+                val querySnapshot = query.get().await()
+
+                // 가져온 문서의 수 만큼 반복한다.
+                querySnapshot.forEach {
+                    // 현재 번째의 문서를 객체로 받아온다.
+                    val cropModel = it.toObject(CropModel::class.java)
+                    // 객체를 리스트에 담는다.
+                    cropAllList.add(cropModel)
+                }
+            }
+            job1.join()
+
+            return cropAllList
+        }
+
         // 이미지 데이터를 받아오는 메서드
         suspend fun gettingCropImage(context:Context, imageFileName:String, imageView: ImageView){
             CoroutineScope(Dispatchers.IO).launch {
@@ -187,28 +215,24 @@ class CropDao {
             return cropModel
         }
 
-//        // 농산품 좋아요 상태를 변경하는 메서드
-//        suspend fun updateCropLikeState(cropModel: CropModel, newLikeState:Boolean){
-//            val job1 = CoroutineScope(Dispatchers.IO).launch {
-//                // 컬렉션에 접근할 수 있는 객체를 가져온다.
-//                val collectionReference = Firebase.firestore.collection("CropData")
-//                // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
-//                val query = collectionReference.whereEqualTo("crop_idx", cropModel.crop_idx).get().await()
-//                // 저장할 데이터를 담을 HashMap을 만들어준다.
-//                val map = mutableMapOf<String, Any?>()
-//                if(newLikeState){
-//                    cropModel.like_state.not()
-//                    cropModel.crop_like_cnt++
-//                }
-//                else{
-//                    cropModel.like_state.not()
-//                    cropModel.crop_like_cnt--
-//                }
-//                // 저장한다.
-//                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
-//                query.documents[0].reference.set(map)
-//            }
-//            job1.join()
-//        }
+        // 농산품 좋아요 상태 및 개수를 변경하는 메서드
+        suspend fun updateCropLikeState(cropModel: CropModel, newLikeState:Boolean){
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("CropData")
+                // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
+                val query = collectionReference.whereEqualTo("crop_idx", cropModel.crop_idx).get().await()
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Any?>()
+                // 좋아요 상태와 개수를 업데이트할 필드 추가
+                map["like_state"] = newLikeState
+                map["crop_like_cnt"] = cropModel.crop_like_cnt
+
+                // 저장한다.
+                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
+                query.documents[0].reference.update(map)
+            }
+            job1.join()
+        }
     }
 }
