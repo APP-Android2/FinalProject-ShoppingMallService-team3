@@ -320,3 +320,9 @@ enum class InquiryType(var str: String, var number:Int) {
     TYPE_COMMUNITY("커뮤니티", 5),
     TYPE_OTHER("기타", 6)
 }
+
+enum class MyPageMyPostName(var str : String){
+    MY_PAGE_MY_POST_BOARD_FRAGMENT("MyPageMyPostBoardFragment"),
+    MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
+}
+

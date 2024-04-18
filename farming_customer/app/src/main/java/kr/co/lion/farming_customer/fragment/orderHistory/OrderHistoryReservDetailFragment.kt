@@ -34,6 +34,9 @@ class OrderHistoryReservDetailFragment : Fragment() {
     private fun settingData() {
         fragmentOrderHistoryReservDetailBinding.apply {
             orderHistoryReservDetailViewModel!!.apply {
+                textviewReservDetail_orderDate.value = "2024.04.04"
+                textviewReservDetail_orderNum.value = "주문번호 : 12341234"
+
                 textViewReservDetail_productName.value = "파밍이네 주말농장"
                 textViewReservDetail_option.value = "이용기간\n2024.03.03 - 2024.04.27"
                 textViewReservDetail_price.value = "10,000원 / 1구획"
