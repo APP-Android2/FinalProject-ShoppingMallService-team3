@@ -11,7 +11,4 @@ class ServiceCenterNoticeViewModel {
     val noticeRegDt = MutableLiveData<String>()
     // 공지 수정 날짜
     val noticeModDt = MutableLiveData<String>()
-    // 공지 고정 유무
-    val noticeFix = MutableLiveData<Boolean>()
-
 }

@@ -12,7 +12,7 @@ import kr.co.lion.farming_customer.model.myPageServiceCenterModel.NoticeModel
 class MyPageServiceCenterNoticeDao {
     companion object {
         // 공지사항 목록을 가져온다
-        suspend fun gettingNoticeList():MutableList<NoticeModel>{
+        suspend fun gettingNoticeList(): MutableList<NoticeModel> {
             // 게시글 정보를 담을 리스트
             val noticeList = mutableListOf<NoticeModel>()
 
@@ -26,9 +26,9 @@ class MyPageServiceCenterNoticeDao {
                 // 게시글 번호를 기준으로 내림 차순 정렬..
                 query = query.orderBy("notice_idx", Query.Direction.DESCENDING)
 
-                val queryShapshot = query.get().await()
+                val querySnapshot = query.get().await()
                 // 가져온 문서의 수 만큼 반복한다.
-                queryShapshot.forEach {
+                querySnapshot.forEach {
                     // 현재 번째의 문서를 객체로 받아온다.
                     val noticeModel = it.toObject(NoticeModel::class.java)
                     // 객체를 리스트에 담는다.
@@ -36,6 +36,9 @@ class MyPageServiceCenterNoticeDao {
                 }
             }
             job1.join()
+
+            // notice_fix가 true인 항목을 먼저, 그 다음에 false인 항목을 가져오도록 리스트를 정렬
+            noticeList.sortByDescending { it.notice_fix }
 
             return noticeList
         }

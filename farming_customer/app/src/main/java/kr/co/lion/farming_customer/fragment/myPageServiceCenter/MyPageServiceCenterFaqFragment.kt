@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
 import kr.co.lion.farming_customer.dao.myPageServiceCenter.MyPageServiceCenterFaqDao
-import kr.co.lion.farming_customer.dao.myPageServiceCenter.MyPageServiceCenterNoticeDao
 import kr.co.lion.farming_customer.databinding.FragmentMyPageServiceCenterFaqBinding
 import kr.co.lion.farming_customer.fragment.myPageServiceCenter.adapter.FaqRVAdapter
 import kr.co.lion.farming_customer.model.myPageServiceCenterModel.FaqModel
@@ -55,5 +54,4 @@ class MyPageServiceCenterFaqFragment : Fragment() {
             faqRVAdapter.setData(faqList)
         }
     }
-
 }

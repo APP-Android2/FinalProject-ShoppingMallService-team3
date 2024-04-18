@@ -1,7 +1,6 @@
 package kr.co.lion.farming_customer.fragment.myPageServiceCenter
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +36,7 @@ class MyPageServiceCenterNoticeFragment : Fragment() {
         binding.lifecycleOwner = this
         myPageServiceCenterActivity = activity as MyPageServiceCenterActivity
 
-        noticeRVAdapter = NoticeRVAdapter(noticeList)
+        noticeRVAdapter = NoticeRVAdapter(requireContext(), noticeList)
         binding.serviceCenterNoticeRv.adapter = noticeRVAdapter
         binding.serviceCenterNoticeRv.layoutManager = LinearLayoutManager(context)
 

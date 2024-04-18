@@ -1,8 +1,10 @@
 package kr.co.lion.farming_customer.fragment.myPageServiceCenter.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +13,7 @@ import kr.co.lion.farming_customer.databinding.RowServiceCenterNoticeBinding
 import kr.co.lion.farming_customer.model.myPageServiceCenterModel.NoticeModel
 import kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterNoticeViewModel
 
-class NoticeRVAdapter(private var noticeList : MutableList<NoticeModel>): RecyclerView.Adapter<NoticeRVAdapter.NoticeViewHolder>() {
+class NoticeRVAdapter(val context: Context, private var noticeList : MutableList<NoticeModel>): RecyclerView.Adapter<NoticeRVAdapter.NoticeViewHolder>() {
     private var expandedPosition = -1
 
     inner class NoticeViewHolder(val binding: RowServiceCenterNoticeBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener{
@@ -62,6 +64,15 @@ class NoticeRVAdapter(private var noticeList : MutableList<NoticeModel>): Recycl
         holder.binding.rowServiceCenterNoticeContentLayout.visibility =
             if (expandedPosition == position) View.VISIBLE else View.GONE
 
+
+        if (noticeList[position].notice_fix) {
+            val textViewNoticeTitle = holder.binding.rowServiceCenterNoticeTitle
+            textViewNoticeTitle.setTextColor(ContextCompat.getColor(context, R.color.orange_01))
+        } else {
+            val textViewNoticeTitle = holder.binding.rowServiceCenterNoticeTitle
+            textViewNoticeTitle.setTextColor(ContextCompat.getColor(context, R.color.brown_01))
+        }
+
         // 버튼 이미지 설정
         if (expandedPosition == position) {
             // 열린 상태일 때
@@ -70,6 +81,5 @@ class NoticeRVAdapter(private var noticeList : MutableList<NoticeModel>): Recycl
             // 닫힌 상태일 때
             holder.binding.rowServiceCenterNoticeOpenBtn.setImageResource(R.drawable.ic_notice_open_btn)
         }
-
     }
 }
