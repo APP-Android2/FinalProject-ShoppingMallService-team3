@@ -93,7 +93,7 @@
                     android:layout_height="match_parent"
                     android:drawablePadding="0dp"
                     android:fontFamily="@font/font_pre_semibold"
-                    android:hint="좋아요순"
+                    android:hint="별점순"
                     android:inputType="none"
                     android:paddingVertical="5dp"
                     android:paddingStart="0dp"

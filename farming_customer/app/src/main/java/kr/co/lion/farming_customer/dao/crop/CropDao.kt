@@ -154,7 +154,7 @@ class CropDao {
         }
 
         // 농산품 모든 목록을 가져온다.
-        suspend fun gettingCropAllList(): MutableList<CropModel>{
+        suspend fun gettingCropAllList(dropDownSort:String): MutableList<CropModel>{
             // 농산품 정보를 담을 리스트
             val cropAllList = mutableListOf<CropModel>()
 
@@ -165,6 +165,12 @@ class CropDao {
                 // Query를 생성한다.
                 // 농산품 상태가 정상 상태인 것만..
                 var query = collectionReference.whereEqualTo("crop_status", CropStatus.NORMAL.num)
+                when(dropDownSort){
+                    "별점순" -> query = query.orderBy("crop_rating",Query.Direction.DESCENDING)
+                    "찜순" -> query = query.orderBy("crop_like_cnt",Query.Direction.DESCENDING)
+                    "가격 높은순" -> query = query.orderBy("crop_option_price",Query.Direction.DESCENDING)
+                    "가격 낮은순" -> query = query.orderBy("crop_option_price",Query.Direction.ASCENDING)
+                }
 
                 val querySnapshot = query.get().await()
 
@@ -176,6 +182,7 @@ class CropDao {
                     cropAllList.add(cropModel)
                 }
             }
+            Log.d("test12","aa")
             job1.join()
 
             return cropAllList

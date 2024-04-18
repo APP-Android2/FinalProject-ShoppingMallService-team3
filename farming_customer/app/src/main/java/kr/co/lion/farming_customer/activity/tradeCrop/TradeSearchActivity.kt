@@ -2,6 +2,7 @@ package kr.co.lion.farming_customer.activity.tradeCrop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,11 +33,11 @@ class TradeSearchActivity : AppCompatActivity() {
 
     private var dropDownButtonClicked = false
 
-    // 농산품 데이터를 담을 리스트
-    var cropAllList:List<CropModel>? = null
+    // 드롭다운 조건에 맞는 농산품 데이터를 담을 리스트
+    var cropDropDownAllList:List<CropModel>? = null
 
     // 드롭다운 정렬
-    var dropDownSort = "별점순"
+    var dropDownSort = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +47,10 @@ class TradeSearchActivity : AppCompatActivity() {
         binding.tradeSearchViewModel = tradeSearchViewModel
         binding.lifecycleOwner = this
 
+        gettingCropData(binding.textViewTradeSearchSort.hint.toString())
+
         settingDropDown()
-        setRecyclerView()
         setBack()
-        //setButton()
-        gettingCropData()
 
         setContentView(binding.root)
     }
@@ -62,26 +62,41 @@ class TradeSearchActivity : AppCompatActivity() {
             val typeList = listOf("별점순", "찜순", "금액 높은순", "금액 낮은순")
             val typeArrayAdapter = ArrayAdapter(this@TradeSearchActivity, R.layout.item_spinner_search_sort, typeList)
             textViewTradeSearchSort.setAdapter(typeArrayAdapter)
+
+
+            // 드롭다운 메뉴 선택 이벤트 처리
+            textViewTradeSearchSort.setOnItemClickListener { _, _, position, _ ->
+                val selectedType = typeList[position]
+
+                // 선택된 항목으로 힌트 텍스트 변경
+                textViewTradeSearchSort.hint = selectedType
+                dropDownSort = selectedType
+
+                // dropDownSort 텍스트에 따라 농산품 데이터를 분기하여 가져온다.
+                gettingCropData(dropDownSort)
+            }
         }
     }
 
     // 검색창 back Button 누르면 Activity 종료
-    private fun setBack(){
+    private fun setBack() {
         binding.apply {
             textInputLayout17.setStartIconOnLongClickListener {
                 finish()
                 true
             }
+        }
+    }
     // 농산품 전체 데이터를 가져온다.
-    fun gettingCropData(){
+    fun gettingCropData(dropDownSort:String) {
         CoroutineScope(Dispatchers.Main).launch {
-            cropAllList = CropDao.gettingCropAllList()
+            cropDropDownAllList = CropDao.gettingCropAllList(dropDownSort)
             setRecyclerView()
         }
     }
 
 
-    fun setRecyclerView(){
+    fun setRecyclerView() {
         binding.recyclerViewTradeSearch.apply {
             adapter = CropAdapter()
             layoutManager = GridLayoutManager(this@TradeSearchActivity, 2)
@@ -89,10 +104,9 @@ class TradeSearchActivity : AppCompatActivity() {
     }
 
 
-    inner class CropAdapter: RecyclerView.Adapter<CropAdapter.CropViewHolder>(){
-        inner class CropViewHolder(binding: RowRelatedCropBinding): RecyclerView.ViewHolder(binding.root) {
-            val binding : RowRelatedCropBinding
-
+    inner class CropAdapter : RecyclerView.Adapter<CropAdapter.CropViewHolder>() {
+        inner class CropViewHolder(binding: RowRelatedCropBinding) : RecyclerView.ViewHolder(binding.root) {
+            val binding: RowRelatedCropBinding
             init {
                 this.binding = binding
                 binding.root.layoutParams = ViewGroup.LayoutParams(
@@ -101,7 +115,6 @@ class TradeSearchActivity : AppCompatActivity() {
                 )
             }
         }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CropViewHolder {
 
             val binding = DataBindingUtil.inflate<RowRelatedCropBinding>(layoutInflater, R.layout.row_related_crop, parent, false)
@@ -112,10 +125,7 @@ class TradeSearchActivity : AppCompatActivity() {
             val cropViewHolder = CropViewHolder(binding)
             return cropViewHolder
         }
-
-
-        override fun getItemCount(): Int = cropAllList?.size?: 0
-
+        override fun getItemCount(): Int = cropDropDownAllList?.size ?: 0
 
         override fun onBindViewHolder(holder: CropViewHolder, position: Int) {
             holder.binding.apply {
@@ -123,23 +133,25 @@ class TradeSearchActivity : AppCompatActivity() {
                     // 좋아요 버튼 클릭 이벤트
                     isLike.value = false
                     constraintLikeCropCancel.setOnClickListener {
-                        if(isLike.value!!){
+                        if (isLike.value!!) {
                             isLike.value = false
                             imageViewHeartCrop.setImageResource(R.drawable.heart_02)
                             holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeSearchActivity, R.color.brown_01))
 
-                        }else{
+                        } else {
                             isLike.value = true
                             imageViewHeartCrop.setImageResource(R.drawable.heart_01)
                             holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeSearchActivity, R.color.white))
                         }
                     }
+                    textViewLikeCropName.value = cropDropDownAllList?.get(position)?.crop_title
+                    textViewLikeCropPrice.value = cropDropDownAllList?.get(position)?.crop_option_detail?.get(0)?.get("crop_option_price")
+                    textViewLikeCropCnt.value = cropDropDownAllList?.get(position)?.crop_like_cnt.toString()
                 }
                 CoroutineScope(Dispatchers.Main).launch {
-                    CropDao.gettingCropImage(this@TradeSearchActivity,
-                        cropAllList?.get(position)?.crop_images?.get(0) ?: "", holder.binding.imageViewLikeCrop)
+                    CropDao.gettingCropImage(this@TradeSearchActivity, cropDropDownAllList?.get(position)?.crop_images?.get(0) ?: "", holder.binding.imageViewLikeCrop)
                 }
-                holder.binding.ratingBarLikeCrop.rating = cropAllList?.get(position)?.crop_rating?.toFloat() ?: 0F
+                ratingBarLikeCrop.rating = cropDropDownAllList?.get(position)?.crop_rating?.toFloat() ?: 0F
             }
 
         }
