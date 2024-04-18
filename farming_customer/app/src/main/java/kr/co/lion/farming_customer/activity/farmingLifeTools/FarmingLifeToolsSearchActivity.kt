@@ -18,6 +18,14 @@ class FarmingLifeToolsSearchActivity : AppCompatActivity() {
         binding.farmingLifeToolsSearchRv.adapter = toolsSearchRVAdapter
         binding.farmingLifeToolsSearchRv.layoutManager = LinearLayoutManager(applicationContext)
 
+        settingEvent()
+
         setContentView(binding.root)
+    }
+
+    private fun settingEvent() {
+        binding.farmingLifeToolsSearchLayout.setStartIconOnClickListener {
+            finish()
+        }
     }
 }

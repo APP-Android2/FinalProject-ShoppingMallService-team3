@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.CommunityAddActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
@@ -38,6 +40,7 @@ class CommunityTabAllFragment : Fragment() {
 
         settingButtonCommunityTabAllPopularity()
         settingRecyclerViewCommunityTabAll()
+        settingFloatingActionButtonCommunityAllAdd()
 
         return fragmentCommunityTabAllBinding.root
     }
@@ -47,6 +50,17 @@ class CommunityTabAllFragment : Fragment() {
         fragmentCommunityTabAllBinding.apply {
             buttonCommunityTabAllPopularity.isChecked = true
 
+        }
+    }
+
+    // 커뮤니티 전체 탭 게시글 작성
+    fun settingFloatingActionButtonCommunityAllAdd() {
+        fragmentCommunityTabAllBinding.apply {
+            floatingActionButtonCommunityAllAdd.setOnClickListener {
+                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
+                startActivity(communityIntent)
+
+            }
         }
     }
 
@@ -89,12 +103,12 @@ class CommunityTabAllFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 100
+            return 10
         }
 
         override fun onBindViewHolder(holder: CommunityTabAllViewHolder, position: Int) {
             holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListLabelAll?.value = "정보"
-            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListTitleAll?.value = "글 제목"
+            holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListTitleAll?.value = "글 제목 $position"
             holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListContentAll?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
                     "글 내용입니다"
             holder.rowCommunityTabAllBinding.communityViewModel?.textViewCommunityListViewCntAll?.value = "999+"
@@ -112,6 +126,12 @@ class CommunityTabAllFragment : Fragment() {
                     imageViewCommunityListLikeAll.isSelected = !imageViewCommunityListLikeAll.isSelected
                     textViewCommunityListLikeCntAll.isSelected = !textViewCommunityListLikeCntAll.isSelected
                 }
+            }
+
+            if (position == 9) {
+                fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = false
+            } else {
+                fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = true
             }
 
         }

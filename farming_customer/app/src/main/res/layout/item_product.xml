@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:tag="layout/item_product_1"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
 
@@ -90,15 +90,15 @@
 
             <ImageButton
                 android:id="@+id/imageButtonProductLike"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageViewCropImage"
-                app:srcCompat="@drawable/heart_02" />
+                app:srcCompat="@drawable/heart_04" />
 
             <TextView
                 android:id="@+id/textViewTradeLike"

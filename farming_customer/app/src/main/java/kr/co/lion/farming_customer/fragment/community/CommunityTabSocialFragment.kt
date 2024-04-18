@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.CommunityAddActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabSocialBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabInformationBinding
@@ -34,6 +36,7 @@ class CommunityTabSocialFragment : Fragment() {
 
         settingButtonCommunityTabSocialPopularity()
         settingRecyclerViewCommunityTabSocial()
+        settingFloatingActionButtonCommunitySocialAdd()
 
         return fragmentCommunityTabSocialBinding.root
     }
@@ -42,7 +45,16 @@ class CommunityTabSocialFragment : Fragment() {
     fun settingButtonCommunityTabSocialPopularity() {
         fragmentCommunityTabSocialBinding.apply {
             buttonCommunityTabSocialPopularity.isChecked = true
+        }
+    }
 
+    // 커뮤니티 소통 탭 게시글 작성
+    fun settingFloatingActionButtonCommunitySocialAdd() {
+        fragmentCommunityTabSocialBinding.apply {
+            floatingActionButtonCommunitySocialAdd.setOnClickListener {
+                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
+                startActivity(communityIntent)
+            }
         }
     }
 
@@ -85,12 +97,12 @@ class CommunityTabSocialFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 100
+            return 10
         }
 
         override fun onBindViewHolder(holder: CommunityTabSocialViewHolder, position: Int) {
             holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLabelSocial?.value = "소통"
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListTitleSocial?.value = "글 제목"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListTitleSocial?.value = "글 제목 $position"
             holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListContentSocial?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
                     "글 내용입니다"
             holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListViewCntSocial?.value = "999+"
@@ -108,6 +120,12 @@ class CommunityTabSocialFragment : Fragment() {
                     imageViewCommunityListLikeSocial.isSelected = !imageViewCommunityListLikeSocial.isSelected
                     textViewCommunityListLikeCntSocial.isSelected = !textViewCommunityListLikeCntSocial.isSelected
                 }
+            }
+
+            if (position == 9) {
+                fragmentCommunityTabSocialBinding.floatingActionButtonCommunitySocialAdd.isVisible = false
+            } else {
+                fragmentCommunityTabSocialBinding.floatingActionButtonCommunitySocialAdd.isVisible = true
             }
         }
     }
