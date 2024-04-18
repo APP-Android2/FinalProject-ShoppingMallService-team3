@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="likeViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.LikeViewModel" />
+    </data>
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -89,7 +95,7 @@
 
                     <ImageView
                         android:id="@+id/imageViewHeartCrop"
-                        android:layout_width="wrap_content"
+                        android:layout_width="30dp"
                         android:layout_height="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -98,11 +104,11 @@
                         app:srcCompat="@drawable/heart_01" />
 
                     <TextView
-                        android:id="@+id/textViewLikeCropCnt"
+                        android:id="@+id/textView_likeCropCnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="999+"
+                        android:text="@={likeViewModel.textView_likeCropCnt}"
                         android:textColor="@color/white"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewHeartCrop"

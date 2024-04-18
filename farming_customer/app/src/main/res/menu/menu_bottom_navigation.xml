@@ -6,30 +6,30 @@
         android:id="@+id/menuItemBottomNavigation_Trade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/bottom_navigation_crop_selector"
         android:title="농산물 거래" />
     <item
         android:id="@+id/menuItemBottonNavigation_Farming_Life"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/bottom_navigation_farming_life_selector"
         android:title="파밍생활" />
     <item
         android:id="@+id/menuItemBottomNavigation_Home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/bottom_navigation_main_selector"
         android:title="홈" />
     <item
         android:id="@+id/menuItemBottonNavigation_Like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/bottom_navigation_like_selector"
         android:title="좋아요" />
     <item
         android:id="@+id/menuItemBottonNavigation_MyPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/bottom_navigation_mypage_selector"
         android:title="마이페이지" />
 </menu>

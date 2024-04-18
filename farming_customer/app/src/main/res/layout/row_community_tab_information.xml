@@ -160,9 +160,10 @@
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -170,21 +171,21 @@
                         android:id="@+id/imageViewCommunityListLikeInformation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:checked="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:checked="true"
                         app:srcCompat="@drawable/community_image_like" />
 
                     <TextView
                         android:id="@+id/textViewCommunityListLikeCntInformation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="true"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="@{communityViewModel.textViewCommunityListLikeCntInformation}"
                         android:textColor="@drawable/community_tab_like_cnt"
-                        android:checked="true"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewCommunityListLikeInformation"
                         app:layout_constraintEnd_toEndOf="@id/imageViewCommunityListLikeInformation"

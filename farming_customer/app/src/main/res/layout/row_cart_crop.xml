@@ -27,7 +27,7 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="15dp"
                 android:background="@color/white"
-                app:cardElevation="4dp"
+                app:cardElevation="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,9 +56,9 @@
                             style="@style/checkBox_Cart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="@={myPageCartViewModel.checkBoxRowCartTabCrop}"
                             android:minWidth="0dp"
                             android:minHeight="0dp"
-                            android:checked="@={myPageCartViewModel.checkBoxRowCartTabCrop}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
