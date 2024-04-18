@@ -7,10 +7,14 @@ import kr.co.lion.farming_customer.databinding.ActivityMyPageServiceCenterReplyB
 
 class MyPageServiceCenterReplyActivity : AppCompatActivity() {
     lateinit var binding: ActivityMyPageServiceCenterReplyBinding
+    var inquiryIdx = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyPageServiceCenterReplyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        inquiryIdx = intent.getIntExtra("inquiryIdx", 0)
 
         settingToolbar()
     }
