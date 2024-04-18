@@ -1,6 +1,7 @@
 package kr.co.lion.farming_customer.fragment.community
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,12 +16,16 @@ import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabSocialBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabSocialBinding
+import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 class CommunityTabSocialFragment : Fragment() {
     lateinit var fragmentCommunityTabSocialBinding: FragmentCommunityTabSocialBinding
     lateinit var mainActivity: MainActivity
     lateinit var communityViewModel: CommunityViewModel
+
+    // 소통 탭의 리사이클러뷰 구성을 위한 리스트
+    var socialList:ArrayList<CommunityModel>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -32,6 +37,7 @@ class CommunityTabSocialFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingButtonCommunityTabSocialPopularity()
+        settingInitDataSocial()
         settingRecyclerViewCommunityTabSocial()
 
         return fragmentCommunityTabSocialBinding.root
@@ -42,6 +48,15 @@ class CommunityTabSocialFragment : Fragment() {
         fragmentCommunityTabSocialBinding.apply {
             buttonCommunityTabSocialPopularity.isChecked = true
 
+        }
+    }
+
+    // 데이터 받아오기
+    fun settingInitDataSocial() {
+        socialList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelableArrayList("communityTabList", CommunityModel::class.java)
+        } else {
+            arguments?.getParcelableArrayList<CommunityModel>("communityTabList")
         }
     }
 
@@ -84,21 +99,21 @@ class CommunityTabSocialFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 100
+            return socialList!!.size
         }
 
         override fun onBindViewHolder(holder: CommunityTabSocialViewHolder, position: Int) {
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLabelSocial?.value = "소통"
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListTitleSocial?.value = "글 제목"
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListContentSocial?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
-                    "글 내용입니다"
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListViewCntSocial?.value = "999+"
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListCommentCntSocial?.value = "999+"
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListDateSocial?.value = "2024.03.01"
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLikeCntSocial?.value = "999+"
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLabelSocial?.value = socialList!![position].postType
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListTitleSocial?.value = socialList!![position].postTitle
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListContentSocial?.value = socialList!![position].postContent
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListViewCntSocial?.value = socialList!![position].postViewCnt.toString()
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListCommentCntSocial?.value = socialList!![position].postCommentCnt.toString()
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLikeCntSocial?.value = socialList!![position].postLikeCnt.toString()
+            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListDateSocial?.value = socialList!![position].postRegDt
 
             holder.rowCommunityTabSocialBinding.linearLayoutCommunityListSocial.setOnClickListener {
                 val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
+                communityIntent.putExtra("postIdx", socialList!![position].postIdx)
                 startActivity(communityIntent)
             }
 

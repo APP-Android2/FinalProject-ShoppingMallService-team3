@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.PostStatus
+import kr.co.lion.farming_customer.PostType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
@@ -335,6 +336,7 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
         val communityIntent = Intent(communityAddActivity, CommunityActivity::class.java)
         communityIntent.putExtra("postIdx", model!!.postIdx)
         startActivity(communityIntent)
+        communityAddActivity.finish()
     }
 
     // 입력 요소 설정
@@ -363,7 +365,13 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
             // 업로드할 정보를 담아준다.
             communityModel.postIdx = communityPostSequence + 1
             communityModel.postTitle = communityAddModifyViewModel.textViewCommunityAddSubject.value!!
-            communityModel.postType = communityAddModifyViewModel.communityPostAddType.value!!
+            if (communityAddModifyViewModel.communityPostAddType.value == "정보 게시판") {
+                communityModel.postType = PostType.TYPE_INFORMATION.str
+            } else if (communityAddModifyViewModel.communityPostAddType.value == "소통 게시판") {
+                communityModel.postType = PostType.TYPE_SOCIAL.str
+            } else {
+                communityModel.postType = PostType.TYPE_JOB.str
+            }
             communityModel.postContent = communityAddModifyViewModel.textViewCommunityAddContent.value!!
             communityModel.postLikeCnt = 0
             communityModel.postCommentCnt = 0

@@ -270,10 +270,10 @@ enum class PaymentFragmentName(var str:String){
 
 // 게시판 종류를 나타내는 값을 정의한다.
 enum class PostType(var str:String, var number:Int){
-    TYPE_ALL("전체 게시판", 0),
-    TYPE_INFORMATION("정보 게시판", 1),
-    TYPE_SOCIAL("소통 게시판", 2),
-    TYPE_JOB("구인구직 게시판", 3),
+    TYPE_ALL("전체", 0),
+    TYPE_INFORMATION("정보", 1),
+    TYPE_SOCIAL("소통", 2),
+    TYPE_JOB("구인구직", 3),
 }
 
 // 게시판 상태를 나타내는 값을 정의한다.

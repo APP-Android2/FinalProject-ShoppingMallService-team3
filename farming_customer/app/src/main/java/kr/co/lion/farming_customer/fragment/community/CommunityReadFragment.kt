@@ -34,9 +34,9 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
     lateinit var communityActivity: CommunityActivity
     lateinit var communityReadViewModel: CommunityReadViewModel
 
-    // 좋아요 개수
+    // 좋아요 수
     var communityReadLikeCnt = 0
-    // 댓글 개수
+    // 댓글 수
     var communityReadCommentCnt = 999
 
     // 이미지 저장용 리스트
@@ -75,6 +75,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
                 setNavigationIcon(R.drawable.back)
                 setNavigationOnClickListener {
                     communityActivity.finish()
+
                 }
                 inflateMenu(R.menu.menu_community)
                 setOnMenuItemClickListener {
@@ -156,11 +157,8 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         override fun onBindViewHolder(holder: CommunityReadImageViewHolder, position: Int) {
 
             CoroutineScope(Dispatchers.Main).launch {
-                // 이미지뷰를 안 보이게 한다.
-                // fragmentCommunityReadBinding.viewPager2CommunityReadImage.visibility = View.INVISIBLE
 
                 CommunityPostDao.gettingCommunityPostImage(communityActivity, imageCommunityStringList[position], holder.rowCommunityReadImageBinding.imageViewRowCommunityRead)
-                Log.d("test1234", imageCommunityStringList.toString())
             }
         }
     }

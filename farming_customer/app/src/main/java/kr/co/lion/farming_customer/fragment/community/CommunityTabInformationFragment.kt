@@ -1,7 +1,9 @@
 package kr.co.lion.farming_customer.fragment.community
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +12,28 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.PostType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabInformationBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabInformationBinding
+import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
+import kotlin.concurrent.thread
 
 
 class CommunityTabInformationFragment : Fragment() {
     lateinit var fragmentCommunityTabInformationBinding: FragmentCommunityTabInformationBinding
     lateinit var mainActivity: MainActivity
     lateinit var communityViewModel: CommunityViewModel
+
+    // 정보 탭의 리사이클러뷰 구성을 위한 리스트
+    var informationList:ArrayList<CommunityModel>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -33,16 +45,26 @@ class CommunityTabInformationFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingButtonCommunityTabInformationPopularity()
+        settingInitDataInformation()
         settingRecyclerViewCommunityTabInformation()
 
         return fragmentCommunityTabInformationBinding.root
     }
 
-    // 커뮤니티 정보 탭
+    // 커뮤니티 정보 탭 인기순이 초기 설정
     fun settingButtonCommunityTabInformationPopularity() {
         fragmentCommunityTabInformationBinding.apply {
             buttonCommunityTabInformationPopularity.isChecked = true
 
+        }
+    }
+
+    // 데이터 받아오기
+    fun settingInitDataInformation() {
+        informationList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelableArrayList("communityTabList", CommunityModel::class.java)
+        } else {
+            arguments?.getParcelableArrayList<CommunityModel>("communityTabList")
         }
     }
 
@@ -85,21 +107,21 @@ class CommunityTabInformationFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 100
+            return informationList!!.size
         }
 
         override fun onBindViewHolder(holder: CommunityTabInformationViewHolder, position: Int) {
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLabelInformation?.value = "정보"
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListTitleInformation?.value = "글 제목"
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListContentInformation?.value = "글 내용입니다 글 내용입니다 글 내용입니다\n" +
-                    "글 내용입니다"
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListViewCntInformation?.value = "999+"
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListCommentCntInformation?.value = "999+"
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListDateInformation?.value = "2024.03.01"
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLikeCntInformation?.value = "999+"
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLabelInformation?.value = informationList!![position].postType
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListTitleInformation?.value = informationList!![position].postTitle
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListContentInformation?.value = informationList!![position].postContent
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListViewCntInformation?.value = informationList!![position].postViewCnt.toString()
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListCommentCntInformation?.value = informationList!![position].postCommentCnt.toString()
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLikeCntInformation?.value = informationList!![position].postLikeCnt.toString()
+            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListDateInformation?.value = informationList!![position].postRegDt
 
             holder.rowCommunityTabInformationBinding.linearLayoutCommunityListInformation.setOnClickListener {
                 val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
+                communityIntent.putExtra("postIdx", informationList!![position].postIdx)
                 startActivity(communityIntent)
             }
 
