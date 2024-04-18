@@ -3,11 +3,15 @@ package kr.co.lion.farming_customer.fragment.myPageServiceCenter.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.RowServiceCenterFaqBinding
+import kr.co.lion.farming_customer.model.myPageServiceCenterModel.FaqModel
+import kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterFaqViewModel
 
-class FaqRVAdapter : RecyclerView.Adapter<FaqRVAdapter.FaqViewHolder>() {
+class FaqRVAdapter(var faqList: MutableList<FaqModel>) : RecyclerView.Adapter<FaqRVAdapter.FaqViewHolder>() {
     private var expandedPosition = -1
 
     inner class FaqViewHolder(val binding: RowServiceCenterFaqBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
@@ -29,20 +33,28 @@ class FaqRVAdapter : RecyclerView.Adapter<FaqRVAdapter.FaqViewHolder>() {
         }
     }
 
+    fun setData(faqList: MutableList<FaqModel>) {
+        this.faqList = faqList
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FaqViewHolder {
-        val binding = RowServiceCenterFaqBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val faqViewHolder = FaqViewHolder(binding)
+        val rowBinding = DataBindingUtil.inflate<RowServiceCenterFaqBinding>(LayoutInflater.from(parent.context), R.layout.row_service_center_faq, parent, false)
+        val rowFaqViewModel = ServiceCenterFaqViewModel()
+        rowBinding.serviceCenterFaqViewModel = rowFaqViewModel
+        rowBinding.lifecycleOwner = parent.context as LifecycleOwner
+        val faqViewHolder = FaqViewHolder(rowBinding)
 
         return faqViewHolder
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return faqList.size
     }
 
     override fun onBindViewHolder(holder: FaqViewHolder, position: Int) {
-        holder.binding.rowServiceCenterFaqTitle.text = "faq 질문 $position"
-        holder.binding.rowServiceCenterFaqContent.text = "faq${position} 답변입니다"
+        holder.binding.serviceCenterFaqViewModel?.faqTitle?.value = faqList[position].faq_title
+        holder.binding.serviceCenterFaqViewModel?.faqContent?.value = faqList[position].faq_content
 
         holder.binding.rowServiceCenterFaqContentLayout.visibility =
             if (expandedPosition == position) View.VISIBLE else View.GONE
