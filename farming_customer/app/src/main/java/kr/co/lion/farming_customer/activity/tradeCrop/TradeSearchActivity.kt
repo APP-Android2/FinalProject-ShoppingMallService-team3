@@ -2,10 +2,10 @@ package kr.co.lion.farming_customer.activity.tradeCrop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,14 +46,34 @@ class TradeSearchActivity : AppCompatActivity() {
         binding.tradeSearchViewModel = tradeSearchViewModel
         binding.lifecycleOwner = this
 
+        settingDropDown()
+        setRecyclerView()
+        setBack()
         //setButton()
         gettingCropData()
 
         setContentView(binding.root)
     }
 
+    // 드롭다운 설정
+    private fun settingDropDown() {
+        binding.apply {
+            // 드롭다운 설정
+            val typeList = listOf("별점순", "찜순", "금액 높은순", "금액 낮은순")
+            val typeArrayAdapter = ArrayAdapter(this@TradeSearchActivity, R.layout.item_spinner_search_sort, typeList)
+            textViewTradeSearchSort.setAdapter(typeArrayAdapter)
+        }
+    }
+
+    // 검색창 back Button 누르면 Activity 종료
+    private fun setBack(){
+        binding.apply {
+            textInputLayout17.setStartIconOnLongClickListener {
+                finish()
+                true
+            }
     // 농산품 전체 데이터를 가져온다.
-    private fun gettingCropData(){
+    fun gettingCropData(){
         CoroutineScope(Dispatchers.Main).launch {
             cropAllList = CropDao.gettingCropAllList()
             setRecyclerView()
@@ -61,7 +81,7 @@ class TradeSearchActivity : AppCompatActivity() {
     }
 
 
-    private fun setRecyclerView(){
+    fun setRecyclerView(){
         binding.recyclerViewTradeSearch.apply {
             adapter = CropAdapter()
             layoutManager = GridLayoutManager(this@TradeSearchActivity, 2)

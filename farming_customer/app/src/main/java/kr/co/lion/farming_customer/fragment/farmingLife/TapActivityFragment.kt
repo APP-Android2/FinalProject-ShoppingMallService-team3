@@ -100,7 +100,7 @@ class TapActivityFragment : Fragment() {
                 constraintLikeCancel.setOnClickListener {
                     if(rowGridItemViewModel!!.isLike.value!!){
                         rowGridItemViewModel!!.isLike.value = false
-                        imageViewHeart.setImageResource(R.drawable.heart_02)
+                        imageViewHeart.setImageResource(R.drawable.heart_04)
                         textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
                     }else{
                         rowGridItemViewModel!!.isLike.value = true

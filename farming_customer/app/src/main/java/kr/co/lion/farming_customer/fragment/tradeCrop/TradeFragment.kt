@@ -65,7 +65,6 @@ class TradeFragment : Fragment() {
     private fun setToolbar(){
         fragmentTradeBinding.apply {
             toolbarTrade.apply {
-                title = "farming"
 
                 // 메뉴 등록
                 inflateMenu(R.menu.menu_trade)

@@ -19,17 +19,14 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarLike"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="@font/pretendard_bold"
-                android:text="farming"
-                android:textColor="@color/brown_01"
-                android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:src="@drawable/font_logo" />
         </com.google.android.material.appbar.MaterialToolbar>
 
         <HorizontalScrollView

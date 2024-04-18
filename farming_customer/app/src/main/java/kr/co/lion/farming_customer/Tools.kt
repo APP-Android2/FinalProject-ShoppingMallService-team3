@@ -284,6 +284,11 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }
 
+enum class MyPageMyPostName(var str : String){
+    MY_PAGE_MY_POST_BOARD_FRAGMENT("MyPageMyPostBoardFragment"),
+    MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
+}
+
 // 농산품 상태
 enum class CropStatus(var str:String, var num:Int){
     NORMAL("정상", 1),
