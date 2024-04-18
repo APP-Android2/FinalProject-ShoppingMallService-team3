@@ -2,7 +2,6 @@ package kr.co.lion.farming_customer.fragment.myPageServiceCenter.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterReplyActivity
 import kr.co.lion.farming_customer.databinding.RowServiceCenterInquiryBinding
-import kr.co.lion.farming_customer.databinding.RowServiceCenterInquiryPhotoBinding
 import kr.co.lion.farming_customer.model.myPageServiceCenterModel.InquiryModel
 import kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterInquiryViewModel
 

@@ -23,7 +23,7 @@ class MyPageServiceCenterInquiryDao {
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
                 val collectionReference =
-                    com.google.firebase.Firebase.firestore.collection("InquiryData")
+                    Firebase.firestore.collection("InquiryData")
                 // 게시글 상태가 정상 상태이고 게시글 번호를 기준으로 내림차순 정렬되게 데이터를 가져올 수 있는
                 // Query를 생성한다.
                 // 게시글 상태가 정상 상태인 것만..
@@ -138,25 +138,6 @@ class MyPageServiceCenterInquiryDao {
             job1.join()
 
             return inquiryModel
-        }
-
-        // 글의 상태를 변경하는 메서드
-        suspend fun updateInquiryState(inquiryIdx: Int, newState: InquiryState) {
-            val job1 = CoroutineScope(Dispatchers.IO).launch {
-                // 컬렉션에 접근할 수 있는 객체를 가져온다.
-                val collectionReference = Firebase.firestore.collection("InquiryData")
-                // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
-                val query =
-                    collectionReference.whereEqualTo("inquiry_idx", inquiryIdx).get().await()
-
-                // 저장할 데이터를 담을 HashMap을 만들어준다.
-                val map = mutableMapOf<String, Long>()
-                map["inquiry_status"] = newState.number.toLong()
-                // 저장한다.
-                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
-                query.documents[0].reference.set(map)
-            }
-            job1.join()
         }
     }
 }
