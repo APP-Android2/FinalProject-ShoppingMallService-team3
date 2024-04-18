@@ -1,16 +1,19 @@
 package kr.co.lion.farming_customer.activity.myPageServiceCenter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -21,25 +24,44 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.InquiryState
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
+import kr.co.lion.farming_customer.dao.myPageServiceCenter.MyPageServiceCenterInquiryDao
 import kr.co.lion.farming_customer.databinding.ActivityMyPageServiceCenterWriteInquiryBinding
 import kr.co.lion.farming_customer.databinding.RowServiceCenterInquiryPhotoBinding
+import kr.co.lion.farming_customer.model.myPageServiceCenterModel.InquiryModel
+import kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterInquiryViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class MyPageServiceCenterWriteInquiryActivity : AppCompatActivity() {
     lateinit var binding: ActivityMyPageServiceCenterWriteInquiryBinding
     lateinit var albumLauncher: ActivityResultLauncher<Intent>
+    lateinit var viewModel: ServiceCenterInquiryViewModel
 
     // 이미지 리스트
-    val imageList = mutableListOf<Bitmap>()
+    val imageBitmapList = mutableListOf<Bitmap>()
+    val imageUriList = mutableListOf<Uri>()
 
     // 이미지 등록 가능 갯수
-    val imageUploadPossible = 5
+    private val imageUploadPossible = 5
+
+    // 이미지 첨부 유무
+    private var isAddPicture = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyPageServiceCenterWriteInquiryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_my_page_service_center_write_inquiry
+        )
+        viewModel = ServiceCenterInquiryViewModel()
+        binding.serviceCenterInquiryViewModel = viewModel
+        binding.lifecycleOwner = this
 
         settingToolbar()
         settingDropdown()
@@ -47,6 +69,9 @@ class MyPageServiceCenterWriteInquiryActivity : AppCompatActivity() {
         settingRecyclerView()
         settingEvent()
         settingButton()
+
+        settingInputUI()
+
     }
 
     fun settingToolbar() {
@@ -65,7 +90,13 @@ class MyPageServiceCenterWriteInquiryActivity : AppCompatActivity() {
 
         // 문의 버튼
         binding.serviceCenterWriteInquiryBtn.setOnClickListener {
-            finish()
+            val check = checkInputForm()
+            if (check) {
+                viewModel.settingInquiryType(viewModel.inquiryType.value!!)
+                saveInquiryData()
+                Log.e("inquiryData", "문의 사항 저장 완료")
+                finish()
+            }
         }
     }
 
@@ -102,11 +133,18 @@ class MyPageServiceCenterWriteInquiryActivity : AppCompatActivity() {
                 val uriclip = it.data?.clipData
                 uriclip?.let { clipData ->
                     for (i in 0 until uriclip!!.itemCount) {
-                        if (imageList.size >= imageUploadPossible) {
-                            Snackbar.make(binding.root, "사진 첨부는 최대 5장까지 가능합니다.", Snackbar.LENGTH_SHORT).show()
+                        if (imageBitmapList.size >= imageUploadPossible) {
+                            Snackbar.make(
+                                binding.root,
+                                "사진 첨부는 최대 5장까지 가능합니다.",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
                             break
                         } else {
                             val uri = uriclip.getItemAt(i).uri
+                            // 한 장씩 리스트에 추가
+                            imageUriList.add(uri)
+
                             if (uri != null) {
                                 // 안드로이드 Q(10) 이상이라면
                                 val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -140,13 +178,14 @@ class MyPageServiceCenterWriteInquiryActivity : AppCompatActivity() {
                                 val bitmap3 = Tools.resizeBitmap(bitmap2, 1024)
 
                                 // 이미지 리스트에 추가한다.
-                                imageList.add(bitmap3)
+                                imageBitmapList.add(bitmap3)
+                                isAddPicture = true
                             }
                         }
                     }
                 }
                 // 이미지 리스트에 이미지가 있으면 스크롤뷰 나타남
-                if (imageList.isNotEmpty()) {
+                if (imageBitmapList.isNotEmpty()) {
                     binding.serviceCenterWriteInquiryPhotoRv.visibility = View.VISIBLE
                 }
                 // 리사이클러뷰 업데이트
@@ -212,6 +251,7 @@ class MyPageServiceCenterWriteInquiryActivity : AppCompatActivity() {
         albumLauncher.launch(albumIntent)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateRecyclerView() {
         binding.serviceCenterWriteInquiryPhotoRv.adapter?.notifyDataSetChanged()
     }
@@ -245,22 +285,110 @@ class MyPageServiceCenterWriteInquiryActivity : AppCompatActivity() {
         }
 
         override fun getItemCount(): Int {
-            return imageList.size
+            return imageBitmapList.size
         }
 
         override fun onBindViewHolder(holder: WriteReviewViewHolder, position: Int) {
             holder.rowBinding.apply {
-                serviceCenterWriteInquiryPhotoIv.setImageBitmap(imageList[position])
+                serviceCenterWriteInquiryPhotoIv.setImageBitmap(imageBitmapList[position])
                 serviceCenterWriteInquiryPhotoCancel.setOnClickListener {
                     // 이미지 삭제
-                    imageList.removeAt(position)
+                    imageBitmapList.removeAt(position)
                     // 이미지 리스트에 이미지가 없으면 스크롤뷰 사라짐
-                    if (imageList.isEmpty()) {
+                    if (imageBitmapList.isEmpty()) {
                         binding.serviceCenterWriteInquiryPhotoRv.visibility = View.GONE
                     }
                     updateRecyclerView()
                 }
             }
+        }
+    }
+
+    // 입력 요소 유효성 검사
+    fun checkInputForm(): Boolean {
+        // 입력한 내용을 가져온다.
+        val inquiryType = viewModel.inquiryType.value!!
+        val content = viewModel.inquiryContent.value!!
+
+        if (inquiryType.isEmpty()) {
+            Tools.showErrorDialog(
+                this@MyPageServiceCenterWriteInquiryActivity, binding.serviceCenterWriteInquiryType,
+                "유형 선택 오류", "유형을 선택해주세요"
+            )
+            return false
+        }
+
+        if (content.isEmpty()) {
+            Tools.showErrorDialog(
+                this@MyPageServiceCenterWriteInquiryActivity,
+                binding.serviceCenterWriteInquiryComment,
+                "내용 입력 오류",
+                "내용을 입력해주세요"
+            )
+            return false
+        }
+        return true
+    }
+
+    // 입력 요소 관련 설정
+    fun settingInputUI() {
+        // 입력 요소들을 초기화 한다.
+        viewModel.inquiryContent.value = ""
+
+        isAddPicture = false
+
+        // 의견 입력란에 포커스를 준다.
+        Tools.showSoftInput(this, binding.serviceCenterWriteInquiryComment)
+    }
+
+    // 데이터를 저장하고 이동한다.
+    @SuppressLint("SimpleDateFormat")
+    fun saveInquiryData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val model = InquiryModel()
+            // 사용자 번호 시퀀스 값을 가져온다.
+            val inquirySequence = MyPageServiceCenterInquiryDao.getContentSequence()
+            // 시퀀스값을 1 증가시켜 덮어씌워준다.
+            MyPageServiceCenterInquiryDao.updateContentSequence(inquirySequence + 1)
+
+            val inquiryIdx = inquirySequence + 1
+            val inquiryType = viewModel.gettingContentType().number
+            val inquiryContent = viewModel.inquiryContent.value!!
+            val inquiryStatus = InquiryState.INQUIRY_STATE_NORMAL.number
+            val inquiryImages = mutableListOf<String?>()
+
+            // 첨부된 이미지가 있다면
+            if (isAddPicture) {
+                // 서버로 업로드한다.
+                val uploadList = MyPageServiceCenterInquiryDao.uploadImage(
+                    this@MyPageServiceCenterWriteInquiryActivity,
+                    model.inquiry_idx,
+                    imageUriList
+                )
+                inquiryImages.addAll(uploadList)
+            } else {
+                // 첨부된 이미지가 없으면 빈 리스트를 사용
+                inquiryImages.addAll(emptyList())
+            }
+
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val inquiryRegDt = simpleDateFormat.format(Date())
+
+            // 저장할 데이터를 객체에 담는다.
+            val inquiryModel = InquiryModel(
+                inquiryIdx,
+                inquiryIdx,
+                inquiryType,
+                inquiryContent,
+                inquiryRegDt.toString(),
+                false,
+                "",
+                inquiryImages,
+                inquiryStatus
+            )
+
+            // 사용자 정보를 저장한다.
+            MyPageServiceCenterInquiryDao.insertContentData(inquiryModel)
         }
     }
 }
