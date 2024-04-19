@@ -7,11 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.OrderHistoryFragmentName
+import kr.co.lion.farming_customer.OrderLabelType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentOrderHistoryCropBinding
+import kr.co.lion.farming_customer.model.orderHistory.OrderModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.OrderHistoryViewModel
+import kotlin.collections.ArrayList
 
 class OrderHistoryCropFragment : Fragment() {
     lateinit var fragmentOrderHistoryCropBinding: FragmentOrderHistoryCropBinding
@@ -27,9 +34,14 @@ class OrderHistoryCropFragment : Fragment() {
 
         settingToolbar()
         settingTabEvent()
-        orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_PAYMENT_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryCrop)
+        settingInitView()
 
         return fragmentOrderHistoryCropBinding.root
+    }
+
+    private fun settingInitView() {
+        // 처음엔 결제 완료 화면으로
+        orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_PAYMENT_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryCrop)
     }
 
     private fun settingToolbar() {
@@ -50,6 +62,7 @@ class OrderHistoryCropFragment : Fragment() {
                         // 결제완료 프래그먼트
                         0 -> {
                             orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_PAYMENT_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryCrop)
+
                         }
                         // 배송중 프래그먼트
                         1 -> {

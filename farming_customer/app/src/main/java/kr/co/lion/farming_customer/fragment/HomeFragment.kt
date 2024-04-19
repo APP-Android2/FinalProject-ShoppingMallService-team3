@@ -2,7 +2,6 @@ package kr.co.lion.farming_customer.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,23 +14,27 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kr.co.lion.farming_customer.ActivityStatus
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
+import kr.co.lion.farming_customer.OrderStatus
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
+import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.model.farminLife.ActivityModel
 import kr.co.lion.farming_customer.model.farminLife.FarmModel
+import kr.co.lion.farming_customer.model.orderHistory.OrderModel
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
+import java.security.SecureRandom
+import java.text.SimpleDateFormat
 
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
@@ -54,6 +57,118 @@ class HomeFragment : Fragment() {
         return fragmentHomeBinding.root
     }
 
+    private fun settingInput() {
+
+        CoroutineScope(Dispatchers.Main).launch {
+            // 농산물 더미 데이터
+            for(j in 1 .. 10){ // 상품 라벨 당 10개
+                for(k in 1..9){ // 라벨 넘버
+                    val sequence = OrderDao.getOrderSequence()
+                    OrderDao.updateOrderSequence(sequence + 1)
+                    var order_idx = sequence + 1
+                    val format = SimpleDateFormat("yyMMDD")
+                    var order_product_type = 1
+                    var order_num = format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(1000)).toString()
+                    var order_user_idx = j
+                    var order_seller_idx = j
+
+                    var order_product_idx = j
+                    var order_label = k
+                    var order_invoice_number = ""
+                    var order_delivery_address = mutableMapOf(
+                        "receiver" to "김파밍", "address" to "경기도 파밍시 파밍구 123-4", "phone" to "010-1234-1234", "request" to "부재 시 경비실에 맡겨 주세요."
+                    )
+                    var order_reg_date = "2024.04." + String.format("%02d", sequence + 1)
+                    var order_mod_date = "2024.04." + String.format("%02d", sequence + 1)
+                    var order_delivery_start_date = ""
+                    var order_delivery_done_date = ""
+                    var order_is_reviewed = false
+                    var order_option_detail = mutableListOf<MutableMap<String, Any>>(
+                        mutableMapOf("option_name" to "감자 5kg", "option_cnt" to 1, "option_price" to "20,000원", "option_total_price" to "20,000원"),
+                        mutableMapOf("option_name" to "감자 3kg", "option_cnt" to 2, "option_price" to "12,000원", "option_total_price" to "24,000원")
+                    )
+                    var order_total_price = "44,000원"
+                    var order_cancel_reason = ""
+                    var order_cancel_reason_detail = ""
+                    var order_status = OrderStatus.ORDER_STATUS_NORMAL.number
+
+                    val model = OrderModel(order_idx, order_num, order_user_idx, order_seller_idx, order_product_type, order_product_idx, order_label, order_invoice_number, order_delivery_address, order_reg_date, order_mod_date, order_delivery_start_date, order_delivery_done_date, order_is_reviewed, order_option_detail, order_total_price, order_cancel_reason, order_cancel_reason_detail, order_status)
+                    OrderDao.insertOrderData(model)
+                }
+
+            }
+            // 주말농장 더미 데이터
+            for(j in 1 .. 5) { // 상품 라벨 당 5개
+                for(k in 9..10){
+                    val sequence = OrderDao.getOrderSequence()
+                    OrderDao.updateOrderSequence(sequence + 1)
+                    var order_idx = sequence + 1
+                    val format = SimpleDateFormat("yyMMDD")
+                    var order_product_type = 2
+                    var order_num = format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(1000)).toString()
+                    var order_user_idx = j
+                    var order_seller_idx = j
+
+                    var order_product_idx = j
+                    var order_label = k
+                    var order_invoice_number = ""
+                    var order_delivery_address = mutableMapOf<String, String>()
+                    var order_reg_date = "2024.04." + String.format("%02d", sequence + 1)
+                    var order_mod_date = "2024.04." + String.format("%02d", sequence + 1)
+                    var order_delivery_start_date = ""
+                    var order_delivery_done_date = ""
+                    var order_is_reviewed = false
+                    var order_option_detail = mutableListOf<MutableMap<String, Any>>(
+                        mutableMapOf("option_name" to "파밍이네 주말농장", "option_price" to "30,000원")
+                    )
+                    var order_total_price = "30,000원"
+                    var order_cancel_reason = ""
+                    var order_cancel_reason_detail = ""
+                    var order_status = OrderStatus.ORDER_STATUS_NORMAL.number
+
+                    val model = OrderModel(order_idx, order_num, order_user_idx, order_seller_idx, order_product_type, order_product_idx, order_label, order_invoice_number, order_delivery_address, order_reg_date, order_mod_date, order_delivery_start_date, order_delivery_done_date, order_is_reviewed, order_option_detail, order_total_price, order_cancel_reason, order_cancel_reason_detail, order_status)
+                    OrderDao.insertOrderData(model)
+                }
+            }
+            // 체험활동 더미 데이터
+            for(j in 1 .. 5) { // 상품 라벨 당 5개
+                for(k in 9..10){
+                    val sequence = OrderDao.getOrderSequence()
+                    OrderDao.updateOrderSequence(sequence + 1)
+                    var order_idx = sequence + 1
+                    val format = SimpleDateFormat("yyMMDD")
+                    var order_product_type = 3
+                    var order_num = format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(1000)).toString()
+                    var order_user_idx = j
+                    var order_seller_idx = j
+
+                    var order_product_idx = j
+                    var order_label = k
+                    var order_invoice_number = ""
+                    var order_delivery_address = mutableMapOf<String, String>()
+                    var order_reg_date = "2024.04." + String.format("%02d", sequence + 1)
+                    var order_mod_date = "2024.04." + String.format("%02d", sequence + 1)
+                    var order_delivery_start_date = ""
+                    var order_delivery_done_date = ""
+                    var order_is_reviewed = false
+                    var order_option_detail = mutableListOf<MutableMap<String, Any>>(
+                        mutableMapOf("option_name" to "딸기따기", "option_price" to "30,000원", "option_cnt" to 1, "option_total_price" to "30,000원", "option_time" to "10:00"),
+                        mutableMapOf("option_name" to "딸기 아이스크림 만들기", "option_price" to "15,000원", "option_cnt" to 1, "option_total_price" to "15,000원", "option_time" to "12:00"),
+                        mutableMapOf("option_name" to "딸기 케이크 만들기", "option_price" to "30,000원", "option_cnt" to 1, "option_total_price" to "30,000원", "option_time" to "14:00")
+                    )
+                    var order_total_price = "75,000원"
+                    var order_cancel_reason = ""
+                    var order_cancel_reason_detail = ""
+                    var order_status = OrderStatus.ORDER_STATUS_NORMAL.number
+
+                    val model = OrderModel(order_idx, order_num, order_user_idx, order_seller_idx, order_product_type, order_product_idx, order_label, order_invoice_number, order_delivery_address, order_reg_date, order_mod_date, order_delivery_start_date, order_delivery_done_date, order_is_reviewed, order_option_detail, order_total_price, order_cancel_reason, order_cancel_reason_detail, order_status)
+                    OrderDao.insertOrderData(model)
+                }
+            }
+
+        }
+    }
+
     private fun settingData() {
         CoroutineScope(Dispatchers.Main).launch {
             // 주말농장 데이터를 가져온다.
@@ -73,7 +188,6 @@ class HomeFragment : Fragment() {
                 }
                 index ++
             }
-
             fragmentHomeBinding.viewPagerFarm.adapter?.notifyDataSetChanged()
         }
     }

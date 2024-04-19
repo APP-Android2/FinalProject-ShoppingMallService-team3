@@ -21,7 +21,8 @@ class DialogYesNo(
     subject: String?,
     content: String,
     activity: AppCompatActivity,
-    position: Int? = null // 리사이클러뷰 삭제할 때의 아이템 포지션
+    position: Int? = null, // 리사이클러뷰 삭제할 때의 아이템 포지션
+    yes_text: String? = "확인"
 ) : DialogFragment() {
 
     lateinit var dialogYesnoBinding: DialogYesnoBinding
@@ -32,6 +33,7 @@ class DialogYesNo(
     var activit = activity
     var dialogYesNoInterface = dialogYesNoInterface
     var position = position
+    var yes_text = yes_text
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,6 +72,9 @@ class DialogYesNo(
 
             // 다이얼로그 내용
             customDialogViewModel?.textViewDialogYesNoText?.value = content
+
+            // 확인 버튼 텍스트
+            customDialogViewModel?.buttonCustomDialogYesNoYesText?.value = yes_text
 
             // 확인 버튼
             buttonCustomDialogYesNoYes.setOnClickListener {
