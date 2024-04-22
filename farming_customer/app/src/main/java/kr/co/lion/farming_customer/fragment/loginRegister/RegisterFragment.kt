@@ -135,9 +135,22 @@ class RegisterFragment : Fragment() {
 
             // 다음 버튼 클릭시 다음 프래그먼트를 보여준다.
             textView8.setOnClickListener {
-                loginActivity.replaceFragment(LoginFragmentName.REGISTER2_FRAGMENT,
-                    addToBackStack = true, isAnimate = true, data = null)
+                registerNext()  // 다음 단계로 진행
             }
         }
+    }
+
+    private fun registerNext(){
+        // 사용자가 입력한 데이터를 담는다.
+        val registerBundle = Bundle()
+        registerBundle.putBoolean("registerUserService", registerViewModel.isServiceTermChecked.value!!)
+        registerBundle.putBoolean("registerUserPersonal", registerViewModel.isPersonalInfoTermChecked.value!!)
+        registerBundle.putBoolean("registerUserAlarm", registerViewModel.isAlertServiceTermChecked.value!!)
+
+        // Register2Fragment를 보여준다.
+        loginActivity.replaceFragment(LoginFragmentName.REGISTER2_FRAGMENT,
+            addToBackStack = true,
+            isAnimate = true,
+            data = registerBundle)
     }
 }

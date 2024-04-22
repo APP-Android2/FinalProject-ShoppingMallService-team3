@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="닉네임 님"
+                android:text="@={register3ViewModel.userNickname}"
                 android:textColor="@color/green_main"
                 android:textSize="20sp" />
 

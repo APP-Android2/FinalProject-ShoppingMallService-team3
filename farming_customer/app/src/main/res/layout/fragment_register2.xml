@@ -68,6 +68,7 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="닉네임을 입력해 주세요."
                         android:inputType="text|textPersonName"
+                        android:text="@={register2ViewModel.userNickname}"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/brown_01"
@@ -119,6 +120,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="아이디를 입력해 주세요."
+                        android:text="@={register2ViewModel.userId}"
                         android:inputType="text"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -174,6 +176,7 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                         android:inputType="text|textPassword"
+                        android:text="@={register2ViewModel.userPw}"
                         android:maxLength="20"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -217,6 +220,7 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                         android:inputType="text|textPassword"
+                        android:text="@={register2ViewModel.userPwConfirm}"
                         android:maxLength="20"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -312,6 +316,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="이름을 입력해 주세요."
+                        android:text="@={register2ViewModel.userName}"
                         android:inputType="text|textPersonName"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
@@ -320,6 +325,7 @@
                         android:textSize="12sp"
                         tools:layout_editor_absoluteX="48dp"
                         tools:layout_editor_absoluteY="348dp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -351,14 +357,13 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="6자리 숫자로 입력해주세요."
                         android:inputType="datetime"
+                        android:text="@={register2ViewModel.userBirthDate}"
                         android:maxLength="6"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/brown_01"
                         android:textColorHint="@color/grey_01"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="49dp"
-                        tools:layout_editor_absoluteY="433dp" />
+                        android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -389,15 +394,14 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/pretendard_semibold"
                         android:hint="숫자로만 입력해 주세요."
+                        android:text="@={register2ViewModel.userPhoneNumber}"
                         android:inputType="phone"
                         android:maxLength="11"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/brown_01"
                         android:textColorHint="@color/grey_01"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="58dp"
-                        tools:layout_editor_absoluteY="511dp" />
+                        android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -433,9 +437,7 @@
                         android:paddingBottom="10dp"
                         android:textColor="@color/brown_01"
                         android:textColorHint="@color/grey_01"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="58dp"
-                        tools:layout_editor_absoluteY="511dp" />
+                        android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -472,13 +474,12 @@
                         android:paddingBottom="10dp"
                         android:textColor="@color/brown_01"
                         android:textColorHint="@color/grey_01"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="58dp"
-                        tools:layout_editor_absoluteY="511dp" />
+                        android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout12"
                     android:layout_width="0dp"
                     android:layout_height="43dp"
                     android:layout_marginTop="10dp"
@@ -518,21 +519,22 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <Button
+        <TextView
             android:id="@+id/buttonReg2Reg"
-            android:layout_width="match_parent"
+            style="@style/isEnabledButtonStyle"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/pretendard_bold"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
             android:text="회원가입"
-            android:textSize="16sp"
-            app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
