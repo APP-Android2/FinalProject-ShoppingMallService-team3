@@ -83,7 +83,8 @@
                         android:id="@+id/imageViewReservDetail_productImage"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:background="@color/grey_02" />
+                        android:background="@color/grey_02"
+                        android:scaleType="fitXY" />
                 </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
                 <LinearLayout

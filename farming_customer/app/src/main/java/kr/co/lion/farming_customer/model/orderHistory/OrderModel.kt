@@ -19,10 +19,10 @@ data class OrderModel(
     var order_delivery_start_date: String, // 출고일
     var order_delivery_done_date: String, // 배송완료일
     var order_is_reviewed: Boolean, // 리뷰 여부
+    var order_reserv_date: String, // 상품 예약 날짜
     var order_option_detail: MutableList<MutableMap<String, String>>, // 주문 옵션 상세
     var order_total_price: String, // 주문 전체 가격
-    var order_cancel_reason: String, // 취소 사유
-    var order_cancel_reason_detail: String, // 취소 사유 내용
+    var order_cancel: MutableMap<String, String>, // 취소 사유, 내용
     var order_status: Int, // 주문 상태
 ) : Parcelable {
     constructor() : this(
@@ -40,10 +40,10 @@ data class OrderModel(
         "",
         "",
         false,
+        "",
         mutableListOf(),
         "",
-        "",
-        "",
+        mutableMapOf(),
         0
     )
 }

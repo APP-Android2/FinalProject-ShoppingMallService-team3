@@ -70,7 +70,7 @@ class OrderDao {
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
-                val collectionReference = Firebase.firestore.collection("orderData")
+                val collectionReference = Firebase.firestore.collection("OrderData")
                 // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
                 val queryShapshot = collectionReference.whereEqualTo("order_idx", orderIdx).get().await()
                 // 가져온 글 정보를 객체에 담아서 반환 받는다.
@@ -193,14 +193,17 @@ class OrderDao {
         }
 
         // 주말농장 주문 목록 전체를 가져온다.
-        suspend fun gettingOrderListFarm():MutableList<OrderModel>{
+        suspend fun gettingOrderListFarm(orderLabelType: OrderLabelType):MutableList<OrderModel>{
             val orderList = mutableListOf<OrderModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
                 val collectionReference = Firebase.firestore.collection("OrderData")
                 // 주문 상태가 정상 상태 and 상품 타입이 농산물
-                var query = collectionReference.whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number).whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_FARM.number)
+                var query = collectionReference
+                    .whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number)
+                    .whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_FARM.number)
+                    .whereEqualTo("order_label", orderLabelType.number)
                 // 체험활동 번호를 기준으로 내림 차순 정렬
                 query = query.orderBy("order_idx", Query.Direction.DESCENDING)
 
@@ -219,14 +222,17 @@ class OrderDao {
         }
 
         // 체험활동 주문 목록 전체를 가져온다.
-        suspend fun gettingOrderListActivity():MutableList<OrderModel>{
+        suspend fun gettingOrderListActivity(orderLabelType: OrderLabelType):MutableList<OrderModel>{
             val orderList = mutableListOf<OrderModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
                 val collectionReference = Firebase.firestore.collection("OrderData")
                 // 주문 상태가 정상 상태 and 상품 타입이 농산물
-                var query = collectionReference.whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number).whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number)
+                var query = collectionReference
+                    .whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number)
+                    .whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number)
+                    .whereEqualTo("order_label", orderLabelType.number)
                 // 체험활동 번호를 기준으로 내림 차순 정렬
                 query = query.orderBy("order_idx", Query.Direction.DESCENDING)
 
@@ -258,6 +264,61 @@ class OrderDao {
                 map["order_label"] = newState.number.toLong()
                 // 상태 수정 날짜
                 map["order_mod_date"] = SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis())
+                // 저장한다.
+                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
+                query.documents[0].reference.update(map)
+            }
+            job1.join()
+        }
+
+        // 교환 환불 신청 메서드
+        suspend fun applyExchangeReturn(order_idx:Int, cancleMap: MutableMap<String, Any>){
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("OrderData")
+                // 컬렉션이 가지고 있는 문서들 중에 orderIdx 필드가 지정된 글 주문 번호값하고 같은 Document들을 가져온다.
+                val query = collectionReference.whereEqualTo("order_idx", order_idx).get().await()
+
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Any>()
+
+                // 취소 정보
+                map["order_cancle"] = cancleMap
+                // 라벨
+                if(cancleMap["cancle_type"] == "교환"){
+                    map["order_label"] = OrderLabelType.ORDER_LABEL_TYPE_EXCHANGE_APPLY.number.toLong()
+                }else{
+                    map["order_label"] = OrderLabelType.ORDER_LABEL_TYPE_RETURN_APPLY.number.toLong()
+                }
+                // 상태 수정 날짜
+                map["order_mod_date"] = SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis())
+
+                // 저장한다.
+                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
+                query.documents[0].reference.update(map)
+            }
+            job1.join()
+        }
+
+        suspend fun cancleReserv(order_idx: Int, cancleMap: MutableMap<String, Any>) {
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("OrderData")
+                // 컬렉션이 가지고 있는 문서들 중에 orderIdx 필드가 지정된 글 주문 번호값하고 같은 Document들을 가져온다.
+                val query = collectionReference.whereEqualTo("order_idx", order_idx).get().await()
+
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Any>()
+
+                // 취소 정보
+                map["order_cancle"] = cancleMap
+
+                // 라벨 변경
+                map["order_label"] = OrderLabelType.ORDER_LABEL_TYPE_RESERV_CANCLE.number.toLong()
+
+                // 상태 수정 날짜
+                map["order_mod_date"] = SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis())
+
                 // 저장한다.
                 // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
                 query.documents[0].reference.update(map)

@@ -7,9 +7,9 @@ class OrderHistoryExchangeReturnViewModel {
     val textViewExchangeReturn_option = MutableLiveData<String>()
     val textViewExchangeReturn_price = MutableLiveData<String>()
 
-    val textViewExchangeReturn_type = MutableLiveData<String>()
-    val textViewExchangeReturn_reason = MutableLiveData<String>()
-    val textViewExchangeReturn_reasonDetail = MutableLiveData<String>()
+    val textViewExchangeReturn_type = MutableLiveData<String?>()
+    val textViewExchangeReturn_reason = MutableLiveData<String?>()
+    val textViewExchangeReturn_reasonDetail = MutableLiveData<String?>()
 
 
 }

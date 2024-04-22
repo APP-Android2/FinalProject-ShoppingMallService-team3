@@ -1,5 +1,9 @@
 package kr.co.lion.farming_customer.model.farminLife
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
 data class ActivityModel(
     var activity_idx: Int, // 체험활동 번호
     var activity_seller_idx: Int, // 체험활동 판매자 번호
@@ -11,11 +15,12 @@ data class ActivityModel(
     var activity_content_policy: String, // 체험활동 교환환불정책
     var activity_utility: Map<String, Boolean>, // 체험활동 편의시설
     var activity_like_cnt: Int, // 체험활동 좋아요 개수
+    var activity_star : Float, // 체험활동 별점
     var activity_images: MutableList<String>, // 체험활동 이미지 첨부파일
     var activity_reg_dt: String, // 체험활동 등록 날짜
     var activity_mod_dt: String, // 체험활동 수정 날짜
     var activity_status: Int // 체험활동 상태
-){
+) {
     constructor() : this(
         0,
         0,
@@ -27,6 +32,7 @@ data class ActivityModel(
         "",
         mutableMapOf(),
         0,
+        0F,
         mutableListOf(),
         "",
         "",
