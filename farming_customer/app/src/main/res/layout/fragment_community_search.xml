@@ -37,6 +37,7 @@
             app:startIconTint="@color/grey_02">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputCommunitySearch"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:fontFamily="@font/pretendard_regular"
