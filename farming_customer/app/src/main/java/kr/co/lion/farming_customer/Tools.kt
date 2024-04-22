@@ -15,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.FileOutputStream
 import android.app.Activity
+import android.content.DialogInterface
 import android.util.TypedValue
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.concurrent.thread
 
 class Tools {
@@ -145,6 +147,17 @@ class Tools {
                 dp.toFloat(),
                 context.resources.displayMetrics
             ).toInt()
+        }
+
+        // 입력 요소가 비어있을때 보여줄 다이얼로그를 구성하는 메서드
+        fun showErrorDialog(context: Context, view: View, title:String, message:String){
+            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
+            materialAlertDialogBuilder.setTitle(title)
+            materialAlertDialogBuilder.setMessage(message)
+            materialAlertDialogBuilder.setPositiveButton("확인"){ dialogInterface: DialogInterface, i: Int ->
+                showSoftInput(context, view)
+            }
+            materialAlertDialogBuilder.show()
         }
     }
 
@@ -284,6 +297,7 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }
 
+
 // Order
 enum class OrderStatus(var str : String, var number : Int){
     ORDER_STATUS_NORMAL("정상", 1)
@@ -325,4 +339,33 @@ enum class ActivityStatus(var str : String, var number : Int){
     ACTIVITY_STATUS_NORMAL("정상", 1),
     ACTIVITY_STATUS_PAUSE("일시중지", 2),
     ACTIVITY_STATUS_DELETE("삭제", 3)
+}
+
+enum class FaqState(var str:String, var number:Int) {
+    FAQ_STATE_NORMAL("정상", 0),
+    FAQ_STATE_REMOVE("삭제", 1)
+}
+
+enum class NoticeState(var str:String, var number:Int) {
+    NOTICE_STATE_NORMAL("정상", 0),
+    NOTICE_STATE_REMOVE("삭제", 1)
+}
+
+enum class InquiryState(var str:String, var number:Int) {
+    INQUIRY_STATE_NORMAL("정상", 0),
+    INQUIRY_STATE_REMOVE("삭제", 1)
+}
+enum class InquiryType(var str: String, var number:Int) {
+    TYPE_CROP("농작물", 0),
+    TYPE_FARM("주말농장", 1),
+    TYPE_ACTIVITY("체험활동", 2),
+    TYPE_JOB("구인구직", 3),
+    TYPE_TOOLS("농기구", 4),
+    TYPE_COMMUNITY("커뮤니티", 5),
+    TYPE_OTHER("기타", 6)
+}
+
+enum class MyPageMyPostName(var str : String){
+    MY_PAGE_MY_POST_BOARD_FRAGMENT("MyPageMyPostBoardFragment"),
+    MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
 }

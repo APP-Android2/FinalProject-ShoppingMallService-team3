@@ -46,15 +46,15 @@ class CartFragment : Fragment() {
                     when(tab!!.position){
                         // 농산물 탭
                         0 -> {
-                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT, false, true, null, R.id.containerCartTab)
+                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT, false, false, null, R.id.containerCartTab)
                         }
                         // 주말농장 탭
                         1 -> {
-                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_FARM_FRAGMENT, false, true, null, R.id.containerCartTab)
+                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_FARM_FRAGMENT, false, false, null, R.id.containerCartTab)
                         }
                         // 체험활동 탭
                         2 -> {
-                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_ACTIVITY_FRAGMENT, false, true, null, R.id.containerCartTab)
+                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_ACTIVITY_FRAGMENT, false, false, null, R.id.containerCartTab)
                         }
                     }
                 }

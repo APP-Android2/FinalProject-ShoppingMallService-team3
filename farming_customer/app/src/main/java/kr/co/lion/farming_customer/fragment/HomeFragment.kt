@@ -26,13 +26,16 @@ import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
+import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
+import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.model.farminLife.ActivityModel
 import kr.co.lion.farming_customer.model.farminLife.FarmModel
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
+import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
@@ -108,12 +111,12 @@ class HomeFragment : Fragment() {
 
     // 추천 농산물 뷰 페이저 어댑터
     inner class ViewPagerCropAdapter : RecyclerView.Adapter<ViewPagerCropAdapter.ViewPagerCropViewHolder>(){
-        inner class ViewPagerCropViewHolder(rowLikeCropBinding: RowLikeCropBinding) : RecyclerView.ViewHolder(rowLikeCropBinding.root){
-            val rowLikeCropBinding : RowLikeCropBinding
+        inner class ViewPagerCropViewHolder(itemProductBinding: ItemProductBinding) : RecyclerView.ViewHolder(itemProductBinding.root){
+            val itemProductBinding : ItemProductBinding
             init {
-                this.rowLikeCropBinding = rowLikeCropBinding
+                this.itemProductBinding = itemProductBinding
 
-                rowLikeCropBinding.root.layoutParams = ViewGroup.LayoutParams(
+                itemProductBinding.root.layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
@@ -121,9 +124,9 @@ class HomeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerCropViewHolder {
-            val rowLikeCropBinding = DataBindingUtil.inflate<RowLikeCropBinding>(layoutInflater, R.layout.row_like_crop, parent, false)
+            val itemProductBinding = DataBindingUtil.inflate<ItemProductBinding>(layoutInflater, R.layout.item_product, parent, false)
 
-            val viewPagerCropViewHolder = ViewPagerCropViewHolder(rowLikeCropBinding)
+            val viewPagerCropViewHolder = ViewPagerCropViewHolder(itemProductBinding)
             return viewPagerCropViewHolder
         }
 
@@ -132,10 +135,14 @@ class HomeFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewPagerCropViewHolder, position: Int) {
-            holder.rowLikeCropBinding.apply {
-                textViewLikeCropName.text = "고랭지 배추"
-                textViewLikeCropPrice.text = "10,000원 / kg"
-                textViewLikeCropCnt.text = "999"
+            holder.itemProductBinding.apply {
+                textViewCropName.text = "고랭지 배추"
+                textViewTradePrice.text = "10,000원 / kg"
+                textViewTradeLike.text = "999"
+            }
+            holder.itemProductBinding.root.setOnClickListener {
+                val intent = Intent(mainActivity, TradeDetailActivity::class.java)
+                startActivity(intent)
             }
         }
     }

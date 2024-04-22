@@ -1,8 +1,11 @@
 package kr.co.lion.farming_customer.activity
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
@@ -42,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.apply {
             bottomNavigation.apply {
                 // 초기화면 홈으로 세팅
+                bottomNavigation.setItemIconTintList(null)
                 selectedItemId = R.id.menuItemBottomNavigation_Home
                 setOnItemSelectedListener {
                     when(it.itemId){
