@@ -1,6 +1,5 @@
 package kr.co.lion.farming_customer.fragment.community
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.CommentStatus
-import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.SwipeHelperCallback
@@ -28,7 +26,6 @@ import kr.co.lion.farming_customer.databinding.FragmentCommunityReadBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityReadCommentBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityReadImageBinding
 import kr.co.lion.farming_customer.model.CommunityCommentModel
-import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityCommentViewModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityReadViewModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
@@ -155,23 +152,13 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
             }
         }
 
-        override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
-        ): CommunityReadImageViewHolder {
-            val rowCommunityReadImageBinding =
-                DataBindingUtil.inflate<RowCommunityReadImageBinding>(
-                    layoutInflater,
-                    R.layout.row_community_read_image,
-                    parent,
-                    false
-                )
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommunityReadImageViewHolder {
+            val rowCommunityReadImageBinding = DataBindingUtil.inflate<RowCommunityReadImageBinding>(layoutInflater, R.layout.row_community_read_image, parent, false)
             val communityViewModel = CommunityViewModel()
             rowCommunityReadImageBinding.communityViewModel = communityViewModel
             rowCommunityReadImageBinding.lifecycleOwner = this@CommunityReadFragment
 
-            val communityReadImageViewHolder =
-                CommunityReadImageViewHolder(rowCommunityReadImageBinding)
+            val communityReadImageViewHolder = CommunityReadImageViewHolder(rowCommunityReadImageBinding)
 
             return communityReadImageViewHolder
         }
@@ -183,11 +170,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         override fun onBindViewHolder(holder: CommunityReadImageViewHolder, position: Int) {
 
             CoroutineScope(Dispatchers.Main).launch {
-                CommunityPostDao.gettingCommunityPostImage(
-                    communityActivity,
-                    imageCommunityStringList[position],
-                    holder.rowCommunityReadImageBinding.imageViewRowCommunityRead
-                )
+                CommunityPostDao.gettingCommunityPostImage(communityActivity, imageCommunityStringList[position], holder.rowCommunityReadImageBinding.imageViewRowCommunityRead)
             }
         }
     }
@@ -301,13 +284,20 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
             holder.rowCommunityReadCommentBinding.communityCommentViewModel?.textViewRowCommunityReadCommentContent?.value = commentList[position].commentContent
 
             holder.rowCommunityReadCommentBinding.imageViewRowCommunityReadCommentModify.setOnClickListener {
-                // 수정 기능
-                Tools.showSoftInput(requireContext(), fragmentCommunityReadBinding.textInputCommunityReadSendComment)
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    // 수정 기능
+                    Tools.showSoftInput(requireContext(), fragmentCommunityReadBinding.textInputCommunityReadSendComment)
+                    communityReadViewModel.textInputCommunityReadSendComment.value = commentList[position].commentContent
+                    fragmentCommunityReadBinding.imageViewCommunityReadSendComment.setOnClickListener {
+                        commentModifyDoneProcess(position, commentList[position].commentIdx)
+                    }
+
+                }
             }
 
             holder.rowCommunityReadCommentBinding.imageViewRowCommunityReadCommentDelete.setOnClickListener {
                 CoroutineScope(Dispatchers.Main).launch {
-
 
                     // 댓글 수가 1보다 큰 경우에만
                     if (communityReadViewModel.textViewCommunityReadCommentCnt.value!!.toInt() > 1 ) {
@@ -319,11 +309,9 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
                         CommunityCommentDao.updateCommunityCommentStatus(commentList[0].commentIdx, CommentStatus.COMMENT_STATUS_REMOVE)
                         removingCommentData(0)
                     }
-
                 }
             }
         }
-
     }
 
     override fun onYesButtonClick(id: Int) {
@@ -339,7 +327,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         communityReadViewModel?.textInputCommunityReadSendComment?.value = ""
     }
 
-    // 댓글 객체 생성
+    // 댓글 입력 객체 생성
     suspend fun generatingCommentObject(): CommunityCommentModel {
 
         var communityCommentModel = CommunityCommentModel()
@@ -354,7 +342,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
             communityCommentModel.commentUserIdx = 0 // 댓글 작성자 유저 아이디 받아올 것.
             val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
             communityCommentModel.commentRegDt = simpleDateFormat.format(Date())
-            communityCommentModel.commentModDt = simpleDateFormat.format(Date())
+            communityCommentModel.commentModDt = ""
             communityCommentModel.commentPostIdx = postIdx
             communityCommentModel.commentContent = communityReadViewModel?.textInputCommunityReadSendComment?.value!!
             communityCommentModel.commentCnt = commentList.size
@@ -374,12 +362,52 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
                 gettingCommentData()
                 Tools.hideSoftInput(communityActivity)
                 settingInputForm()
-//                val job2 = CoroutineScope(Dispatchers.IO).launch {
-//                    communityReadViewModel.textViewCommunityReadCommentCnt.postValue(model!!.commentCnt.toString())
-//                }
-//                job2.join()
+
             }
         }
+    }
+
+    // 댓글 수정 객체 생성
+    suspend fun generatingCommentModifyObject(): CommunityCommentModel {
+
+        var communityCommentModel = CommunityCommentModel()
+
+        val job1 = CoroutineScope(Dispatchers.Main).launch {
+            // 댓글 번호를 가져온다.
+            val commentSequence = CommunityCommentDao.getCommunityCommentSequence()
+            // 댓글 번호를 업데이트 한다.
+            CommunityCommentDao.updateCommunityCommentSequence(commentSequence)
+            // 저장할 데이터를 담는다.
+            communityCommentModel.commentIdx = commentSequence
+            communityCommentModel.commentUserIdx = 0 // 댓글 작성자 유저 아이디 받아올 것.
+            val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+            communityCommentModel.commentModDt = simpleDateFormat.format(Date())
+            communityCommentModel.commentPostIdx = postIdx
+            communityCommentModel.commentContent = communityReadViewModel?.textInputCommunityReadSendComment?.value!!
+            communityCommentModel.commentCnt = commentList.size
+            communityCommentModel.commentStatus = CommentStatus.COMMENT_STATUS_NORMAL.number
+        }
+        job1.join()
+
+        return communityCommentModel
+    }
+
+    // 댓글 수정 완료 처리
+    fun commentModifyDoneProcess(position: Int, commentIdx:Int) {
+
+            CoroutineScope(Dispatchers.Main).launch {
+                var map = mutableMapOf<String, Any>(
+                    "commentContent" to communityReadViewModel?.textInputCommunityReadSendComment?.value!!,
+                    "commentModDt" to SimpleDateFormat("yyyy.MM.dd").format(Date()),
+                    "commentStatus" to CommentStatus.COMMENT_STATUS_MODIFY.number
+                )
+                CommunityCommentDao.updateCommunityCommentData(commentIdx, map)
+                commentList[position].commentContent = communityReadViewModel?.textInputCommunityReadSendComment?.value!!
+                fragmentCommunityReadBinding.recyclerViewCommunityReadComment.adapter?.notifyItemChanged(position)
+                Tools.hideSoftInput(communityActivity)
+                settingInputForm()
+            }
+
     }
 
     // 서버로 부터 데이터를 가져와 리사이클러뷰를 갱신한다.
