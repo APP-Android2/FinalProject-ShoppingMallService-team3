@@ -25,7 +25,6 @@ import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 

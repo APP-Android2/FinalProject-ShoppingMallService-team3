@@ -18,4 +18,6 @@ class CommunityReadViewModel: ViewModel() {
     val textViewCommunityReadSubject = MutableLiveData<String>()
     // 커뮤니티 글 상세조회 내용
     val textViewCommunityReadContent = MutableLiveData<String>()
+    // 커뮤니티 글 상세조회 댓글 입력요소
+    val textInputCommunityReadSendComment = MutableLiveData<String>()
 }

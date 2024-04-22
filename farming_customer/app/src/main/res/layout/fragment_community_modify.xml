@@ -124,7 +124,7 @@
                             android:hint="게시판 유형"
                             android:inputType="none"
                             android:popupBackground="@drawable/dropdown_box_border"
-                            android:text=""
+                            android:text="@={communityAddModifyViewModel.communityPostModifyType}"
                             android:textColor="@color/brown_01"
                             android:textSize="12sp" />
                     </com.google.android.material.textfield.TextInputLayout>

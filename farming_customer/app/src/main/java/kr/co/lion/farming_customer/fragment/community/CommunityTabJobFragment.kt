@@ -12,9 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabJobBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabJobBinding
 import kr.co.lion.farming_customer.model.CommunityModel
@@ -25,8 +30,9 @@ class CommunityTabJobFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var communityViewModel: CommunityViewModel
 
+    var allList = mutableListOf<CommunityModel>()
     // 구인구직 탭의 리사이클러뷰 구성을 위한 리스트
-    var jobList:ArrayList<CommunityModel>? = null
+    var jobList = mutableListOf<CommunityModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -38,11 +44,16 @@ class CommunityTabJobFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingButtonCommunityTabJobPopularity()
-        settingInitDataJob()
         settingRecyclerViewCommunityTabJob()
         settingFloatingActionButtonCommunityJobAdd()
 
         return fragmentCommunityTabJobBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        settingList()
     }
 
     // 커뮤니티 구인구직 탭
@@ -53,12 +64,18 @@ class CommunityTabJobFragment : Fragment() {
         }
     }
 
-    // 데이터 받아오기
-    fun settingInitDataJob() {
-        jobList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelableArrayList("communityTabList", CommunityModel::class.java)
-        } else {
-            arguments?.getParcelableArrayList<CommunityModel>("communityTabList")
+    // 리스트에 받아오기
+    fun settingList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            allList = CommunityPostDao.gettingCommunityPostList()
+
+            allList.forEach {
+                when(it.postType) {
+                    "구인구직" -> jobList.add(it)
+                }
+            }
+
+            fragmentCommunityTabJobBinding.recyclerViewCommunityTabJob.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -116,28 +133,37 @@ class CommunityTabJobFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CommunityTabJobViewHolder, position: Int) {
-            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListLabelJob?.value = jobList!![position].postType
-            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListTitleJob?.value = jobList!![position].postTitle
-            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListContentJob?.value = jobList!![position].postContent
-            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListViewCntJob?.value = jobList!![position].postViewCnt.toString()
-            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListCommentCntJob?.value = jobList!![position].postCommentCnt.toString()
-            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListLikeCntJob?.value = jobList!![position].postLikeCnt.toString()
-            holder.rowCommunityTabJobBinding.communityViewModel?.textViewCommunityListDateJob?.value = jobList!![position].postRegDt
-
-            holder.rowCommunityTabJobBinding.linearLayoutCommunityListJob.setOnClickListener {
-                val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
-                communityIntent.putExtra("postIdx", jobList!![position].postIdx)
-                startActivity(communityIntent)
-            }
 
             holder.rowCommunityTabJobBinding.apply {
+                communityViewModel?.textViewCommunityListLabelJob?.value = jobList[position].postType
+                communityViewModel?.textViewCommunityListTitleJob?.value = jobList[position].postTitle
+                communityViewModel?.textViewCommunityListContentJob?.value = jobList[position].postContent
+                communityViewModel?.textViewCommunityListViewCntJob?.value = jobList[position].postViewCnt.toString()
+                communityViewModel?.textViewCommunityListCommentCntJob?.value = jobList[position].postCommentCnt.toString()
+                communityViewModel?.textViewCommunityListLikeCntJob?.value = jobList[position].postLikeCnt.toString()
+                communityViewModel?.textViewCommunityListDateJob?.value = jobList[position].postRegDt
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (jobList[position].postImages != null) {
+                        CommunityPostDao.gettingCommunityPostImage(mainActivity, jobList[position].postImages!![0], imageViewCommunityListJob)
+                    } else {
+                        holder.rowCommunityTabJobBinding.imageViewCommunityListJob.visibility = View.GONE
+                    }
+                }
+
+                linearLayoutCommunityListJob.setOnClickListener {
+                    val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
+                    communityIntent.putExtra("postIdx", jobList[position].postIdx)
+                    startActivity(communityIntent)
+                }
+
                 imageViewCommunityListLikeJob.setOnClickListener {
                     imageViewCommunityListLikeJob.isSelected = !imageViewCommunityListLikeJob.isSelected
                     textViewCommunityListLikeCntJob.isSelected = !textViewCommunityListLikeCntJob.isSelected
                 }
             }
 
-            if (position == 9) {
+            if (position == jobList.size) {
                 fragmentCommunityTabJobBinding.floatingActionButtonCommunityJobAdd.isVisible = false
             } else {
                 fragmentCommunityTabJobBinding.floatingActionButtonCommunityJobAdd.isVisible = true

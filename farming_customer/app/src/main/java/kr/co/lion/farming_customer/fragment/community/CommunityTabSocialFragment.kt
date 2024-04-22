@@ -12,9 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabSocialBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabSocialBinding
 import kr.co.lion.farming_customer.model.CommunityModel
@@ -25,8 +30,9 @@ class CommunityTabSocialFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var communityViewModel: CommunityViewModel
 
+    var allList = mutableListOf<CommunityModel>()
     // 소통 탭의 리사이클러뷰 구성을 위한 리스트
-    var socialList:ArrayList<CommunityModel>? = null
+    var socialList = mutableListOf<CommunityModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -38,11 +44,16 @@ class CommunityTabSocialFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingButtonCommunityTabSocialPopularity()
-        settingInitDataSocial()
         settingRecyclerViewCommunityTabSocial()
         settingFloatingActionButtonCommunitySocialAdd()
 
         return fragmentCommunityTabSocialBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        settingList()
     }
 
     // 커뮤니티 소통 탭
@@ -58,13 +69,21 @@ class CommunityTabSocialFragment : Fragment() {
                 val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
                 startActivity(communityIntent)
             }
+        }
+    }
 
-    // 데이터 받아오기
-    fun settingInitDataSocial() {
-        socialList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelableArrayList("communityTabList", CommunityModel::class.java)
-        } else {
-            arguments?.getParcelableArrayList<CommunityModel>("communityTabList")
+    // 리스트에 받아오기
+    fun settingList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            allList = CommunityPostDao.gettingCommunityPostList()
+
+            allList.forEach {
+                when(it.postType) {
+                    "소통 게시판" -> socialList.add(it)
+                }
+            }
+
+            fragmentCommunityTabSocialBinding.recyclerViewCommunityTabSocial.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -111,28 +130,37 @@ class CommunityTabSocialFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CommunityTabSocialViewHolder, position: Int) {
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLabelSocial?.value = socialList!![position].postType
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListTitleSocial?.value = socialList!![position].postTitle
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListContentSocial?.value = socialList!![position].postContent
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListViewCntSocial?.value = socialList!![position].postViewCnt.toString()
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListCommentCntSocial?.value = socialList!![position].postCommentCnt.toString()
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListLikeCntSocial?.value = socialList!![position].postLikeCnt.toString()
-            holder.rowCommunityTabSocialBinding.communityViewModel?.textViewCommunityListDateSocial?.value = socialList!![position].postRegDt
-
-            holder.rowCommunityTabSocialBinding.linearLayoutCommunityListSocial.setOnClickListener {
-                val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
-                communityIntent.putExtra("postIdx", socialList!![position].postIdx)
-                startActivity(communityIntent)
-            }
 
             holder.rowCommunityTabSocialBinding.apply {
+                communityViewModel?.textViewCommunityListLabelSocial?.value = socialList[position].postType
+                communityViewModel?.textViewCommunityListTitleSocial?.value = socialList[position].postTitle
+                communityViewModel?.textViewCommunityListContentSocial?.value = socialList[position].postContent
+                communityViewModel?.textViewCommunityListViewCntSocial?.value = socialList[position].postViewCnt.toString()
+                communityViewModel?.textViewCommunityListCommentCntSocial?.value = socialList[position].postCommentCnt.toString()
+                communityViewModel?.textViewCommunityListLikeCntSocial?.value = socialList[position].postLikeCnt.toString()
+                communityViewModel?.textViewCommunityListDateSocial?.value = socialList[position].postRegDt
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (socialList[position].postImages != null) {
+                        CommunityPostDao.gettingCommunityPostImage(mainActivity, socialList[position].postImages!![0], imageViewCommunityListSocial)
+                    } else {
+                        holder.rowCommunityTabSocialBinding.imageViewCommunityListSocial.visibility = View.GONE
+                    }
+                }
+
+                linearLayoutCommunityListSocial.setOnClickListener {
+                    val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
+                    communityIntent.putExtra("postIdx", socialList[position].postIdx)
+                    startActivity(communityIntent)
+                }
+
                 imageViewCommunityListLikeSocial.setOnClickListener {
                     imageViewCommunityListLikeSocial.isSelected = !imageViewCommunityListLikeSocial.isSelected
                     textViewCommunityListLikeCntSocial.isSelected = !textViewCommunityListLikeCntSocial.isSelected
                 }
             }
 
-            if (position == 9) {
+            if (position == socialList.size) {
                 fragmentCommunityTabSocialBinding.floatingActionButtonCommunitySocialAdd.isVisible = false
             } else {
                 fragmentCommunityTabSocialBinding.floatingActionButtonCommunitySocialAdd.isVisible = true

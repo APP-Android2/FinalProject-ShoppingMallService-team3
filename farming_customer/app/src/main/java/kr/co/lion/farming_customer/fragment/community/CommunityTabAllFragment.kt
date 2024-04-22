@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
 import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
@@ -32,7 +33,7 @@ class CommunityTabAllFragment : Fragment() {
     lateinit var communityViewModel: CommunityViewModel
 
     // 전체 탭의 리사이클러뷰 구성을 위한 리스트
-    var allList:ArrayList<CommunityModel>? = null
+    var allList = mutableListOf<CommunityModel>()
     // 조회 수
     var communityReadAllViewCnt = 1
 
@@ -46,27 +47,32 @@ class CommunityTabAllFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingButtonCommunityTabAllPopularity()
-        settingInitDataAll()
+        settingList()
         settingRecyclerViewCommunityTabAll()
         settingFloatingActionButtonCommunityAllAdd()
 
         return fragmentCommunityTabAllBinding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        settingList()
+    }
+
     // 커뮤니티 전체 탭
     fun settingButtonCommunityTabAllPopularity() {
         fragmentCommunityTabAllBinding.apply {
             buttonCommunityTabAllPopularity.isChecked = true
-
         }
     }
 
-    // 데이터 받아오기
-    fun settingInitDataAll() {
-        allList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelableArrayList("communityTabList", CommunityModel::class.java)
-        } else {
-            arguments?.getParcelableArrayList<CommunityModel>("communityTabList")
+    // 리스트에 받아오기
+    fun settingList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            allList = CommunityPostDao.gettingCommunityPostList()
+            fragmentCommunityTabAllBinding.recyclerViewCommunityTabAll.adapter?.notifyDataSetChanged()
+
         }
     }
 
@@ -122,28 +128,32 @@ class CommunityTabAllFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return allList!!.size
+            return allList.size
         }
 
         override fun onBindViewHolder(holder: CommunityTabAllViewHolder, position: Int) {
 
             holder.rowCommunityTabAllBinding.apply {
-                communityViewModel?.textViewCommunityListLabelAll?.value = allList!![position].postType
-                communityViewModel?.textViewCommunityListTitleAll?.value = allList!![position].postTitle
-                communityViewModel?.textViewCommunityListContentAll?.value = allList!![position].postContent
-                communityViewModel?.textViewCommunityListViewCntAll?.value = allList!![position].postViewCnt.toString()
-                communityViewModel?.textViewCommunityListCommentCntAll?.value = allList!![position].postCommentCnt.toString()
-                communityViewModel?.textViewCommunityListLikeCntAll?.value = allList!![position].postLikeCnt.toString()
-                communityViewModel?.textViewCommunityListDateAll?.value = allList!![position].postRegDt
+                communityViewModel?.textViewCommunityListLabelAll?.value = allList[position].postType
+                communityViewModel?.textViewCommunityListTitleAll?.value = allList[position].postTitle
+                communityViewModel?.textViewCommunityListContentAll?.value = allList[position].postContent
+                communityViewModel?.textViewCommunityListViewCntAll?.value = allList[position].postViewCnt.toString()
+                communityViewModel?.textViewCommunityListCommentCntAll?.value = allList[position].postCommentCnt.toString()
+                communityViewModel?.textViewCommunityListLikeCntAll?.value = allList[position].postLikeCnt.toString()
+                communityViewModel?.textViewCommunityListDateAll?.value = allList[position].postRegDt
 
                 CoroutineScope(Dispatchers.Main).launch {
-                    CommunityPostDao.gettingCommunityPostImage(mainActivity, allList!![position].postImages!![0], imageViewCommunityListAll)
+                    if (allList[position].postImages != null) {
+                        CommunityPostDao.gettingCommunityPostImage(mainActivity, allList[position].postImages!![0], imageViewCommunityListAll)
+                    } else {
+                        holder.rowCommunityTabAllBinding.imageViewCommunityListAll.visibility = View.GONE
+                    }
                 }
 
                 linearLayoutCommunityListAll.setOnClickListener {
 
                     val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
-                    communityIntent.putExtra("postIdx", allList!![position].postIdx)
+                    communityIntent.putExtra("postIdx", allList[position].postIdx)
                     startActivity(communityIntent)
                 }
 
@@ -153,7 +163,7 @@ class CommunityTabAllFragment : Fragment() {
                 }
             }
 
-            if (position == 9) {
+            if (position == allList.size) {
                 fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = false
             } else {
                 fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = true

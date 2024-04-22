@@ -45,8 +45,6 @@ class CommunityPostDao {
 
         // 이미지 데이터를 받아오는 메서드
         suspend fun gettingCommunityPostImage(context:Context, imageFileName:String, imageView: ImageView){
-                Log.d("test1234", imageFileName)
-                Log.d("test1234", imageView.toString())
                 val job1 = CoroutineScope(Dispatchers.IO).launch {
                     // 이미지에 접근할 수 있는 객체를 가져온다.
                     val storageRef = Firebase.storage.reference.child("image/community/$imageFileName")
@@ -59,6 +57,7 @@ class CommunityPostDao {
                         imageView.visibility = View.VISIBLE
                     }
                     job2.join()
+
                 }
                 job1.join()
                 // 이미지는 용량이 매우 클 수 있다. 즉 이미지 데이터를 내려받는데 시간이 오래걸릴 수도 있다.
@@ -162,6 +161,45 @@ class CommunityPostDao {
             job1.join()
 
             return communityPostList
+        }
+
+        // 글의 상태를 변경하는 메서드
+        suspend fun updateCommunityPostStatus(postIdx: Int, newState:PostStatus) {
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("CommunityPostData")
+                // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document 들을 가져온다.
+                val query = collectionReference.whereEqualTo("postIdx", postIdx).get().await()
+
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Any>()
+                map["postStatus"] = newState.number.toLong()
+                // 저장한다.
+                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
+                query.documents[0].reference.update(map)
+            }
+            job1.join()
+        }
+
+        // 글 데이터를 수정하는 메서드
+        suspend fun updateCommunityPostData(communityModel: CommunityModel) {
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("CommunityPostData")
+                // 컬렉션이 가지고 있는 문서들 중에 수정할 글 정보를 가져온다.
+                val query = collectionReference.whereEqualTo("postIdx", communityModel.postIdx).get().await()
+
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Any?>()
+                map["postTitle"] = communityModel.postTitle
+                map["postContent"] = communityModel.postContent
+                map["postType"] = communityModel.postType
+
+                // 저장한다.
+                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
+                query.documents[0].reference.update(map)
+            }
+            job1.join()
         }
 
 

@@ -305,3 +305,10 @@ enum class MyPageMyPostName(var str : String){
     MY_PAGE_MY_POST_BOARD_FRAGMENT("MyPageMyPostBoardFragment"),
     MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
 }
+
+// 댓글 상태
+enum class CommentStatus(var str:String, var number: Int) {
+    COMMENT_STATUS_NORMAL("정상", 1),
+    COMMENT_STATUS_REMOVE("삭제", 2),
+    COMMENT_STATUS_MODIFY("수정", 3)
+}

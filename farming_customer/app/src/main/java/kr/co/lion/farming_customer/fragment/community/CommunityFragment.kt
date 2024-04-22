@@ -34,21 +34,15 @@ class CommunityFragment : Fragment() {
     var oldFragment: Fragment? = null
     var newFragment: Fragment? = null
 
-    var allList = mutableListOf<CommunityModel>()
-    var informationList = mutableListOf<CommunityModel>()
-    var socialList = mutableListOf<CommunityModel>()
-    var jobList = mutableListOf<CommunityModel>()
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentCommunityBinding = FragmentCommunityBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
         settingToolbar()
-        settingList()
         settingTabLayoutCommunity()
-        settingFloatingActionButtonCommunityAdd()
+
+        replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
 
         return fragmentCommunityBinding.root
     }
@@ -79,30 +73,6 @@ class CommunityFragment : Fragment() {
         }
     }
 
-    // 리스트에 받아오기
-    fun settingList() {
-        CoroutineScope(Dispatchers.IO).launch {
-            allList = CommunityPostDao.gettingCommunityPostList()
-
-            allList.forEach {
-                when(it.postType) {
-                    "정보 게시판" -> informationList.add(it)
-                    "소통 게시판" -> socialList.add(it)
-                    "구인구직" -> jobList.add(it)
-                }
-            }
-
-            settingInitView()
-        }
-    }
-
-    fun settingInitView() {
-        val tabBundle = Bundle()
-        tabBundle.putParcelableArrayList("communityTabList", ArrayList(allList))
-
-        replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, tabBundle, R.id.containerCommunityTab)
-    }
-
     // 탭 설정
     fun settingTabLayoutCommunity() {
         fragmentCommunityBinding.apply {
@@ -111,31 +81,19 @@ class CommunityFragment : Fragment() {
                     when(tab!!.position){
                         // 전체 탭
                         0 -> {
-                            val tabBundle = Bundle()
-                            tabBundle.putParcelableArrayList("communityTabList", ArrayList(allList))
-
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, tabBundle, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 정보 탭
                         1 -> {
-                            val tabBundle = Bundle()
-                            tabBundle.putParcelableArrayList("communityTabList", ArrayList(informationList))
-
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_INFORMATION_FRAGMENT, false, false, tabBundle, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_INFORMATION_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 소통 탭
                         2 -> {
-                            val tabBundle = Bundle()
-                            tabBundle.putParcelableArrayList("communityTabList", ArrayList(socialList))
-
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_SOCIAL_FRAGMENT, false, false, tabBundle, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_SOCIAL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 구인구직 탭
                         3 -> {
-                            val tabBundle = Bundle()
-                            tabBundle.putParcelableArrayList("communityTabList", ArrayList(jobList))
-
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_JOB_FRAGMENT, false, false, tabBundle, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_JOB_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
 
                     }
@@ -152,16 +110,6 @@ class CommunityFragment : Fragment() {
         }
     }
 
-    // 커뮤니티 게시글 작성
-    fun settingFloatingActionButtonCommunityAdd() {
-        fragmentCommunityBinding.apply {
-            floatingActionButtonCommunityAdd.setOnClickListener {
-                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
-                startActivity(communityIntent)
-
-            }
-        }
-    }
 
 
     fun replaceFragment(name: CommunityTabFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunityTab){

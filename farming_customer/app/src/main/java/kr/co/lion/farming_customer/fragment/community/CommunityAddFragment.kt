@@ -94,7 +94,6 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
         settingTextInputLayoutCommunityAddType()
         settingButtonCommunityAdd()
         settingViewPager2CommunityAddImage()
-        settingImageViewCommunityAdd()
 
         // 권한 확인
         requestPermissions(permissionList, 0)
@@ -203,15 +202,15 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
 
     }
 
-    // 사진 첨부하기 버튼
-    fun settingImageViewCommunityAdd() {
-        fragmentCommunityAddBinding.apply {
-            imageViewCommunityAdd.setOnClickListener {
-                startAlbumLauncher()
-                imageViewCommunityAddDefault.isVisible = false
-            }
-        }
-    }
+//    // 사진 첨부하기 버튼
+//    fun settingImageViewCommunityAdd() {
+//        fragmentCommunityAddBinding.apply {
+//            imageViewCommunityAdd.setOnClickListener {
+//                startAlbumLauncher()
+//                imageViewCommunityAddDefault.isVisible = false
+//            }
+//        }
+//    }
 
     // 앨범 런처를 실행하는 메서드
     fun startAlbumLauncher() {
@@ -372,7 +371,6 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
         communityAddModifyViewModel?.textViewCommunityAddSubject?.value = ""
         communityAddModifyViewModel?.textViewCommunityAddContent?.value = ""
         settingTextInputLayoutCommunityAddType()
-        // communityAddModifyViewModel.settingCommunityType(PostType.TYPE_INFORMATION)
 
         isAddPicture = false
 
@@ -380,7 +378,7 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
     }
 
     // 게시글 객체 생성
-   suspend fun generatingPostObject() : CommunityModel {
+    suspend fun generatingPostObject() : CommunityModel {
 
         var communityModel = CommunityModel()
 
@@ -427,6 +425,8 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
                 // 서버로 업로드 한다.
                 val uploadList = CommunityPostDao.uploadImage(communityAddActivity, postIdx, imageCommunityAddUriList)
                 model!!.postImages = uploadList
+            } else {
+                model!!.postImages = null
             }
             CommunityPostDao.insertCommunityPostData(model!!)
         }

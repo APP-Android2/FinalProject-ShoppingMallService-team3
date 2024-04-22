@@ -20,6 +20,7 @@ import kr.co.lion.farming_customer.PostType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
 import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabInformationBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabInformationBinding
@@ -33,8 +34,9 @@ class CommunityTabInformationFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var communityViewModel: CommunityViewModel
 
+    var allList = mutableListOf<CommunityModel>()
     // 정보 탭의 리사이클러뷰 구성을 위한 리스트
-    var informationList:ArrayList<CommunityModel>? = null
+    var informationList = mutableListOf<CommunityModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -46,27 +48,37 @@ class CommunityTabInformationFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         settingButtonCommunityTabInformationPopularity()
-        settingInitDataInformation()
         settingFloatingActionButtonCommunityInformationAdd()
         settingRecyclerViewCommunityTabInformation()
 
         return fragmentCommunityTabInformationBinding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        settingList()
+    }
+
     // 커뮤니티 정보 탭 인기순이 초기 설정
     fun settingButtonCommunityTabInformationPopularity() {
         fragmentCommunityTabInformationBinding.apply {
             buttonCommunityTabInformationPopularity.isChecked = true
-
         }
     }
 
-    // 데이터 받아오기
-    fun settingInitDataInformation() {
-        informationList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelableArrayList("communityTabList", CommunityModel::class.java)
-        } else {
-            arguments?.getParcelableArrayList<CommunityModel>("communityTabList")
+    // 리스트에 받아오기
+    fun settingList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            allList = CommunityPostDao.gettingCommunityPostList()
+
+            allList.forEach {
+                when(it.postType) {
+                    "정보 게시판" -> informationList.add(it)
+                }
+            }
+
+            fragmentCommunityTabInformationBinding.recyclerViewCommunityTabInformation.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -124,28 +136,37 @@ class CommunityTabInformationFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CommunityTabInformationViewHolder, position: Int) {
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLabelInformation?.value = informationList!![position].postType
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListTitleInformation?.value = informationList!![position].postTitle
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListContentInformation?.value = informationList!![position].postContent
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListViewCntInformation?.value = informationList!![position].postViewCnt.toString()
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListCommentCntInformation?.value = informationList!![position].postCommentCnt.toString()
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListLikeCntInformation?.value = informationList!![position].postLikeCnt.toString()
-            holder.rowCommunityTabInformationBinding.communityViewModel?.textViewCommunityListDateInformation?.value = informationList!![position].postRegDt
-
-            holder.rowCommunityTabInformationBinding.linearLayoutCommunityListInformation.setOnClickListener {
-                val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
-                communityIntent.putExtra("postIdx", informationList!![position].postIdx)
-                startActivity(communityIntent)
-            }
 
             holder.rowCommunityTabInformationBinding.apply {
+                communityViewModel?.textViewCommunityListLabelInformation?.value = informationList[position].postType
+                communityViewModel?.textViewCommunityListTitleInformation?.value = informationList[position].postTitle
+                communityViewModel?.textViewCommunityListContentInformation?.value = informationList[position].postContent
+                communityViewModel?.textViewCommunityListViewCntInformation?.value = informationList[position].postViewCnt.toString()
+                communityViewModel?.textViewCommunityListCommentCntInformation?.value = informationList[position].postCommentCnt.toString()
+                communityViewModel?.textViewCommunityListLikeCntInformation?.value = informationList[position].postLikeCnt.toString()
+                communityViewModel?.textViewCommunityListDateInformation?.value = informationList[position].postRegDt
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (informationList[position].postImages != null) {
+                        CommunityPostDao.gettingCommunityPostImage(mainActivity, informationList[position].postImages!![0], imageViewCommunityListInformation)
+                    } else {
+                        holder.rowCommunityTabInformationBinding.imageViewCommunityListInformation.visibility = View.GONE
+                    }
+                }
+
+                linearLayoutCommunityListInformation.setOnClickListener {
+                    val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
+                    communityIntent.putExtra("postIdx", informationList[position].postIdx)
+                    startActivity(communityIntent)
+                }
+
                 imageViewCommunityListLikeInformation.setOnClickListener {
                     imageViewCommunityListLikeInformation.isSelected = !imageViewCommunityListLikeInformation.isSelected
                     textViewCommunityListLikeCntInformation.isSelected = !textViewCommunityListLikeCntInformation.isSelected
                 }
             }
 
-            if (position == 9) {
+            if (position == informationList.size) {
                 fragmentCommunityTabInformationBinding.floatingActionButtonCommunityInformationAdd.isVisible = false
             } else {
                 fragmentCommunityTabInformationBinding.floatingActionButtonCommunityInformationAdd.isVisible = true
