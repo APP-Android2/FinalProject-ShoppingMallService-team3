@@ -302,3 +302,16 @@ enum class Gender(var str:String, var num:Int){
     MALE("male", 1),
     FEMALE("female", 2)
 }
+
+// 사용자 설정
+enum class UserType(var str:String, var num:Int){
+    USER_BUYER("UserBuyer", 0),
+    USER_SELLER("UserSeller", 1),
+    USER_ADMIN("UserAdmin", 2)
+}
+
+// 회원 상태를 나타내는 값을 정의한다
+enum class UserState(var str:String, var num:Int){
+    USER_STATE_NORMAL("정상", 1),
+    USER_STATE_SIGNOUT("탈퇴", 2),
+}
