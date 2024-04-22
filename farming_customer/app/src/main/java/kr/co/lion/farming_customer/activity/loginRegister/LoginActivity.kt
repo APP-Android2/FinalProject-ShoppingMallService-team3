@@ -9,6 +9,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityLoginBinding
+import kr.co.lion.farming_customer.fragment.loginRegister.CantFindIdFragment
 import kr.co.lion.farming_customer.fragment.loginRegister.FindAccountFragment
 import kr.co.lion.farming_customer.fragment.loginRegister.FindIdDoneFragment
 import kr.co.lion.farming_customer.fragment.loginRegister.FindPwDone2Fragment
@@ -71,6 +72,9 @@ class LoginActivity : AppCompatActivity() {
             }
             LoginFragmentName.FIND_PW_DONE2_FRAGMENT -> {
                 FindPwDone2Fragment()
+            }
+            LoginFragmentName.CANT_FIND_ID_FRAGMENT -> {
+                CantFindIdFragment()
             }
         }
         if(data != null){

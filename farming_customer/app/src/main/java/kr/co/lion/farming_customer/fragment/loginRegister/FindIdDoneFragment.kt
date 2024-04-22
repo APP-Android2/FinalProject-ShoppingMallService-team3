@@ -14,10 +14,10 @@ import kr.co.lion.farming_customer.viewmodel.loginRegister.FindIdDoneViewModel
 
 class FindIdDoneFragment : Fragment() {
 
-    lateinit var fragmentFindIdDoneBinding: FragmentFindIdDoneBinding
+    private lateinit var fragmentFindIdDoneBinding: FragmentFindIdDoneBinding
     lateinit var loginActivity: LoginActivity
 
-    lateinit var findIdDoneViewModel: FindIdDoneViewModel
+    private lateinit var findIdDoneViewModel: FindIdDoneViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentFindIdDoneBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_id_done, container, false)
@@ -44,7 +44,8 @@ class FindIdDoneFragment : Fragment() {
     }
 
     // 텍스트 설정
-    fun settingText(){
-        // TODO("아이디 부분 색상 변경 필요")
+    private fun settingText(){
+        val userId = arguments?.getString("foundUserId")
+        findIdDoneViewModel.userId.value = userId
     }
 }

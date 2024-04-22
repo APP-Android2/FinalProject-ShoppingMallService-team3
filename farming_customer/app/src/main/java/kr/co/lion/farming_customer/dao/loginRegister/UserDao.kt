@@ -2,6 +2,7 @@ package kr.co.lion.farming_customer.dao.loginRegister
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.google.firebase.Firebase
@@ -206,6 +207,23 @@ class UserDao {
             // 이에, 이미지 데이터를 받아와 보여주는 코루틴을 작업이 끝날 때 까지 대기 하지 않는다.
             // 그 이유는 데이터를 받아오는데 걸리는 오랜 시간 동안 화면에 아무것도 나타나지 않을 수 있기 때문이다.
             // 따라서 이 메서드는 제일 마지막에 호출해야 한다.(다른 것들을 모두 보여준 후에...)
+        }
+
+        // 아이디를 찾는 메서드
+        suspend fun findUserID(name: String, phone: String): String? {
+            var userId: String? = null
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                val db = Firebase.firestore
+
+                db.collection("UserData").whereEqualTo("user_name", name)
+                    .whereEqualTo("user_phone", phone).get().await().documents
+                    .firstOrNull()?.let{document ->
+                        userId = document.getString("user_id")
+                    }
+            }
+            job1.join()
+
+            return userId
         }
     }
 }
