@@ -18,7 +18,7 @@ class Register2ViewModel {
     // 생년월일
     val userBirthDate = MutableLiveData<String>()
     // 성별
-    val userGender = MutableLiveData<Gender>()
+    val userGender = MutableLiveData<Int>()
     // 휴대폰
     val userPhoneNumber = MutableLiveData<String>()
     // 주소
@@ -31,10 +31,10 @@ class Register2ViewModel {
         // 성별로 분기한다.
         when(buttonId){
             R.id.buttonReg2GenderMale -> {
-                userGender.value = Gender.MALE
+                userGender.value = Gender.MALE.num
             }
             R.id.buttonReg2GenderFemale -> {
-                userGender.value = Gender.FEMALE
+                userGender.value = Gender.FEMALE.num
             }
         }
     }

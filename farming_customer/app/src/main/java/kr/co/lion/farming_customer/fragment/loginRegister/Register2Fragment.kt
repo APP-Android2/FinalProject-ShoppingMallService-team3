@@ -16,6 +16,8 @@ import kr.co.lion.farming_customer.Gender
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
+import kr.co.lion.farming_customer.UserState
+import kr.co.lion.farming_customer.UserType
 import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
 import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.databinding.FragmentRegister2Binding
@@ -49,7 +51,7 @@ class Register2Fragment : Fragment() {
         // 회원가입 버튼을 비활성화
         fragmentRegister2Binding.buttonReg2Reg.isEnabled = false
         // 성별 기본값 남자로 설정
-        register2ViewModel.userGender.value = Gender.MALE
+        register2ViewModel.userGender.value = Gender.MALE.num
 
         settingToolbar()
         settingButton()
@@ -312,11 +314,12 @@ class Register2Fragment : Fragment() {
             val userServiceAgree = arguments?.getBoolean("registerUserService")!!
             val userPersonalAgree = arguments?.getBoolean("registerUserPersonal")!!
             val userAlertAgree = arguments?.getBoolean("registerUserAlarm")!!
-            val userType = 0
+            val userType = UserType.USER_BUYER.num
+            val userState = UserState.USER_STATE_NORMAL.num
             val imageFileName = "image/user/profile.jpg"  // 이미지 파일 경로를 설정
 
             val userModel = UserModel(userIdx, userName, userNickName, userId, userPw, userBirth, userGender, userPhone,
-                "", userServiceAgree, userPersonalAgree, userAlertAgree, userType, 0, imageFileName)
+                "", userServiceAgree, userPersonalAgree, userAlertAgree, userType, 0, userState, imageFileName)
 
 
             // 사용자 정보를 저장한다.
