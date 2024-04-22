@@ -121,6 +121,7 @@ class TapActivityFragment : Fragment() {
                     } ~"
                     isLike.value = false
                 }
+                ratingBar.rating = activityList!![position].activity_star
             }
             // 아이템 클릭 리스너
             holder.rowGridItemBinding.root.setOnClickListener {

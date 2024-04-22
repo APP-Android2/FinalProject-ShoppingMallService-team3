@@ -106,6 +106,7 @@ class TapFarmFragment : Fragment() {
                     textView_price.value = farmList!![position].farm_option_detail["price_area"].toString()
                     isLike.value = false
                 }
+                ratingBar.rating = farmList!![position].farm_star
             }
             holder.rowGridItemBinding.root.setOnClickListener {
                 val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
