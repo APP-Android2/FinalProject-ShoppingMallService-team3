@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayout
 import kr.co.lion.farming_customer.OrderHistoryFragmentName
+import kr.co.lion.farming_customer.OrderProductType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.databinding.FragmentOrderHistoryActivityBinding
@@ -27,9 +28,16 @@ class OrderHistoryActivityFragment : Fragment() {
 
         settingToolbar()
         settingTapEvent()
-        orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_RESERV_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryActivity)
+        settingView()
+
 
         return fragmentOrderHistoryActivityBinding.root
+    }
+
+    private fun settingView() {
+        val bundle = Bundle()
+        bundle.putInt("orderType", OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number)
+        orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_RESERV_DONE_FRAGMENT, false, true, bundle, R.id.containerOrderHistoryActivity)
     }
 
     private fun settingToolbar() {
@@ -49,11 +57,15 @@ class OrderHistoryActivityFragment : Fragment() {
                     when(tab!!.position){
                         // 예약 완료 프래그먼트
                         0 -> {
-                            orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_RESERV_DONE_FRAGMENT, false, true, null, R.id.containerOrderHistoryActivity)
+                            val bundle = Bundle()
+                            bundle.putInt("orderType", OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number)
+                            orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_RESERV_DONE_FRAGMENT, false, true, bundle, R.id.containerOrderHistoryActivity)
                         }
                         // 예약 취소 프래그먼트
                         1 -> {
-                            orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_RESERV_CANCLE_FRAGMENT, false, true, null, R.id.containerOrderHistoryActivity)
+                            val bundle = Bundle()
+                            bundle.putInt("orderType", OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number)
+                            orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.TAP_RESERV_CANCLE_FRAGMENT, false, true, bundle, R.id.containerOrderHistoryActivity)
                         }
                     }
                 }

@@ -1,204 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".activity.myPageServiceCenter.MyPageServiceCenterWriteInquiryActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/service_center_write_inquiry_toolbar"
+    <data>
+
+        <variable
+            name="serviceCenterInquiryViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterInquiryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/service_center_write_inquiry"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ToolbarTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/back"
-        app:title="고객센터"
-        app:titleCentered="true">
+        tools:context=".activity.myPageServiceCenter.MyPageServiceCenterWriteInquiryActivity">
 
-    </com.google.android.material.appbar.MaterialToolbar>
-
-    <TextView
-        android:id="@+id/service_center_write_inquiry_tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/font_pre_semibold"
-        android:text="파밍의 중심은 항상 고객님입니다"
-        android:textColor="@color/brown_01"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/service_center_write_inquiry_toolbar" />
-
-    <TextView
-        android:id="@+id/service_center_write_inquiry_tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/font_pre_regular"
-        android:text="이용하며 느끼신 불편한 점이나 바라는 점을 알려주세요"
-        android:textColor="@color/grey_01"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/service_center_write_inquiry_tv1"
-        app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_tv1" />
-
-    <TextView
-        android:id="@+id/service_center_write_inquiry_tv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/font_pre_regular"
-        android:text="소중한 의견으로 한 뼘 더 자라나는 파밍이 되겠습니다"
-        android:textColor="@color/grey_01"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/service_center_write_inquiry_tv2"
-        app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_tv2" />
-
-    <TextView
-        android:id="@+id/service_center_write_inquiry_tv4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/font_pre_regular"
-        android:text="문의량이 많은 경우 답변은 24시간 이상 소요될 수 있습니다"
-        android:textColor="@color/brown_01"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/service_center_write_inquiry_tv3"
-        app:layout_constraintTop_toBottomOf="@+id/service_center_write_inquiry_tv3" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/service_center_write_inquiry_type_layout"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:textColorHint="@color/grey_01"
-        app:boxBackgroundColor="@color/white"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
-        app:endIconMode="dropdown_menu"
-        app:endIconTint="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/service_center_write_inquiry_tv4"
-        app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_tv4"
-        app:startIconDrawable="@drawable/ic_open_btn_grey"
-        app:startIconScaleType="center"
-        app:startIconTint="@color/grey_02">
-
-        <AutoCompleteTextView
-            android:id="@+id/service_center_write_inquiry_type"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/service_center_write_inquiry_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawablePadding="0dp"
-            android:fontFamily="@font/font_pre_semibold"
-            android:hint="유형을 선택해주세요"
-            android:inputType="none"
-            android:popupBackground="@drawable/dropdown_box_border"
-            android:text=""
-            android:textColor="@color/brown_01"
-            android:textSize="12sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/back"
+            app:title="고객센터"
+            app:titleCentered="true">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/service_center_write_inquiry_comment_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
-        android:textColorHint="@color/grey_01"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_type_layout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/service_center_write_inquiry_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/font_pre_semibold"
-            android:gravity="top"
-            android:hint="의견을 남겨주세요"
-            android:lines="10"
-            android:maxLines="10"
-            android:text=""
-            android:textColor="@color/brown_01"
-            android:textColorHint="@color/grey_01"
-            android:textSize="12sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/service_center_write_inquiry_camera_btn_layout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="20dp"
-        android:background="@drawable/box_border_green"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_comment_layout">
-
-
-        <ImageView
-            android:id="@+id/service_center_write_inquiry_camera_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/camera_green" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <TextView
-            android:id="@+id/service_center_write_inquiry_camera_tv"
+            android:id="@+id/service_center_write_inquiry_tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/pretendard_bold"
-            android:text="사진 첨부하기"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/font_pre_semibold"
+            android:text="파밍의 중심은 항상 고객님입니다"
+            android:textColor="@color/brown_01"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/service_center_write_inquiry_toolbar" />
+
+        <TextView
+            android:id="@+id/service_center_write_inquiry_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_pre_regular"
+            android:text="이용하며 느끼신 불편한 점이나 바라는 점을 알려주세요"
+            android:textColor="@color/grey_01"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/service_center_write_inquiry_tv1"
+            app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_tv1" />
+
+        <TextView
+            android:id="@+id/service_center_write_inquiry_tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_pre_regular"
+            android:text="소중한 의견으로 한 뼘 더 자라나는 파밍이 되겠습니다"
+            android:textColor="@color/grey_01"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/service_center_write_inquiry_tv2"
+            app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_tv2" />
+
+        <TextView
+            android:id="@+id/service_center_write_inquiry_tv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_pre_regular"
+            android:text="문의량이 많은 경우 답변은 24시간 이상 소요될 수 있습니다"
+            android:textColor="@color/brown_01"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/service_center_write_inquiry_tv3"
+            app:layout_constraintTop_toBottomOf="@+id/service_center_write_inquiry_tv3" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/service_center_write_inquiry_type_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textColorHint="@color/grey_01"
+            app:boxBackgroundColor="@color/white"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+            app:endIconMode="dropdown_menu"
+            app:endIconTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/service_center_write_inquiry_tv4"
+            app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_tv4"
+            app:startIconDrawable="@drawable/ic_open_btn_grey"
+            app:startIconScaleType="center"
+            app:startIconTint="@color/grey_02">
+
+            <AutoCompleteTextView
+                android:id="@+id/service_center_write_inquiry_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/font_pre_semibold"
+                android:hint="유형을 선택해주세요"
+                android:inputType="none"
+                android:popupBackground="@drawable/dropdown_box_border"
+                android:text="@={serviceCenterInquiryViewModel.inquiryType}"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/service_center_write_inquiry_comment_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/grey_01"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_type_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/service_center_write_inquiry_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_pre_semibold"
+                android:gravity="top"
+                android:hint="의견을 남겨주세요"
+                android:lines="10"
+                android:maxLines="10"
+                android:text="@={serviceCenterInquiryViewModel.inquiryContent}"
+                android:textColor="@color/brown_01"
+                android:textColorHint="@color/grey_01"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/service_center_write_inquiry_camera_btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/box_border_green"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_comment_layout">
+
+
+            <ImageView
+                android:id="@+id/service_center_write_inquiry_camera_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/camera_green" />
+
+            <TextView
+                android:id="@+id/service_center_write_inquiry_camera_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="사진 첨부하기"
+                android:textColor="@color/green_main"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/service_center_write_inquiry_photo_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_camera_btn_layout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/service_center_write_inquiry_btn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/white"
+            android:enabled="false"
+            android:fontFamily="@font/font_pre_bold"
+            android:text="문의하기"
             android:textColor="@color/green_main"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/green_main"
+            app:strokeWidth="1dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/service_center_write_inquiry_photo_rv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/service_center_write_inquiry_camera_btn_layout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/service_center_write_inquiry_btn"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/white"
-        android:enabled="false"
-        android:fontFamily="@font/font_pre_bold"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="문의하기"
-        android:textColor="@color/green_main"
-        android:textSize="16sp"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="@color/green_main"
-        app:strokeWidth="1dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
