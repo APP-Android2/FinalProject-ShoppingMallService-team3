@@ -165,8 +165,25 @@ class UserDao {
                 val query = collectionReference.whereEqualTo("user_idx", userModel.user_idx).get().await()
 
                 // 쿼리 결과에서 첫 번째 문서 참조를 가져와서 해당 문서를 업데이트한다.
-                // 주의: 여기서는 첫 번째 문서만 업데이트하고 있음
-                query.documents.firstOrNull()?.reference?.update("user_profile_image", userModel.user_profile_image)
+                query.documents.firstOrNull()?.reference?.update(
+                    mapOf(
+                        "user_name" to userModel.user_name,
+                        "user_nickname" to userModel.user_nickname,
+                        "user_id" to userModel.user_id,
+                        "user_pw" to userModel.user_pw,
+                        "user_birth" to userModel.user_birth,
+                        "user_gender" to userModel.user_gender,
+                        "user_phone" to userModel.user_phone,
+                        "user_address" to userModel.user_address,
+                        "user_service_agree" to userModel.user_service_agree,
+                        "user_personal_agree" to userModel.user_personal_agree,
+                        "user_alarm_agree" to userModel.user_alarm_agree,
+                        "user_type" to userModel.user_type,
+                        "user_point" to userModel.user_point,
+                        "user_state" to userModel.user_state,
+                        "user_profile_image" to userModel.user_profile_image
+                    )
+                )
             }
             job1.join()
         }
@@ -187,28 +204,6 @@ class UserDao {
             }
         }
 
-        // 이미지 데이터를 받아오는 메서드
-        suspend fun gettingUserImage(context:Context, imageFileName:String, imageView: ImageView){
-            val job1 = CoroutineScope(Dispatchers.IO).launch {
-                // 이미지에 접근할 수 있는 객체를 가져온다.
-                val storageRef = Firebase.storage.reference.child(imageFileName)
-                // 이미지의 주소를 가지고 있는 Uri 객체를 받아온다.
-                val imageUri = storageRef.downloadUrl.await()
-                // 이미지 데이터를 받아와 이미지 뷰에 보여준다.
-                val job2 = CoroutineScope(Dispatchers.Main).launch {
-                    Glide.with(context).load(imageUri).into(imageView)
-                    // 이미지 뷰가 나타나게 한다.
-                    imageView.visibility = View.VISIBLE
-                }
-                job2.join()
-            }
-            job1.join()
-            // 이미지는 용량이 매우 클 수 있다. 즉 이미지 데이터를 내려받는데 시간이 오래걸릴 수도 있다.
-            // 이에, 이미지 데이터를 받아와 보여주는 코루틴을 작업이 끝날 때 까지 대기 하지 않는다.
-            // 그 이유는 데이터를 받아오는데 걸리는 오랜 시간 동안 화면에 아무것도 나타나지 않을 수 있기 때문이다.
-            // 따라서 이 메서드는 제일 마지막에 호출해야 한다.(다른 것들을 모두 보여준 후에...)
-        }
-
         // 아이디를 찾는 메서드
         suspend fun findUserID(name: String, phone: String): String? {
             var userId: String? = null
@@ -224,6 +219,27 @@ class UserDao {
             job1.join()
 
             return userId
+        }
+
+        suspend fun verifyUserPasswordReset(name: String, userId: String, phone: String): Boolean {
+            val db = Firebase.firestore
+            var chk = false
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                chk = try {
+                    val querySnapshot = db.collection("UserData").whereEqualTo("user_name", name)
+                        .whereEqualTo("user_id", userId)
+                        .whereEqualTo("user_phone", phone)
+                        .get()
+                        .await()
+
+                    querySnapshot.documents.isNotEmpty()
+                } catch (e: Exception) {
+                    false
+                }
+            }
+            job1.join()
+
+            return chk
         }
     }
 }

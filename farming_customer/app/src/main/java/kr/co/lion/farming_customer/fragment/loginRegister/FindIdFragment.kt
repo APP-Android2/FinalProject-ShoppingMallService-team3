@@ -71,19 +71,19 @@ class FindIdFragment : Fragment() {
         }
     }
 
-    // 아이디, 휴대폰 입력이 되어있는지 확인하는 메서드
+    // 이름, 휴대폰 입력이 되어있는지 확인하는 메서드
     private fun checkInputForm(): Boolean{
         // 입력한 값들을 가져온다.
-        val userName = findIdViewModel.userName.value!!
-        val userPhone = findIdViewModel.userPhoneNumber.value!!
+        val userName = findIdViewModel.userName.value
+        val userPhone = findIdViewModel.userPhoneNumber.value
 
-        if(userName.isEmpty()){
+        if(userName.isNullOrEmpty()){
             Tools.showErrorDialog(loginActivity, fragmentFindIdBinding.textFieldFindIdName, "이름 입력 오류",
                 "이름을 입력해주세요")
             return false
         }
 
-        if(userPhone.isEmpty()){
+        if(userPhone.isNullOrEmpty()){
             Tools.showErrorDialog(loginActivity, fragmentFindIdBinding.textFieldFindIdPhone, "휴대폰 입력 오류",
                 "휴대폰 번호를 입력해주세요")
             return false

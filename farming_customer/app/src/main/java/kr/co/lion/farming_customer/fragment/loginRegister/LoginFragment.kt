@@ -105,16 +105,16 @@ class LoginFragment : Fragment() {
 
     private fun checkInputForm(): Boolean{
         // 입력한 값들을 가져온다.
-        val userId = loginViewModel.textFieldLoginId.value!!
-        val userPw = loginViewModel.textFieldLoginPw.value!!
+        val userId = loginViewModel.textFieldLoginId.value
+        val userPw = loginViewModel.textFieldLoginPw.value
 
-        if(userId.isEmpty()){
+        if(userId.isNullOrEmpty()){
             Tools.showErrorDialog(loginActivity, fragmentLoginBinding.textFieldLoginId, "아이디 입력 오류",
                 "아이디를 입력해주세요")
             return false
         }
 
-        if(userPw.isEmpty()){
+        if(userPw.isNullOrEmpty()){
             Tools.showErrorDialog(loginActivity, fragmentLoginBinding.textFieldLoginPw, "비밀번호 입력 오류",
                 "비밀번호를 입력해주세요")
             return false

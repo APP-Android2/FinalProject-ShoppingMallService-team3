@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="닉네임"
+                android:text="@={register3ViewModel.userNickname}"
                 android:textColor="@color/brown_01"
                 android:textSize="20sp" />
         </LinearLayout>
