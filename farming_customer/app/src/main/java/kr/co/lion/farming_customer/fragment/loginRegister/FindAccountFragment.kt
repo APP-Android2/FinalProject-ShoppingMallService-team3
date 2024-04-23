@@ -17,10 +17,10 @@ import kr.co.lion.farming_customer.viewmodel.loginRegister.FindAccountViewModel
 
 class FindAccountFragment : Fragment() {
 
-    lateinit var fragmentFindAccountBinding: FragmentFindAccountBinding
+    private lateinit var fragmentFindAccountBinding: FragmentFindAccountBinding
     lateinit var loginActivity: LoginActivity
 
-    lateinit var findAccountViewModel: FindAccountViewModel
+    private lateinit var findAccountViewModel: FindAccountViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

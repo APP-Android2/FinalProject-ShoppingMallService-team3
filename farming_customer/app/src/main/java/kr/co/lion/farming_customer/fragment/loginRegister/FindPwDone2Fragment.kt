@@ -17,7 +17,7 @@ import kr.co.lion.farming_customer.databinding.FragmentFindPwDone2Binding
 
 class FindPwDone2Fragment : Fragment() {
 
-    lateinit var fragmentFindPwDone2Binding: FragmentFindPwDone2Binding
+    private lateinit var fragmentFindPwDone2Binding: FragmentFindPwDone2Binding
     lateinit var loginActivity: LoginActivity
 
 
@@ -33,7 +33,7 @@ class FindPwDone2Fragment : Fragment() {
         return fragmentFindPwDone2Binding.root
     }
 
-    fun settingButton() {
+    private fun settingButton() {
         fragmentFindPwDone2Binding.apply {
             buttonFindPwDone2.setOnClickListener {
                 loginActivity.replaceFragment(LoginFragmentName.LOGIN_FRAGMENT,
@@ -43,7 +43,7 @@ class FindPwDone2Fragment : Fragment() {
     }
 
     // 텍스트 설정
-    fun settingTextView(){
+    private fun settingTextView(){
         fragmentFindPwDone2Binding.apply {
             val fullText = textView6.text.toString()
             val spannableString = SpannableString(fullText)
