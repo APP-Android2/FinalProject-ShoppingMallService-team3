@@ -19,12 +19,11 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
-import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeActivityDetailBinding
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeReviewBinding
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeReviewImageBinding
 import kr.co.lion.farming_customer.databinding.ViewPagerFarmingLifeFarmDetailBinding
-import kr.co.lion.farming_customer.model.farminLife.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.FarmingLifeActivityDetailViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowFarmingLifeReviewViewModel
 

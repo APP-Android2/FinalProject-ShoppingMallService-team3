@@ -1,7 +1,4 @@
-package kr.co.lion.farming_customer.model.farminLife
-
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+package kr.co.lion.farming_customer.model.farmingLife
 
 
 data class ActivityModel(
