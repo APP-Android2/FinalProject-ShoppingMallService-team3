@@ -78,6 +78,9 @@
             android:name=".activity.myPageManagement.MyPageManagementActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.myPageMyPost.MyPageMyPostActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.loginRegister.LoginActivity"
             android:exported="true">
             <intent-filter>

@@ -48,13 +48,13 @@
 
                     <ImageView
                         android:id="@+id/imageView_heart"
-                        android:layout_width="wrap_content"
+                        android:layout_width="30dp"
                         android:layout_height="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/heart_02" />
+                        app:srcCompat="@drawable/heart_04" />
 
                     <TextView
                         android:id="@+id/textView_likeCnt"
@@ -82,10 +82,11 @@
                     app:srb_drawableFilled="@drawable/star_01"
                     app:srb_isIndicator="true"
                     app:srb_numStars="5"
-                    app:srb_rating="3"
+                    app:srb_rating="0"
                     app:srb_starHeight="15dp"
                     app:srb_starPadding="3dp"
-                    app:srb_starWidth="15dp" />
+                    app:srb_starWidth="15dp"
+                    app:srb_stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/textView_ItemName"

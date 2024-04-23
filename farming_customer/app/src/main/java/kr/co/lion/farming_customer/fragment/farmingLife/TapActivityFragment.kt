@@ -11,13 +11,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.GridSpaceItemDecoration
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.databinding.FragmentTapActivityBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
+import kr.co.lion.farming_customer.model.farminLife.ActivityModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 
 class TapActivityFragment : Fragment() {
@@ -26,6 +31,9 @@ class TapActivityFragment : Fragment() {
 
     lateinit var deco: MaterialDividerItemDecoration
     lateinit var deco2: GridSpaceItemDecoration
+
+    var activityList : MutableList<ActivityModel>? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,9 +43,17 @@ class TapActivityFragment : Fragment() {
 
         deco = MaterialDividerItemDecoration(mainActivity, MaterialDividerItemDecoration.VERTICAL)
         deco2 = GridSpaceItemDecoration(2,40,-10,-10,-10)
-        settingRecyclerView()
+
+        settingInitData()
 
         return fragmentTapActivityBinding.root
+    }
+
+    private fun settingInitData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            activityList = ActivityDao.gettingActivityList()
+            settingRecyclerView()
+        }
     }
 
     private fun settingRecyclerView() {
@@ -77,22 +93,41 @@ class TapActivityFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return activityList!!.size
         }
 
         override fun onBindViewHolder(holder: TapActivityViewHolder, position: Int) {
             holder.rowGridItemBinding.apply {
                 rowGridItemViewModel!!.apply {
-                    textView_likeCnt.value = "999"
-                    textView_ItemName.value = "파밍이네 농장"
-                    textView_location.value = "경기도 파밍시 파밍구"
-                    textView_price.value = "10,000원~"
+                    textView_likeCnt.value = activityList!![position].activity_like_cnt.toString()
+                    textView_ItemName.value = activityList!![position].activity_title
+                    textView_location.value = activityList!![position].activity_address
+
+                    // 옵션 중 가장 최소 가격 표시
+                    var minPrice = Int.MAX_VALUE
+                    var minPrice_pos = -1
+                    activityList!![position].activity_option_detail.forEachIndexed { index, mutableMap ->
+                        val priceString = mutableMap["option_price"] as String
+                        val numberString = priceString.replace(",", "").replace("원", "")
+                        val priceInt = numberString.toInt()
+
+                        if(priceInt < minPrice){
+                            minPrice = priceInt
+                            minPrice_pos = index
+                        }
+                    }
+                    textView_price.value = "금액 : ${
+                        activityList!![position].activity_option_detail[minPrice_pos]["option_price"]
+                    } ~"
                     isLike.value = false
                 }
+                ratingBar.rating = activityList!![position].activity_star
             }
+            // 아이템 클릭 리스너
             holder.rowGridItemBinding.root.setOnClickListener {
                 val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
                 intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT)
+                intent.putExtra("idx", activityList!![position].activity_idx)
                 startActivity(intent)
             }
             // 하트
@@ -100,13 +135,19 @@ class TapActivityFragment : Fragment() {
                 constraintLikeCancel.setOnClickListener {
                     if(rowGridItemViewModel!!.isLike.value!!){
                         rowGridItemViewModel!!.isLike.value = false
-                        imageViewHeart.setImageResource(R.drawable.heart_02)
+                        imageViewHeart.setImageResource(R.drawable.heart_04)
                         textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
                     }else{
                         rowGridItemViewModel!!.isLike.value = true
                         imageViewHeart.setImageResource(R.drawable.heart_01)
                         textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     }
+                }
+            }
+            // 이미지
+            holder.rowGridItemBinding.apply {
+                CoroutineScope(Dispatchers.Main).launch {
+                    ActivityDao.gettingActivityImage(mainActivity, activityList!![position].activity_images[0], imageView)
                 }
             }
         }

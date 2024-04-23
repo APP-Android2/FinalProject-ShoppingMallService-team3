@@ -8,12 +8,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentOrderHistoryOrderDetailBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryOrderDetailBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryOrderDetailOptionBinding
+import kr.co.lion.farming_customer.model.orderHistory.OrderModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.OrderHistoryOrderDetailViewModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryOrderDetailOptionViewModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryOrderDetailViewModel
@@ -23,6 +28,10 @@ class OrderHistoryOrderDetailFragment : Fragment() {
     lateinit var orderHistoryActivity: OrderHistoryActivity
 
     lateinit var orderHistoryOrderDetailViewModel: OrderHistoryOrderDetailViewModel
+
+    var orderNum : String? = null
+    var orderList : MutableList<OrderModel>? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         fragmentOrderHistoryOrderDetailBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_order_history_order_detail, container, false)
@@ -31,12 +40,24 @@ class OrderHistoryOrderDetailFragment : Fragment() {
         fragmentOrderHistoryOrderDetailBinding.lifecycleOwner = this
         orderHistoryActivity = activity as OrderHistoryActivity
 
+        settingInitData()
         settingToolbar()
         settingEvent()
-        settingData()
-        settingRecyclerView()
+
+
 
         return fragmentOrderHistoryOrderDetailBinding.root
+    }
+
+    private fun settingInitData() {
+        orderNum = arguments?.getString("orderNum")
+        // 주문번호로 주문 목록 가져오기
+        CoroutineScope(Dispatchers.Main).launch {
+            orderList = OrderDao.gettingOrderListByOrderNum(orderNum!!)
+            settingData()
+            settingRecyclerView()
+        }
+
     }
 
     private fun settingRecyclerView() {
@@ -51,21 +72,21 @@ class OrderHistoryOrderDetailFragment : Fragment() {
     private fun settingData() {
         fragmentOrderHistoryOrderDetailBinding.apply {
             orderHistoryOrderDetailViewModel!!.apply {
-                textviewOrderDetail_orderDate.value = "2024.04.04"
-                textviewOrderDetail_orderNum.value = "주문번호 : 12341234"
+                textviewOrderDetail_orderDate.value = orderList!![0].order_reg_date
+                textviewOrderDetail_orderNum.value = "주문번호 : ${orderList!![0].order_num}"
 
-                textviewOrderDetail_receiverName.value = "김파밍"
-                textviewOrderDetail_address.value = "[12312] 서울특별시 파밍구 파밍동 12345"
-                textviewOrderDetail_receivePhoneNum.value = "010-1234-1234"
-                textviewOrderDetail_request.value= "부재 시 경비실에 맡겨주세요."
+                textviewOrderDetail_receiverName.value = orderList!![0].order_delivery_address["receiver"]
+                textviewOrderDetail_address.value = orderList!![0].order_delivery_address["address"]
+                textviewOrderDetail_receivePhoneNum.value = orderList!![0].order_delivery_address["phone"]
+                textviewOrderDetail_request.value= orderList!![0].order_delivery_address["request"]
 
-                textViewOrderDetail_reservName.value = "김파밍"
-                textViewOrderDetail_phoneNum.value = "010-12341234"
+                textViewOrderDetail_reservName.value = "김파밍" // 유저 데이터 가져와야함
+                textViewOrderDetail_phoneNum.value = "010-12341234" // 유저 데이터 가져와야함
 
-                textViewOrderDetail_productPrice.value = "10,000원"
-                textViewOrderDetail_deliveryPrice.value = "12,000원(3건)"
-                textViewOrderDetail_discountPrice.value = "-0P"
-                textViewOrderDetail_totalPrice.value = "140,000원"
+                textViewOrderDetail_productPrice.value = "10,000원" // 결제 데이터 가져와야함
+                textViewOrderDetail_deliveryPrice.value = "12,000원(3건)" // 결제 데이터 가져와야함
+                textViewOrderDetail_discountPrice.value = "-0P" // 결제 데이터 가져와야함
+                textViewOrderDetail_totalPrice.value = "140,000원" // 결제 데이터 가져와야함
             }
         }
 
@@ -114,18 +135,18 @@ class OrderHistoryOrderDetailFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 3
+            return orderList!!.size
         }
 
         override fun onBindViewHolder(holder: OrderDetailViewHolder, position: Int) {
             holder.rowOrderHistoryOrderDetailBinding.apply {
                 rowOrderHistoryOrderDetailViewModel!!.apply {
-                    textviewOrderHistoryOrderDetail_productName.value = "파밍이네 감자"
-                    textviewOrderHistoryOrderDetail_option.value = "못난이 감자 5kg ..외 3개"
-                    textviewOrderHistoryOrderDetail_price.value = "10,000원"
+                    textviewOrderHistoryOrderDetail_productName.value = "파밍이네 감자" // 상품 데이터 가져와야함
+                    textviewOrderHistoryOrderDetail_option.value = "${orderList!![position].order_option_detail[0]["option_name"]}...외 ${orderList!![position].order_option_detail.size-1}개"
+                    textviewOrderHistoryOrderDetail_price.value = orderList!![position].order_total_price
                 }
                 recyclerViewOptionDetail.apply {
-                    this.adapter = OrderDetailOptionRecyclerViewAdapter()
+                    this.adapter = OrderDetailOptionRecyclerViewAdapter(orderList!![position].order_option_detail)
                     this.layoutManager = LinearLayoutManager(orderHistoryActivity)
                 }
                 imageButton2.setOnClickListener {
@@ -145,12 +166,14 @@ class OrderHistoryOrderDetailFragment : Fragment() {
         }
     }
 
-    inner class OrderDetailOptionRecyclerViewAdapter : RecyclerView.Adapter<OrderDetailOptionRecyclerViewAdapter.OrderDetailOptionViewHolder>(){
-        inner class OrderDetailOptionViewHolder(rowOrderHistoryOrderDetailOptionBinding: RowOrderHistoryOrderDetailOptionBinding) : RecyclerView.ViewHolder(rowOrderHistoryOrderDetailOptionBinding.root){
+    inner class OrderDetailOptionRecyclerViewAdapter(orderOptionDetail: MutableList<MutableMap<String, String>>) : RecyclerView.Adapter<OrderDetailOptionRecyclerViewAdapter.OrderDetailOptionViewHolder>(){
+        val orderOptionDetail = orderOptionDetail
+        inner class OrderDetailOptionViewHolder(rowOrderHistoryOrderDetailOptionBinding: RowOrderHistoryOrderDetailOptionBinding, orderOptionDetail: MutableList<MutableMap<String, String>>) : RecyclerView.ViewHolder(rowOrderHistoryOrderDetailOptionBinding.root){
             val rowOrderHistoryOrderDetailOptionBinding : RowOrderHistoryOrderDetailOptionBinding
-
+            val orderOptionDetail : MutableList<MutableMap<String, String>>
             init{
                 this.rowOrderHistoryOrderDetailOptionBinding = rowOrderHistoryOrderDetailOptionBinding
+                this.orderOptionDetail = orderOptionDetail
 
                 rowOrderHistoryOrderDetailOptionBinding.root.layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -165,19 +188,19 @@ class OrderHistoryOrderDetailFragment : Fragment() {
             rowOrderHistoryOrderDetailOptionBinding.rowOrderHistoryDetailOptionViewModel = rowOrderHistoryOrderDetailOptionViewModel
             rowOrderHistoryOrderDetailOptionBinding.lifecycleOwner = this@OrderHistoryOrderDetailFragment
 
-            val orderDetailOptionViewHolder = OrderDetailOptionViewHolder(rowOrderHistoryOrderDetailOptionBinding)
+            val orderDetailOptionViewHolder = OrderDetailOptionViewHolder(rowOrderHistoryOrderDetailOptionBinding, orderOptionDetail)
             return orderDetailOptionViewHolder
         }
 
         override fun getItemCount(): Int {
-            return 3
+            return orderOptionDetail.size
         }
 
         override fun onBindViewHolder(holder: OrderDetailOptionViewHolder, position: Int) {
             holder.rowOrderHistoryOrderDetailOptionBinding.apply {
                 rowOrderHistoryDetailOptionViewModel!!.apply {
-                    textviewRowOrderDetail_optionName.value = "파밍 감자 10kg 1개"
-                    textviewRowOrderDetail_price.value = "5,000원"
+                    textviewRowOrderDetail_optionName.value = "${orderOptionDetail[position]["option_name"]} ${orderOptionDetail[position]["option_cnt"]}개"
+                    textviewRowOrderDetail_price.value = orderOptionDetail[position]["option_total_price"]
                 }
             }
         }

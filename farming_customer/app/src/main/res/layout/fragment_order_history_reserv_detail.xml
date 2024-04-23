@@ -36,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -83,7 +84,8 @@
                         android:id="@+id/imageViewReservDetail_productImage"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:background="@color/grey_02" />
+                        android:background="@color/grey_02"
+                        android:scaleType="fitXY" />
                 </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
                 <LinearLayout
@@ -269,7 +271,7 @@
                     android:textColor="@color/brown_01"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textViewReservDetail_productNumber"
@@ -321,8 +323,11 @@
 
                 <Button
                     android:id="@+id/buttonReservDetail_check"
+                    style="@style/buttonStyle_OrderHistory_filled"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
                     android:text="확인"
                     app:cornerRadius="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
