@@ -35,7 +35,11 @@ class PaymentActivity : AppCompatActivity() {
 
         activityPaymentBinding = ActivityPaymentBinding.inflate(layoutInflater)
 
-        replaceFragment(PaymentFragmentName.PAYMENT_CROP_FRAGMENT,false,false,null)
+        val fragmentName = intent.getSerializableExtra("PaymentFragmentName")
+        val bundle = Bundle()
+        val crop_idx = intent.getIntExtra("crop_idx",0)
+        bundle.putInt("crop_idx",crop_idx)
+        replaceFragment(fragmentName as PaymentFragmentName,false,false,bundle)
 
         setContentView(activityPaymentBinding.root)
     }

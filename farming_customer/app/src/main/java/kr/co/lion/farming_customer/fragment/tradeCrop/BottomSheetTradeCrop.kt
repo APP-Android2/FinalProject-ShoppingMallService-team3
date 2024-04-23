@@ -246,6 +246,7 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                         "PaymentFragmentName",
                         PaymentFragmentName.PAYMENT_CROP_FRAGMENT
                     )
+                    intent.putExtra("crop_idx",crop_idx)
                     startActivity(intent)
                 }
             }

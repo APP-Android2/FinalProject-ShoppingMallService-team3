@@ -2,12 +2,12 @@ package kr.co.lion.farming_customer.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -15,36 +15,25 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
-import kr.co.lion.farming_customer.PointStatus
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
-import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
-import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.dao.crop.CropDao
-import kr.co.lion.farming_customer.dao.myPagePoint.myPagePointDao
+import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
+import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
-import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
-import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
-import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
-import kr.co.lion.farming_customer.model.farmingLife.FarmModel
-import kr.co.lion.farming_customer.model.myPagePoint.PointModel
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.HomeViewModel
-import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import kotlin.math.pow
 
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
@@ -63,8 +52,6 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding.homeViewModel = homeViewModel
         fragmentHomeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
-        gettingCropLikeTop5()
-
 
         settingData()
         settingRecyclerView()
@@ -95,6 +82,7 @@ class HomeFragment : Fragment() {
                 index ++
             }
             fragmentHomeBinding.viewPagerFarm.adapter?.notifyDataSetChanged()
+            fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
         }
     }
 

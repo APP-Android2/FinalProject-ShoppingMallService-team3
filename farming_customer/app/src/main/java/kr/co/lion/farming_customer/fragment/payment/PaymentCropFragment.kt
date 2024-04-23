@@ -13,6 +13,7 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.payment.PaymentActivity
 import kr.co.lion.farming_customer.databinding.FragmentPaymentCropBinding
 import kr.co.lion.farming_customer.databinding.RowPaymentProductBinding
+import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.viewmodel.payment.PaymentCropViewModel
 
 class PaymentCropFragment : Fragment() {
@@ -20,6 +21,9 @@ class PaymentCropFragment : Fragment() {
     lateinit var fragmentPaymentCropBinding: FragmentPaymentCropBinding
     lateinit var paymentActivity: PaymentActivity
     lateinit var paymentCropVIewModel:PaymentCropViewModel
+
+    // 결제할 농산품 데이터를 담을 리스트
+    var paymentCropDataList:MutableList<CropModel>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
