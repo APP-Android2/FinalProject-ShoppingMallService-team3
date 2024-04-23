@@ -56,11 +56,13 @@
                     app:srb_drawableEmpty="@drawable/star_02"
                     app:srb_drawableFilled="@drawable/star_01"
                     app:srb_isIndicator="true"
+                    app:srb_minimumStars="0"
                     app:srb_numStars="5"
                     app:srb_rating="3"
                     app:srb_starHeight="14.02dp"
                     app:srb_starPadding="2dp"
-                    app:srb_starWidth="14.58dp" />
+                    app:srb_starWidth="14.58dp"
+                    app:srb_stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/textViewRowReviewCropDate"

@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.loginRegister
 
 import android.os.Bundle
 import android.text.SpannableString
@@ -12,14 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.LoginActivity
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
 import kr.co.lion.farming_customer.databinding.FragmentFindPwDone2Binding
-import kr.co.lion.farming_customer.databinding.FragmentFindPwDoneBinding
-import kr.co.lion.farming_customer.viewmodel.FindPwDoneViewModel
 
 class FindPwDone2Fragment : Fragment() {
 
-    lateinit var fragmentFindPwDone2Binding: FragmentFindPwDone2Binding
+    private lateinit var fragmentFindPwDone2Binding: FragmentFindPwDone2Binding
     lateinit var loginActivity: LoginActivity
 
 
@@ -35,7 +33,7 @@ class FindPwDone2Fragment : Fragment() {
         return fragmentFindPwDone2Binding.root
     }
 
-    fun settingButton() {
+    private fun settingButton() {
         fragmentFindPwDone2Binding.apply {
             buttonFindPwDone2.setOnClickListener {
                 loginActivity.replaceFragment(LoginFragmentName.LOGIN_FRAGMENT,
@@ -45,7 +43,7 @@ class FindPwDone2Fragment : Fragment() {
     }
 
     // 텍스트 설정
-    fun settingTextView(){
+    private fun settingTextView(){
         fragmentFindPwDone2Binding.apply {
             val fullText = textView6.text.toString()
             val spannableString = SpannableString(fullText)

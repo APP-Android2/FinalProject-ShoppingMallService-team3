@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="tradeViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel" />
+    </data>
+
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
@@ -45,11 +51,13 @@
                     app:srb_drawableEmpty="@drawable/star_02"
                     app:srb_drawableFilled="@drawable/star_01"
                     app:srb_isIndicator="true"
+                    app:srb_minimumStars="0"
                     app:srb_numStars="5"
                     app:srb_rating="3"
                     app:srb_starHeight="15dp"
                     app:srb_starPadding="2dp"
-                    app:srb_starWidth="15dp" />
+                    app:srb_starWidth="15dp"
+                    app:srb_stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/textViewLikeCropName"
@@ -58,7 +66,7 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="TextView"
+                    android:text="@={tradeViewModel.textViewLikeCropName}"
                     android:textColor="@color/brown_01"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@+id/imageViewLikeCrop"
@@ -72,7 +80,7 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="TextView"
+                    android:text="@={tradeViewModel.textViewLikeCropPrice}"
                     android:textColor="@color/brown_01"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -103,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="999"
+                        android:text="@={tradeViewModel.textViewLikeCropCnt}"
                         android:textColor="@color/brown_01"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewHeartCrop"

@@ -58,12 +58,14 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0") // 농기구 구글맵
     implementation("com.google.android.gms:play-services-location:21.1.0") // 농기구 구글맵
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
     implementation("com.google.firebase:firebase-storage:20.3.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
 

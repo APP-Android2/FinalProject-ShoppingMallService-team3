@@ -8,29 +8,19 @@ class BottomSheetTradeCropViewModel : ViewModel() {
     // 옵션 수량
     val optionCounts = MutableLiveData<Int>()
 
-    // 선택된 농산물 이름
-    val cropName = MutableLiveData<String>()
-
-
     // 선택된 농산물 가격
     val selectedCropPrice = MutableLiveData<String>()
-
 
     // 배송비
     val fee = MutableLiveData<String>()
 
-
     // 총 가격
     val totalPrice = MutableLiveData<String>()
-
 
     init {
         // 초기 값 설정
         optionCounts.value = 1  // 기본 옵션 수량
-        cropName.value = "감자 10kg"
-        selectedCropPrice.value = "0원"  // 기본 가격
-        fee.value = "2,500원"  // 기본 배송비
-        totalPrice.value = "2,500원"  // 초기 총 가격
+
     }
 
     fun plusOptionCount() {
@@ -44,4 +34,5 @@ class BottomSheetTradeCropViewModel : ViewModel() {
             optionCounts.value = currentCount - 1 // 현재 값에서 1을 빼서 다시 설정
         }
     }
+
 }

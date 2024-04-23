@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="findIdViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.FindIdViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.loginRegister.FindIdViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_pre_semibold"
+                android:text="@={findIdViewModel.userName}"
                 android:hint="이름을 입력해 주세요."
                 android:inputType="text|textPersonName"
                 android:paddingTop="10dp"
@@ -75,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_pre_semibold"
                 android:hint="숫자로만 입력해 주세요."
+                android:text="@={findIdViewModel.userPhoneNumber}"
                 android:inputType="number"
                 android:maxLength="11"
                 android:paddingTop="10dp"

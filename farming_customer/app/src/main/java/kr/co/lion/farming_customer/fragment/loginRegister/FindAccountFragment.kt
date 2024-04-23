@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.loginRegister
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,17 +10,17 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.LoginActivity
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
 import kr.co.lion.farming_customer.databinding.FragmentFindAccountBinding
-import kr.co.lion.farming_customer.viewmodel.FindAccountViewModel
+import kr.co.lion.farming_customer.viewmodel.loginRegister.FindAccountViewModel
 
 
 class FindAccountFragment : Fragment() {
 
-    lateinit var fragmentFindAccountBinding: FragmentFindAccountBinding
+    private lateinit var fragmentFindAccountBinding: FragmentFindAccountBinding
     lateinit var loginActivity: LoginActivity
 
-    lateinit var findAccountViewModel: FindAccountViewModel
+    private lateinit var findAccountViewModel: FindAccountViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

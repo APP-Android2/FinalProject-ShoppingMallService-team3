@@ -193,7 +193,7 @@
                 android:fontFamily="@font/font_pre_semibold"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:text="삭제"
+                android:text="소멸"
                 android:textSize="12sp" />
         </kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius>
 
