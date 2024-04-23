@@ -3,7 +3,6 @@ package kr.co.lion.farming_customer.activity.farmingLife
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
@@ -17,6 +16,8 @@ import kr.co.lion.farming_customer.fragment.farmingLife.FarmingLifeSearchFragmen
 class FarmingLifeActivity : AppCompatActivity() {
     lateinit var activityFarmingLifeBinding: ActivityFarmingLifeBinding
 
+    var idx : Int? = null
+
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
     var newFragment: Fragment? = null
@@ -26,7 +27,12 @@ class FarmingLifeActivity : AppCompatActivity() {
         setContentView(activityFarmingLifeBinding.root)
 
         val fragmentName = intent.getSerializableExtra("fragmentName")
-        replaceFragment(fragmentName as FarmingLifeFragmnetName, false, true, null)
+        idx = intent.getIntExtra("idx", 0)
+        val bundle = Bundle()
+        bundle.putInt("idx", idx!!)
+        replaceFragment(fragmentName as FarmingLifeFragmnetName, false, true, bundle)
+
+
     }
 
     fun replaceFragment(name: FarmingLifeFragmnetName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?){
@@ -44,10 +50,10 @@ class FarmingLifeActivity : AppCompatActivity() {
                 newFragment = FarmingLifeSearchFragment()
             }
             FarmingLifeFragmnetName.FARMING_LIFE_FARM_DETAIL_FARMGNET -> {
-                newFragment = FarmingLifeFarmDetailFragment()
+                newFragment = FarmingLifeFarmDetailFragment(data)
             }
             FarmingLifeFragmnetName.FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT -> {
-                newFragment = FarmingLifeActivityDetailFragment()
+                newFragment = FarmingLifeActivityDetailFragment(data)
             }
         }
         if(data != null){

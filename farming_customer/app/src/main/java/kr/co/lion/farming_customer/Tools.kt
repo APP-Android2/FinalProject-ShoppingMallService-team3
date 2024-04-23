@@ -297,6 +297,50 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }
 
+
+// Order
+enum class OrderStatus(var str : String, var number : Int){
+    ORDER_STATUS_NORMAL("정상", 1)
+}
+
+enum class OrderProductType(var str : String, var number : Int){
+    ORDER_PRODUCT_TYPE_CROP("농산물", 1),
+    ORDER_PRODUCT_TYPE_FARM("주말농장", 2),
+    ORDER_PRODUCT_TYPE_ACTIVITY("체험활동", 3)
+}
+
+enum class OrderLabelType(var str : String, var number : Int){
+    ORDER_LABEL_TYPE_PAY_DONE("결제완료", 1),
+    ORDER_LABEL_TYPE_DELIVERY("배송중", 2),
+    ORDER_LABEL_TYPE_DELIVERY_DONE("배송완료", 3),
+    ORDER_LABEL_TYPE_CANCLE_APPLY("취소신청", 4),
+    ORDER_LABEL_TYPE_CANCLE_DONE("취소완료", 5),
+    ORDER_LABEL_TYPE_RETURN_APPLY("반품신청", 6),
+    ORDER_LABEL_TYPE_RETURN_DONE("반품완료", 7),
+    ORDER_LABEL_TYPE_EXCHANGE_APPLY("교환신청", 8),
+    ORDER_LABEL_TYPE_EXCHANGE_DONE("교환완료", 9),
+    ORDER_LABEL_TYPE_RESERV_DONE("예약완료", 10),
+    ORDER_LABEL_TYPE_RESERV_CANCLE("예약취소", 11);
+
+    companion object {
+        fun fromNumber(number: Int): String? {
+            return values().firstOrNull { it.number == number }?.str
+        }
+    }
+}
+
+enum class FarmStatus(var str : String, var number : Int){
+    FARM_STATUS_NORMAL("정상", 1),
+    FARM_STATUS_PAUSE("일시중지", 2),
+    FARM_STATUS_DELETE("삭제", 3)
+}
+
+enum class ActivityStatus(var str : String, var number : Int){
+    ACTIVITY_STATUS_NORMAL("정상", 1),
+    ACTIVITY_STATUS_PAUSE("일시중지", 2),
+    ACTIVITY_STATUS_DELETE("삭제", 3)
+}
+
 enum class FaqState(var str:String, var number:Int) {
     FAQ_STATE_NORMAL("정상", 0),
     FAQ_STATE_REMOVE("삭제", 1)
@@ -325,4 +369,3 @@ enum class MyPageMyPostName(var str : String){
     MY_PAGE_MY_POST_BOARD_FRAGMENT("MyPageMyPostBoardFragment"),
     MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
 }
-

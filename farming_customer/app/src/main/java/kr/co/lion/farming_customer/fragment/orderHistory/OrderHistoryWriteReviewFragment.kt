@@ -21,12 +21,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.OrderHistoryFragmentName
+import kr.co.lion.farming_customer.OrderProductType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
+import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
+import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentOrderHistoryWriteReviewBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryWritePhotoBinding
+import kr.co.lion.farming_customer.model.farminLife.ActivityModel
+import kr.co.lion.farming_customer.model.farminLife.FarmModel
+import kr.co.lion.farming_customer.model.orderHistory.OrderModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.OrderHistoryReviewViewModel
 
 class OrderHistoryWriteReviewFragment : Fragment() {
@@ -43,6 +53,10 @@ class OrderHistoryWriteReviewFragment : Fragment() {
     // 이미지 등록 가능 갯수
     val imageUploadPossible = 5
 
+    var orderModel : OrderModel? = null
+    var productType : Int? = null
+    var farmModel : FarmModel? = null
+    var activityModel : ActivityModel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentOrderHistoryWriteReviewBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_order_history_write_review, container, false)
         orderHistoryReviewViewModel = OrderHistoryReviewViewModel()
@@ -50,20 +64,53 @@ class OrderHistoryWriteReviewFragment : Fragment() {
         fragmentOrderHistoryWriteReviewBinding.lifecycleOwner = this
         orderHistoryActivity = activity as OrderHistoryActivity
 
+        settingInitData()
         settingToolbar()
         settingEvent()
         settingAlbumLauncher(imageUploadPossible)
         settingRecyclerView()
-        settingData()
 
         return fragmentOrderHistoryWriteReviewBinding.root
+    }
+
+    private fun settingInitData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            orderModel = OrderDao.selectOrderData(arguments?.getInt("orderIdx")!!)
+            productType = arguments?.getInt("orderProductType")
+            if(productType == OrderProductType.ORDER_PRODUCT_TYPE_FARM.number){
+                // 주말농장
+                farmModel = FarmDao.selectFarmData(arguments?.getInt("orderProductIdx")!!)
+            }else{
+                // 체험활동
+                activityModel = ActivityDao.selectActivityData(arguments?.getInt("orderProductIdx")!!)
+            }
+            settingData()
+            settingImage()
+
+        }
+    }
+
+    private fun settingImage() {
+        fragmentOrderHistoryWriteReviewBinding.apply {
+            CoroutineScope(Dispatchers.Main).launch {
+                if(productType == OrderProductType.ORDER_PRODUCT_TYPE_FARM.number){
+                    FarmDao.gettingFarmImage(orderHistoryActivity, farmModel!!.farm_images[0], imageViewWriteReviewProductImage)
+                }else{
+                    ActivityDao.gettingActivityImage(orderHistoryActivity, activityModel!!.activity_images[0], imageViewWriteReviewProductImage)
+                }
+            }
+        }
     }
 
     private fun settingData() {
         fragmentOrderHistoryWriteReviewBinding.apply {
             orderHistoryReviewViewModel!!.apply {
-                textViewWriteReview_productName.value = "파밍이네 감자"
-                textViewWriteReview_price.value = "10,000원 1개"
+                if(orderModel!!.order_option_detail.size > 1){
+                    textViewWriteReview_productName.value = "${orderModel!!.order_option_detail[0]["option_name"]}...외 ${orderModel!!.order_option_detail.size-1}개"
+                }else{
+                    textViewWriteReview_productName.value = "${orderModel!!.order_option_detail[0]["option_name"]}"
+                }
+                textViewWriteReview_price.value = orderModel!!.order_total_price
             }
         }
     }
@@ -82,6 +129,12 @@ class OrderHistoryWriteReviewFragment : Fragment() {
             // 앨범에서 사진 추가 버튼
             buttonWriteReviewUploadImage.setOnClickListener {
                 startAlbumLauncher()
+            }
+
+            // 완료
+            buttonWriteReviewDone.setOnClickListener {
+                // 리뷰 작성 업로드 작업 추가
+                orderHistoryActivity.removeFragment(OrderHistoryFragmentName.ORDER_HISTORY_WRITE_REVIEW_FRAGMENT)
             }
         }
     }

@@ -317,7 +317,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/pretendard_regular"
-                        android:text="갯수"
+                        android:text="배송비"
                         android:textColor="@color/grey_01"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
