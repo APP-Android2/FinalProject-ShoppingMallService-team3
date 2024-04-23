@@ -13,37 +13,55 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
+import kr.co.lion.farming_customer.dao.crop.CropDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
+import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
+import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
     lateinit var mainActivity: MainActivity
 
     lateinit var homeViewModel: HomeViewModel
+
+    // 추천 농산물 데이터를 담을 리스트
+    var cropLikeTop5List = listOf<CropModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentHomeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
         homeViewModel = HomeViewModel()
         fragmentHomeBinding.homeViewModel = homeViewModel
         fragmentHomeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
+        gettingCropLikeTop5()
 
-        settingRecyclerView()
 
         return fragmentHomeBinding.root
+    }
+
+    // 추천 농산물 데이터를 가져온다.
+    fun gettingCropLikeTop5(){
+        CoroutineScope(Dispatchers.Main).launch {
+            cropLikeTop5List = CropDao.gettingCropLikeTop5List()
+            settingRecyclerView()
+        }
+        fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
     }
 
     private fun settingRecyclerView() {
@@ -83,24 +101,47 @@ class HomeFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerCropViewHolder {
             val itemProductBinding = DataBindingUtil.inflate<ItemProductBinding>(layoutInflater, R.layout.item_product, parent, false)
+            val tradeViewModel = TradeViewModel()
+            itemProductBinding.tradeViewModel = tradeViewModel
+            itemProductBinding.lifecycleOwner = this@HomeFragment
 
             val viewPagerCropViewHolder = ViewPagerCropViewHolder(itemProductBinding)
             return viewPagerCropViewHolder
         }
 
         override fun getItemCount(): Int {
-            return 5
+            return cropLikeTop5List.size
         }
 
         override fun onBindViewHolder(holder: ViewPagerCropViewHolder, position: Int) {
-            holder.itemProductBinding.apply {
-                textViewCropName.text = "고랭지 배추"
-                textViewTradePrice.text = "10,000원 / kg"
-                textViewTradeLike.text = "999"
+            holder.itemProductBinding.tradeViewModel!!.apply {
+
+                textViewCropName.value = cropLikeTop5List[position].crop_title
+                textViewTradePrice.value = cropLikeTop5List[position].crop_option_detail[0]["crop_option_price"]
+                textViewTradeLike.value = cropLikeTop5List[position].crop_like_cnt.toString()
+                textViewCropLocation.value = cropLikeTop5List[position].crop_address
+                holder.itemProductBinding.RatingBarTrade.rating = cropLikeTop5List[position].crop_rating.toFloat()
             }
             holder.itemProductBinding.root.setOnClickListener {
                 val intent = Intent(mainActivity, TradeDetailActivity::class.java)
+                intent.putExtra("crop_idx",cropLikeTop5List[position].crop_idx)
                 startActivity(intent)
+            }
+            holder.itemProductBinding.tradeViewModel?.isLike?.value = false
+            holder.itemProductBinding.imageButtonProductLike.setOnClickListener {
+                if(holder.itemProductBinding.tradeViewModel?.isLike?.value!!){
+                    holder.itemProductBinding.tradeViewModel?.isLike?.value = false
+                    holder.itemProductBinding.imageButtonProductLike.setImageResource(R.drawable.heart_02)
+                    holder.itemProductBinding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                }else{
+                    holder.itemProductBinding.tradeViewModel?.isLike?.value = true
+                    holder.itemProductBinding.imageButtonProductLike.setImageResource(R.drawable.heart_01)
+                    holder.itemProductBinding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                CropDao.gettingCropImage(mainActivity,cropLikeTop5List[position].crop_images[position],holder.itemProductBinding.imageViewCropImage)
             }
         }
     }
