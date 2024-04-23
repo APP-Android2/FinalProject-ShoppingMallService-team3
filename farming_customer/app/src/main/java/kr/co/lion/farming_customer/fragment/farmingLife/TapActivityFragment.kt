@@ -22,7 +22,7 @@ import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.databinding.FragmentTapActivityBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
-import kr.co.lion.farming_customer.model.farminLife.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 
 class TapActivityFragment : Fragment() {

@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.model.farminLife
+package kr.co.lion.farming_customer.model.farmingLife
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
