@@ -1,43 +1,39 @@
 package kr.co.lion.farming_customer.activity.tradeCrop
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kr.co.lion.farming_customer.MainFragmentName
+import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
+import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.dao.crop.CropDao
 import kr.co.lion.farming_customer.databinding.ActivityTradeDetailBinding
-import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCropImageBinding
-import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewCropImageBinding
 import kr.co.lion.farming_customer.fragment.tradeCrop.BottomSheetTradeCrop
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.CropReview
-import kr.co.lion.farming_customer.model.Product
-import kr.co.lion.farming_customer.model.ProductCard
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeDetailViewModel
+import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 
-class TradeDetailActivity : AppCompatActivity() {
+class TradeDetailActivity : AppCompatActivity(),DialogYesNoInterface {
 
     lateinit var binding: ActivityTradeDetailBinding
     lateinit var tradeDetailViewModel:TradeDetailViewModel
@@ -58,6 +54,9 @@ class TradeDetailActivity : AppCompatActivity() {
     // 리뷰 더보기 버튼이 클릭된 상태인지 확인
     private var isReviewSeeMoreButtonClicked = false
 
+    // 임시로 관련 농작물에 넣을 데이터를 담을 리스트
+    var relatedCropList:List<CropModel>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_trade_detail)
@@ -76,6 +75,7 @@ class TradeDetailActivity : AppCompatActivity() {
         position = intent.getIntExtra("position",0)
         CoroutineScope(Dispatchers.Main).launch {
             cropData = CropDao.selectCropData(crop_idx)
+            relatedCropList = CropDao.gettingCropLikeTop5List()
 
             setToolbar()
             setTab()
@@ -96,6 +96,10 @@ class TradeDetailActivity : AppCompatActivity() {
             tradeDetailViewModel?.textViewTradeDetailLocation?.value = "지역 : ${cropData?.crop_address}"
             // 농작물 택배비
             tradeDetailViewModel?.textViewTradeDetailFee?.value = "택배비 : ${cropData?.delivery_fee}원"
+            // 농작물 상세내용 이미지
+            CoroutineScope(Dispatchers.Main).launch {
+                CropDao.gettingCropImage(this@TradeDetailActivity, cropData?.crop_images?.get(0) ?: "", imageViewTradeDetail)
+            }
             // 농작물 상세내용
             tradeDetailViewModel?.textViewTradeTabDetailContents?.value = cropData?.crop_content_detail
             // 농작물 주의사항
@@ -129,6 +133,21 @@ class TradeDetailActivity : AppCompatActivity() {
                 setNavigationIcon(R.drawable.back)
                 setNavigationOnClickListener {
                     finish()
+                }
+                setOnMenuItemClickListener {
+                    when(it.itemId){
+                        R.id.menuItemTradeDetailCart -> {
+                            // ("장바구니 연결")
+                            val dialog = DialogYesNo(
+                                this@TradeDetailActivity,
+                                "장바구니에 해당 상품이 담겼습니다.",
+                                "장바구니로 이동하시겠습니까?",
+                                this@TradeDetailActivity
+                            )
+                            dialog.show(this@TradeDetailActivity.supportFragmentManager, "DialogYesNo")
+                        }
+                    }
+                    true
                 }
             }
         }
@@ -232,7 +251,7 @@ class TradeDetailActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.Main).launch {
                         CropDao.updateCropLikeState(cropData!!, buttonLikeClicked!!)
                     }
-                //TODO("좋아요 항목에 해당 아이템 추가, 좋아요 count 증가")
+                    //TODO("좋아요 항목에 해당 아이템 추가, 좋아요 count 증가")
                 } else {
                     buttonLikeClicked = true
                     imageButtonLike.setImageResource(R.drawable.heart_01)
@@ -246,6 +265,11 @@ class TradeDetailActivity : AppCompatActivity() {
             // 구매하기 버튼 누르면
             buttonTradeDetailPurchase.setOnClickListener {
                 val bottomSheet = BottomSheetTradeCrop()
+                val bundle = Bundle()
+                bundle.putInt("crop_idx",crop_idx)
+
+                bottomSheet.arguments = bundle
+
                 bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
         }
@@ -254,8 +278,7 @@ class TradeDetailActivity : AppCompatActivity() {
 
     // 이미지 설정
     private fun setImageAdapter(){
-        // 임의로 이미지 리소스를 가져옴
-        // TODO("DB에서 이미지 가져오는 작업 필요")
+        // 이미지 리소스를 가져옴
         val image = cropData?.crop_images
 
         // ViewPager2에 이미지 어댑터 설정
@@ -391,48 +414,32 @@ class TradeDetailActivity : AppCompatActivity() {
     // 관련 농작물 설정
     private fun setRecyclerRelatedCrop(){
 
-        val crops = listOf(
-            ProductCard(R.drawable.farming_mark, "사과", "10,000원", 999, 1.0),
-            ProductCard(R.drawable.farming_mark, "배", "10,000원", 999, 2.0),
-            ProductCard(R.drawable.farming_mark, "감자", "10,000원", 999, 3.0),
-            ProductCard(R.drawable.farming_mark, "바나나", "10,000원", 999, 4.0),
-            ProductCard(R.drawable.farming_mark, "사과", "10,000원", 999, 5.0),
-        )
+        val crops = relatedCropList
         binding.apply {
             recyclerViewRelatedCrop.layoutManager = LinearLayoutManager(this@TradeDetailActivity, LinearLayoutManager.HORIZONTAL, false)
-            recyclerViewRelatedCrop.adapter = RelatedCropAdpter(crops)
+            recyclerViewRelatedCrop.adapter = RelatedCropAdpter(crops!!)
         }
     }
 
     // 관련 농작물 recyclerView Adapter
-    inner class RelatedCropAdpter(private val crops: List<ProductCard>): RecyclerView.Adapter<RelatedCropAdpter.RelatedCropViewHolder>(){
-        inner class RelatedCropViewHolder(private val binding: RowRelatedCropBinding): RecyclerView.ViewHolder(binding.root) {
-            fun binding(crop: ProductCard) {
+    inner class RelatedCropAdpter(private val crops: List<CropModel>): RecyclerView.Adapter<RelatedCropAdpter.RelatedCropViewHolder>(){
+        inner class RelatedCropViewHolder(val binding: RowRelatedCropBinding): RecyclerView.ViewHolder(binding.root) {
+            fun binding(crop: CropModel) {
                 binding.apply {
-                    textViewLikeCropName.text = crop.name
-                    textViewLikeCropPrice.text = crop.price
-                    ratingBarLikeCrop.rating = crop.ratings.toFloat()
-                    imageViewLikeCrop.setImageResource(crop.imageResourceId)
-                    textViewLikeCropCnt.text = if (crop.likes > 999) "999+"
-                    else crop.likes.toString()
+                    tradeViewModel?.textViewLikeCropName?.value = crop.crop_title
+                    tradeViewModel?.textViewLikeCropPrice?.value = crop.crop_option_detail[1]["crop_option_price"]
+                    tradeViewModel?.textViewLikeCropCnt?.value = if (crop.crop_like_cnt >= 1000) "999+"  // 좋아요 개수 1000이상이면 초기값 999+
+                    else "${crop.crop_like_cnt}"
+                    ratingBarLikeCrop.rating = crop.crop_rating.toFloat()
                 }
-
-                binding.apply {
-                    imageViewHeartCrop.setOnClickListener {
-                        crop.isLiked = !crop.isLiked // 좋아요 선택
-                        if (crop.isLiked) {
-                            crop.likes++ // 좋아요 상태면 좋아요 수 증가, 텍스트 흰색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeDetailActivity, R.color.white))
-                        } else {
-                            crop.likes-- // 좋아요 취소면 좋아요 수 감소, 텍스트 갈색
-                            binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeDetailActivity, R.color.brown_01))
-                        }
-                        // 좋아요 수가 1000 이상이면 999+로 표기
-                        binding.textViewLikeCropCnt.text = if (crop.likes >= 1000) "999+"
-                        else "${crop.likes}"
-                        binding.imageViewHeartCrop.setImageResource(
-                            if (crop.isLiked) R.drawable.heart_01 else R.drawable.heart_02
-                        )
+                // 아이템 클릭 이벤트 처리
+                itemView.setOnClickListener {
+                    val adapterPosition = adapterPosition
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        val intent = Intent(itemView.context, TradeDetailActivity::class.java)
+                        intent.putExtra("crop_idx", crop.crop_idx) // 상품 ID를 인텐트에 추가
+                        intent.putExtra("position", adapterPosition) // 클릭된 아이템의 포지션 추가
+                        itemView.context.startActivity(intent)
                     }
                 }
             }
@@ -440,8 +447,10 @@ class TradeDetailActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RelatedCropViewHolder {
-            val inflater = LayoutInflater.from(parent.context)
-            val binding = RowRelatedCropBinding.inflate(inflater, parent, false)
+            val binding = DataBindingUtil.inflate<RowRelatedCropBinding>(layoutInflater,R.layout.row_related_crop,parent,false)
+            val tradeViewModel = TradeViewModel()
+            binding.tradeViewModel = tradeViewModel
+            binding.lifecycleOwner = this@TradeDetailActivity
             return RelatedCropViewHolder(binding)
         }
 
@@ -449,7 +458,38 @@ class TradeDetailActivity : AppCompatActivity() {
 
 
         override fun onBindViewHolder(holder: RelatedCropViewHolder, position: Int) {
-            holder.binding(crops[position])
+            val product = crops[position]
+            holder.binding(product)
+            holder.binding.apply {
+                tradeViewModel!!.apply {
+                    isLike.value = false
+                    constraintLikeCropCancel.setOnClickListener {
+                        if(isLike.value!!){
+                            isLike.value = false
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_02)
+                            holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeDetailActivity, R.color.brown_01))
+
+                        }else{
+                            isLike.value = true
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_01)
+                            holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(this@TradeDetailActivity, R.color.white))
+                        }
+                    }
+                }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                CropDao.gettingCropImage(this@TradeDetailActivity,product.crop_images[position],holder.binding.imageViewLikeCrop)
+            }
         }
+    }
+
+    override fun onYesButtonClick(id: Int) {
+
+    }
+
+    override fun onYesButtonClick(activity: AppCompatActivity) {
+        val intent = Intent(this@TradeDetailActivity, CartActivity::class.java)
+        intent.putExtra("crop_idx",crop_idx)
+        startActivity(intent)
     }
 }

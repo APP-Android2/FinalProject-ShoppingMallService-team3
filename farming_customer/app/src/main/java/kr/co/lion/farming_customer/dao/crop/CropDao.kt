@@ -2,13 +2,11 @@ package kr.co.lion.farming_customer.dao.crop
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -153,7 +151,7 @@ class CropDao {
             }
         }
 
-        // 농산품 모든 목록을 가져온다.
+        // 농산품 검색 드롭다운 조건에 맞게 데이터를 가져온다.
         suspend fun gettingCropAllList(dropDownSort:String): MutableList<CropModel>{
             // 농산품 정보를 담을 리스트
             val cropAllList = mutableListOf<CropModel>()
@@ -182,7 +180,6 @@ class CropDao {
                     cropAllList.add(cropModel)
                 }
             }
-            Log.d("test12","aa")
             job1.join()
 
             return cropAllList
@@ -190,16 +187,18 @@ class CropDao {
 
         // 이미지 데이터를 받아오는 메서드
         suspend fun gettingCropImage(context:Context, imageFileName:String, imageView: ImageView){
-            CoroutineScope(Dispatchers.IO).launch {
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 이미지에 접근할 수 있는 객체를 가져온다.
                 val storageRef = Firebase.storage.reference.child("$imageFileName")
                 // 이미지의 주소를 가지고 있는 Uri 객체를 받아온다.
                 val imageUri = storageRef.downloadUrl.await()
                 // 이미지 데이터를 받아와 이미지 뷰에 보여준다.
-                CoroutineScope(Dispatchers.Main).launch {
+                val job2 = CoroutineScope(Dispatchers.Main).launch {
                     Glide.with(context).load(imageUri).into(imageView)
                 }
+                job2.join()
             }
+            job1.join()
             // 이미지는 용량이 매우 클 수 있다. 즉 이미지 데이터를 내려받는데 시간이 오래걸릴 수도 있다.
             // 이에, 이미지 데이터를 받아와 보여주는 코루틴을 작업이 끝날 때 까지 대기 하지 않는다.
             // 그 이유는 데이터를 받아오는데 걸리는 오랜 시간 동안 화면에 아무것도 나타나지 않을 수 있기 때문이다.

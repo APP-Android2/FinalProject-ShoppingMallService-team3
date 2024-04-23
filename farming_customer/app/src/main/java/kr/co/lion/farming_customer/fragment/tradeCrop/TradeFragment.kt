@@ -2,14 +2,12 @@ package kr.co.lion.farming_customer.fragment.tradeCrop
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -25,8 +23,6 @@ import kr.co.lion.farming_customer.databinding.FragmentTradeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.CropModel
-import kr.co.lion.farming_customer.model.Product
-import kr.co.lion.farming_customer.model.ProductCard
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -45,8 +41,6 @@ class TradeFragment : Fragment() {
         fragmentTradeBinding.tradeViewModel = tradeViewModel
         fragmentTradeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
-
-
 
         settingInputForm()
         setToolbar()
@@ -205,9 +199,6 @@ class TradeFragment : Fragment() {
     inner class ProductPagerAdapter(private val products: List<CropModel>) : RecyclerView.Adapter<ProductPagerAdapter.ProductViewHolder>() {
         inner class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
             fun bind(product: CropModel) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    CropDao.gettingCropImage(mainActivity,product.crop_images[adapterPosition],binding.imageViewCropImage)
-                }
                 binding.tradeViewModel?.textViewCropName?.value = product.crop_title
                 binding.tradeViewModel?.textViewCropLocation?.value = product.crop_address
                 binding.tradeViewModel?.textViewTradePrice?.value = product.crop_option_detail[1]["crop_option_price"]
@@ -215,6 +206,7 @@ class TradeFragment : Fragment() {
                 else "${product.crop_like_cnt}"
 
                 binding.RatingBarTrade.rating = product.crop_rating.toFloat()
+
 
 //                binding.imageButtonProductLike.setOnClickListener {
 //                    product.like_state = !product.like_state // 좋아요 선택
@@ -281,6 +273,9 @@ class TradeFragment : Fragment() {
                     holder.binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 }
             }
+            CoroutineScope(Dispatchers.Main).launch {
+                CropDao.gettingCropImage(mainActivity,products[position].crop_images[position],holder.binding.imageViewCropImage)
+            }
 
         }
 
@@ -292,15 +287,14 @@ class TradeFragment : Fragment() {
         inner class ViewHolder(val binding: RowRelatedCropBinding) : RecyclerView.ViewHolder(binding.root) {
             fun bind(product: CropModel){
                 binding.apply {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        CropDao.gettingCropImage(mainActivity,product.crop_images[adapterPosition],binding.imageViewLikeCrop)
-                    }
+
                     tradeViewModel?.textViewLikeCropName?.value = product.crop_title
                     tradeViewModel?.textViewLikeCropPrice?.value = product.crop_option_detail[1]["crop_option_price"]
                     tradeViewModel?.textViewLikeCropCnt?.value = if (product.crop_like_cnt >= 1000) "999+"  // 좋아요 개수 1000이상이면 초기값 999+
                     else "${product.crop_like_cnt}"
 
                     ratingBarLikeCrop.rating = product.crop_rating.toFloat()
+
 
 //
 //                    imageViewHeartCrop.setOnClickListener {
@@ -349,7 +343,6 @@ class TradeFragment : Fragment() {
         override fun onBindViewHolder(holder: TradeNewAdapter.ViewHolder, position: Int) {
             val product = products[position]
             holder.bind(product)
-
             holder.binding.apply {
                 tradeViewModel!!.apply {
                     isLike.value = false
@@ -367,6 +360,9 @@ class TradeFragment : Fragment() {
                     }
 
                 }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                CropDao.gettingCropImage(mainActivity,product.crop_images[position],holder.binding.imageViewLikeCrop)
             }
         }
 

@@ -41,11 +41,13 @@
             app:startIconTint="@color/grey_02">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldTradeSearchCrop"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:fontFamily="@font/pretendard_regular"
                 android:hint="원하는 농작물을 검색해보세요"
                 android:inputType="text"
+                android:maxLines="1"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:textColor="@color/brown_01"
@@ -110,7 +112,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewTradeSearch"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
