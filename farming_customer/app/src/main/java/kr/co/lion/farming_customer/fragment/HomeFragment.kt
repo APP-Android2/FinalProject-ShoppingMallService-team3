@@ -12,12 +12,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
@@ -25,6 +29,7 @@ import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
+import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 
@@ -33,6 +38,9 @@ class HomeFragment : Fragment() {
     lateinit var mainActivity: MainActivity
 
     lateinit var homeViewModel: HomeViewModel
+
+    // 추천 게시물 데이터를 담을 리스트
+    var communityPostLikeTop5List = listOf<CommunityModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentHomeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
         homeViewModel = HomeViewModel()
@@ -43,6 +51,15 @@ class HomeFragment : Fragment() {
         settingRecyclerView()
 
         return fragmentHomeBinding.root
+    }
+
+    // 추천 게시물 데이터를 가져온다.
+    fun gettingCommunityPostLikeTop5(){
+        CoroutineScope(Dispatchers.Main).launch {
+            communityPostLikeTop5List = CommunityPostDao.gettingCommunityPostLikeTop5List()
+            settingRecyclerView()
+        }
+        fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
     }
 
     private fun settingRecyclerView() {
@@ -192,7 +209,7 @@ class HomeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 5
+            return communityPostLikeTop5List.size
         }
 
         override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {

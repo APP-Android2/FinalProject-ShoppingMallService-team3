@@ -18,9 +18,11 @@ import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.community.CommunitySearchActivity
+import kr.co.lion.farming_customer.dao.CommunityCommentDao
 import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunitySearchBinding
 import kr.co.lion.farming_customer.databinding.RowCommunitySearchBinding
+import kr.co.lion.farming_customer.model.CommunityCommentModel
 import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
@@ -31,6 +33,8 @@ class CommunitySearchFragment : Fragment() {
 
     // 검색 화면의 RecyclerView 구성을 위한 리스트
     var searchList = mutableListOf<CommunityModel>()
+    // 댓글 정보를 가지고 있는 리스트
+    var commentList = mutableListOf<CommunityCommentModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -123,8 +127,13 @@ class CommunitySearchFragment : Fragment() {
                 communityViewModel?.textViewCommunityListContentSearch?.value = searchList[position].postContent
                 communityViewModel?.textViewCommunityListViewCntSearch?.value = searchList[position].postViewCnt.toString()
                 communityViewModel?.textViewCommunityListCommentCntSearch?.value = searchList[position].postCommentCnt.toString()
-                communityViewModel?.textViewCommunityListLikeCntSearch?.value = searchList[position].postLikeCnt.toString()
                 communityViewModel?.textViewCommunityListDateSearch?.value = searchList[position].postRegDt
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    // 댓글 정보를 가져온다
+                    commentList = CommunityCommentDao.gettingCommunityCommentList(searchList[position].postIdx)
+                    communityViewModel?.textViewCommunityListCommentCntSearch?.value = commentList.size.toString()
+                }
 
                 CoroutineScope(Dispatchers.Main).launch {
                     if (searchList[position].postImages != null) {
@@ -135,6 +144,11 @@ class CommunitySearchFragment : Fragment() {
                 }
 
                 linearLayoutCommunityListSearch.setOnClickListener {
+                    // 조회수
+                    CoroutineScope(Dispatchers.Main).launch {
+                        searchList[position].postViewCnt += 1
+                        CommunityPostDao.updateCommunityPostViewCnt(searchList[position].postIdx, searchList[position].postViewCnt)
+                    }
 
                     val communityIntent = Intent(communitySearchActivity, CommunityActivity::class.java)
                     communityIntent.putExtra("postIdx", searchList[position].postIdx)
@@ -163,7 +177,7 @@ class CommunitySearchFragment : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
             // 현재 게시판에 해당하는 게시글을 모두 가져온다.
-            val tempList = CommunityPostDao.gettingCommunityPostList()
+            val tempList = CommunityPostDao.gettingCommunityPostList("번호순")
             // 사용자 정보를 가져온다.
 //            userList = UserDao.getUserAll()
             // 가져온 게시글 데이터 중에서 검색어를 포함하는 제목의 글 데이터만 담는다.

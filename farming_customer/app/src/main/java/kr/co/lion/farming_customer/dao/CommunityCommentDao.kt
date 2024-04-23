@@ -72,7 +72,7 @@ class CommunityCommentDao {
                 val collectionReference = Firebase.firestore.collection("CommunityCommentData")
                 // 댓글 상태가 정상 상태이고 댓글 번호를 기준으로 내림차순 정렬되게 데이터를 가져올 수 있는
                 // Query를 생성한다.
-                // 댓글 상태가 정상 상태인 것만..
+                // 댓글 상태가 정상과 수정 상태인 것만..
                 var query = collectionReference.whereIn("commentStatus", listOf(CommentStatus.COMMENT_STATUS_NORMAL.number, CommentStatus.COMMENT_STATUS_MODIFY.number))
                 // 글 번호에 해당하는 것들만
                 query = query.whereEqualTo("commentPostIdx", postIdx)

@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.community
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -40,9 +41,6 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
     // 댓글 모델
     var model:CommunityCommentModel? = null
 
-    // 좋아요 수
-    var communityReadLikeCnt = 0
-
     // 이미지 저장용 리스트
     var imageCommunityStringList = mutableListOf<String>()
 
@@ -52,7 +50,6 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
 
     // 현재 글 번호를 담을 변수
     var postIdx = 0
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -108,17 +105,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
 
     // 좋아요 누르기
     fun settingImageViewCommunityReadLike() {
-        fragmentCommunityReadBinding.apply {
-            imageViewCommunityReadLike.setOnClickListener {
-                if (imageViewCommunityReadLike.isSelected) {
-                    communityReadLikeCnt++
-                    !it.isSelected
-                } else {
-                    communityReadLikeCnt--
-                }
 
-            }
-        }
     }
 
     // 커뮤니티 글 상세조회 이미지 뷰페이저 설정
@@ -207,14 +194,40 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
             communityReadViewModel.textViewCommunityReadDate.value = communityPostModel?.postRegDt
             communityReadViewModel.textViewCommunityReadWriter.value = "글 작성자" // UserDao를 받아와서 userModel의 닉네임 갖고오기
             communityReadViewModel.textViewCommunityReadToolbarTitle.value = communityPostModel?.postType
-            communityReadViewModel.textViewCommunityReadLikeCnt.value = communityPostModel?.postLikeCnt.toString()
+
+            fragmentCommunityReadBinding.apply {
+                if (communityPostModel?.postLikeState == true) {
+                    imageViewCommunityReadLike.setImageResource(R.drawable.heart_01)
+                    communityReadViewModel?.textViewCommunityReadLikeCnt?.value = communityPostModel.postLikeCnt.toString()
+                } else {
+                    imageViewCommunityReadLike.setImageResource(R.drawable.heart_04)
+                    communityReadViewModel?.textViewCommunityReadLikeCnt?.value = communityPostModel?.postLikeCnt.toString()
+                }
+
+                imageViewCommunityReadLike.setOnClickListener {
+                    if (communityPostModel?.postLikeState == false) {
+                        communityPostModel.postLikeState = true
+                        imageViewCommunityReadLike.setImageResource(R.drawable.heart_01)
+                        communityPostModel.postLikeCnt += 1
+                        CoroutineScope(Dispatchers.Main).launch {
+                            CommunityPostDao.updateCommunityPostLikeState(communityPostModel, communityPostModel.postLikeState)
+                        }
+                    } else {
+                        communityPostModel?.postLikeState = false
+                        imageViewCommunityReadLike.setImageResource(R.drawable.heart_04)
+                        communityPostModel!!.postLikeCnt -= 1
+                        CoroutineScope(Dispatchers.Main).launch {
+                            CommunityPostDao.updateCommunityPostLikeState(communityPostModel!!, communityPostModel.postLikeState)
+                        }
+                    }
+                    communityReadViewModel?.textViewCommunityReadLikeCnt?.value = communityPostModel?.postLikeCnt.toString()
+                }
+            }
 
             val job2 = CoroutineScope(Dispatchers.IO).launch {
                 communityReadViewModel.textViewCommunityReadCommentCnt.postValue(model!!.commentCnt.toString())
             }
             job2.join()
-
-
 
             settingViewPager2CommunityReadImage()
 
@@ -367,31 +380,6 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         }
     }
 
-    // 댓글 수정 객체 생성
-    suspend fun generatingCommentModifyObject(): CommunityCommentModel {
-
-        var communityCommentModel = CommunityCommentModel()
-
-        val job1 = CoroutineScope(Dispatchers.Main).launch {
-            // 댓글 번호를 가져온다.
-            val commentSequence = CommunityCommentDao.getCommunityCommentSequence()
-            // 댓글 번호를 업데이트 한다.
-            CommunityCommentDao.updateCommunityCommentSequence(commentSequence)
-            // 저장할 데이터를 담는다.
-            communityCommentModel.commentIdx = commentSequence
-            communityCommentModel.commentUserIdx = 0 // 댓글 작성자 유저 아이디 받아올 것.
-            val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
-            communityCommentModel.commentModDt = simpleDateFormat.format(Date())
-            communityCommentModel.commentPostIdx = postIdx
-            communityCommentModel.commentContent = communityReadViewModel?.textInputCommunityReadSendComment?.value!!
-            communityCommentModel.commentCnt = commentList.size
-            communityCommentModel.commentStatus = CommentStatus.COMMENT_STATUS_NORMAL.number
-        }
-        job1.join()
-
-        return communityCommentModel
-    }
-
     // 댓글 수정 완료 처리
     fun commentModifyDoneProcess(position: Int, commentIdx:Int) {
 
@@ -422,6 +410,7 @@ class CommunityReadFragment : Fragment(), DialogYesNoInterface {
         }
     }
 
+    // 댓글 정보를 가져온다
     fun gettingCommentData() {
         CoroutineScope(Dispatchers.Main).launch {
             // 댓글 정보를 가져온다

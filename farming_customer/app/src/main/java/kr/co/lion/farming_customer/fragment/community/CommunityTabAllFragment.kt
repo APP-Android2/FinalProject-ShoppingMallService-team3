@@ -1,6 +1,7 @@
 package kr.co.lion.farming_customer.fragment.community
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -20,9 +21,11 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
+import kr.co.lion.farming_customer.dao.CommunityCommentDao
 import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
+import kr.co.lion.farming_customer.model.CommunityCommentModel
 import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
@@ -34,8 +37,9 @@ class CommunityTabAllFragment : Fragment() {
 
     // 전체 탭의 리사이클러뷰 구성을 위한 리스트
     var allList = mutableListOf<CommunityModel>()
-    // 조회 수
-    var communityReadAllViewCnt = 1
+    // 댓글 정보를 가지고 있는 리스트
+    var commentList = mutableListOf<CommunityCommentModel>()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -46,10 +50,10 @@ class CommunityTabAllFragment : Fragment() {
 
         mainActivity = activity as MainActivity
 
-        settingButtonCommunityTabAllPopularity()
-        settingList()
+        settingToggleButtonCommunityTabAll()
         settingRecyclerViewCommunityTabAll()
         settingFloatingActionButtonCommunityAllAdd()
+        settingFloatingButton()
 
         return fragmentCommunityTabAllBinding.root
     }
@@ -57,26 +61,59 @@ class CommunityTabAllFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        settingList()
+        settingToggleButtonCommunityTabAll()
     }
 
-    // 커뮤니티 전체 탭
-    fun settingButtonCommunityTabAllPopularity() {
+    // 커뮤니티 전체 탭의 정렬 토글
+    fun settingToggleButtonCommunityTabAll() {
         fragmentCommunityTabAllBinding.apply {
             buttonCommunityTabAllPopularity.isChecked = true
+            handleToggleSelected("인기순")
+
+            buttonCommunityTabAllPopularity.setOnClickListener {
+                buttonCommunityTabAllPopularity.isChecked = true
+                handleToggleSelected("인기순")
+            }
+            buttonCommunityTabAllRecent.setOnClickListener {
+                buttonCommunityTabAllRecent.isChecked = true
+                handleToggleSelected("최신순")
+            }
+            buttonCommunityTabAllLook.setOnClickListener {
+                buttonCommunityTabAllLook.isChecked = true
+                handleToggleSelected("조회순")
+            }
         }
     }
 
-    // 리스트에 받아오기
-    fun settingList() {
-        CoroutineScope(Dispatchers.Main).launch {
-            allList = CommunityPostDao.gettingCommunityPostList()
-            fragmentCommunityTabAllBinding.recyclerViewCommunityTabAll.adapter?.notifyDataSetChanged()
-
+    // 정렬 토글 눌렀을 때
+    fun handleToggleSelected(toggleType:String) {
+        when(toggleType) {
+            "인기순" -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    allList = CommunityPostDao.gettingCommunityPostList("인기순")
+                    fragmentCommunityTabAllBinding.recyclerViewCommunityTabAll.adapter?.notifyDataSetChanged()
+                }
+            }
+            "최신순" -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    allList = CommunityPostDao.gettingCommunityPostList("최신순")
+                    fragmentCommunityTabAllBinding.recyclerViewCommunityTabAll.adapter?.notifyDataSetChanged()
+                }
+            }
+            "조회순" -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    allList = CommunityPostDao.gettingCommunityPostList("조회순")
+                    fragmentCommunityTabAllBinding.recyclerViewCommunityTabAll.adapter?.notifyDataSetChanged()
+                }
+            }
+            "번호순" -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    allList = CommunityPostDao.gettingCommunityPostList("번호순")
+                    fragmentCommunityTabAllBinding.recyclerViewCommunityTabAll.adapter?.notifyDataSetChanged()
+                }
+            }
         }
     }
-
-
 
     // 커뮤니티 전체 탭 게시글 작성
     fun settingFloatingActionButtonCommunityAllAdd() {
@@ -84,8 +121,29 @@ class CommunityTabAllFragment : Fragment() {
             floatingActionButtonCommunityAllAdd.setOnClickListener {
                 val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
                 startActivity(communityIntent)
-
             }
+        }
+    }
+
+    // 플로팅 버튼 리사이클러뷰 마지막에만 안 보이게
+    fun settingFloatingButton() {
+        fragmentCommunityTabAllBinding.apply {
+            recyclerViewCommunityTabAll.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                var temp: Int = 0
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (temp == 1) {
+                        super.onScrolled(recyclerView, dx, dy)
+                    }
+                    floatingActionButtonCommunityAllAdd.visibility = View.GONE
+                }
+
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    floatingActionButtonCommunityAllAdd.visibility = View.VISIBLE
+                    temp = 1
+                }
+            })
         }
     }
 
@@ -138,9 +196,23 @@ class CommunityTabAllFragment : Fragment() {
                 communityViewModel?.textViewCommunityListTitleAll?.value = allList[position].postTitle
                 communityViewModel?.textViewCommunityListContentAll?.value = allList[position].postContent
                 communityViewModel?.textViewCommunityListViewCntAll?.value = allList[position].postViewCnt.toString()
-                communityViewModel?.textViewCommunityListCommentCntAll?.value = allList[position].postCommentCnt.toString()
-                communityViewModel?.textViewCommunityListLikeCntAll?.value = allList[position].postLikeCnt.toString()
                 communityViewModel?.textViewCommunityListDateAll?.value = allList[position].postRegDt
+
+                if (allList[position].postLikeState == true) {
+                    imageViewCommunityListLikeAll.setImageResource(R.drawable.heart_01)
+                    textViewCommunityListLikeCntAll.setTextColor(Color.parseColor("#FFFFFFFF"))
+                    communityViewModel?.textViewCommunityListLikeCntAll?.value = allList[position].postLikeCnt.toString()
+                } else {
+                    imageViewCommunityListLikeAll.setImageResource(R.drawable.heart_04)
+                    textViewCommunityListLikeCntAll.setTextColor(Color.parseColor("#413514"))
+                    communityViewModel?.textViewCommunityListLikeCntAll?.value = allList[position].postLikeCnt.toString()
+                }
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    // 댓글 정보를 가져온다
+                    commentList = CommunityCommentDao.gettingCommunityCommentList(allList[position].postIdx)
+                    communityViewModel?.textViewCommunityListCommentCntAll?.value = commentList.size.toString()
+                }
 
                 CoroutineScope(Dispatchers.Main).launch {
                     if (allList[position].postImages != null) {
@@ -152,23 +224,38 @@ class CommunityTabAllFragment : Fragment() {
 
                 linearLayoutCommunityListAll.setOnClickListener {
 
+                    // 조회수
+                    CoroutineScope(Dispatchers.Main).launch {
+                        allList[position].postViewCnt += 1
+                        CommunityPostDao.updateCommunityPostViewCnt(allList[position].postIdx, allList[position].postViewCnt)
+                    }
+
                     val communityIntent = Intent(mainActivity, CommunityActivity::class.java)
                     communityIntent.putExtra("postIdx", allList[position].postIdx)
                     startActivity(communityIntent)
                 }
 
                 imageViewCommunityListLikeAll.setOnClickListener {
-                    imageViewCommunityListLikeAll.isSelected = !imageViewCommunityListLikeAll.isSelected
-                    textViewCommunityListLikeCntAll.isSelected = !textViewCommunityListLikeCntAll.isSelected
+                    if (allList[position].postLikeState == false) {
+                        allList[position].postLikeState = true
+                        imageViewCommunityListLikeAll.setImageResource(R.drawable.heart_01)
+                        textViewCommunityListLikeCntAll.setTextColor(Color.parseColor("#FFFFFFFF"))
+                        allList[position].postLikeCnt += 1
+                        CoroutineScope(Dispatchers.Main).launch {
+                            CommunityPostDao.updateCommunityPostLikeState(allList[position], allList[position].postLikeState)
+                        }
+                    } else {
+                        allList[position].postLikeState = false
+                        imageViewCommunityListLikeAll.setImageResource(R.drawable.heart_04)
+                        textViewCommunityListLikeCntAll.setTextColor(Color.parseColor("#413514"))
+                        allList[position].postLikeCnt -= 1
+                        CoroutineScope(Dispatchers.Main).launch {
+                            CommunityPostDao.updateCommunityPostLikeState(allList[position], allList[position].postLikeState)
+                        }
+                    }
+                    communityViewModel?.textViewCommunityListLikeCntAll?.value = allList[position].postLikeCnt.toString()
                 }
             }
-
-            if (position == allList.size) {
-                fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = false
-            } else {
-                fragmentCommunityTabAllBinding.floatingActionButtonCommunityAllAdd.isVisible = true
-            }
-
         }
     }
 }

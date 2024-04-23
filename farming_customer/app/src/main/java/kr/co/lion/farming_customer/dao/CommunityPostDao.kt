@@ -137,7 +137,7 @@ class CommunityPostDao {
         }
 
         // 게시글 목록을 가져온다.
-        suspend fun gettingCommunityPostList() : MutableList<CommunityModel> {
+        suspend fun gettingCommunityPostList(toggleType:String) : MutableList<CommunityModel> {
             // 게시글 정보를 담을 리스트
             val communityPostList = mutableListOf<CommunityModel>()
 
@@ -145,10 +145,16 @@ class CommunityPostDao {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
                 val collectionReference = Firebase.firestore.collection("CommunityPostData")
                 // 게시글 상태가 정상 상태이고 게시글 번호를 기준으로 내림차순 정렬되게 데이터를 가져올 수 있는 Query 를 생성한다.
-                // 게시글 상태가 정상 상태인 것만..
-                var query = collectionReference.whereEqualTo("postStatus", PostStatus.POST_STATUS_NORMAL.number)
+                // 게시글 상태가 정상 또는 수정 상태인 것만 가져오기 위한 조건 설정
+                val validStatus = listOf(PostStatus.POST_STATUS_NORMAL.number, PostStatus.POST_STATUS_MODIFY.number)
+                var query = collectionReference.whereIn("postStatus", validStatus)
                 // 게시글 번호를 기준으로 내림차순 정렬
-                query = query.orderBy("postIdx", Query.Direction.DESCENDING)
+                when(toggleType){
+                    "인기순" -> query = query.orderBy("postLikeCnt",Query.Direction.DESCENDING)
+                    "최신순" -> query = query.orderBy("postRegDt",Query.Direction.DESCENDING)
+                    "조회순" -> query = query.orderBy("postViewCnt",Query.Direction.DESCENDING)
+                    "번호순" -> query = query.orderBy("postIdx",Query.Direction.DESCENDING)
+                }
                 val querySnapshot = query.get().await()
                 // 가져온 문서의 수 만큼 반복한다.
                 querySnapshot.forEach {
@@ -181,6 +187,23 @@ class CommunityPostDao {
             job1.join()
         }
 
+        // 글 조회수를 구하는 메서드
+        suspend fun updateCommunityPostViewCnt(postIdx: Int, postViewCnt:Int) {
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("CommunityPostData")
+                // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document 들을 가져온다.
+                val query = collectionReference.whereEqualTo("postIdx", postIdx).get().await()
+
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Any>()
+                map["postViewCnt"] = postViewCnt.toLong()
+                // 저장한다.
+                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
+                query.documents[0].reference.update(map)
+            }
+        }
+
         // 글 데이터를 수정하는 메서드
         suspend fun updateCommunityPostData(communityModel: CommunityModel) {
             val job1 = CoroutineScope(Dispatchers.IO).launch {
@@ -202,6 +225,61 @@ class CommunityPostDao {
             job1.join()
         }
 
+        // 글 좋아요 상태 및 개수를 변경하는 메서드
+        suspend fun updateCommunityPostLikeState(communityModel: CommunityModel, newLikeState:Boolean){
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("CommunityPostData")
+                // 컬렉션이 가지고 있는 문서들 중에 postIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
+                val query = collectionReference.whereEqualTo("postIdx", communityModel.postIdx).get().await()
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Any?>()
+                // 좋아요 상태와 개수를 업데이트할 필드 추가
+                map["postLikeState"] = newLikeState
+                map["postLikeCnt"] = communityModel.postLikeCnt
+
+                // 저장한다.
+                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
+                query.documents[0].reference.update(map)
+            }
+            job1.join()
+        }
+
+        // 게시글 목록중 좋아요 Top5를 가져온다.
+        suspend fun gettingCommunityPostLikeTop5List(): List<CommunityModel> {
+            // 농산품 정보를 담을 리스트
+            val communityPostList = mutableListOf<CommunityModel>()
+
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 컬렉션에 접근할 수 있는 객체를 가져온다.
+                val collectionReference = Firebase.firestore.collection("CommunityPostData")
+                // 농산품 상태가 정상 상태이며 게시글 번호를 기준으로 내림차순 정렬되게 데이터를 가져올 수 있는
+                // Query를 생성한다.
+                // 게시글 상태가 정상 또는 수정 상태인 것만 가져오기 위한 조건 설정
+                val validStatus = listOf(PostStatus.POST_STATUS_NORMAL.number, PostStatus.POST_STATUS_MODIFY.number)
+                var query = collectionReference.whereIn("postStatus", validStatus)
+                // 농산품 좋아요 개수를 기준으로 내림 차순 정렬..
+                query = query.orderBy("postLikeCnt", Query.Direction.DESCENDING)
+
+                val querySnapshot = query.get().await()
+
+                // 가져온 문서의 수 만큼 반복한다.
+                querySnapshot.forEach {
+                    // 현재 번째의 문서를 객체로 받아온다.
+                    val communityPostModel = it.toObject(CommunityModel::class.java)
+                    // 객체를 리스트에 담는다.
+                    communityPostList.add(communityPostModel)
+                }
+            }
+            job1.join()
+
+            if(communityPostList.size > 4){
+                return communityPostList.slice(0..4)
+            }
+            else{
+                return communityPostList
+            }
+        }
 
     }
 }
