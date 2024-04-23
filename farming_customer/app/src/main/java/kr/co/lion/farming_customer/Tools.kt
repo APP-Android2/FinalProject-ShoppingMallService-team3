@@ -389,6 +389,13 @@ enum class MyPageMyPostName(var str : String){
     MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
 }
 
+
+// 농산품 상태
+enum class CropStatus(var str:String, var num:Int){
+    NORMAL("정상", 1),
+    PAUSE("판매품 일시정지",2),
+    DELETE("판매품 삭제",3)
+}
 enum class PointStatus(var str:String, var number : Int){
     POINT_STATE_NORMAL("정상", 1),
     POINT_STATE_REMOVE("삭제", 2)
@@ -398,4 +405,5 @@ enum class PointType(var str : String, var number : Int){
     POINT_TYPE_SAVE("적립", 1),
     POINT_TYPE_USE("사용", 2),
     POINT_TYPE_EXTINCTION("소멸", 3)
+
 }
