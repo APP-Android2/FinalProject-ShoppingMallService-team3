@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.loginRegister
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,18 +8,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.LoginActivity
-import kr.co.lion.farming_customer.databinding.FragmentFindIdBinding
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
 import kr.co.lion.farming_customer.databinding.FragmentFindIdDoneBinding
-import kr.co.lion.farming_customer.viewmodel.FindIdDoneViewModel
-import kr.co.lion.farming_customer.viewmodel.FindIdViewModel
+import kr.co.lion.farming_customer.viewmodel.loginRegister.FindIdDoneViewModel
 
 class FindIdDoneFragment : Fragment() {
 
-    lateinit var fragmentFindIdDoneBinding: FragmentFindIdDoneBinding
+    private lateinit var fragmentFindIdDoneBinding: FragmentFindIdDoneBinding
     lateinit var loginActivity: LoginActivity
 
-    lateinit var findIdDoneViewModel: FindIdDoneViewModel
+    private lateinit var findIdDoneViewModel: FindIdDoneViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentFindIdDoneBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_id_done, container, false)
@@ -46,7 +44,8 @@ class FindIdDoneFragment : Fragment() {
     }
 
     // 텍스트 설정
-    fun settingText(){
-        // TODO("아이디 부분 색상 변경 필요")
+    private fun settingText(){
+        val userId = arguments?.getString("foundUserId")
+        findIdDoneViewModel.userId.value = userId
     }
 }

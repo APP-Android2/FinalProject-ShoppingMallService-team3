@@ -358,7 +358,7 @@
                     app:strokeColor="@color/green_main" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/buttonReg2Reg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -381,7 +381,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonReg2Reg" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.amar.library.ui.StickyScrollView>

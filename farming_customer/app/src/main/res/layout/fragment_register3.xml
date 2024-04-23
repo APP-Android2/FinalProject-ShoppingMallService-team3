@@ -6,7 +6,7 @@
     <data>
         <variable
             name="register3ViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.Register3ViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.loginRegister.Register3ViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="닉네임 님"
+                android:text="@={register3ViewModel.userNickname}"
                 android:textColor="@color/green_main"
                 android:textSize="20sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="닉네임"
+                android:text="@={register3ViewModel.userNickname}"
                 android:textColor="@color/brown_01"
                 android:textSize="20sp" />
         </LinearLayout>

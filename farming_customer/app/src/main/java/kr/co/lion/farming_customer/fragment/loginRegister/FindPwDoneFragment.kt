@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.fragment
+package kr.co.lion.farming_customer.fragment.loginRegister
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,20 +12,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.LoginActivity
-import kr.co.lion.farming_customer.databinding.FragmentFindIdDoneBinding
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.databinding.FragmentFindPwDoneBinding
-import kr.co.lion.farming_customer.viewmodel.FindIdDoneViewModel
-import kr.co.lion.farming_customer.viewmodel.FindPwDoneViewModel
+import kr.co.lion.farming_customer.viewmodel.loginRegister.FindPwDoneViewModel
 
 class FindPwDoneFragment : Fragment() {
 
     lateinit var fragmentFindPwDoneBinding: FragmentFindPwDoneBinding
     lateinit var loginActivity: LoginActivity
 
-    lateinit var findPwDoneViewModel: FindPwDoneViewModel
+    private lateinit var findPwDoneViewModel: FindPwDoneViewModel
+
+    private var checkPw = false
+    private var checkPw2 = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentFindPwDoneBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_pw_done, container, false)
@@ -35,9 +40,13 @@ class FindPwDoneFragment : Fragment() {
 
         loginActivity = activity as LoginActivity
 
+        // 버튼을 비활성화 시킴
+        fragmentFindPwDoneBinding.buttonFindPwDone.isEnabled = false
+
         settingButton()
         settingTextView()
         settingPassword()
+        isRegisterButtonEnabled()
 
         return fragmentFindPwDoneBinding.root
     }
@@ -45,15 +54,29 @@ class FindPwDoneFragment : Fragment() {
     // 버튼 설정
     fun settingButton(){
         fragmentFindPwDoneBinding.apply {
+
+            // 비밀번호 변경 버튼을 누르면
             buttonFindPwDone.setOnClickListener {
+                // Bundle로부터 받은 userId를 가져온다.
+                val userId = arguments?.getString("UserId")!!
+                // 버튼은 유효성 검사가 되어야 활성화 되므로 null이나 다른 값 고려 안함
+                val userPw = findPwDoneViewModel?.userPw?.value!!
+
+                // ID를 통해 userModel을 가져오고 비밀번호를 수정 후 update
+                CoroutineScope(Dispatchers.Main).launch {
+                    val userModel = UserDao.getUserDataById(userId)
+                    userModel!!.user_pw = userPw
+                    UserDao.updateUserData(userModel)
+                }
                 loginActivity.replaceFragment(
                     LoginFragmentName.FIND_PW_DONE2_FRAGMENT, addToBackStack = true, isAnimate = true, data = null)
             }
+
         }
     }
 
     // 텍스트 설정
-    fun settingTextView(){
+    private fun settingTextView(){
         fragmentFindPwDoneBinding.apply {
             val fullText = textViewFindPwDone.text.toString()
             val spannableString = SpannableString(fullText)
@@ -72,8 +95,31 @@ class FindPwDoneFragment : Fragment() {
         }
     }
 
+    // Text를 감시하는 textWatcher 객체 생성
+    private val textWatcher = object: TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            // 둘다 true일 경우에만 버튼 활성화
+            fragmentFindPwDoneBinding.buttonFindPwDone.isEnabled = checkPw && checkPw2
+        }
+    }
+
+    // 비밀번호, 비밀번호 확인에 감시자를 붙임
+    private fun isRegisterButtonEnabled(){
+        fragmentFindPwDoneBinding.apply {
+            textFieldFindPw.addTextChangedListener(textWatcher)
+            textFieldFindPw2.addTextChangedListener(textWatcher)
+            //TODO("인증코드 확인 필요")
+        }
+    }
+
     // 텍스트 관련 설정
-    fun settingPassword(){
+    private fun settingPassword(){
         fragmentFindPwDoneBinding.apply {
 
 
@@ -112,11 +158,13 @@ class FindPwDoneFragment : Fragment() {
                         // 비밀번호 조건을 충족하지 않을 시
 //                        textInputLayout5.helperText = "6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
                         textInputLayout5.error = "6~20자, 영문 대/소문자, 숫자, 특수문자 중 2가지 이상 조합"
+                        checkPw = false
                     } else {
                         // 조건 충족
 //                        textInputLayout5.isHelperTextEnabled = false
                         textInputLayout5.error = null
                         textInputLayout5.isErrorEnabled = false
+                        checkPw = true
                     }
                 }
             })
@@ -140,6 +188,7 @@ class FindPwDoneFragment : Fragment() {
 //                        fragmentRegister2Binding.textInputLayout6.isHelperTextEnabled = true
 //                        fragmentRegister2Binding.textInputLayout6.helperText = "비밀번호가 일치하지 않습니다."
                         fragmentFindPwDoneBinding.textInputLayout6.error = "비밀번호가 일치하지 않습니다."
+                        checkPw2 = false
 
                     } else {
                         // 오류 제거
@@ -147,10 +196,12 @@ class FindPwDoneFragment : Fragment() {
 //                        fragmentRegister2Binding.textInputLayout6.helperText = null
                         fragmentFindPwDoneBinding.textInputLayout6.error = null
                         fragmentFindPwDoneBinding.textInputLayout6.isErrorEnabled = false
+                        checkPw2 = true
                     }
                 }
 
             })
+
         }
     }
 }

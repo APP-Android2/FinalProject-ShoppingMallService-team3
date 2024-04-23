@@ -1,4 +1,4 @@
-package kr.co.lion.farming_customer.activity
+package kr.co.lion.farming_customer.activity.loginRegister
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,14 +9,15 @@ import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityLoginBinding
-import kr.co.lion.farming_customer.fragment.FindAccountFragment
-import kr.co.lion.farming_customer.fragment.FindIdDoneFragment
-import kr.co.lion.farming_customer.fragment.FindPwDone2Fragment
-import kr.co.lion.farming_customer.fragment.FindPwDoneFragment
-import kr.co.lion.farming_customer.fragment.LoginFragment
-import kr.co.lion.farming_customer.fragment.Register2Fragment
-import kr.co.lion.farming_customer.fragment.Register3Fragment
-import kr.co.lion.farming_customer.fragment.RegisterFragment
+import kr.co.lion.farming_customer.fragment.loginRegister.CantFindIdFragment
+import kr.co.lion.farming_customer.fragment.loginRegister.FindAccountFragment
+import kr.co.lion.farming_customer.fragment.loginRegister.FindIdDoneFragment
+import kr.co.lion.farming_customer.fragment.loginRegister.FindPwDone2Fragment
+import kr.co.lion.farming_customer.fragment.loginRegister.FindPwDoneFragment
+import kr.co.lion.farming_customer.fragment.loginRegister.LoginFragment
+import kr.co.lion.farming_customer.fragment.loginRegister.Register2Fragment
+import kr.co.lion.farming_customer.fragment.loginRegister.Register3Fragment
+import kr.co.lion.farming_customer.fragment.loginRegister.RegisterFragment
 
 class LoginActivity : AppCompatActivity() {
 
@@ -71,6 +72,9 @@ class LoginActivity : AppCompatActivity() {
             }
             LoginFragmentName.FIND_PW_DONE2_FRAGMENT -> {
                 FindPwDone2Fragment()
+            }
+            LoginFragmentName.CANT_FIND_ID_FRAGMENT -> {
+                CantFindIdFragment()
             }
         }
         if(data != null){
