@@ -8,6 +8,9 @@ class CustomDialogViewModel : ViewModel() {
     val textViewDialogYesNoSubject = MutableLiveData<String>()
     // YesNo 다이얼로그 내용
     val textViewDialogYesNoText = MutableLiveData<String>()
+    // YesNo 다이얼로그 yes 버튼 텍스트
+    val buttonCustomDialogYesNoYesText = MutableLiveData<String>()
+
 
     // Yes 다이얼로그 제목
     val textViewDialogYesSubject = MutableLiveData<String>()
@@ -15,4 +18,5 @@ class CustomDialogViewModel : ViewModel() {
     val textViewDialogYesText = MutableLiveData<String>()
     // Yes 다이얼로그 내용2
     val textViewDialogYesText2 = MutableLiveData<String>()
+
 }

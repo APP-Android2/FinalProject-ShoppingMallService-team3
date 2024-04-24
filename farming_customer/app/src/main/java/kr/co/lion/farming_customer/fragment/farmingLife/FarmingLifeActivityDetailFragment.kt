@@ -12,17 +12,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeActivityDetailBinding
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeReviewBinding
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeReviewImageBinding
 import kr.co.lion.farming_customer.databinding.ViewPagerFarmingLifeFarmDetailBinding
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.FarmingLifeActivityDetailViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowFarmingLifeReviewViewModel
 
-class FarmingLifeActivityDetailFragment : Fragment() {
+class FarmingLifeActivityDetailFragment(idx: Bundle?) : Fragment() {
     lateinit var fragmentFarmingLifeActivityDetailBinding: FragmentFarmingLifeActivityDetailBinding
     lateinit var farmingLifeActivity: FarmingLifeActivity
 
@@ -32,13 +37,10 @@ class FarmingLifeActivityDetailFragment : Fragment() {
     var isCollapsed_review = true
     var isLiked = false
 
-    val imageList = arrayOf(
-        R.drawable.image_1,
-        R.drawable.image_1,
-        R.drawable.image_1,
-        R.drawable.image_1,
-        R.drawable.image_1
-    )
+    var activityModel : ActivityModel? = null
+    var imageList = mutableListOf<String>()
+
+    var idx : Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +52,11 @@ class FarmingLifeActivityDetailFragment : Fragment() {
         fragmentFarmingLifeActivityDetailBinding.lifecycleOwner = this
         farmingLifeActivity = activity as FarmingLifeActivity
 
+        // 번들 객체에서 idx 추출
+        idx = arguments?.getInt("idx", 0)
+
         settingToolbar()
+        settingInitData()
         settingData()
         settingViewPager()
         settingReview()
@@ -58,6 +64,17 @@ class FarmingLifeActivityDetailFragment : Fragment() {
         settingEvent()
 
         return fragmentFarmingLifeActivityDetailBinding.root
+    }
+
+    private fun settingInitData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            // 매개변수로 받은 idx 값으로 파이어베이스에서 farmModel 객체를 가져온다.
+            activityModel = ActivityDao.selectActivityData(idx!!)
+            imageList = activityModel!!.activity_images
+            settingData()
+            settingViewPager()
+            settingReview()
+        }
     }
 
     private fun settingEvent() {
@@ -193,38 +210,43 @@ class FarmingLifeActivityDetailFragment : Fragment() {
     private fun settingData() {
         farmingLifeActivityDetailViewModel.apply {
             textView_sellerName.value = "김파밍"
-            textView_address.value = "강원도 횡성군"
-            textView_price.value = "구획 당 금액 : 10,000원"
-            textView_productDetail.value = "공무원의 직무상 불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여 국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이 경우 공무원 자신의 책임은 면제되지 아니한다.\n" +
+            textView_address.value = activityModel?.activity_address
+
+            // 옵션 중 가장 최소 가격 표시
+            var minPrice = Int.MAX_VALUE
+            var minPrice_pos = -1
+            activityModel?.activity_option_detail?.forEachIndexed { index, mutableMap ->
+                val priceString = mutableMap["option_price"] as String
+                val numberString = priceString.replace(",", "").replace("원", "")
+                val priceInt = numberString.toInt()
+
+                if(priceInt < minPrice){
+                    minPrice = priceInt
+                    minPrice_pos = index
+                }
+            }
+            textView_price.value = "금액 : ${
+                activityModel?.activity_option_detail?.get(minPrice_pos)
+                ?.get("option_price")} ~"
+            textView_productDetail.value = activityModel?.activity_content_detail
+            val optionNameList = mutableListOf<String>()
+            activityModel?.activity_option_detail?.forEach {
+                optionNameList.add(it["option_name"].toString())
+            }
+            textView_serviceInfo.value = "체험활동" +
+                    "\n\n" +
+                    buildString {
+                        append("\t")
+                        append(optionNameList.joinToString(separator = "\n\n\t"))
+                    } +
+                    "\n\n주의사항\n${activityModel?.activity_content_warning}" +
                     "\n" +
-                    "국가는 과학기술의 혁신과 정보 및 인력의 개발을 통하여 국민경제의 발전에 노력하여야 한다. 이 헌법중 공무원의 임기 또는 중임제한에 관한 규정은 이 헌법에 의하여 그 공무원이 최초로 선출 또는 임명된 때로부터 적용한다.\n" +
+                    "편의시설" +
                     "\n" +
-                    "환경권의 내용과 행사에 관하여는 법률로 정한다. 헌법재판소는 법률에 저촉되지 아니하는 범위안에서 심판에 관한 절차, 내부규율과 사무처리에 관한 규칙을 제정할 수 있다.\n" +
-                    "\n" +
-                    "일반사면을 명하려면 국회의 동의를 얻어야 한다. 대통령은 국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을 겸할 수 없다. 모든 국민은 학문과 예술의 자유를 가진다.\n" +
-                    "\n" +
-                    "명령·규칙 또는 처분이 헌법이나 법률에 위반되는 여부가 재판의 전제가 된 경우에는 대법원은 이를 최종적으로 심사할 권한을 가진다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.\n" +
-                    "\n" +
-                    "재의의 요구가 있을 때에는 국회는 재의에 붙이고, 재적의원과반수의 출석과 출석의원 3분의 2 이상의 찬성으로 전과 같은 의결을 하면 그 법률안은 법률로서 확정된다.\n" +
-                    "\n" +
-                    "행정각부의 설치·조직과 직무범위는 법률로 정한다. 의원을 제명하려면 국회재적의원 3분의 2 이상의 찬성이 있어야 한다. 모든 국민은 통신의 비밀을 침해받지 아니한다.\n" +
-                    "\n" +
-                    "국가는 대외무역을 육성하며, 이를 규제·조정할 수 있다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다."
-            textView_serviceInfo.value = "공무원의 직무상 불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여 국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이 경우 공무원 자신의 책임은 면제되지 아니한다.\n" +
-                    "\n" +
-                    "국가는 과학기술의 혁신과 정보 및 인력의 개발을 통하여 국민경제의 발전에 노력하여야 한다. 이 헌법중 공무원의 임기 또는 중임제한에 관한 규정은 이 헌법에 의하여 그 공무원이 최초로 선출 또는 임명된 때로부터 적용한다.\n" +
-                    "\n" +
-                    "환경권의 내용과 행사에 관하여는 법률로 정한다. 헌법재판소는 법률에 저촉되지 아니하는 범위안에서 심판에 관한 절차, 내부규율과 사무처리에 관한 규칙을 제정할 수 있다.\n" +
-                    "\n" +
-                    "일반사면을 명하려면 국회의 동의를 얻어야 한다. 대통령은 국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을 겸할 수 없다. 모든 국민은 학문과 예술의 자유를 가진다.\n" +
-                    "\n" +
-                    "명령·규칙 또는 처분이 헌법이나 법률에 위반되는 여부가 재판의 전제가 된 경우에는 대법원은 이를 최종적으로 심사할 권한을 가진다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.\n" +
-                    "\n" +
-                    "재의의 요구가 있을 때에는 국회는 재의에 붙이고, 재적의원과반수의 출석과 출석의원 3분의 2 이상의 찬성으로 전과 같은 의결을 하면 그 법률안은 법률로서 확정된다.\n" +
-                    "\n" +
-                    "행정각부의 설치·조직과 직무범위는 법률로 정한다. 의원을 제명하려면 국회재적의원 3분의 2 이상의 찬성이 있어야 한다. 모든 국민은 통신의 비밀을 침해받지 아니한다.\n" +
-                    "\n" +
-                    "국가는 대외무역을 육성하며, 이를 규제·조정할 수 있다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다.z"
+                    "\t주차장 : ${if(activityModel?.activity_utility?.get("park") == true)"가능" else "불가능"}" +
+                    "\n\t화장실 : ${if(activityModel?.activity_utility?.get("bathroom") == true)"가능" else "불가능"}" +
+                    "\n\t수도 : ${if(activityModel?.activity_utility?.get("water") == true)"가능" else "불가능"}" +
+                    "\n\t휴식공간 : ${if(activityModel?.activity_utility?.get("rest_space") == true)"가능" else "불가능"}"
         }
     }
 
@@ -276,7 +298,9 @@ class FarmingLifeActivityDetailFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
             holder.viewPagerFarmingLifeFarmDetailBinding.apply {
-                imageViewViewPager.setImageResource(imageList[position])
+                CoroutineScope(Dispatchers.Main).launch {
+                    ActivityDao.gettingActivityImage(farmingLifeActivity, imageList[position], imageViewViewPager)
+                }
             }
         }
     }

@@ -1,7 +1,6 @@
 package kr.co.lion.farming_customer.fragment
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,13 +16,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
+import kr.co.lion.farming_customer.PointStatus
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
+import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.dao.CommunityCommentDao
 import kr.co.lion.farming_customer.dao.CommunityPostDao
+import kr.co.lion.farming_customer.dao.crop.CropDao
+import kr.co.lion.farming_customer.dao.myPagePoint.myPagePointDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
@@ -33,8 +37,20 @@ import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.CommunityCommentModel
 import kr.co.lion.farming_customer.model.CommunityModel
+import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
+import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
+import kr.co.lion.farming_customer.model.myPagePoint.PointModel
+import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.viewmodel.HomeViewModel
+import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import kotlin.math.pow
 
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
@@ -47,15 +63,24 @@ class HomeFragment : Fragment() {
     // 댓글 정보를 가지고 있는 리스트
     var commentList = mutableListOf<CommunityCommentModel>()
 
+    // 추천 농산물 데이터를 담을 리스트
+    var cropLikeTop5List = listOf<CropModel>()
+    
+    var farmAndActivityList = mutableListOf<Any>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentHomeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
         homeViewModel = HomeViewModel()
         fragmentHomeBinding.homeViewModel = homeViewModel
         fragmentHomeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
+        gettingCropLikeTop5()
 
         gettingCommunityPostLikeTop5()
+
+        settingData()
         settingRecyclerView()
+
 
         return fragmentHomeBinding.root
     }
@@ -73,6 +98,30 @@ class HomeFragment : Fragment() {
             settingRecyclerView()
         }
         fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
+        
+    private fun settingData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            // 주말농장 데이터를 가져온다.
+            val farmList = FarmDao.gettingFarmListOrderByLikeCnt()
+            // 체험활동 데이터를 가져온다.
+            val activityList = ActivityDao.gettingActivityListOrderByLikeCnt()
+            // 추천 농산물 데이터를 가져온다.
+            cropLikeTop5List = CropDao.gettingCropLikeTop5List()
+
+            var index = 0
+            while (farmAndActivityList.size < 6){
+                if(farmList[index].farm_like_cnt > activityList[index].activity_like_cnt){
+                    farmAndActivityList.add(farmList[index])
+                }else if(farmList[index].farm_like_cnt == activityList[index].activity_like_cnt){
+                    farmAndActivityList.add(farmList[index])
+                    farmAndActivityList.add(activityList[index])
+                }else{
+                    farmAndActivityList.add(activityList[index])
+                }
+                index ++
+            }
+            fragmentHomeBinding.viewPagerFarm.adapter?.notifyDataSetChanged()
+        }
     }
 
     private fun settingRecyclerView() {
@@ -112,24 +161,47 @@ class HomeFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerCropViewHolder {
             val itemProductBinding = DataBindingUtil.inflate<ItemProductBinding>(layoutInflater, R.layout.item_product, parent, false)
+            val tradeViewModel = TradeViewModel()
+            itemProductBinding.tradeViewModel = tradeViewModel
+            itemProductBinding.lifecycleOwner = this@HomeFragment
 
             val viewPagerCropViewHolder = ViewPagerCropViewHolder(itemProductBinding)
             return viewPagerCropViewHolder
         }
 
         override fun getItemCount(): Int {
-            return 5
+            return cropLikeTop5List.size
         }
 
         override fun onBindViewHolder(holder: ViewPagerCropViewHolder, position: Int) {
-            holder.itemProductBinding.apply {
-                textViewCropName.text = "고랭지 배추"
-                textViewTradePrice.text = "10,000원 / kg"
-                textViewTradeLike.text = "999"
+            holder.itemProductBinding.tradeViewModel!!.apply {
+
+                textViewCropName.value = cropLikeTop5List[position].crop_title
+                textViewTradePrice.value = cropLikeTop5List[position].crop_option_detail[0]["crop_option_price"]
+                textViewTradeLike.value = cropLikeTop5List[position].crop_like_cnt.toString()
+                textViewCropLocation.value = cropLikeTop5List[position].crop_address
+                holder.itemProductBinding.RatingBarTrade.rating = cropLikeTop5List[position].crop_rating.toFloat()
             }
             holder.itemProductBinding.root.setOnClickListener {
                 val intent = Intent(mainActivity, TradeDetailActivity::class.java)
+                intent.putExtra("crop_idx",cropLikeTop5List[position].crop_idx)
                 startActivity(intent)
+            }
+            holder.itemProductBinding.tradeViewModel?.isLike?.value = false
+            holder.itemProductBinding.imageButtonProductLike.setOnClickListener {
+                if(holder.itemProductBinding.tradeViewModel?.isLike?.value!!){
+                    holder.itemProductBinding.tradeViewModel?.isLike?.value = false
+                    holder.itemProductBinding.imageButtonProductLike.setImageResource(R.drawable.heart_02)
+                    holder.itemProductBinding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                }else{
+                    holder.itemProductBinding.tradeViewModel?.isLike?.value = true
+                    holder.itemProductBinding.imageButtonProductLike.setImageResource(R.drawable.heart_01)
+                    holder.itemProductBinding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                CropDao.gettingCropImage(mainActivity,cropLikeTop5List[position].crop_images[position],holder.itemProductBinding.imageViewCropImage)
             }
         }
     }
@@ -159,15 +231,38 @@ class HomeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 5
+            return farmAndActivityList.size
         }
 
         override fun onBindViewHolder(holder: ViewPagerFarmViewHolder, position: Int) {
             holder.rowGridItemBinding.rowGridItemViewModel!!.apply {
-                textView_likeCnt.value = "999"
-                textView_ItemName.value = "파밍이네 농장"
-                textView_location.value = "경기도 파밍시 파밍구"
-                textView_price.value = "20,000원 ~"
+                var model = farmAndActivityList[position]
+                if(model is FarmModel){
+                    textView_likeCnt.value = model.farm_like_cnt.toString()
+                    textView_ItemName.value = model.farm_title
+                    textView_location.value = model.farm_address
+                    textView_price.value = model.farm_option_detail["price_area"].toString()
+                }else if(model is ActivityModel){
+                    textView_likeCnt.value = model.activity_like_cnt.toString()
+                    textView_ItemName.value = model.activity_title
+                    textView_location.value = model.activity_address
+
+                    // 옵션 중 가장 최소 가격 표시
+                    var minPrice = Int.MAX_VALUE
+                    var minPrice_pos = -1
+                    model.activity_option_detail.forEachIndexed { index, mutableMap ->
+                        val priceString = mutableMap["option_price"] as String
+                        val numberString = priceString.replace(",", "").replace("원", "")
+                        val priceInt = numberString.toInt()
+
+                        if(priceInt < minPrice){
+                            minPrice = priceInt
+                            minPrice_pos = index
+                        }
+                    }
+                    textView_price.value = model.activity_option_detail[minPrice_pos]["option_price"] as String + " ~"
+                }
+
                 isLike.value = false
             }
             // 하트 클릭 리스너
@@ -189,10 +284,32 @@ class HomeFragment : Fragment() {
             }
             // 뷰페이저 아이템 클릭 리스너
             holder.rowGridItemBinding.root.setOnClickListener {
+                val model = farmAndActivityList[position]
                 // 주말농장인지 체험활동인지 구분해야함
-                val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
-                intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT)
-                startActivity(intent)
+                if(model is FarmModel){
+                    val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
+                    intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_FARM_DETAIL_FARMGNET)
+                    intent.putExtra("idx", model.farm_idx)
+                    startActivity(intent)
+                }else if(model is ActivityModel){
+                    val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
+                    intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT)
+                    intent.putExtra("idx", model.activity_idx)
+                    startActivity(intent)
+                }
+
+            }
+            holder.rowGridItemBinding.apply {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val model = farmAndActivityList[position]
+                    if(model is FarmModel){
+                        FarmDao.gettingFarmImage(mainActivity, model.farm_images[0], imageView)
+                        ratingBar.rating = model.farm_star
+                    }else if(model is ActivityModel){
+                        ActivityDao.gettingActivityImage(mainActivity, model.activity_images[0], imageView)
+                        ratingBar.rating = model.activity_star
+                    }
+                }
             }
         }
     }

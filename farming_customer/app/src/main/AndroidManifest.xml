@@ -81,7 +81,7 @@
             android:name=".activity.myPageMyPost.MyPageMyPostActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.loginRegister.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
