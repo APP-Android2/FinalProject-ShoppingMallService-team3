@@ -10,11 +10,15 @@
             type="kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeSearchViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:paddingHorizontal="20dp">
+        android:layout_height="match_parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingHorizontal="20dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout17"
@@ -37,11 +41,13 @@
             app:startIconTint="@color/grey_02">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldTradeSearchCrop"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:fontFamily="@font/pretendard_regular"
                 android:hint="원하는 농작물을 검색해보세요"
                 android:inputType="text"
+                android:maxLines="1"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:textColor="@color/brown_01"
@@ -89,7 +95,7 @@
                     android:layout_height="match_parent"
                     android:drawablePadding="0dp"
                     android:fontFamily="@font/font_pre_semibold"
-                    android:hint="좋아요순"
+                    android:hint="별점순"
                     android:inputType="none"
                     android:paddingVertical="5dp"
                     android:paddingStart="0dp"
@@ -101,16 +107,17 @@
                     android:textSize="12sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewTradeSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewSort" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewTradeSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewSort" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

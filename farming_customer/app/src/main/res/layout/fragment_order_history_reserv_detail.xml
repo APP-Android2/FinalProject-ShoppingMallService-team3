@@ -84,7 +84,8 @@
                         android:id="@+id/imageViewReservDetail_productImage"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:background="@color/grey_02" />
+                        android:background="@color/grey_02"
+                        android:scaleType="fitXY" />
                 </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
                 <LinearLayout
@@ -213,7 +214,7 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/buttonReg2Reg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_semibold"

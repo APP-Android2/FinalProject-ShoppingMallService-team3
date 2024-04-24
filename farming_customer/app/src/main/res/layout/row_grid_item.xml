@@ -82,10 +82,11 @@
                     app:srb_drawableFilled="@drawable/star_01"
                     app:srb_isIndicator="true"
                     app:srb_numStars="5"
-                    app:srb_rating="3"
+                    app:srb_rating="0"
                     app:srb_starHeight="15dp"
                     app:srb_starPadding="3dp"
-                    app:srb_starWidth="15dp" />
+                    app:srb_starWidth="15dp"
+                    app:srb_stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/textView_ItemName"
