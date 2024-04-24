@@ -17,6 +17,7 @@ import java.io.FileOutputStream
 import android.app.Activity
 import android.content.DialogInterface
 import android.util.TypedValue
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.concurrent.thread
 
@@ -271,6 +272,7 @@ enum class FarmingLifeFragmnetName(var str:String){
     FARMING_LIFE_FARM_DETAIL_FARMGNET("FarmingLifeFarmDetailFragment"),
     FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT("FarmingLifeActivityDetailFragment")
 }
+
 // 농기구 프래그먼트
 enum class FarmingLifeToolsFragmentName(var str: String) {
     FARMING_LIFE_TOOLS_MAP_FRAGMENT("FarmingLifeToolsMapFragment"),
@@ -297,6 +299,20 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_FAIL_FRAGMENT("PaymentFailFragment"),
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }
+
+// 게시판 종류를 나타내는 값을 정의한다.
+enum class PostType(var str:String, var number:Int){
+    TYPE_ALL("전체", 0),
+    TYPE_INFORMATION("정보", 1),
+    TYPE_SOCIAL("소통", 2),
+    TYPE_JOB("구인구직", 3),
+}
+
+// 게시판 상태를 나타내는 값을 정의한다.
+enum class PostStatus(var str:String, var number:Int) {
+    POST_STATUS_NORMAL("정상", 1),
+    POST_STATUS_REMOVE("샥제", 2),
+    POST_STATUS_MODIFY("수정", 3)
 
 // 남자 또는 여자를 나타내는 값을 정의한다.
 enum class Gender(var str:String, var num:Int){
@@ -388,6 +404,12 @@ enum class MyPageMyPostName(var str : String){
     MY_PAGE_MY_POST_BOARD_FRAGMENT("MyPageMyPostBoardFragment"),
     MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
 }
+
+// 댓글 상태
+enum class CommentStatus(var str:String, var number: Int) {
+    COMMENT_STATUS_NORMAL("정상", 1),
+    COMMENT_STATUS_REMOVE("삭제", 2),
+    COMMENT_STATUS_MODIFY("수정", 3)
 
 enum class ReviewState(var str:String, var number:Int) {
     REVIEW_STATE_NORMAL("정상", 0),
