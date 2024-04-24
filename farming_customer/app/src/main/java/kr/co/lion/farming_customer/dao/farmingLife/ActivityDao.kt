@@ -12,9 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kr.co.lion.farming_customer.ActivityStatus
-import kr.co.lion.farming_customer.FarmStatus
-import kr.co.lion.farming_customer.model.farminLife.ActivityModel
-import kr.co.lion.farming_customer.model.farminLife.FarmModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 
 class ActivityDao {
     companion object{

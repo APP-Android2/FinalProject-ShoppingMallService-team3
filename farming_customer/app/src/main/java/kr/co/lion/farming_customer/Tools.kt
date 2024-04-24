@@ -17,6 +17,7 @@ import java.io.FileOutputStream
 import android.app.Activity
 import android.content.DialogInterface
 import android.util.TypedValue
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.concurrent.thread
 
@@ -154,7 +155,7 @@ class Tools {
             val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
             materialAlertDialogBuilder.setTitle(title)
             materialAlertDialogBuilder.setMessage(message)
-            materialAlertDialogBuilder.setPositiveButton("확인"){ dialogInterface: DialogInterface, i: Int ->
+            materialAlertDialogBuilder.setPositiveButton("확인"){ _: DialogInterface, _: Int ->
                 showSoftInput(context, view)
             }
             materialAlertDialogBuilder.show()
@@ -271,6 +272,7 @@ enum class FarmingLifeFragmnetName(var str:String){
     FARMING_LIFE_FARM_DETAIL_FARMGNET("FarmingLifeFarmDetailFragment"),
     FARMING_LIFE_ACTIVITY_DETAIL_FRAGMENT("FarmingLifeActivityDetailFragment")
 }
+
 // 농기구 프래그먼트
 enum class FarmingLifeToolsFragmentName(var str: String) {
     FARMING_LIFE_TOOLS_MAP_FRAGMENT("FarmingLifeToolsMapFragment"),
@@ -286,6 +288,7 @@ enum class LoginFragmentName(var str: String){
     FIND_ID_DONE_FRAGMENT("FindIdDoneFragment"),
     FIND_PW_DONE_FRAGMENT("FindPwDoneFragment"),
     FIND_PW_DONE2_FRAGMENT("FindPwDone2Fragment"),
+    CANT_FIND_ID_FRAGMENT("CantFindIdFragment"),
 }
 
 // PaymentActivity에서 보여줄 프래그먼트들의 이름
@@ -297,6 +300,38 @@ enum class PaymentFragmentName(var str:String){
     PAYMENT_DELIVERY_ADDRESS_FRAGMENT("PaymentDeliveryAddressFragment")
 }
 
+// 게시판 종류를 나타내는 값을 정의한다.
+enum class PostType(var str:String, var number:Int){
+    TYPE_ALL("전체", 0),
+    TYPE_INFORMATION("정보", 1),
+    TYPE_SOCIAL("소통", 2),
+    TYPE_JOB("구인구직", 3),
+}
+
+// 게시판 상태를 나타내는 값을 정의한다.
+enum class PostStatus(var str:String, var number:Int) {
+    POST_STATUS_NORMAL("정상", 1),
+    POST_STATUS_REMOVE("샥제", 2),
+    POST_STATUS_MODIFY("수정", 3)
+
+// 남자 또는 여자를 나타내는 값을 정의한다.
+enum class Gender(var str:String, var num:Int){
+    MALE("male", 1),
+    FEMALE("female", 2)
+}
+
+// 사용자 설정
+enum class UserType(var str:String, var num:Int){
+    USER_BUYER("UserBuyer", 0),
+    USER_SELLER("UserSeller", 1),
+    USER_ADMIN("UserAdmin", 2)
+}
+
+// 회원 상태를 나타내는 값을 정의한다
+enum class UserState(var str:String, var num:Int){
+    USER_STATE_NORMAL("정상", 1),
+    USER_STATE_SIGNOUT("탈퇴", 2),
+}
 
 // Order
 enum class OrderStatus(var str : String, var number : Int){
@@ -368,4 +403,38 @@ enum class InquiryType(var str: String, var number:Int) {
 enum class MyPageMyPostName(var str : String){
     MY_PAGE_MY_POST_BOARD_FRAGMENT("MyPageMyPostBoardFragment"),
     MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
+}
+
+// 댓글 상태
+enum class CommentStatus(var str:String, var number: Int) {
+    COMMENT_STATUS_NORMAL("정상", 1),
+    COMMENT_STATUS_REMOVE("삭제", 2),
+    COMMENT_STATUS_MODIFY("수정", 3)
+
+enum class ReviewState(var str:String, var number:Int) {
+    REVIEW_STATE_NORMAL("정상", 0),
+    REVIEW_STATE_REMOVE("삭제", 1)
+}
+
+enum class ReviewType(var str:String, var number:Int) {
+    TYPE_CROP("농작물", 0),
+    TYPE_FARM("주말농장", 1),
+    TYPE_ACTIVITY("체험활동", 2)
+}
+
+// 농산품 상태
+enum class CropStatus(var str:String, var num:Int){
+    NORMAL("정상", 1),
+    PAUSE("판매품 일시정지",2),
+    DELETE("판매품 삭제",3)
+}
+enum class PointStatus(var str:String, var number : Int){
+    POINT_STATE_NORMAL("정상", 1),
+    POINT_STATE_REMOVE("삭제", 2)
+}
+
+enum class PointType(var str : String, var number : Int){
+    POINT_TYPE_SAVE("적립", 1),
+    POINT_TYPE_USE("사용", 2),
+    POINT_TYPE_EXTINCTION("소멸", 3)
 }

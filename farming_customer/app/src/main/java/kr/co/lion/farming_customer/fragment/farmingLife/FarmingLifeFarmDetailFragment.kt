@@ -23,7 +23,7 @@ import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeFarmDetailBind
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeReviewBinding
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeReviewImageBinding
 import kr.co.lion.farming_customer.databinding.ViewPagerFarmingLifeFarmDetailBinding
-import kr.co.lion.farming_customer.model.farminLife.FarmModel
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.FarmingLifeFarmDetailViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowFarmingLifeReviewViewModel
 

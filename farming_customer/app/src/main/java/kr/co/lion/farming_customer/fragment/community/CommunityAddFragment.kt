@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
@@ -22,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
@@ -29,30 +31,48 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
+import kr.co.lion.farming_customer.PostStatus
+import kr.co.lion.farming_customer.PostType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
-import kr.co.lion.farming_customer.activity.CommunityAddActivity
-import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityAddBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityAddImageBinding
-import kr.co.lion.farming_customer.databinding.RowCommunityReadImageBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.FarminglLifeViewModel
+import kr.co.lion.farming_customer.model.CommunityModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityAddModifyViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
 
-class CommunityAddFragment : Fragment() {
+class CommunityAddFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentCommunityAddBinding: FragmentCommunityAddBinding
     lateinit var communityAddActivity: CommunityAddActivity
-    lateinit var communityViewModel: CommunityViewModel
+    lateinit var communityAddModifyViewModel: CommunityAddModifyViewModel
 
+    var model:CommunityModel? = null
 
     // 이미지 리스트
-    val imageCommunityAddList = mutableListOf<Bitmap>()
+    val imageCommunityAddUriList = mutableListOf<Uri>()
+
+    val imageCommunityAddBitmapList = mutableListOf<Bitmap>()
+
+    // 이미지 저장용 리스트
+    val imageCommunityStringList = mutableListOf<String>()
 
     // 이미지 등록 가능 갯수
     val imageUploadPossible = 10
 
     // 앨범 실행을 위한 런처
     lateinit var albumLauncher: ActivityResultLauncher<Intent>
+
+    // 이미지를 첨부한 적이 있는지..
+    var isAddPicture = false
 
     // 확인할 권한 등록
     val permissionList = arrayOf(
@@ -63,18 +83,17 @@ class CommunityAddFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentCommunityAddBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_community_add, container, false)
-        communityViewModel = CommunityViewModel()
-        fragmentCommunityAddBinding.communityViewModel = communityViewModel
+        communityAddModifyViewModel = CommunityAddModifyViewModel()
+        fragmentCommunityAddBinding.communityAddModifyViewModel = communityAddModifyViewModel
         fragmentCommunityAddBinding.lifecycleOwner = this
         communityAddActivity = activity as CommunityAddActivity
 
         settingToolbar()
-        settingTextInputLayoutCommunityAddType()
+        settingInputForm()
         settingAlbumLauncher(imageUploadPossible)
         settingTextInputLayoutCommunityAddType()
         settingButtonCommunityAdd()
         settingViewPager2CommunityAddImage()
-        //settingImageViewCommunityAdd()
 
         // 권한 확인
         requestPermissions(permissionList, 0)
@@ -124,7 +143,7 @@ class CommunityAddFragment : Fragment() {
     fun settingViewPager2CommunityAddImage() {
         fragmentCommunityAddBinding.apply {
             viewPager2CommunityAddImage.apply {
-                imageCommunityAddList.add(getBitmapFromDrawable())
+                imageCommunityAddBitmapList.add(getBitmapFromDrawable())
                 adapter = CommunityAddImageViewPager2Adapter()
             }
 
@@ -150,8 +169,6 @@ class CommunityAddFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): CommunityAddImageViewHolder {
             val rowCommunityAddImageBinding = DataBindingUtil.inflate<RowCommunityAddImageBinding>(layoutInflater, R.layout.row_community_add_image, parent,false)
-            val communityViewModel = CommunityViewModel()
-            rowCommunityAddImageBinding.communityViewModel = communityViewModel
             rowCommunityAddImageBinding.lifecycleOwner = this@CommunityAddFragment
 
             val communityAddImageViewHolder = CommunityAddImageViewHolder(rowCommunityAddImageBinding)
@@ -160,29 +177,40 @@ class CommunityAddFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return imageCommunityAddList.size
+            return imageCommunityAddBitmapList.size
         }
 
         override fun onBindViewHolder(holder: CommunityAddImageViewHolder, position: Int) {
-            holder.rowCommunityAddImageBinding.imageViewRowCommunityAdd.setImageBitmap(imageCommunityAddList[position])
-
+            holder.rowCommunityAddImageBinding.imageViewRowCommunityAdd.setImageBitmap(imageCommunityAddBitmapList[position])
             holder.rowCommunityAddImageBinding.imageButtonCommunityAddDelete.setOnClickListener {
-                if(position != imageCommunityAddList.size-1){
-                    imageCommunityAddList.removeAt(position)
+                if(position != imageCommunityAddBitmapList.size-1){
+                    imageCommunityAddBitmapList.removeAt(position)
                     updateViewPager2CommunityAddImage()
                 }else{
-                    imageCommunityAddList[position] = getBitmapFromDrawable()
+                    imageCommunityAddBitmapList[position] = getBitmapFromDrawable()
                     fragmentCommunityAddBinding.viewPager2CommunityAddImage.adapter?.notifyDataSetChanged()
                 }
             }
             // 마지막 아이템의 경우
             holder.rowCommunityAddImageBinding.root.setOnClickListener {
-                if(position == imageCommunityAddList.size-1){
+                if(position == imageCommunityAddBitmapList.size-1){
                     startAlbumLauncher()
                 }
             }
         }
+
+
     }
+
+//    // 사진 첨부하기 버튼
+//    fun settingImageViewCommunityAdd() {
+//        fragmentCommunityAddBinding.apply {
+//            imageViewCommunityAdd.setOnClickListener {
+//                startAlbumLauncher()
+//                imageViewCommunityAddDefault.isVisible = false
+//            }
+//        }
+//    }
 
     // 앨범 런처를 실행하는 메서드
     fun startAlbumLauncher() {
@@ -208,11 +236,14 @@ class CommunityAddFragment : Fragment() {
                 val uriclip = it.data?.clipData
                 uriclip?.let { clipData ->
                     for (i in 0 until uriclip!!.itemCount) {
-                        if (imageCommunityAddList.size > imageUploadPossible + 1) {
+                        if (imageCommunityAddBitmapList.size > imageUploadPossible + 1) {
                             Snackbar.make(fragmentCommunityAddBinding.root, "사진 첨부는 최대 10장까지 가능합니다.", Snackbar.LENGTH_SHORT).show()
                             break
                         } else {
                             val uri = uriclip.getItemAt(i).uri
+                            // 한 장씩 리스트에 추가
+                            imageCommunityAddUriList.add(uri)
+
                             if (uri != null) {
                                 // 안드로이드 Q(10) 이상이라면
                                 val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -245,28 +276,20 @@ class CommunityAddFragment : Fragment() {
                                 val bitmap3 = Tools.resizeBitmap(bitmap2, 1024)
 
                                 // 이미지 리스트에 추가한다.
-                                imageCommunityAddList.add(bitmap3)
-
-                                if(imageCommunityAddList.size == imageUploadPossible + 1){
-                                    imageCommunityAddList.removeAt(imageCommunityAddList.size-2)
+                                imageCommunityAddBitmapList.add(bitmap3)
+                                if(imageCommunityAddBitmapList.size == imageUploadPossible + 1){
+                                    imageCommunityAddBitmapList.removeAt(imageCommunityAddBitmapList.size-2)
                                     break
                                 }else{
                                     // add_default 이미지를 리스트 마지막으로 이동
-                                    var tmp = imageCommunityAddList[imageCommunityAddList.size-2]
-                                    imageCommunityAddList[imageCommunityAddList.size-2] = bitmap3
-                                    imageCommunityAddList[imageCommunityAddList.size-1] = tmp
+                                    var tmp = imageCommunityAddBitmapList[imageCommunityAddBitmapList.size-2]
+                                    imageCommunityAddBitmapList[imageCommunityAddBitmapList.size-2] = bitmap3
+                                    imageCommunityAddBitmapList[imageCommunityAddBitmapList.size-1] = tmp
                                 }
-
+                                isAddPicture = true
                             }
                         }
                     }
-
-//                    // 10개면 + 삭제
-//                    if (imageCommunityAddList.size >= imageUploadPossible) {
-//                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.GONE
-//                    } else {
-//                        fragmentCommunityAddBinding.imageViewCommunityAddDefault.visibility = View.VISIBLE
-//                    }
                 }
                 // 리사이클러뷰 업데이트
                 updateViewPager2CommunityAddImage()
@@ -315,8 +338,98 @@ class CommunityAddFragment : Fragment() {
 
             textViewCommunityAddSubject.addTextChangedListener(textWatcher)
             textViewCommunityAddContent.addTextChangedListener(textWatcher)
+
+            buttonCommunityAdd.setOnClickListener {
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    model = generatingPostObject()
+                    // 글 데이터 업로드
+                    uploadCommunityPostData(model!!.postIdx)
+
+                    val dialog = DialogYesNo(this@CommunityAddFragment, null, "게시글이 등록되었습니다", communityAddActivity, null)
+                    dialog.show(communityAddActivity.supportFragmentManager, "DialogYesNo")
+
+                }
+
+            }
         }
     }
 
+    override fun onYesButtonClick(id: Int) {
+
+    }
+
+    override fun onYesButtonClick(activity: AppCompatActivity) {
+        val communityIntent = Intent(communityAddActivity, CommunityActivity::class.java)
+        communityIntent.putExtra("postIdx", model!!.postIdx)
+        startActivity(communityIntent)
+        communityAddActivity.finish()
+    }
+
+    // 입력 요소 설정
+    fun settingInputForm() {
+        communityAddModifyViewModel?.textViewCommunityAddSubject?.value = ""
+        communityAddModifyViewModel?.textViewCommunityAddContent?.value = ""
+        settingTextInputLayoutCommunityAddType()
+
+        isAddPicture = false
+
+        Tools.showSoftInput(communityAddActivity, fragmentCommunityAddBinding.textViewCommunityAddSubject)
+    }
+
+    // 게시글 객체 생성
+    suspend fun generatingPostObject() : CommunityModel {
+
+        var communityModel = CommunityModel()
+
+        val job1 = CoroutineScope(Dispatchers.Main).launch {
+            // 게시글 시퀀스 값을 가져온다.
+            val communityPostSequence = CommunityPostDao.getCommunityPostSequence()
+            // 게시글 시퀀스 값을 업데이트한다.
+            CommunityPostDao.updateCommunityPostSequence(communityPostSequence + 1)
+
+            // 업로드할 정보를 담아준다.
+            communityModel.postIdx = communityPostSequence + 1
+            communityModel.postTitle = communityAddModifyViewModel.textViewCommunityAddSubject.value!!
+            if (communityAddModifyViewModel.communityPostAddType.value == "정보 게시판") {
+                communityModel.postType = PostType.TYPE_INFORMATION.str
+            } else if (communityAddModifyViewModel.communityPostAddType.value == "소통 게시판") {
+                communityModel.postType = PostType.TYPE_SOCIAL.str
+            } else {
+                communityModel.postType = PostType.TYPE_JOB.str
+            }
+            communityModel.postContent = communityAddModifyViewModel.textViewCommunityAddContent.value!!
+            communityModel.postLikeCnt = 0
+            communityModel.postCommentCnt = 0
+            communityModel.postImages = mutableListOf<String>()
+            communityModel.postUserIdx = 1
+
+            val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+            communityModel.postRegDt = simpleDateFormat.format(Date())
+            communityModel.postModDt = simpleDateFormat.format(Date())
+            communityModel.postStatus = PostStatus.POST_STATUS_NORMAL.number
+
+        }
+        job1.join()
+
+        return communityModel
+    }
+
+
+    // 게시글 작성
+    fun uploadCommunityPostData(postIdx:Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+
+            // 첨부된 이미지가 있다면
+            if (isAddPicture == true) {
+                // 서버로 업로드 한다.
+                val uploadList = CommunityPostDao.uploadImage(communityAddActivity, postIdx, imageCommunityAddUriList)
+                model!!.postImages = uploadList
+            } else {
+                model!!.postImages = null
+            }
+            CommunityPostDao.insertCommunityPostData(model!!)
+        }
+    }
 
 }

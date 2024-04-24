@@ -1,6 +1,9 @@
 package kr.co.lion.farming_customer.fragment.point
 
+import android.graphics.Point
+import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +12,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYes
+import kr.co.lion.farming_customer.PointType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.point.PointActivity
+import kr.co.lion.farming_customer.dao.myPagePoint.myPagePointDao
 import kr.co.lion.farming_customer.databinding.FragmentPointHistoryBinding
 import kr.co.lion.farming_customer.databinding.RowPointHistoryBinding
+import kr.co.lion.farming_customer.model.myPagePoint.PointModel
 import kr.co.lion.farming_customer.viewmodel.point.MyPagePointViewModel
 
 class PointHistoryFragment : Fragment() {
@@ -21,6 +30,12 @@ class PointHistoryFragment : Fragment() {
     lateinit var pointActivity: PointActivity
     lateinit var myPagePointViewModel: MyPagePointViewModel
 
+
+    var pointList = mutableListOf<PointModel>()
+    var pointList_all = mutableListOf<PointModel>()
+    var pointList_save = mutableListOf<PointModel>()
+    var pointList_use = mutableListOf<PointModel>()
+    var pointList_extinction = mutableListOf<PointModel>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentPointHistoryBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_point_history, container, false)
@@ -30,13 +45,60 @@ class PointHistoryFragment : Fragment() {
 
         pointActivity = activity as PointActivity
 
+        settingInitData()
         settingToolbar()
         settingImageViewPointHistoryCaution()
-        settingButtonPointHistoryAll()
-        settingTextViewPointHistoryRemainPoint()
-        settingRecyclerViewPointHistory()
+        settingToggleButton()
+
 
         return fragmentPointHistoryBinding.root
+    }
+
+    private fun settingToggleButton() {
+        fragmentPointHistoryBinding.materialButtonToggleGroupWithRadius.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if(isChecked){
+                when(checkedId){
+                    R.id.buttonPointHistoryAll -> {
+                        pointList = pointList_all
+                        fragmentPointHistoryBinding.recyclerViewPointHistory.adapter?.notifyDataSetChanged()
+                    }
+                    R.id.buttonPointHistoryAccumulate -> {
+                        pointList = pointList_save
+                        fragmentPointHistoryBinding.recyclerViewPointHistory.adapter?.notifyDataSetChanged()
+                    }
+                    R.id.buttonPointHistoryUse -> {
+                        pointList = pointList_use
+                        fragmentPointHistoryBinding.recyclerViewPointHistory.adapter?.notifyDataSetChanged()
+                    }
+                    R.id.buttonPointHistoryDelete -> {
+                        pointList = pointList_extinction
+                        fragmentPointHistoryBinding.recyclerViewPointHistory.adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun settingInitData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            pointList_all = myPagePointDao.gettingPointList()
+            var remain_point = 0
+            pointList_all.forEach {
+                if(it.point_type == PointType.POINT_TYPE_SAVE.number){
+                    pointList_save.add(it)
+                }else if(it.point_type == PointType.POINT_TYPE_USE.number){
+                    pointList_use.add(it)
+                }else{
+                    pointList_extinction.add(it)
+                }
+                remain_point += it.point_changed
+            }
+
+            myPagePointViewModel.textViewPointHistoryRemainPoint.value = "${DecimalFormat("#,###").format(remain_point)}P"
+            pointList = pointList_all
+            settingButtonPointHistoryAll()
+            settingRecyclerViewPointHistory()
+        }
     }
 
     // 툴바 설정
@@ -67,13 +129,7 @@ class PointHistoryFragment : Fragment() {
     fun settingButtonPointHistoryAll() {
         fragmentPointHistoryBinding.apply {
             buttonPointHistoryAll.isChecked = true
-
         }
-    }
-
-    // 현재 남은포인트 양
-    fun settingTextViewPointHistoryRemainPoint() {
-        myPagePointViewModel.textViewPointHistoryRemainPoint.value = "1000P"
     }
 
     // 포인트 리사이클러뷰 설정
@@ -116,13 +172,33 @@ class PointHistoryFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 100
+            return pointList.size
         }
 
         override fun onBindViewHolder(holder: PointHistoryViewHolder, position: Int) {
-            holder.rowPointHistoryBinding.myPagePointViewModel?.textViewRowPointHistoryDate?.value = "2024.03.01"
-            holder.rowPointHistoryBinding.myPagePointViewModel?.textViewRowPointHistoryName?.value = "농산품 이름 $position"
-            holder.rowPointHistoryBinding.myPagePointViewModel?.textViewRowPointHistoryNumber?.value = "+100P"
+            holder.rowPointHistoryBinding.apply {
+                myPagePointViewModel!!.apply {
+                    textViewRowPointHistoryDate.value = pointList[position].point_date
+                    textViewRowPointHistoryName.value = pointList[position].point_reason
+                    textViewRowPointHistoryNumber.value = "${pointList[position].point_changed}P"
+                }
+                if(pointList[position].point_type == PointType.POINT_TYPE_SAVE.number){
+                    // 적립
+                    imageViewRowPointHistory.setImageResource(R.drawable.point_save)
+                    textViewRowPointHistoryNumber.setTextColor(resources.getColor(R.color.green_main))
+                }else if(pointList[position].point_type == PointType.POINT_TYPE_USE.number){
+                    // 사용
+                    imageViewRowPointHistory.setImageResource(R.drawable.point_use)
+                    textViewRowPointHistoryNumber.setTextColor(resources.getColor(R.color.orange_01))
+                }else{
+                    // 소멸
+                    imageViewRowPointHistory.setImageResource(R.drawable.point_gone)
+                    textViewRowPointHistoryNumber.setTextColor(resources.getColor(R.color.orange_01))
+                }
+            }
+
+
+
         }
     }
 

@@ -33,13 +33,13 @@
             android:name=".activity.myPageSetting.MyPageSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CommunitySearchActivity"
+            android:name=".activity.community.CommunitySearchActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CommunityAddActivity"
+            android:name=".activity.community.CommunityAddActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CommunityActivity"
+            android:name=".activity.community.CommunityActivity"
             android:exported="false" />
         <activity
             android:name=".activity.cart.CartActivity"
@@ -81,7 +81,7 @@
             android:name=".activity.myPageMyPost.MyPageMyPostActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.loginRegister.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

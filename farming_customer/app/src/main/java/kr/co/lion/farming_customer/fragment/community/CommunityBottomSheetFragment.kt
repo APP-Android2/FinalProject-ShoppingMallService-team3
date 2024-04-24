@@ -2,6 +2,7 @@ package kr.co.lion.farming_customer.fragment.community
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +11,27 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
+import kr.co.lion.farming_customer.PostStatus
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityBottomSheetBinding
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.model.CommunityModel
+import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 
 
-class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragment) : BottomSheetDialogFragment(), DialogYesNoInterface {
+class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragment, postIdx:Int) : BottomSheetDialogFragment(), DialogYesNoInterface {
     lateinit var fragmentCommunityBottomSheetBinding: FragmentCommunityBottomSheetBinding
     lateinit var communityActivity: CommunityActivity
     lateinit var communityViewModel: CommunityViewModel
+
+    var postIdx = postIdx
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -45,7 +54,9 @@ class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragm
             // 수정하기
             buttonCommunityReadModify.setOnClickListener {
                 dismiss()
-                communityActivity.replaceFragment(CommunityFragmentName.COMMUNITY_MODIFY_FRAGMENT, false, false, null)
+                val communityModifyBundle = Bundle()
+                communityModifyBundle.putInt("postIdx", postIdx)
+                communityActivity.replaceFragment(CommunityFragmentName.COMMUNITY_MODIFY_FRAGMENT, true, false, communityModifyBundle)
             }
             // 삭제하기
             buttonCommunityReadDelete.setOnClickListener {
@@ -54,7 +65,7 @@ class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragm
                     "게시글을 삭제하시겠습니까?",
                     "한 번 삭제한 게시물은 복원할 수 없습니다.",
                     communityActivity,
-                    0
+                    postIdx
                 )
                 dialog.show(communityActivity.supportFragmentManager, "DialogYesNo")
                 dismiss()
@@ -93,6 +104,10 @@ class CommunityBottomSheetFragment(var communityReadFragment: CommunityReadFragm
 
     override fun onYesButtonClick(id: Int) {
         // 게시글 아이디로 삭제
+        CoroutineScope(Dispatchers.Main).launch {
+            CommunityPostDao.updateCommunityPostStatus(id, PostStatus.POST_STATUS_REMOVE)
+            communityActivity.finish()
+        }
     }
 
     override fun onYesButtonClick(activity: AppCompatActivity) {
