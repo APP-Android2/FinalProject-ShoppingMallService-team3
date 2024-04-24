@@ -1,8 +1,11 @@
 package kr.co.lion.farming_customer.dao.orderHistory
 
+import android.content.Context
+import android.net.Uri
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -324,6 +327,28 @@ class OrderDao {
                 query.documents[0].reference.update(map)
             }
             job1.join()
+        }
+
+        // 이미지 데이터를 firebase storage에 업로드는 메서드
+        suspend fun uploadImage(
+            context: Context,
+            orderIdx: Int,
+            uriList: MutableList<Uri>
+        ): MutableList<String> {
+            val uploadFileList = mutableListOf<String>()
+            uriList.forEach {
+                val uploadFileName = "order_review_${orderIdx}_${System.currentTimeMillis()}.jpg"
+                uploadFileList.add(uploadFileName)
+                val job1 = CoroutineScope(Dispatchers.IO).launch {
+                    // Storage에 접근할 수 있는 객체를 가져온다.(폴더의 이름과 파일이름을 저장해준다.
+                    val storageRef =
+                        Firebase.storage.reference.child("image/review/$uploadFileName")
+                    // 업로드한다.
+                    storageRef.putFile(it)
+                }
+                job1.join()
+            }
+            return uploadFileList
         }
 
 
