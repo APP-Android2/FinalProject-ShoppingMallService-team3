@@ -1,14 +1,100 @@
 package kr.co.lion.farming_customer.viewmodel
 
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kr.co.lion.farming_customer.LikeType
 import kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.dao.like.LikeDao
+import kr.co.lion.farming_customer.model.ActivityModel
+import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.model.FarmModel
+import kr.co.lion.farming_customer.model.LikeModel
+import kr.co.lion.farming_customer.model.CommunityPostModel
+import kr.co.lion.farming_customer.model.RentalModel
 
-class LikeViewModel {
+class LikeViewModel() :ViewModel(){
+    data class LikeData(
+        val LikeList: List<LikeModel>?,
+        val cropList: List<CropModel>?,
+        val postList: List<CommunityPostModel>?,
+        val farmList: List<FarmModel>?,
+        val activityList: List<ActivityModel>?,
+        val rentalList: List<RentalModel>?,
+    )
+
+    // 농산물 좋아요 리스트
+    suspend fun getLikeListAndLikeTypeList(userIdx: String, type: String): LikeData = withContext(Dispatchers.IO) {
+        var LikeList = mutableListOf<LikeModel>()
+        var cropList = mutableListOf<CropModel>()
+        var postList = mutableListOf<CommunityPostModel>()
+        var farmList = mutableListOf<FarmModel>()
+        var activityList = mutableListOf<ActivityModel>()
+        var rentalList = mutableListOf<RentalModel>()
+
+
+        when (type) {
+            "CROP" -> {
+                LikeList = LikeDao.getCropLikeList(userIdx.toInt()).toMutableList()
+                val likeTypeIndices = LikeList.map { it.like_type_idx }
+
+                for (likeTypeIdx in likeTypeIndices) {
+                    val crop = LikeDao.getCropList(likeTypeIdx)
+                    cropList.addAll(crop)
+                }
+            }
+
+            "POST" -> {
+                LikeList = LikeDao.getPostLikeList(userIdx.toInt()).toMutableList()
+                val likeTypeIndices = LikeList.map { it.like_type_idx }
+
+                for (likeTypeIdx in likeTypeIndices) {
+                    val post = LikeDao.getPostList(likeTypeIdx)
+                    postList.addAll(post)
+                }
+            }
+
+            "FARM" -> {
+                LikeList = LikeDao.getFarmLikeList(userIdx.toInt()).toMutableList()
+                val likeTypeIndices = LikeList.map { it.like_type_idx }
+
+                for (likeTypeIdx in likeTypeIndices) {
+                    val farm = LikeDao.getFarmList(likeTypeIdx)
+                    farmList.addAll(farm)
+                }
+            }
+
+            "ACTIVITY" -> {
+                LikeList = LikeDao.getActivityLikeList(userIdx.toInt()).toMutableList()
+                val likeTypeIndices = LikeList.map { it.like_type_idx }
+
+                for (likeTypeIdx in likeTypeIndices) {
+                    val activity = LikeDao.getActivityList(likeTypeIdx)
+                    activityList.addAll(activity)
+                }
+            }
+
+            "RENTAL" -> {
+                LikeList = LikeDao.getRentalLikeList(userIdx.toInt()).toMutableList()
+                val likeTypeIndices = LikeList.map { it.like_type_idx }
+
+                for (likeTypeIdx in likeTypeIndices) {
+                    val rental = LikeDao.getRentalList(likeTypeIdx)
+                    rentalList.addAll(rental)
+                }
+            }
+        }
+
+
+        LikeData(LikeList, cropList, postList, farmList, activityList, rentalList)
+    }
+
     // 좋아요 타입
     val toggleLikeType = MutableLiveData<Int>()
 
@@ -63,4 +149,6 @@ class LikeViewModel {
             return group.checkedButtonId
         }
     }
+
+
 }
