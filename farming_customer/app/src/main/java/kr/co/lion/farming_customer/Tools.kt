@@ -326,3 +326,13 @@ enum class MyPageMyPostName(var str : String){
     MY_PAGE_MY_POST_comment_FRAGMENT("MyPageMyPostCommentFragment"),
 }
 
+enum class ReviewState(var str:String, var number:Int) {
+    REVIEW_STATE_NORMAL("정상", 0),
+    REVIEW_STATE_REMOVE("삭제", 1)
+}
+
+enum class ReviewType(var str:String, var number:Int) {
+    TYPE_CROP("농작물", 0),
+    TYPE_FARM("주말농장", 1),
+    TYPE_ACTIVITY("체험활동", 2)
+}
