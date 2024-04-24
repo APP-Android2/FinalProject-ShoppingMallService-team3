@@ -1,6 +1,5 @@
 package kr.co.lion.farming_customer.viewmodel
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
