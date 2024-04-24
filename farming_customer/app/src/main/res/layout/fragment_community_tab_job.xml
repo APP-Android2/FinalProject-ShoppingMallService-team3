@@ -7,7 +7,7 @@
     <data>
         <variable
             name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,6 +84,22 @@
                     android:layout_marginHorizontal="20dp" />
             </LinearLayout>
         </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonCommunityJobAdd"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/green_main"
+            android:clickable="true"
+            app:elevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearance="@style/Widget.Material3.CircularProgressIndicator"
+            app:srcCompat="@drawable/add_community"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

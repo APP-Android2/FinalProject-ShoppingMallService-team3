@@ -33,73 +33,53 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardViewPaymentCrop_crop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider">
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputBottomTradeOptionName"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColorHint="@color/grey_01"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/text_input_search_layout_stroke_color_selector"
+                app:endIconMode="dropdown_menu"
+                app:endIconTint="@android:color/transparent"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintViewPager"
+                app:startIconDrawable="@drawable/bottom_triangle"
+                app:startIconTint="@color/brown_01"
+                tools:layout_constraintEnd_toEndOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <AutoCompleteTextView
+                    android:id="@+id/textViewBottomTradeOptionName"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/white">
-
-                    <ImageButton
-                        android:id="@+id/imageButtonDropDown"
-                        android:layout_width="14dp"
-                        android:layout_height="10dp"
-                        android:layout_marginStart="10dp"
-                        android:backgroundTint="@color/white"
-                        android:src="@drawable/polygon_down"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textViewCrop"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:fontFamily="@font/pretendard_regular"
-                        android:text="농산물"
-                        android:textColor="@color/brown_01"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/imageButtonDropDown"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayoutCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/textViewPaymentCrop_cropName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="34dp"
-                        android:fontFamily="@font/pretendard_regular"
-                        android:text="@{bottomSheetTradeCropViewModel.cropName}"
-                        android:textColor="@color/brown_01"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </LinearLayout>
-
-
+                    android:layout_height="match_parent"
+                    android:drawablePadding="0dp"
+                    android:fontFamily="@font/font_pre_semibold"
+                    android:hint="농산물"
+                    android:inputType="none"
+                    android:paddingVertical="5dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:popupBackground="@drawable/dropdown_box_border_bottom_sheet"
+                    android:text=""
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp" />
+            </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <Button
@@ -160,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="@{bottomSheetTradeCropViewModel.selectedCropPrice}"
+            android:text="@={bottomSheetTradeCropViewModel.selectedCropPrice}"
             android:textColor="@color/brown_01"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/toggleButton"

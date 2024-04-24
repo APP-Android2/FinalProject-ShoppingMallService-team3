@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,7 +23,7 @@ import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.GridSpaceItemDecoration
 import kr.co.lion.farming_customer.LikeType
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.CommunityActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
@@ -295,7 +296,10 @@ class LikeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeCropViewHolder {
-            val rowLikeCropBinding = RowLikeCropBinding.inflate(layoutInflater)
+            val rowLikeCropBinding = DataBindingUtil.inflate<RowLikeCropBinding>(layoutInflater,R.layout.row_like_crop,parent,false)
+            val likeViewModel = LikeViewModel()
+            rowLikeCropBinding.likeViewModel = likeViewModel
+            rowLikeCropBinding.lifecycleOwner = this@LikeFragment
             val likeCropViewHolder = LikeCropViewHolder(rowLikeCropBinding)
             return likeCropViewHolder
         }
@@ -321,6 +325,23 @@ class LikeFragment : Fragment() {
                         .into(imageViewLikeCrop)
                 }
             }
+            // 하트 클릭 리스너
+            holder.rowLikeCropBinding.apply {
+                likeViewModel!!.apply {
+                    constraintLikeCropCancel.setOnClickListener {
+                        if(isLike.value!!){
+                            isLike.value = false
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_04)
+                            textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                        }else{
+                            isLike.value = true
+                            imageViewHeartCrop.setImageResource(R.drawable.heart_01)
+                            textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -341,7 +362,10 @@ class LikeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikePostViewHolder {
-            val rowLikePostBinding = RowLikePostBinding.inflate(layoutInflater)
+            val rowLikePostBinding = DataBindingUtil.inflate<RowLikePostBinding>(layoutInflater,R.layout.row_like_post,parent,false)
+            val likeViewModel = LikeViewModel()
+            rowLikePostBinding.likeViewModel = likeViewModel
+            rowLikePostBinding.lifecycleOwner = this@LikeFragment
             val likePostViewHolder = LikePostViewHolder(rowLikePostBinding)
             return likePostViewHolder
         }
@@ -376,6 +400,25 @@ class LikeFragment : Fragment() {
                 val intent = Intent(mainActivity, CommunityActivity::class.java)
                 startActivity(intent)
             }
+
+
+            // 하트 클릭 리스너
+            holder.rowLikePostBinding.apply {
+                likeViewModel!!.apply {
+                    constraintLike.setOnClickListener {
+                        if(isLike.value!!){
+                            isLike.value = false
+                            imageView.setImageResource(R.drawable.heart_04)
+                            textViewLikePostCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                        }else{
+                            isLike.value = true
+                            imageView.setImageResource(R.drawable.heart_01)
+                            textViewLikePostCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -395,15 +438,20 @@ class LikeFragment : Fragment() {
             }
         }
 
-        override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
-        ): LikeFarmAndAcitivityViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeFarmAndAcitivityViewHolder {
             val rowLikeFarmActivityBinding = RowLikeFarmActivityBinding.inflate(layoutInflater)
             val likeFarmAndActivityViewHolder =
                 LikeFarmAndAcitivityViewHolder(rowLikeFarmActivityBinding)
             return likeFarmAndActivityViewHolder
         }
+//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeFarmAndAcitivityViewHolder {
+//            val rowLikeFarmActivityBinding = DataBindingUtil.inflate<RowLikeFarmActivityBinding>(layoutInflater,R.layout.row_like_farm_activity,parent,false)
+//            val likeViewModel = LikeViewModel()
+//            rowLikeFarmActivityBinding.likeViewModel = likeViewModel
+//            rowLikeFarmActivityBinding.lifecycleOwner = this@LikeFragment
+//            val likeFarmAndActivityViewHolder = LikeFarmAndAcitivityViewHolder(rowLikeFarmActivityBinding)
+//            return likeFarmAndActivityViewHolder
+//        }
 
         override fun getItemCount(): Int {
             return LikeList.size
@@ -441,6 +489,23 @@ class LikeFragment : Fragment() {
                     )
                     startActivity(intent)
 
+            }
+
+            // 하트 클릭 리스너
+            holder.rowLikeFarmActivityBinding.apply {
+                likeViewModel!!.apply {
+                    constraintLikeFarmAndActivityCancel.setOnClickListener {
+                        if(isLike.value!!){
+                            isLike.value = false
+                            imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_04)
+                            textViewLikeFarmAndActivityCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                        }else{
+                            isLike.value = true
+                            imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_01)
+                            textViewLikeFarmAndActivityCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                        }
+                    }
                 }
             }
         }
@@ -470,6 +535,14 @@ class LikeFragment : Fragment() {
             val likeRentalViewHolder = LikeRentalViewHolder(rowLikeRentalBinding)
             return likeRentalViewHolder
         }
+//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeRentalViewHolder {
+//            val rowLikeRentalBinding = DataBindingUtil.inflate<RowLikeRentalBinding>(layoutInflater,R.layout.row_like_rental,parent,false)
+//            val likeViewModel = LikeViewModel()
+//            rowLikeRentalBinding.likeViewModel = likeViewModel
+//            rowLikeRentalBinding.lifecycleOwner = this@LikeFragment
+//            val likeRentalViewHolder = LikeRentalViewHolder(rowLikeRentalBinding)
+//            return likeRentalViewHolder
+//        }
 
         override fun getItemCount(): Int {
             return LikeList.size
@@ -490,7 +563,26 @@ class LikeFragment : Fragment() {
                 val intent = Intent(context, FarmingLifeToolsDetailActivity::class.java)
                 startActivity(intent)
             }
+
+            // 하트 클릭 리스너
+            holder.rowLikeRentalBinding.apply {
+                likeViewModel!!.apply {
+                    constraintLikeRentalHeart.setOnClickListener {
+                        if(isLike.value!!){
+                            isLike.value = false
+                            imageViewHeart.setImageResource(R.drawable.heart_04)
+                            textViewLikeRentalCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+
+                        }else{
+                            isLike.value = true
+                            imageViewHeart.setImageResource(R.drawable.heart_01)
+                            textViewLikeRentalCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                        }
+                    }
+                }
+            }
         }
 
     }
 }
+

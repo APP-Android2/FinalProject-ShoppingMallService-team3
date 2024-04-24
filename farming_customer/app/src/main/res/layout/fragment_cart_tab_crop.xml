@@ -57,6 +57,8 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/pretendard_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="구매하기"
             android:textSize="16sp"
             app:cornerRadius="10dp"

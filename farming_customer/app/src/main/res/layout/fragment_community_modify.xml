@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            name="communityAddModifyViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityAddModifyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,8 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="15dp">
+                android:paddingHorizontal="20dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -119,13 +118,13 @@
                         <AutoCompleteTextView
                             android:id="@+id/textViewCommunityModifyType"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="45dp"
                             android:drawablePadding="0dp"
                             android:fontFamily="@font/font_pre_semibold"
                             android:hint="게시판 유형"
                             android:inputType="none"
                             android:popupBackground="@drawable/dropdown_box_border"
-                            android:text=""
+                            android:text="@={communityAddModifyViewModel.communityPostModifyType}"
                             android:textColor="@color/brown_01"
                             android:textSize="12sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -153,7 +152,7 @@
                             android:gravity="top"
                             android:hint="글 제목 (최대 30자)"
                             android:maxLength="30"
-                            android:text="@={communityViewModel.textViewCommunityModifySubject}"
+                            android:text="@={communityAddModifyViewModel.textViewCommunityModifySubject}"
                             android:textColor="@color/brown_01"
                             android:textColorHint="@color/grey_01"
                             android:textSize="12sp" />
@@ -181,10 +180,10 @@
                             android:fontFamily="@font/font_pre_semibold"
                             android:gravity="top"
                             android:hint="글 내용을 작성해주세요. (최대 2000자)"
+                            android:lines="10"
                             android:maxLength="2000"
-                            android:lines="30"
                             android:maxLines="30"
-                            android:text="@={communityViewModel.textViewCommunityModifyContent}"
+                            android:text="@={communityAddModifyViewModel.textViewCommunityModifyContent}"
                             android:textColor="@color/brown_01"
                             android:textColorHint="@color/grey_01"
                             android:textSize="12sp" />
@@ -194,11 +193,12 @@
                         android:id="@+id/buttonCommunityModify"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_marginTop="180dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="30dp"
                         android:backgroundTint="@color/white"
                         android:enabled="false"
                         android:fontFamily="@font/font_pre_bold"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
                         android:text="수정 완료"
                         android:textColor="@color/green_main"
                         android:textSize="16sp"

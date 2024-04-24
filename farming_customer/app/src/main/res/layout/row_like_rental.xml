@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="likeViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.LikeViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -92,11 +98,11 @@
                         app:srcCompat="@drawable/heart_01" />
 
                     <TextView
-                        android:id="@+id/textViewHeartCnt"
+                        android:id="@+id/textView_likeRentalCnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="999+"
+                        android:text="@={likeViewModel.textView_likeRentalCnt}"
                         android:textColor="@color/white"
                         android:textSize="8sp"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewHeart"

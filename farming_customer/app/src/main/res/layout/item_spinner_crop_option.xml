@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/dropDown_item"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:fontFamily="@font/pretendard_regular"
+        android:paddingHorizontal="52dp"
+        android:paddingVertical="5dp"
+        android:text="TextView"
+        android:textColor="@color/brown_01"
+        android:textSize="12sp" />
+</layout>

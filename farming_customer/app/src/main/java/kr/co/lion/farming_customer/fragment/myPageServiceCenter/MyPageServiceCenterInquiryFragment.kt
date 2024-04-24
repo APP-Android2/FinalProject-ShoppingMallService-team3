@@ -8,12 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterActivity
 import kr.co.lion.farming_customer.activity.myPageServiceCenter.MyPageServiceCenterWriteInquiryActivity
+import kr.co.lion.farming_customer.dao.myPageServiceCenter.MyPageServiceCenterInquiryDao
 import kr.co.lion.farming_customer.databinding.FragmentMyPageServiceCenterInquiryBinding
 import kr.co.lion.farming_customer.fragment.myPageServiceCenter.adapter.InquiryRVAdapter
+import kr.co.lion.farming_customer.model.myPageServiceCenterModel.InquiryModel
 import kr.co.lion.farming_customer.viewmodel.myPageServiceCenter.ServiceCenterInquiryViewModel
 
 class MyPageServiceCenterInquiryFragment : Fragment() {
@@ -22,6 +26,9 @@ class MyPageServiceCenterInquiryFragment : Fragment() {
     lateinit var viewModel: ServiceCenterInquiryViewModel
 
     lateinit var inquiryRVAdapter : InquiryRVAdapter
+
+    var inquiryList = mutableListOf<InquiryModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,19 +40,27 @@ class MyPageServiceCenterInquiryFragment : Fragment() {
         binding.lifecycleOwner = this
         myPageServiceCenterActivity = activity as MyPageServiceCenterActivity
 
-        inquiryRVAdapter = InquiryRVAdapter(requireContext())
+        inquiryRVAdapter = InquiryRVAdapter(requireContext(), inquiryList)
         binding.serviceCenterInquiryRv.adapter = inquiryRVAdapter
         binding.serviceCenterInquiryRv.layoutManager = LinearLayoutManager(context)
 
         settingFloatingActionButton()
+        gettingInquiryList()
 
         return binding.root
     }
 
-    fun settingFloatingActionButton() {
+    private fun settingFloatingActionButton() {
         binding.serviceCenterInquiryFab.setOnClickListener {
             val intent = Intent(context, MyPageServiceCenterWriteInquiryActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    fun gettingInquiryList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            inquiryList = MyPageServiceCenterInquiryDao.gettingInquiryList()
+            inquiryRVAdapter.setInquiryListData(inquiryList)
         }
     }
 }

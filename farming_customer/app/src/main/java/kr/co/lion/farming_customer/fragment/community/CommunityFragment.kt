@@ -11,16 +11,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.CommunityTabFragmentName
 import kr.co.lion.farming_customer.MainFragmentName
+import kr.co.lion.farming_customer.PostType
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.ReviewFragmentName
-import kr.co.lion.farming_customer.activity.CommunityActivity
-import kr.co.lion.farming_customer.activity.CommunityAddActivity
-import kr.co.lion.farming_customer.activity.CommunitySearchActivity
+import kr.co.lion.farming_customer.activity.community.CommunityAddActivity
+import kr.co.lion.farming_customer.activity.community.CommunitySearchActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.databinding.FragmentCommunityBinding
 import kr.co.lion.farming_customer.fragment.FarmingLifeBottomSheetFragment
+import kr.co.lion.farming_customer.model.CommunityModel
 
 class CommunityFragment : Fragment() {
     lateinit var fragmentCommunityBinding: FragmentCommunityBinding
@@ -30,7 +34,6 @@ class CommunityFragment : Fragment() {
     var oldFragment: Fragment? = null
     var newFragment: Fragment? = null
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentCommunityBinding = FragmentCommunityBinding.inflate(inflater)
@@ -38,9 +41,9 @@ class CommunityFragment : Fragment() {
 
         settingToolbar()
         settingTabLayoutCommunity()
-        settingFloatingActionButtonCommunityAdd()
 
-        replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, null)
+        replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
+
         return fragmentCommunityBinding.root
     }
 
@@ -78,19 +81,19 @@ class CommunityFragment : Fragment() {
                     when(tab!!.position){
                         // 전체 탭
                         0 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_ALL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 정보 탭
                         1 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_INFORMATION_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_INFORMATION_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 소통 탭
                         2 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_SOCIAL_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_SOCIAL_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
                         // 구인구직 탭
                         3 -> {
-                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_JOB_FRAGMENT, false, true, null, R.id.containerCommunityTab)
+                            replaceFragment(CommunityTabFragmentName.COMMUNITY_TAB_JOB_FRAGMENT, false, false, null, R.id.containerCommunityTab)
                         }
 
                     }
@@ -107,22 +110,12 @@ class CommunityFragment : Fragment() {
         }
     }
 
-    // 커뮤니티 게시글 작성
-    fun settingFloatingActionButtonCommunityAdd() {
-        fragmentCommunityBinding.apply {
-            floatingActionButtonCommunityAdd.setOnClickListener {
-                val communityIntent = Intent(mainActivity, CommunityAddActivity::class.java)
-                startActivity(communityIntent)
-
-            }
-        }
-    }
 
 
     fun replaceFragment(name: CommunityTabFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunityTab){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
-        val fragmentTransaction = (context as MainActivity).supportFragmentManager.beginTransaction()
+        val fragmentTransaction = mainActivity.supportFragmentManager.beginTransaction()
         // oldFragment에 newFragment가 가지고 있는 Fragment 객체를 담아준다.
         if(newFragment != null){
             oldFragment = newFragment
@@ -198,10 +191,10 @@ class CommunityFragment : Fragment() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name: MainFragmentName){
+    fun removeFragment(name: CommunityTabFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
-        (context as MainActivity).supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        mainActivity.supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
 }

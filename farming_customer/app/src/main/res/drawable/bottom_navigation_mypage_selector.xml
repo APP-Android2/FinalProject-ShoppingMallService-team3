@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:drawable="@drawable/mypage_01"/> <!-- 체크된 상태의 색상 -->
+    <item android:drawable="@drawable/mypage_02"/> <!-- 체크되지 않은 상태의 색상 -->
+</selector>

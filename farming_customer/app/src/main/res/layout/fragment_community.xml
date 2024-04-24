@@ -96,24 +96,12 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayoutCommunity" />
+            app:layout_constraintTop_toBottomOf="@+id/tabLayoutCommunity"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButtonCommunityAdd"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/green_main"
-            android:clickable="true"
-            app:elevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:shapeAppearance="@style/Widget.Material3.CircularProgressIndicator"
-            app:srcCompat="@drawable/add_community"
-            app:tint="@color/white" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

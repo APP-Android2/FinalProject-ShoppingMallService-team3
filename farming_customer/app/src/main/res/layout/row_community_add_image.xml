@@ -7,7 +7,7 @@
     <data>
         <variable
             name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,14 +16,14 @@
 
         <ImageView
             android:id="@+id/imageViewRowCommunityAdd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="380dp"
+            android:layout_height="380dp"
             android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:srcCompat="@color/grey_03" />
 
         <ImageButton

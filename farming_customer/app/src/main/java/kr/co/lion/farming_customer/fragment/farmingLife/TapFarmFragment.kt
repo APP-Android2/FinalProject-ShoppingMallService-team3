@@ -9,16 +9,20 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.GridSpaceItemDecoration
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.databinding.FragmentTapFarmBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 
 class TapFarmFragment : Fragment() {
@@ -27,6 +31,9 @@ class TapFarmFragment : Fragment() {
 
     lateinit var deco: MaterialDividerItemDecoration
     lateinit var deco2: GridSpaceItemDecoration
+
+    var farmList : MutableList<FarmModel>? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,9 +43,17 @@ class TapFarmFragment : Fragment() {
 
         deco = MaterialDividerItemDecoration(mainActivity, MaterialDividerItemDecoration.VERTICAL)
         deco2 = GridSpaceItemDecoration(2,40,-10,-10,-10)
-        settingRecyclerView()
+
+        settingInitData()
 
         return fragmentTapFarmBinding.root
+    }
+
+    private fun settingInitData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            farmList = FarmDao.gettingFarmList()
+            settingRecyclerView()
+        }
     }
 
     private fun settingRecyclerView() {
@@ -78,22 +93,24 @@ class TapFarmFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return farmList!!.size
         }
 
         override fun onBindViewHolder(holder: TapFarmViewHolder, position: Int) {
             holder.rowGridItemBinding.apply {
                 rowGridItemViewModel!!.apply {
-                    textView_likeCnt.value = "999"
-                    textView_ItemName.value = "파밍이네 농장"
-                    textView_location.value = "경기도 파밍시 파밍구"
-                    textView_price.value = "10,000원~"
+                    textView_likeCnt.value = farmList!![position].farm_like_cnt.toString()
+                    textView_ItemName.value = farmList!![position].farm_title
+                    textView_location.value = farmList!![position].farm_address
+                    textView_price.value = farmList!![position].farm_option_detail["price_area"].toString()
                     isLike.value = false
                 }
+                ratingBar.rating = farmList!![position].farm_star
             }
             holder.rowGridItemBinding.root.setOnClickListener {
                 val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
                 intent.putExtra("fragmentName", FarmingLifeFragmnetName.FARMING_LIFE_FARM_DETAIL_FARMGNET)
+                intent.putExtra("idx", farmList!![position].farm_idx)
                 startActivity(intent)
             }
             // 하트
@@ -101,13 +118,19 @@ class TapFarmFragment : Fragment() {
                 constraintLikeCancel.setOnClickListener {
                     if(rowGridItemViewModel!!.isLike.value!!){
                         rowGridItemViewModel!!.isLike.value = false
-                        imageViewHeart.setImageResource(R.drawable.heart_02)
+                        imageViewHeart.setImageResource(R.drawable.heart_04)
                         textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
                     }else{
                         rowGridItemViewModel!!.isLike.value = true
                         imageViewHeart.setImageResource(R.drawable.heart_01)
                         textViewLikeCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                     }
+                }
+            }
+            // 이미지
+            holder.rowGridItemBinding.apply {
+                CoroutineScope(Dispatchers.Main).launch {
+                    FarmDao.gettingFarmImage(mainActivity, farmList!![position].farm_images[0], imageView)
                 }
             }
         }

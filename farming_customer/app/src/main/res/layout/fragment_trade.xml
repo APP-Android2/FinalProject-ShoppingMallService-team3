@@ -18,12 +18,20 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarTrade"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/CustomToolbarStyle"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/brown_01" />
+            app:titleTextColor="@color/brown_01">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:src="@drawable/font_logo" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <ScrollView
             android:layout_width="0dp"

@@ -49,7 +49,7 @@
             android:layout_marginEnd="20dp"
             android:background="@color/white"
             app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
+            app:cardElevation="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarPoint">
@@ -193,7 +193,7 @@
                 android:fontFamily="@font/font_pre_semibold"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:text="삭제"
+                android:text="소멸"
                 android:textSize="12sp" />
         </kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius>
 
