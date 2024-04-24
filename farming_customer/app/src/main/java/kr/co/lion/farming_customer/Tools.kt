@@ -313,6 +313,7 @@ enum class PostStatus(var str:String, var number:Int) {
     POST_STATUS_NORMAL("정상", 1),
     POST_STATUS_REMOVE("샥제", 2),
     POST_STATUS_MODIFY("수정", 3)
+}
 
 // 남자 또는 여자를 나타내는 값을 정의한다.
 enum class Gender(var str:String, var num:Int){
@@ -390,6 +391,7 @@ enum class InquiryState(var str:String, var number:Int) {
     INQUIRY_STATE_NORMAL("정상", 0),
     INQUIRY_STATE_REMOVE("삭제", 1)
 }
+
 enum class InquiryType(var str: String, var number:Int) {
     TYPE_CROP("농작물", 0),
     TYPE_FARM("주말농장", 1),
@@ -410,6 +412,7 @@ enum class CommentStatus(var str:String, var number: Int) {
     COMMENT_STATUS_NORMAL("정상", 1),
     COMMENT_STATUS_REMOVE("삭제", 2),
     COMMENT_STATUS_MODIFY("수정", 3)
+}
 
 enum class ReviewState(var str:String, var number:Int) {
     REVIEW_STATE_NORMAL("정상", 0),
