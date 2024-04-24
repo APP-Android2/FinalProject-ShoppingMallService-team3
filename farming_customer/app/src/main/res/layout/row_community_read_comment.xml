@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            name="communityCommentViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityCommentViewModel" />
     </data>
 
     <FrameLayout
@@ -94,7 +94,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="@{communityViewModel.textViewRowCommunityReadCommentWriter}"
+                        android:text="@{communityCommentViewModel.textViewRowCommunityReadCommentWriter}"
                         android:textColor="@color/brown_01"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -107,7 +107,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="@{communityViewModel.textViewRowCommunityReadCommentContent}"
+                    android:text="@{communityCommentViewModel.textViewRowCommunityReadCommentContent}"
                     android:textColor="@color/brown_01"
                     android:textSize="12sp" />
 
