@@ -258,7 +258,7 @@ class CommunityPostDao {
                 // 게시글 상태가 정상 또는 수정 상태인 것만 가져오기 위한 조건 설정
                 val validStatus = listOf(PostStatus.POST_STATUS_NORMAL.number, PostStatus.POST_STATUS_MODIFY.number)
                 var query = collectionReference.whereIn("postStatus", validStatus)
-                // 농산품 좋아요 개수를 기준으로 내림 차순 정렬..
+                // 게시글 좋아요 개수를 기준으로 내림 차순 정렬..
                 query = query.orderBy("postLikeCnt", Query.Direction.DESCENDING)
 
                 val querySnapshot = query.get().await()

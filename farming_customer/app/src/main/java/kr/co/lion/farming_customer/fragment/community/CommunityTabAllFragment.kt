@@ -218,7 +218,7 @@ class CommunityTabAllFragment : Fragment() {
                     if (allList[position].postImages != null) {
                         CommunityPostDao.gettingCommunityPostImage(mainActivity, allList[position].postImages!![0], imageViewCommunityListAll)
                     } else {
-                        holder.rowCommunityTabAllBinding.imageViewCommunityListAll.visibility = View.GONE
+                        holder.rowCommunityTabAllBinding.imageViewCommunityListAll.setImageResource(R.color.white)
                     }
                 }
 

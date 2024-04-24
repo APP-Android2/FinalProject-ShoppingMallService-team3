@@ -242,7 +242,7 @@ class CommunityTabJobFragment : Fragment() {
                     if (jobList[position].postImages != null) {
                         CommunityPostDao.gettingCommunityPostImage(mainActivity, jobList[position].postImages!![0], imageViewCommunityListJob)
                     } else {
-                        holder.rowCommunityTabJobBinding.imageViewCommunityListJob.visibility = View.GONE
+                        holder.rowCommunityTabJobBinding.imageViewCommunityListJob.setImageResource(R.color.white)
                     }
                 }
 

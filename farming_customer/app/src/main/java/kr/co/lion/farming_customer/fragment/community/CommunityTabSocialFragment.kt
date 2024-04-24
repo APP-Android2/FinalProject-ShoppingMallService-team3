@@ -242,7 +242,7 @@ class CommunityTabSocialFragment : Fragment() {
                     if (socialList[position].postImages != null) {
                         CommunityPostDao.gettingCommunityPostImage(mainActivity, socialList[position].postImages!![0], imageViewCommunityListSocial)
                     } else {
-                        holder.rowCommunityTabSocialBinding.imageViewCommunityListSocial.visibility = View.GONE
+                        holder.rowCommunityTabSocialBinding.imageViewCommunityListSocial.setImageResource(R.color.white)
                     }
                 }
 

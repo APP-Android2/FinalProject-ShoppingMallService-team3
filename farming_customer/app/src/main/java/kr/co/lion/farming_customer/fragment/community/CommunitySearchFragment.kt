@@ -1,6 +1,7 @@
 package kr.co.lion.farming_customer.fragment.community
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -50,6 +51,12 @@ class CommunitySearchFragment : Fragment() {
         settingRecyclerViewCommunitySearch()
 
         return fragmentCommunitySearchBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        settingRecyclerViewCommunitySearch()
     }
 
     // 뒤로 가기
@@ -129,6 +136,16 @@ class CommunitySearchFragment : Fragment() {
                 communityViewModel?.textViewCommunityListCommentCntSearch?.value = searchList[position].postCommentCnt.toString()
                 communityViewModel?.textViewCommunityListDateSearch?.value = searchList[position].postRegDt
 
+                if (searchList[position].postLikeState == true) {
+                    imageViewCommunityListLikeSearch.setImageResource(R.drawable.heart_01)
+                    textViewCommunityListLikeCntSearch.setTextColor(Color.parseColor("#FFFFFFFF"))
+                    communityViewModel?.textViewCommunityListLikeCntSearch?.value = searchList[position].postLikeCnt.toString()
+                } else {
+                    imageViewCommunityListLikeSearch.setImageResource(R.drawable.heart_04)
+                    textViewCommunityListLikeCntSearch.setTextColor(Color.parseColor("#413514"))
+                    communityViewModel?.textViewCommunityListLikeCntSearch?.value = searchList[position].postLikeCnt.toString()
+                }
+
                 CoroutineScope(Dispatchers.Main).launch {
                     // 댓글 정보를 가져온다
                     commentList = CommunityCommentDao.gettingCommunityCommentList(searchList[position].postIdx)
@@ -139,7 +156,7 @@ class CommunitySearchFragment : Fragment() {
                     if (searchList[position].postImages != null) {
                         CommunityPostDao.gettingCommunityPostImage(communitySearchActivity, searchList[position].postImages!![0], imageViewCommunityListSearch)
                     } else {
-                        holder.rowCommunitySearchBinding.imageViewCommunityListSearch.visibility = View.GONE
+                        holder.rowCommunitySearchBinding.imageViewCommunityListSearch.setImageResource(R.color.white)
                     }
                 }
 
@@ -154,15 +171,29 @@ class CommunitySearchFragment : Fragment() {
                     communityIntent.putExtra("postIdx", searchList[position].postIdx)
                     startActivity(communityIntent)
                 }
-            }
 
-            holder.rowCommunitySearchBinding.apply {
                 imageViewCommunityListLikeSearch.setOnClickListener {
-                    imageViewCommunityListLikeSearch.isSelected = !imageViewCommunityListLikeSearch.isSelected
-                    textViewCommunityListLikeCntSearch.isSelected = !textViewCommunityListLikeCntSearch.isSelected
+                    if (searchList[position].postLikeState == false) {
+                        searchList[position].postLikeState = true
+                        imageViewCommunityListLikeSearch.setImageResource(R.drawable.heart_01)
+                        textViewCommunityListLikeCntSearch.setTextColor(Color.parseColor("#FFFFFFFF"))
+                        searchList[position].postLikeCnt += 1
+                        CoroutineScope(Dispatchers.Main).launch {
+                            CommunityPostDao.updateCommunityPostLikeState(searchList[position], searchList[position].postLikeState)
+                        }
+                    } else {
+                        searchList[position].postLikeState = false
+                        imageViewCommunityListLikeSearch.setImageResource(R.drawable.heart_04)
+                        textViewCommunityListLikeCntSearch.setTextColor(Color.parseColor("#413514"))
+                        searchList[position].postLikeCnt -= 1
+                        CoroutineScope(Dispatchers.Main).launch {
+                            CommunityPostDao.updateCommunityPostLikeState(searchList[position], searchList[position].postLikeState)
+                        }
+                    }
+                    communityViewModel?.textViewCommunityListLikeCntSearch?.value = searchList[position].postLikeCnt.toString()
                 }
-            }
 
+            }
         }
     }
 
