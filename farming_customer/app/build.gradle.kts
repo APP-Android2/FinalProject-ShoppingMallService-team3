@@ -67,4 +67,17 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    // Retrofit2
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.opencsv:opencsv:5.9")
+//    //xml parser
+//    implementation("com.tickaroo.tikxml:annotation:0.8.15")
+//    implementation("com.tickaroo.tikxml:core:0.8.15")
+//    implementation("com.tickaroo.tikxml:retrofit-converter:0.8.15")
+//    kapt("com.tickaroo.tikxml:processor:0.8.15")
+
 }

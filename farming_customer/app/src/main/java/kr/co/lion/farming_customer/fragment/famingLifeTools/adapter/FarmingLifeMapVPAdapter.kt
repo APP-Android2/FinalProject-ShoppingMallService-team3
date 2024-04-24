@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
 import kr.co.lion.farming_customer.databinding.RowLikeRentalVpItemBinding
+import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 
-class FarmingLifeMapVPAdapter(val context: Context) :
+class FarmingLifeMapVPAdapter(val context: Context, rentalList: MutableList<RentalModel>) :
     RecyclerView.Adapter<FarmingLifeMapVPAdapter.MapViewHolder>() {
     private var isHeartBtn: Boolean = true
+    var rentalList = rentalList
 
     inner class MapViewHolder(val rowBinding: RowLikeRentalVpItemBinding) :
         RecyclerView.ViewHolder(rowBinding.root) {
@@ -33,13 +35,13 @@ class FarmingLifeMapVPAdapter(val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return rentalList.size
     }
 
     override fun onBindViewHolder(holder: MapViewHolder, position: Int) {
-        holder.rowBinding.vpItemTextViewLikeRentalName.text = "농기구점 $position"
-        holder.rowBinding.vpItemTextViewLikeRentalPhoneNumber.text = "010-1111-1111"
-        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = "농기구점 $position 주소"
+        holder.rowBinding.vpItemTextViewLikeRentalName.text = rentalList[position].rental_name
+        holder.rowBinding.vpItemTextViewLikeRentalPhoneNumber.text = rentalList[position].rental_phone
+        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = rentalList[position].rental_address
 
         holder.rowBinding.vpItemImageViewHeart.setOnClickListener {
             if (isHeartBtn) {
@@ -56,6 +58,7 @@ class FarmingLifeMapVPAdapter(val context: Context) :
 
         holder.rowBinding.root.setOnClickListener {
             val intent = Intent(context, FarmingLifeToolsDetailActivity::class.java)
+            intent.putExtra("rentalIdx", rentalList[position].rental_idx)
             context.startActivity(intent)
         }
     }
