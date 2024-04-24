@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.review
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,13 +11,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.ReviewState
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
+import kr.co.lion.farming_customer.dao.myPageReview.MyPageReviewDao
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryCropBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageCropBinding
+import kr.co.lion.farming_customer.model.myPageReview.ReviewModel
 import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
 
@@ -25,6 +32,10 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
     lateinit var reviewActivity: ReviewActivity
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
 
+    var cropReviewList = mutableListOf<ReviewModel>()
+    var cropReviewImages: MutableList<String>? = null
+    private var reviewIdx = 0
+    private var reviewCount = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -36,17 +47,11 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
 
         reviewActivity = activity as ReviewActivity
 
-        settingWrittenCropReviewCount()
         settingRecyclerViewReviewTabCrop()
+        gettingCropReviewData()
 
         return fragmentReviewTabCropBinding.root
     }
-
-    // 쓴 농산품 리뷰 개수
-    fun settingWrittenCropReviewCount() {
-        fragmentReviewTabCropBinding.myPageReviewViewModel?.textViewReviewTabCropCount?.value = "내가 쓴 리뷰 총 100개"
-    }
-
 
     // 리뷰 농산물 탭 리사이클러뷰 설정
     fun settingRecyclerViewReviewTabCrop() {
@@ -57,6 +62,19 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
                 val deco = MaterialDividerItemDecoration(reviewActivity, MaterialDividerItemDecoration.VERTICAL)
                 addItemDecoration(deco)
             }
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun gettingCropReviewData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            cropReviewList = MyPageReviewDao.gettingCropReviewList()
+
+            fragmentReviewTabCropBinding.recyclerViewReviewTabCrop.adapter?.notifyDataSetChanged()
+
+            val reviewCount = cropReviewList.size
+            fragmentReviewTabCropBinding.myPageReviewViewModel?.textViewReviewTabCropCount?.value = "내가 쓴 리뷰 총 ${reviewCount}개"
+
         }
     }
 
@@ -90,24 +108,35 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
                 layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
             }
 
-
             return reviewTabCropViewHolder
         }
 
         override fun getItemCount(): Int {
-            return 100
+            return cropReviewList.size
         }
 
         override fun onBindViewHolder(holder: ReviewTabCropViewHolder, position: Int) {
-            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropDate?.value = "2024.04.01"
-            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropName?.value = "파밍이네 감자 $position"
-            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropText?.value = "리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다."
-            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropLabel?.value = "파밍이네 감자 10kg"
+            reviewIdx = cropReviewList[position].review_idx
+
+            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropDate?.value = cropReviewList[position].review_reg_dt
+            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropName?.value = cropReviewList[position].review_title
+            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropText?.value = cropReviewList[position].review_content
+            holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropLabel?.value = cropReviewList[position].review_option
+            holder.rowReviewHistoryCropBinding.ratingBarRowReviewHistoryCrop.rating =
+                cropReviewList[position].review_rate.toFloat()
 
             holder.rowReviewHistoryCropBinding.buttonReviewTabCropDelete.setOnClickListener {
                 val dialog = DialogYesNo(this@ReviewTabCropFragment, null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
                         "삭제하시겠습니까?", reviewActivity, position)
                 dialog.show(this@ReviewTabCropFragment?.parentFragmentManager!!, "DialogYesNo")
+            }
+
+            if (cropReviewImages == null) {
+                holder.rowReviewHistoryCropBinding.recyclerViewReviewImageCrop.visibility = View.GONE
+                holder.rowReviewHistoryCropBinding.horizontalScrollView.visibility = View.GONE
+            } else {
+                holder.rowReviewHistoryCropBinding.recyclerViewReviewImageCrop.visibility = View.VISIBLE
+                holder.rowReviewHistoryCropBinding.horizontalScrollView.visibility = View.VISIBLE
             }
         }
 
@@ -139,11 +168,13 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
             }
 
             override fun getItemCount(): Int {
-                return 5
+                return cropReviewImages?.size ?: 0
             }
 
             override fun onBindViewHolder(holder: ReviewImageCropViewHolder, position: Int) {
-                holder.rowReviewHistoryImageCropBinding.imageViewRowReviewTabCrop.setImageResource(R.drawable.ic_launcher_background)
+                CoroutineScope(Dispatchers.Main).launch {
+                        MyPageReviewDao.gettingCropReviewPostImage(requireContext(), cropReviewImages?.getOrNull(position), holder.rowReviewHistoryImageCropBinding.imageViewRowReviewTabCrop)
+                }
             }
         }
 
@@ -151,6 +182,11 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
 
     override fun onYesButtonClick(id: Int) {
         fragmentReviewTabCropBinding.recyclerViewReviewTabCrop.adapter!!.notifyItemRemoved(id)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            // 글 상태를 삭제 상태로 변경한다.
+            MyPageReviewDao.updateReviewState(reviewIdx, ReviewState.REVIEW_STATE_REMOVE)
+        }
     }
 
     override fun onYesButtonClick(activity: AppCompatActivity) {

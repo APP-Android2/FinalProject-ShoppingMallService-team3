@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -16,18 +17,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
-import kr.co.lion.farming_customer.PointStatus
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
-import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
-import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.dao.CommunityCommentDao
 import kr.co.lion.farming_customer.dao.CommunityPostDao
 import kr.co.lion.farming_customer.dao.crop.CropDao
-import kr.co.lion.farming_customer.dao.myPagePoint.myPagePointDao
+import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
+import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
@@ -38,19 +37,12 @@ import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.CommunityCommentModel
 import kr.co.lion.farming_customer.model.CommunityModel
 import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
-import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
-import kr.co.lion.farming_customer.model.farmingLife.FarmModel
-import kr.co.lion.farming_customer.model.myPagePoint.PointModel
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.HomeViewModel
-import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import kotlin.math.pow
 
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
@@ -74,9 +66,6 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding.homeViewModel = homeViewModel
         fragmentHomeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
-        gettingCropLikeTop5()
-
-        gettingCommunityPostLikeTop5()
 
         settingData()
         settingRecyclerView()
@@ -84,20 +73,6 @@ class HomeFragment : Fragment() {
 
         return fragmentHomeBinding.root
     }
-
-    override fun onResume() {
-        super.onResume()
-
-        gettingCommunityPostLikeTop5()
-    }
-
-    // 추천 게시물 데이터를 가져온다.
-    fun gettingCommunityPostLikeTop5(){
-        CoroutineScope(Dispatchers.Main).launch {
-            communityPostLikeTop5List = CommunityPostDao.gettingCommunityPostLikeTop5List()
-            settingRecyclerView()
-        }
-        fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
         
     private fun settingData() {
         CoroutineScope(Dispatchers.Main).launch {
@@ -107,6 +82,8 @@ class HomeFragment : Fragment() {
             val activityList = ActivityDao.gettingActivityListOrderByLikeCnt()
             // 추천 농산물 데이터를 가져온다.
             cropLikeTop5List = CropDao.gettingCropLikeTop5List()
+            // 게시글 데이터를 가져온다.
+            communityPostLikeTop5List = CommunityPostDao.gettingCommunityPostLikeTop5List()
 
             var index = 0
             while (farmAndActivityList.size < 6){
@@ -121,6 +98,8 @@ class HomeFragment : Fragment() {
                 index ++
             }
             fragmentHomeBinding.viewPagerFarm.adapter?.notifyDataSetChanged()
+            fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
+            fragmentHomeBinding.recyclerViewBoard.adaper?.notifyDataSetChanged()
         }
     }
 

@@ -1,7 +1,9 @@
 package kr.co.lion.farming_customer.viewmodel.review
 
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.willy.ratingbar.ScaleRatingBar
 
 class MyPageReviewViewModel : ViewModel() {
     // 리뷰 탭 농작물 리뷰 개수
@@ -14,7 +16,6 @@ class MyPageReviewViewModel : ViewModel() {
     val textViewRowReviewTabCropText = MutableLiveData<String>()
     // 리뷰 탭 농작물 리뷰 옵션 라벨
     val textViewRowReviewTabCropLabel = MutableLiveData<String>()
-
 
     // 리뷰 탭 주말농장 리뷰 개수
     val textViewReviewTabFarmCount = MutableLiveData<String>()
@@ -37,4 +38,5 @@ class MyPageReviewViewModel : ViewModel() {
     val textViewRowReviewTabActivityText = MutableLiveData<String>()
     // 리뷰 탭 체험활동 리뷰 옵션 라벨
     val textViewRowReviewTabActivityLabel = MutableLiveData<String>()
+
 }

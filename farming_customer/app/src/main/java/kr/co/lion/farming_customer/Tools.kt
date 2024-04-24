@@ -411,6 +411,17 @@ enum class CommentStatus(var str:String, var number: Int) {
     COMMENT_STATUS_REMOVE("삭제", 2),
     COMMENT_STATUS_MODIFY("수정", 3)
 
+enum class ReviewState(var str:String, var number:Int) {
+    REVIEW_STATE_NORMAL("정상", 0),
+    REVIEW_STATE_REMOVE("삭제", 1)
+}
+
+enum class ReviewType(var str:String, var number:Int) {
+    TYPE_CROP("농작물", 0),
+    TYPE_FARM("주말농장", 1),
+    TYPE_ACTIVITY("체험활동", 2)
+}
+
 // 농산품 상태
 enum class CropStatus(var str:String, var num:Int){
     NORMAL("정상", 1),
