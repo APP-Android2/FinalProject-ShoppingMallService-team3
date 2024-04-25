@@ -2,6 +2,7 @@ package kr.co.lion.farming_customer.fragment.review
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,9 +34,7 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
 
     var cropReviewList = mutableListOf<ReviewModel>()
-    var cropReviewImages: MutableList<String>? = null
     private var reviewIdx = 0
-    private var reviewCount = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -102,12 +101,6 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
 
             val reviewTabCropViewHolder = ReviewTabCropViewHolder(rowReviewHistoryCropBinding)
 
-            // 리뷰 농산물 탭 이미지 리사이클러뷰 설정
-            rowReviewHistoryCropBinding.recyclerViewReviewImageCrop.apply {
-                adapter = ReviewImageCropRecyclerViewAdapter()
-                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
-            }
-
             return reviewTabCropViewHolder
         }
 
@@ -116,6 +109,8 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
         }
 
         override fun onBindViewHolder(holder: ReviewTabCropViewHolder, position: Int) {
+            val cropImageList = cropReviewList[position].review_images
+
             reviewIdx = cropReviewList[position].review_idx
 
             holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropDate?.value = cropReviewList[position].review_reg_dt
@@ -131,18 +126,17 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
                 dialog.show(this@ReviewTabCropFragment?.parentFragmentManager!!, "DialogYesNo")
             }
 
-            if (cropReviewImages == null) {
-                holder.rowReviewHistoryCropBinding.recyclerViewReviewImageCrop.visibility = View.GONE
-                holder.rowReviewHistoryCropBinding.horizontalScrollView.visibility = View.GONE
-            } else {
-                holder.rowReviewHistoryCropBinding.recyclerViewReviewImageCrop.visibility = View.VISIBLE
-                holder.rowReviewHistoryCropBinding.horizontalScrollView.visibility = View.VISIBLE
+            // 리뷰 농산물 탭 이미지 리사이클러뷰 설정
+            holder.rowReviewHistoryCropBinding.recyclerViewReviewImageCrop.apply {
+                adapter = ReviewImageCropRecyclerViewAdapter(cropImageList)
+                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
             }
         }
 
 
         // 리뷰 농산물 탭 이미지 리사이클러뷰 설정
-        inner class ReviewImageCropRecyclerViewAdapter : RecyclerView.Adapter<ReviewImageCropRecyclerViewAdapter.ReviewImageCropViewHolder>() {
+        inner class ReviewImageCropRecyclerViewAdapter(cropImageList: MutableList<String>) : RecyclerView.Adapter<ReviewImageCropRecyclerViewAdapter.ReviewImageCropViewHolder>() {
+            var cropImages = cropImageList
             inner class ReviewImageCropViewHolder(rowReviewHistoryImageCropBinding: RowReviewHistoryImageCropBinding) : RecyclerView.ViewHolder(rowReviewHistoryImageCropBinding.root) {
                 val rowReviewHistoryImageCropBinding: RowReviewHistoryImageCropBinding
 
@@ -168,12 +162,12 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
             }
 
             override fun getItemCount(): Int {
-                return cropReviewImages?.size ?: 0
+                return cropImages.size
             }
 
             override fun onBindViewHolder(holder: ReviewImageCropViewHolder, position: Int) {
                 CoroutineScope(Dispatchers.Main).launch {
-                        MyPageReviewDao.gettingCropReviewPostImage(requireContext(), cropReviewImages?.getOrNull(position), holder.rowReviewHistoryImageCropBinding.imageViewRowReviewTabCrop)
+                    MyPageReviewDao.gettingCropReviewPostImage(requireContext(), cropImages[position], holder.rowReviewHistoryImageCropBinding.imageViewRowReviewTabCrop)
                 }
             }
         }
