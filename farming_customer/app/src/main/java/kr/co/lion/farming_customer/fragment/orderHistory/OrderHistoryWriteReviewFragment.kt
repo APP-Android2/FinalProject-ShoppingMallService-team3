@@ -104,7 +104,19 @@ class OrderHistoryWriteReviewFragment : Fragment() {
             settingData()
             settingImage()
 
+            settingInputUI()
+
         }
+    }
+
+    fun settingInputUI() {
+        // 입력 요소들을 초기화 한다.
+        orderHistoryReviewViewModel.textViewWriteReview_reviewContent.value = ""
+
+        isAddPicture = false
+
+        // 의견 입력란에 포커스를 준다.
+        Tools.showSoftInput(orderHistoryActivity, fragmentOrderHistoryWriteReviewBinding.textViewWriteReviewReviewContent)
     }
 
     private fun settingImage() {
