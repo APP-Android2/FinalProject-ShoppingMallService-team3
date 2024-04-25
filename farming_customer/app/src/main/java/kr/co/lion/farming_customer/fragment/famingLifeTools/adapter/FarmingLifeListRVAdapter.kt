@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
 import kr.co.lion.farming_customer.databinding.RowLikeRentalVpItemBinding
+import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 
-class FarmingLifeListRVAdapter(val context: Context) : RecyclerView.Adapter<FarmingLifeListRVAdapter.ListViewHolder>() {
+class FarmingLifeListRVAdapter(val context: Context, rentalList: MutableList<RentalModel>) : RecyclerView.Adapter<FarmingLifeListRVAdapter.ListViewHolder>() {
     private var isHeartBtn : Boolean = true
+    var rentalList = rentalList
 
     inner class ListViewHolder(val rowBinding: RowLikeRentalVpItemBinding) : RecyclerView.ViewHolder(rowBinding.root) {
         init {
@@ -30,13 +32,13 @@ class FarmingLifeListRVAdapter(val context: Context) : RecyclerView.Adapter<Farm
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return rentalList.size
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.rowBinding.vpItemTextViewLikeRentalName.text = "농기구 $position"
-        holder.rowBinding.vpItemTextViewLikeRentalPhoneNumber.text = "010-1111-1111"
-        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = "농기구 임대점${position} 주소"
+        holder.rowBinding.vpItemTextViewLikeRentalName.text = rentalList[position].rental_name
+        holder.rowBinding.vpItemTextViewLikeRentalPhoneNumber.text = rentalList[position].rental_phone
+        holder.rowBinding.vpItemTextViewLikeRentalAddress.text = rentalList[position].rental_address
 
         holder.rowBinding.vpItemImageViewHeart.setOnClickListener {
             if (isHeartBtn) {
@@ -53,6 +55,7 @@ class FarmingLifeListRVAdapter(val context: Context) : RecyclerView.Adapter<Farm
 
         holder.rowBinding.root.setOnClickListener {
             val intent = Intent(context, FarmingLifeToolsDetailActivity::class.java)
+            intent.putExtra("rentalIdx", rentalList[position].rental_idx)
             context.startActivity(intent)
         }
     }
