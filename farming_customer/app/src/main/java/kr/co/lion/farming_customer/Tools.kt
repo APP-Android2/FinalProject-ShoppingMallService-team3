@@ -345,6 +345,11 @@ enum class OrderProductType(var str : String, var number : Int){
     ORDER_PRODUCT_TYPE_ACTIVITY("체험활동", 3)
 }
 
+enum class CartCropStatus(var str: String, var number: Int){
+    CART_CROP_STATUS_NORMAL("정상", 1),
+    CART_CROP_STATUS_DELETE("삭제", 2)
+}
+
 enum class OrderLabelType(var str : String, var number : Int){
     ORDER_LABEL_TYPE_PAY_DONE("결제완료", 1),
     ORDER_LABEL_TYPE_DELIVERY("배송중", 2),

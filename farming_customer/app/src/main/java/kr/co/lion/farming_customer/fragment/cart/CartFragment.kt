@@ -12,16 +12,16 @@ import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.databinding.FragmentCartBinding
 
 class CartFragment : Fragment() {
-    lateinit var fragmentCartBinding: FragmentCartBinding
+    private lateinit var fragmentCartBinding: FragmentCartBinding
     lateinit var cartActivity: CartActivity
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         fragmentCartBinding = FragmentCartBinding.inflate(inflater)
         cartActivity = activity as CartActivity
 
         settingToolbar()
         settingTabLayoutCart()
-        cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT, false, false, null, container = R.id.containerCartTab)
+        settingInitView()
 
         return fragmentCartBinding.root
     }
@@ -38,23 +38,49 @@ class CartFragment : Fragment() {
         }
     }
 
+    private fun settingInitView(){
+        cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT,
+            addToBackStack = false,
+            isAnimate = false,
+            data = null,
+            container = R.id.containerCartTab
+        )
+    }
+
     // 탭 설정
-    fun settingTabLayoutCart() {
+    private fun settingTabLayoutCart() {
         fragmentCartBinding.apply {
+
             tabLayoutCart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
                         // 농산물 탭
                         0 -> {
-                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT, false, false, null, R.id.containerCartTab)
+
+                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT,
+                                addToBackStack = false,
+                                isAnimate = false,
+                                data = null,
+                                container = R.id.containerCartTab
+                            )
                         }
                         // 주말농장 탭
                         1 -> {
-                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_FARM_FRAGMENT, false, false, null, R.id.containerCartTab)
+                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_FARM_FRAGMENT,
+                                addToBackStack = false,
+                                isAnimate = false,
+                                data = null,
+                                container = R.id.containerCartTab
+                            )
                         }
                         // 체험활동 탭
                         2 -> {
-                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_ACTIVITY_FRAGMENT, false, false, null, R.id.containerCartTab)
+                            cartActivity.replaceFragment(CartFragmentName.CART_TAB_ACTIVITY_FRAGMENT,
+                                addToBackStack = false,
+                                isAnimate = false,
+                                data = null,
+                                container = R.id.containerCartTab
+                            )
                         }
                     }
                 }
