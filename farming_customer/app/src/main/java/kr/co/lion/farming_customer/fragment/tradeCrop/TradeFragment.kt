@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.tradeCrop
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,10 +20,14 @@ import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeSearchActivity
 import kr.co.lion.farming_customer.dao.crop.CropDao
+import kr.co.lion.farming_customer.dao.like.LikeDao
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.databinding.FragmentTradeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.model.LikeModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -35,6 +40,7 @@ class TradeFragment : Fragment() {
 
     var cropLikeTop5List:List<CropModel>? = null
     var cropRecentTop5List:List<CropModel>? = null
+    var userModel : UserModel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentTradeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_trade, container, false)
         tradeViewModel = TradeViewModel()
@@ -87,13 +93,18 @@ class TradeFragment : Fragment() {
 
 
         CoroutineScope(Dispatchers.Main).launch {
-
+            val sharedPreferences = mainActivity.getSharedPreferences("AutoLogin",
+                Context.MODE_PRIVATE)
+            val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
             //uploadCropData()
 
             // 인기 농작물 데이터 가져오기
             cropLikeTop5List = CropDao.gettingCropLikeTop5List()
             // 최신등록 농작물 데이터 가져오기
             cropRecentTop5List = CropDao.gettingCropRecentTop5List()
+
+
 
             setupViewPager()
             setupViewPager2()
@@ -266,11 +277,20 @@ class TradeFragment : Fragment() {
                     holder.binding.tradeViewModel?.isLike?.value = false
                     holder.binding.imageButtonProductLike.setImageResource(R.drawable.heart_02)
                     holder.binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+                    holder.binding.textViewTradeLike.text = (holder.binding.textViewTradeLike.text.toString().toInt() - 1).toString()
+                    CoroutineScope(Dispatchers.Main).launch {
+
+                    }
 
                 }else{
                     holder.binding.tradeViewModel?.isLike?.value = true
                     holder.binding.imageButtonProductLike.setImageResource(R.drawable.heart_01)
                     holder.binding.textViewTradeLike.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    holder.binding.textViewTradeLike.text = (holder.binding.textViewTradeLike.text.toString().toInt() + 1).toString()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LikeDao.LikeListAdd(1, products[position].crop_idx, userModel!!.user_idx)
+                    }
+
                 }
             }
             CoroutineScope(Dispatchers.Main).launch {
@@ -351,11 +371,16 @@ class TradeFragment : Fragment() {
                             isLike.value = false
                             imageViewHeartCrop.setImageResource(R.drawable.heart_02)
                             holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+                            holder.binding.textViewLikeCropCnt.text = (holder.binding.textViewLikeCropCnt.text.toString().toInt() - 1).toString()
 
                         }else{
                             isLike.value = true
                             imageViewHeartCrop.setImageResource(R.drawable.heart_01)
                             holder.binding.textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                            holder.binding.textViewLikeCropCnt.text = (holder.binding.textViewLikeCropCnt.text.toString().toInt() + 1).toString()
+                            CoroutineScope(Dispatchers.Main).launch {
+                                LikeDao.LikeListAdd(1, products[position].crop_idx, userModel!!.user_idx)
+                            }
                         }
                     }
 

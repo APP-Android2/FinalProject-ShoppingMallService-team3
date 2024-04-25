@@ -333,6 +333,8 @@ class LikeFragment : Fragment() {
 
         override fun onBindViewHolder(holder: LikePostViewHolder, position: Int) {
             holder.rowLikePostBinding.apply {
+                imageView.setImageResource(R.drawable.heart_01)
+                textViewLikePostCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 imageViewLikePost.isSelected = true
                 textViewLikePostLabel.text = postList[position].postType
                 textViewLikePostTitle.text = postList[position].postTitle.substring(10)
@@ -365,13 +367,10 @@ class LikeFragment : Fragment() {
             holder.rowLikePostBinding.apply {
                 likeViewModel!!.apply {
                     constraintLike.setOnClickListener {
-                        constraintLike.setOnClickListener {
-                            CoroutineScope(Dispatchers.Main).launch {
-                                LikeDao.LikeListDelete( postList[position].postIdx, 2)
-                            }
+                        CoroutineScope(Dispatchers.Main).launch {
+                            LikeDao.LikeListDelete( postList[position].postIdx, 2)
                             postList.removeAt(position)
                             fragmentLikeBinding.recyclerViewLike.adapter?.notifyDataSetChanged()
-
                         }
                     }
                 }
