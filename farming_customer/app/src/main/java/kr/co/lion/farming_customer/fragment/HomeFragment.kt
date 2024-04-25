@@ -98,7 +98,6 @@ class HomeFragment : Fragment() {
             fragmentHomeBinding.viewPagerFarm.adapter?.notifyDataSetChanged()
             fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
             fragmentHomeBinding.recyclerViewBoard.adapter?.notifyDataSetChanged()
-
         }
     }
 
