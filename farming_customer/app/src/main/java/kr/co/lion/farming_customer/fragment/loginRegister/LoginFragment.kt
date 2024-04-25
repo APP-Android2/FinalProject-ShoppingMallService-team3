@@ -13,6 +13,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.DialogYes
+import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.LoginFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
@@ -110,14 +112,14 @@ class LoginFragment : Fragment() {
         val userPw = loginViewModel.textFieldLoginPw.value
 
         if(userId.isNullOrEmpty()){
-            Tools.showErrorDialog(loginActivity, fragmentLoginBinding.textFieldLoginId, "아이디 입력 오류",
-                "아이디를 입력해주세요")
+            val dialog = DialogYes("존재하지 않는 ID", "존재하지 않는 ID 입니다.", null, loginActivity)
+            dialog.show(loginActivity.supportFragmentManager, "DialogYes")
             return false
         }
 
         if(userPw.isNullOrEmpty()){
-            Tools.showErrorDialog(loginActivity, fragmentLoginBinding.textFieldLoginPw, "비밀번호 입력 오류",
-                "비밀번호를 입력해주세요")
+            val dialog = DialogYes("비밀번호 오류", "비밀번호가 일치하지 않습니다.", null, loginActivity)
+            dialog.show(loginActivity.supportFragmentManager, "DialogYes")
             return false
         }
 

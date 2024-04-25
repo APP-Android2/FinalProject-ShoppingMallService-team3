@@ -2,6 +2,7 @@ package kr.co.lion.farming_customer.fragment.community
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -382,6 +383,9 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
 
         var communityModel = CommunityModel()
 
+        val sharedPreferences = communityAddActivity.getSharedPreferences("AutoLogin", Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
         val job1 = CoroutineScope(Dispatchers.Main).launch {
             // 게시글 시퀀스 값을 가져온다.
             val communityPostSequence = CommunityPostDao.getCommunityPostSequence()
@@ -402,7 +406,7 @@ class CommunityAddFragment : Fragment(), DialogYesNoInterface {
             communityModel.postLikeCnt = 0
             communityModel.postCommentCnt = 0
             communityModel.postImages = mutableListOf<String>()
-            communityModel.postUserIdx = 1
+            communityModel.postUserIdx = userIdx
 
             val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
             communityModel.postRegDt = simpleDateFormat.format(Date())
