@@ -77,10 +77,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.opencsv:opencsv:5.9")
-//    //xml parser
-//    implementation("com.tickaroo.tikxml:annotation:0.8.15")
-//    implementation("com.tickaroo.tikxml:core:0.8.15")
-//    implementation("com.tickaroo.tikxml:retrofit-converter:0.8.15")
-//    kapt("com.tickaroo.tikxml:processor:0.8.15")
+
+    // splash
+    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
+
 
 }

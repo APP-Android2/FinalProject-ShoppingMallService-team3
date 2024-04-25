@@ -24,6 +24,15 @@
         android:theme="@style/Theme.Farming_customer"
         tools:targetApi="31">
         <activity
+            android:name=".activity.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity.tradeCrop.TradeDetailActivity"
             android:exported="false" />
         <activity
@@ -82,16 +91,10 @@
             android:exported="false" />
         <activity
             android:name=".activity.loginRegister.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
+            android:exported="false">
 
             <!--
             MainActivity Launcher 인텐트 필터 주석처리
