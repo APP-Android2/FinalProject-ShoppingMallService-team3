@@ -181,20 +181,23 @@ class BottomSheetActivityReservFragment(idx: Int) : BottomSheetDialogFragment(),
                 intent.putExtra("PaymentFragmentName", PaymentFragmentName.PAYMENT_FARM_ACTIVITY_FRAGMENT)
 
                 val mapList = ArrayList<HashMap<String, Any>>()
+                var map1 = HashMap<String, Any>()
+                map1["productType"] = OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number
+                map1["product_idx"] = activityIdx
+                map1["totalPrice"] = bottomSheetActivityReservViewModel!!.textView_totalPrice.value.toString()
+                map1["option"] = mutableListOf<MutableMap<String, Any>>()
                 for(i in 0..<selectedOptionList.size){
-                    var map1 = HashMap<String, Any>()
-                    map1["productType"] = OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number
-                    map1["product_idx"] = activityIdx
-                    map1["totalPrice"] = bottomSheetActivityReservViewModel!!.textView_totalPrice.value.toString()
-                    map1["option"] = mutableMapOf<String, Any>(
+                    val map_option = mutableMapOf<String, Any>(
                         "optionName" to selectedOptionList[i].programName,
                         "optionPrice" to selectedOptionList[i].price,
                         "optionCnt" to selectedOptionList[i].cnt,
                         "optionTime" to selectedOptionList[i].time,
                         "optionTotalPrice" to DecimalFormat("#,###").format(selectedOptionList[i].price.replace(",", "").replace("원", "").toInt() * selectedOptionList[i].cnt) + "원"
                     )
-                    mapList.add(map1)
+                    (map1["option"] as MutableList<MutableMap<String, Any>>).add(map_option)
                 }
+                mapList.add(map1)
+
                 val bundle = Bundle()
                 bundle.putSerializable("mapList", mapList)
                 intent.putExtra("paymentData", bundle)
@@ -415,7 +418,6 @@ class BottomSheetActivityReservFragment(idx: Int) : BottomSheetDialogFragment(),
                         var str_change_money_up = t_dec_up.format(price_int)
                         var price = str_change_money_up + "원"
                         bottomSheetActivityReservViewModel.textView_totalPrice.value = price
-                        selectedOptionList[position].price = t_dec_up.format(rowBottomSheetActivityReservSelectedOptionViewModel!!.textView_price.value!!.replace(",", "").replace("원", "").toInt() * selectedOptionList[position].cnt) + "원"
                     }
                 }
                 buttonPlus.setOnClickListener {
@@ -427,7 +429,6 @@ class BottomSheetActivityReservFragment(idx: Int) : BottomSheetDialogFragment(),
                         var str_change_money_up = t_dec_up.format(price_int)
                         var price = str_change_money_up + "원"
                         bottomSheetActivityReservViewModel.textView_totalPrice.value = price
-                        selectedOptionList[position].price = t_dec_up.format(rowBottomSheetActivityReservSelectedOptionViewModel!!.textView_price.value!!.replace(",", "").replace("원", "").toInt() * selectedOptionList[position].cnt) + "원"
                     }
 
 

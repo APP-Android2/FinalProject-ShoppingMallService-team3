@@ -79,11 +79,15 @@ class BottomSheetFarmReservFragment(idx: Int) : BottomSheetDialogFragment(), Dia
                 map1["productType"] = OrderProductType.ORDER_PRODUCT_TYPE_FARM.number
                 map1["product_idx"] = farmIdx
                 map1["totalPrice"] = farmModel!!.farm_option_detail["price_area"] as String
-                map1["option"] = mutableMapOf<String, Any>(
-                    "optionName" to "이용기간\n${farmModel!!.farm_use_date_start}~${farmModel!!.farm_use_date_end}",
-                    "optionCnt" to 1,
-                    "optionPrice" to farmModel!!.farm_option_detail["price_area"] as String
+                map1["option"] = mutableListOf<MutableMap<String, Any>>(
+                    mutableMapOf(
+                        "optionName" to "이용기간\n${farmModel!!.farm_use_date_start}~${farmModel!!.farm_use_date_end}",
+                        "optionCnt" to 1,
+                        "optionPrice" to farmModel!!.farm_option_detail["price_area"] as String,
+                        "optionTotalPrice" to farmModel!!.farm_option_detail["price_area"] as String
+                    )
                 )
+
                 mapList.add(map1)
                 val bundle = Bundle()
                 bundle.putSerializable("mapList", mapList)

@@ -105,7 +105,9 @@ class PaymentFarmActivityFragment : Fragment() {
             for (map in mapList) {
                 // product_idx만 리스트에 담아준다.
                 farmActivityIdxList.add(map["product_idx"]!!)
-                farmActivityTotalPriceList.add(map["totalPrice"]!!)
+                for (option in map["option"] as MutableList<MutableMap<String, Any>>){
+                    farmActivityTotalPriceList.add(option["optionTotalPrice"]!!)
+                }
             }
         }
         // paymentCropDataList를 비워준다.
@@ -304,14 +306,16 @@ class PaymentFarmActivityFragment : Fragment() {
     fun saveFarmData(){
         CoroutineScope(Dispatchers.Main).launch {
             val currentDate = LocalDate.now()
+            var orderNum = ""
             mapList.forEach {
                 val sequence = OrderDao.getOrderSequence()
                 OrderDao.updateOrderSequence(sequence + 1)
                 var order_idx = sequence + 1
                 val format = SimpleDateFormat("yyMMDD")
                 var order_product_type = 2
-                var order_num =
-                    format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(1000)).toString()
+                orderNum = format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(1000)).toString()
+                var order_num = orderNum
+
                 var order_user_idx = userData?.user_idx!!
                 var order_seller_idx = sequence + 1
 
@@ -326,11 +330,21 @@ class PaymentFarmActivityFragment : Fragment() {
                 var order_delivery_done_date = ""
                 var order_is_reviewed = false
                 var order_reserv_date = ""
-                var order_option_detail = mutableListOf<MutableMap<String, String>>(
-                    mutableMapOf(
-                        "option_name" to "${(it["option"] as HashMap<String,Any>)["optionName"]}",
-                        "option_price" to "${(it["option"] as HashMap<String,Any>)["optionPrice"]}")
-                )
+                var order_option_detail = mutableListOf<MutableMap<String, String>>()
+
+                for(i in it["option"] as MutableList<MutableMap<String, Any>>){
+                    var order_map = mutableMapOf<String,String>(
+                        "option_name" to i["optionName"].toString(),
+                        "option_price" to i["optionPrice"].toString(),
+                        "option_cnt" to i["optionCnt"].toString(),
+                        "option_total_price" to i["optionTotalPrice"].toString(),
+                    )
+                    order_option_detail.add(order_map)
+                }
+
+
+
+
                 var order_total_price = "${paymentFarmActivityViewModel?.textViewPaymentFarmActivityTotalPayPrice2?.value}"
                 var order_cancel = mutableMapOf<String, String>()
                 var order_status = OrderStatus.ORDER_STATUS_NORMAL.number
@@ -352,10 +366,7 @@ class PaymentFarmActivityFragment : Fragment() {
             PaymentDao.updatePaymentSequence(sequence + 1)
             var payment_idx = sequence + 1
             val format = SimpleDateFormat("yyMMDD")
-            var payment_order_num =
-                format.format(System.currentTimeMillis()) + OrderProductType.ORDER_PRODUCT_TYPE_FARM.number.toString() + (SecureRandom().nextInt(
-                    1000
-                )).toString()
+            var payment_order_num = orderNum
             var payment_total_price = paymentFarmActivityViewModel.textViewPaymentFarmActivityProductPrice2.value
             var payment_total_discount = paymentFarmActivityViewModel.textViewPaymentFarmActivityUsePoint2.value
             var payment_final_price = paymentFarmActivityViewModel.textViewPaymentFarmActivityTotalPayPrice2.value
@@ -380,14 +391,16 @@ class PaymentFarmActivityFragment : Fragment() {
     fun saveActivityData(){
         CoroutineScope(Dispatchers.Main).launch {
             val currentDate = LocalDate.now()
+            var orderNum = ""
             mapList.forEach {
                 val sequence = OrderDao.getOrderSequence()
                 OrderDao.updateOrderSequence(sequence + 1)
                 var order_idx = sequence + 1
                 val format = SimpleDateFormat("yyMMDD")
                 var order_product_type = 3
-                var order_num =
+                orderNum =
                     format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(1000)).toString()
+                var order_num = orderNum
                 var order_user_idx = userData?.user_idx!!
                 var order_seller_idx = sequence + 1
 
@@ -401,20 +414,30 @@ class PaymentFarmActivityFragment : Fragment() {
                 var order_delivery_start_date = ""
                 var order_delivery_done_date = ""
                 var order_is_reviewed = false
-                var order_reserv_date = ""
+                var order_reserv_date = ((it["option"]as MutableList<HashMap<String,Any>>).first()["optionTime"] as String).split(" ").first()
                 var order_option_detail = mutableListOf<MutableMap<String, String>>(
 
                 )
-                for(i in 1..(it["option"] as MutableList<HashMap<String,Any>>).size){
+                for(i in it["option"] as MutableList<MutableMap<String, Any>>){
                     var order_map = mutableMapOf<String,String>(
-                        "option_name" to "${(it["option"] as HashMap<String,Any>)["optionName"]}",
-                        "option_price" to "${(it["option"] as HashMap<String,Any>)["optionPrice"]}",
-                        "option_cnt" to "${(it["option"] as HashMap<String,Any>)["optionCnt"]}",
-                        "option_time" to "${(it["option"] as HashMap<String,Any>)["optionTime"]}",
-                        "option_total_price" to "${(it["option"] as HashMap<String,Any>)["optionTotalPrice"]}"
+                        "option_name" to i["optionName"].toString(),
+                        "option_price" to i["optionPrice"].toString(),
+                        "option_cnt" to i["optionCnt"].toString(),
+                        "option_time" to i["optionTime"].toString(),
+                        "option_total_price" to i["optionTotalPrice"].toString(),
                     )
                     order_option_detail.add(order_map)
                 }
+//                for(i in 0..<(it["option"] as MutableList<MutableMap<String, Any>>).size){
+//                    var order_map = mutableMapOf<String,String>(
+//                        "option_name" to (mapList[i]["option"] as MutableMap<String, String>)["optionName"].toString(),
+//                        "option_price" to (mapList[i]["option"] as MutableMap<String, String>)["optionPrice"].toString(),
+//                        "option_cnt" to (mapList[i]["option"] as MutableMap<String, String>)["optionCnt"].toString(),
+//                        "option_time" to (mapList[i]["option"] as MutableMap<String, String>)["optionTime"].toString(),
+//                        "option_total_price" to (mapList[i]["option"] as MutableMap<String, String>)["optionTotalPrice"].toString(),
+//                    )
+//                    order_option_detail.add(order_map)
+//                }
                 var order_total_price = "${paymentFarmActivityViewModel.textViewPaymentFarmActivityTotalPayPrice2.value}"
                 var order_cancel = mutableMapOf<String, String>()
                 var order_status = OrderStatus.ORDER_STATUS_NORMAL.number
@@ -435,10 +458,7 @@ class PaymentFarmActivityFragment : Fragment() {
             PaymentDao.updatePaymentSequence(sequence + 1)
             var payment_idx = sequence + 1
             val format = SimpleDateFormat("yyMMDD")
-            var payment_order_num =
-                format.format(System.currentTimeMillis()) + OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number.toString() + (SecureRandom().nextInt(
-                    1000
-                )).toString()
+            var payment_order_num = orderNum
             var payment_total_price = paymentFarmActivityViewModel.textViewPaymentFarmActivityProductPrice2.value
             var payment_total_discount = paymentFarmActivityViewModel.textViewPaymentFarmActivityUsePoint2.value
             var payment_final_price = paymentFarmActivityViewModel.textViewPaymentFarmActivityTotalPayPrice2.value
@@ -525,10 +545,21 @@ class PaymentFarmActivityFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: PaymentFarmActivityViewHolder, position: Int) {
-            // 옵션명
-            holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductOption?.value = (mapList[position]["option"] as HashMap<String,Any>)["optionName"].toString()
+            val option_size = (mapList[position]["option"] as MutableList<HashMap<String,Any>>).size
+            if(option_size == 1){
+                // 옵션명
+                holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductOption?.value = "${(mapList[position]["option"] as MutableList<HashMap<String,Any>>)[0]["optionName"]}"
+            }else{
+                // 옵션명
+                holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductOption?.value = "${(mapList[position]["option"] as MutableList<HashMap<String,Any>>)[0]["optionName"]}외 ${option_size-1}개"
+            }
+            var option_cnt = 0
+            for(i in (mapList[position]["option"] as MutableList<HashMap<String,Any>>)){
+                option_cnt += i["optionCnt"] as Int
+            }
+
             // 옵션 개수
-            holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductCnt?.value = "${(mapList[position]["option"] as HashMap<String,Any>)["optionCnt"].toString()}개"
+            holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductCnt?.value = "총 ${option_cnt}개"
             // 총 가격
             holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductPrice?.value = mapList[position]["totalPrice"].toString()
 
