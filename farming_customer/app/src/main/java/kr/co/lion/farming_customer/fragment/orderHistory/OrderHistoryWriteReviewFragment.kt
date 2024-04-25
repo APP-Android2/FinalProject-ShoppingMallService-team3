@@ -29,12 +29,14 @@ import kr.co.lion.farming_customer.OrderProductType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.crop.CropDao
 import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.dao.review.ReviewDao
 import kr.co.lion.farming_customer.databinding.FragmentOrderHistoryWriteReviewBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryWritePhotoBinding
+import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
@@ -64,6 +66,7 @@ class OrderHistoryWriteReviewFragment : Fragment() {
     var productType : Int? = null
     var farmModel : FarmModel? = null
     var activityModel : ActivityModel? = null
+    var cropModel : CropModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentOrderHistoryWriteReviewBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_order_history_write_review, container, false)
@@ -88,10 +91,16 @@ class OrderHistoryWriteReviewFragment : Fragment() {
             if(productType == OrderProductType.ORDER_PRODUCT_TYPE_FARM.number){
                 // 주말농장
                 farmModel = FarmDao.selectFarmData(arguments?.getInt("orderProductIdx")!!)
-            }else{
+            }
+            else if (productType == OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number){
                 // 체험활동
                 activityModel = ActivityDao.selectActivityData(arguments?.getInt("orderProductIdx")!!)
             }
+            else {
+                // 농산물
+                cropModel = CropDao.selectCropData(arguments?.getInt("orderProductIdx")!!)
+            }
+
             settingData()
             settingImage()
 
@@ -103,8 +112,10 @@ class OrderHistoryWriteReviewFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 if(productType == OrderProductType.ORDER_PRODUCT_TYPE_FARM.number){
                     FarmDao.gettingFarmImage(orderHistoryActivity, farmModel!!.farm_images[0], imageViewWriteReviewProductImage)
-                }else{
+                }else if (productType == OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number){
                     ActivityDao.gettingActivityImage(orderHistoryActivity, activityModel!!.activity_images[0], imageViewWriteReviewProductImage)
+                }else {
+                    CropDao.gettingCropImage(orderHistoryActivity, cropModel!!.crop_images[0], imageViewWriteReviewProductImage)
                 }
             }
         }
@@ -328,7 +339,7 @@ class OrderHistoryWriteReviewFragment : Fragment() {
             if (isAddPicture) {
                 // 서버로 업로드한다.
                 val uploadList = ReviewDao.uploadImage(
-                    requireContext(),
+                    orderHistoryActivity,
                     model.review_idx,
                     imageUriList
                 )

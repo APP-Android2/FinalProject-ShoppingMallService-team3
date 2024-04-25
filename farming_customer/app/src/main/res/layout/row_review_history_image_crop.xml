@@ -27,6 +27,7 @@
                 android:id="@+id/imageViewRowReviewTabCrop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_launcher_background" />
         </com.google.android.material.card.MaterialCardView>
 

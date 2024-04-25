@@ -2,7 +2,6 @@ package kr.co.lion.farming_customer.fragment.review
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +32,7 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
 
     var activityReviewList = mutableListOf<ReviewModel>()
-    var activityReviewImages: MutableList<String>? = null
+
     private var reviewIdx = 0
 
     override fun onCreateView(
@@ -123,13 +122,6 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
             val reviewTabActivityViewHolder =
                 ReviewTabActivityViewHolder(rowReviewHistoryActivityBinding)
 
-            // 리뷰 체험활동 탭 이미지 리사이클러뷰 설정
-            rowReviewHistoryActivityBinding.recyclerViewReviewImageActivity.apply {
-                adapter = ReviewImageActivityRecyclerViewAdapter()
-                layoutManager =
-                    LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
-            }
-
             return reviewTabActivityViewHolder
         }
 
@@ -138,6 +130,8 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
         }
 
         override fun onBindViewHolder(holder: ReviewTabActivityViewHolder, position: Int) {
+            val activityImageList = activityReviewList[position].review_images
+
             reviewIdx = activityReviewList[position].review_idx
 
             holder.rowReviewHistoryActivityBinding.myPageReviewViewModel?.textViewRowReviewTabActivityDate?.value =
@@ -152,7 +146,6 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
                 activityReviewList[position].review_rate.toFloat()
 
 
-
             holder.rowReviewHistoryActivityBinding.buttonReviewTabActivityDelete.setOnClickListener {
                 val dialog = DialogYesNo(
                     this@ReviewTabActivityFragment, null, "리뷰를 삭제하시면 재작성이 불가합니다.\n" +
@@ -161,21 +154,19 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
                 dialog.show(this@ReviewTabActivityFragment?.parentFragmentManager!!, "DialogYesNo")
             }
 
-            if (activityReviewImages == null) {
-                holder.rowReviewHistoryActivityBinding.recyclerViewReviewImageActivity.visibility =
-                    View.GONE
-                holder.rowReviewHistoryActivityBinding.horizontalScrollView.visibility = View.GONE
-            } else {
-                holder.rowReviewHistoryActivityBinding.recyclerViewReviewImageActivity.visibility =
-                    View.VISIBLE
-                holder.rowReviewHistoryActivityBinding.horizontalScrollView.visibility =
-                    View.VISIBLE
+            // 리뷰 체험활동 탭 이미지 리사이클러뷰 설정
+            holder.rowReviewHistoryActivityBinding.recyclerViewReviewImageActivity.apply {
+                adapter = ReviewImageActivityRecyclerViewAdapter(activityImageList)
+                layoutManager =
+                    LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
             }
         }
 
         // 리뷰 체험활동 탭 이미지 리사이클러뷰 설정
-        inner class ReviewImageActivityRecyclerViewAdapter :
+        inner class ReviewImageActivityRecyclerViewAdapter(activityImageList: MutableList<String>) :
             RecyclerView.Adapter<ReviewImageActivityRecyclerViewAdapter.ReviewImageActivityViewHolder>() {
+            var activityImages = activityImageList
+
             inner class ReviewImageActivityViewHolder(rowReviewHistoryImageActivityBinding: RowReviewHistoryImageActivityBinding) :
                 RecyclerView.ViewHolder(rowReviewHistoryImageActivityBinding.root) {
                 val rowReviewHistoryImageActivityBinding: RowReviewHistoryImageActivityBinding
@@ -213,14 +204,14 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
             }
 
             override fun getItemCount(): Int {
-                return activityReviewImages?.size ?: 0
+                return activityImages.size
             }
 
             override fun onBindViewHolder(holder: ReviewImageActivityViewHolder, position: Int) {
                 CoroutineScope(Dispatchers.Main).launch {
                     MyPageReviewDao.gettingCropReviewPostImage(
                         requireContext(),
-                        activityReviewImages?.getOrNull(position),
+                        activityImages[position],
                         holder.rowReviewHistoryImageActivityBinding.imageViewRowReviewTabActivity
                     )
                 }
@@ -229,9 +220,9 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
     }
 
     override fun onYesButtonClick(id: Int) {
-        fragmentReviewTabActivityBinding.recyclerViewReviewTabActivity.adapter!!.notifyItemRemoved(
-            id
-        )
+//        fragmentReviewTabActivityBinding.recyclerViewReviewTabActivity.adapter!!.notifyItemRemoved(
+//            id
+//        )
 
         CoroutineScope(Dispatchers.Main).launch {
             // 글 상태를 삭제 상태로 변경한다.

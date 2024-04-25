@@ -1,6 +1,7 @@
 package kr.co.lion.farming_customer.dao.myPageReview
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -116,6 +117,7 @@ class MyPageReviewDao {
                 val storageRef = Firebase.storage.reference.child("image/review/$imageFileName")
                 // 이미지의 주소를 가지고 있는 Uri 객체를 받아온다.
                 val imageUri = storageRef.downloadUrl.await()
+                //Log.e("cropImage", imageUri.toString())
                 // 이미지 데이터를 받아와 이미지 뷰에 보여준다.
                 val job2 = CoroutineScope(Dispatchers.Main).launch {
                     Glide.with(context).load(imageUri).into(imageView)
@@ -133,36 +135,37 @@ class MyPageReviewDao {
 
         }
 
-        // 글의 상태를 변경하는 메서드
+//        // 글의 상태를 변경하는 메서드
 //        suspend fun updateReviewState(reviewIdx: Int, newState: ReviewState){
 //            val job1 = CoroutineScope(Dispatchers.IO).launch {
 //                // 컬렉션에 접근할 수 있는 객체를 가져온다.
 //                val collectionReference = Firebase.firestore.collection("ReviewData")
 //                // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
-//                val query = collectionReference.whereEqualTo("review_idx", reviewIdx).get().await()
+//                val query = collectionReference.whereEqualTo("review_idx", reviewIdx)
+//                val documents = query.get().await().documents
 //
-//                // 저장할 데이터를 담을 HashMap을 만들어준다.
-//                val map = mutableMapOf<String, Long>()
-//                map["review_status"] = newState.number.toLong()
-//                // 저장한다.
 //                // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
-//                query.documents[0].reference.set(map)
+//                val documentReference = documents.firstOrNull()?.reference
+//                documentReference?.update("review_status", newState.number)
 //            }
 //            job1.join()
 //        }
 
         // 글의 상태를 변경하는 메서드
-        suspend fun updateReviewState(reviewIdx: Int, newState: ReviewState){
+        suspend fun updateReviewState(reviewIdx:Int, newState:ReviewState){
+            Log.e("reviewIdxddddd dao", reviewIdx.toString())
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
                 val collectionReference = Firebase.firestore.collection("ReviewData")
                 // 컬렉션이 가지고 있는 문서들 중에 contentIdx 필드가 지정된 글 번호값하고 같은 Document들을 가져온다.
-                val query = collectionReference.whereEqualTo("review_idx", reviewIdx)
-                val documents = query.get().await().documents
+                val query = collectionReference.whereEqualTo("review_idx", reviewIdx).get().await()
 
+                // 저장할 데이터를 담을 HashMap을 만들어준다.
+                val map = mutableMapOf<String, Long>()
+                map["review_status"] = newState.number.toLong()
+                // 저장한다.
                 // 가져온 문서 중 첫 번째 문서에 접근하여 데이터를 수정한다.
-                val documentReference = documents.firstOrNull()?.reference
-                documentReference?.update("review_status", newState.number.toLong())
+                query.documents[0].reference.set(map)
             }
             job1.join()
         }

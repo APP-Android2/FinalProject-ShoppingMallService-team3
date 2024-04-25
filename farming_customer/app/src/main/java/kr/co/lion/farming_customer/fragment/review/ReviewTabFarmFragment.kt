@@ -33,7 +33,6 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
 
     var farmReviewList = mutableListOf<ReviewModel>()
-    var farmReviewImages : MutableList<String>? = null
     private var reviewIdx = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -98,12 +97,6 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
 
             val reviewTabFarmViewHolder = ReviewTabFarmViewHolder(rowReviewHistoryFarmBinding)
 
-            // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
-            rowReviewHistoryFarmBinding.recyclerViewReviewImageFarm.apply {
-                adapter = ReviewImageFarmRecyclerViewAdapter()
-                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
-            }
-
             return reviewTabFarmViewHolder
         }
 
@@ -112,6 +105,7 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
         }
 
         override fun onBindViewHolder(holder: ReviewTabFarmViewHolder, position: Int) {
+            val farmImageList = farmReviewList[position].review_images
             reviewIdx = farmReviewList[position].review_idx
 
             holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmDate?.value = farmReviewList[position].review_reg_dt
@@ -129,17 +123,16 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
                 dialog.show(this@ReviewTabFarmFragment?.parentFragmentManager!!, "DialogYesNo")
             }
 
-            if (farmReviewImages == null) {
-                holder.rowReviewHistoryFarmBinding.recyclerViewReviewImageFarm.visibility = View.GONE
-                holder.rowReviewHistoryFarmBinding.horizontalScrollView.visibility = View.GONE
-            } else {
-                holder.rowReviewHistoryFarmBinding.recyclerViewReviewImageFarm.visibility = View.VISIBLE
-                holder.rowReviewHistoryFarmBinding.horizontalScrollView.visibility = View.VISIBLE
+            // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
+            holder.rowReviewHistoryFarmBinding.recyclerViewReviewImageFarm.apply {
+                adapter = ReviewImageFarmRecyclerViewAdapter(farmImageList)
+                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
             }
         }
 
         // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
-        inner class ReviewImageFarmRecyclerViewAdapter : RecyclerView.Adapter<ReviewImageFarmRecyclerViewAdapter.ReviewImageFarmViewHolder>() {
+        inner class ReviewImageFarmRecyclerViewAdapter(farmImageList: MutableList<String>) : RecyclerView.Adapter<ReviewImageFarmRecyclerViewAdapter.ReviewImageFarmViewHolder>() {
+            var farmImages = farmImageList
             inner class ReviewImageFarmViewHolder(rowReviewHistoryImageFarmBinding: RowReviewHistoryImageFarmBinding) : RecyclerView.ViewHolder(rowReviewHistoryImageFarmBinding.root) {
                 val rowReviewHistoryImageFarmBinding: RowReviewHistoryImageFarmBinding
 
@@ -165,12 +158,12 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
             }
 
             override fun getItemCount(): Int {
-                return farmReviewImages?.size ?: 0
+                return farmImages.size
             }
 
             override fun onBindViewHolder(holder: ReviewImageFarmViewHolder, position: Int) {
                 CoroutineScope(Dispatchers.Main).launch {
-                    MyPageReviewDao.gettingCropReviewPostImage(requireContext(), farmReviewImages?.getOrNull(position), holder.rowReviewHistoryImageFarmBinding.imageViewRowReviewTabFarm)
+                    MyPageReviewDao.gettingCropReviewPostImage(requireContext(), farmImages[position], holder.rowReviewHistoryImageFarmBinding.imageViewRowReviewTabFarm)
                 }
             }
         }
@@ -181,6 +174,7 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
 
         CoroutineScope(Dispatchers.Main).launch {
             // 글 상태를 삭제 상태로 변경한다.
+            Log.e("reviewIdxddddd", reviewIdx.toString())
             MyPageReviewDao.updateReviewState(reviewIdx, ReviewState.REVIEW_STATE_REMOVE)
         }
     }
