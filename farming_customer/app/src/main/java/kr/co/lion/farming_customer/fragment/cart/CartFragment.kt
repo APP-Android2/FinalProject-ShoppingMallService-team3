@@ -21,6 +21,7 @@ class CartFragment : Fragment() {
 
         settingToolbar()
         settingTabLayoutCart()
+        settingInitView()
 
         return fragmentCartBinding.root
     }
@@ -37,29 +38,29 @@ class CartFragment : Fragment() {
         }
     }
 
+    private fun settingInitView(){
+        cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT,
+            addToBackStack = false,
+            isAnimate = false,
+            data = null,
+            container = R.id.containerCartTab
+        )
+    }
+
     // 탭 설정
     private fun settingTabLayoutCart() {
         fragmentCartBinding.apply {
+
             tabLayoutCart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
                         // 농산물 탭
                         0 -> {
-                            val cropIdx = arguments?.getInt("cropIdx")!!
-                            val optionName = arguments?.getString("optionName")
-                            val optionCnt = arguments?.getInt("optionCnt")!!
-
-                            val bundle = Bundle()
-                            bundle.apply {
-                                putInt("cropIdx", cropIdx)
-                                putString("optionName", optionName)
-                                putInt("optionCnt", optionCnt)
-                            }
 
                             cartActivity.replaceFragment(CartFragmentName.CART_TAB_CROP_FRAGMENT,
                                 addToBackStack = false,
                                 isAnimate = false,
-                                data = bundle,
+                                data = null,
                                 container = R.id.containerCartTab
                             )
                         }

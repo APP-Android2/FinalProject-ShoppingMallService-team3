@@ -177,7 +177,7 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                     totalResultToString += "원"
                     // 변경된 총가격
                     bottomSheetTradeCropViewModel?.totalPrice?.value = totalResultToString
-                    realOriginalPrice = originalPrice
+                    realOriginalPrice = totalResultToString
                 }
             }
 
@@ -224,7 +224,7 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                     totalResultToString += "원"
                     // 변경된 총가격
                     bottomSheetTradeCropViewModel?.totalPrice?.value = totalResultToString
-                    realOriginalPrice = originalPrice
+                    realOriginalPrice = totalResultToString
                 }
             }
 

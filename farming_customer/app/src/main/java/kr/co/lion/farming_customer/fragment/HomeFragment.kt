@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.FarmingLifeFragmnetName
-import kr.co.lion.farming_customer.PointStatus
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
@@ -24,13 +23,10 @@ import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
 import kr.co.lion.farming_customer.dao.crop.CropDao
-import kr.co.lion.farming_customer.dao.myPagePoint.myPagePointDao
 import kr.co.lion.farming_customer.databinding.FragmentHomeBinding
 import kr.co.lion.farming_customer.databinding.ItemProductBinding
 import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
 import kr.co.lion.farming_customer.databinding.RowGridItemBinding
-import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
-import kr.co.lion.farming_customer.databinding.RowRelatedCropBinding
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
@@ -38,14 +34,6 @@ import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.farmingLife.FarmModel
-import kr.co.lion.farming_customer.model.myPagePoint.PointModel
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.HomeViewModel
-import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import kotlin.math.pow
-
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
     lateinit var mainActivity: MainActivity
@@ -63,7 +51,6 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding.homeViewModel = homeViewModel
         fragmentHomeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
-        gettingCropLikeTop5()
 
 
         settingData()

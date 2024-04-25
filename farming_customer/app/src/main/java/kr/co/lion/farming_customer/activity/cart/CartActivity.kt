@@ -15,7 +15,7 @@ import kr.co.lion.farming_customer.fragment.cart.CartTabCropFragment
 import kr.co.lion.farming_customer.fragment.cart.CartTabFarmFragment
 
 class CartActivity : AppCompatActivity() {
-    private lateinit var activityCartBinding: ActivityCartBinding
+    lateinit var activityCartBinding: ActivityCartBinding
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
@@ -27,12 +27,7 @@ class CartActivity : AppCompatActivity() {
         activityCartBinding = ActivityCartBinding.inflate(layoutInflater)
         setContentView(activityCartBinding.root)
 
-        // Intent에서 데이터 추출
-        val cropIdx = intent.getIntExtra("crop_idx", -1)
-        val optionName = intent.getStringExtra("optionName")
-        val optionCnt = intent.getIntExtra("optionCnt", 0)
-
-        getCrop(cropIdx, optionName, optionCnt)
+        replaceFragment(CartFragmentName.CART_FRAGMENT, false, false, null)
     }
 
     fun replaceFragment(name: CartFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCart){
@@ -45,21 +40,18 @@ class CartActivity : AppCompatActivity() {
         }
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
-        newFragment = when(name){
+        when(name){
             CartFragmentName.CART_FRAGMENT -> {
-                CartFragment()
+                newFragment = CartFragment()
             }
-
             CartFragmentName.CART_TAB_CROP_FRAGMENT -> {
-                CartTabCropFragment()
+                newFragment = CartTabCropFragment()
             }
-
             CartFragmentName.CART_TAB_FARM_FRAGMENT -> {
-                CartTabFarmFragment()
+                newFragment = CartTabFarmFragment()
             }
-
             CartFragmentName.CART_TAB_ACTIVITY_FRAGMENT -> {
-                CartTabActivityFragment()
+                newFragment = CartTabActivityFragment()
             }
         }
         if(data != null){
@@ -121,21 +113,5 @@ class CartActivity : AppCompatActivity() {
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-    }
-
-    // 농작물 정보를 받아온다.
-    private fun getCrop(cropIdx: Int, optionName: String?, optionCnt: Int){
-        // 받아온 정보를 Bundle에 담아 Fragment로 전달해준다.
-        // 이 때, 각 변수에는 기본 값이 아닌 받아온 값이 저장되어 있어야 한다.
-        if (cropIdx != -1 && !optionName.isNullOrEmpty() && optionCnt != 0){
-            val bundle = Bundle()
-            bundle.apply {
-                putInt("cropIdx", cropIdx)
-                putString("optionName", optionName)
-                putInt("optionCnt", optionCnt)
-            }
-            replaceFragment(CartFragmentName.CART_FRAGMENT, addToBackStack = false,
-                isAnimate = false, data = bundle)
-        }
     }
 }
