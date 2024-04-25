@@ -140,7 +140,7 @@ class LikeDao {
         }
 
         // 좋아요 클릭시 [ 찜하기 ]
-        suspend fun LikeListAdd(likeType: Int, likeTypeIdx: Int, likeUserIdx: String) {
+        suspend fun LikeListAdd(likeType: Int, likeTypeIdx: Int, userIdx: Int) {
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 var likeIdx:Int?
 
@@ -162,7 +162,7 @@ class LikeDao {
                 data["like_status"] = 1
                 data["like_type"] = likeType
                 data["like_type_idx"] = likeTypeIdx
-                data["like_user_idx"] = likeUserIdx.toInt()
+                data["like_user_idx"] = userIdx
 
                 collectionReference.document(likeIdx.toString()).set(data).await()
             }

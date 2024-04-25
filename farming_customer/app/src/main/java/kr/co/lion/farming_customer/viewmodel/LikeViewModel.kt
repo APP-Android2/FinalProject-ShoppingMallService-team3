@@ -42,7 +42,7 @@ class LikeViewModel() :ViewModel(){
     )
 
     // 농산물 좋아요 리스트
-    suspend fun getLikeListAndLikeTypeList(userIdx: String): LikeData = withContext(Dispatchers.IO) {
+    suspend fun getLikeListAndLikeTypeList(userIdx: Int): LikeData = withContext(Dispatchers.IO) {
         var LikeList = mutableListOf<LikeModel>()
         var cropList = mutableListOf<CropModel>()
         var postList = mutableListOf<CommunityPostModel>()
@@ -50,7 +50,7 @@ class LikeViewModel() :ViewModel(){
         var activityList = mutableListOf<ActivityModel>()
         var rentalList = mutableListOf<RentalModel>()
 
-        LikeList = LikeDao.getLikeList(userIdx.toInt()).toMutableList()
+        LikeList = LikeDao.getLikeList(userIdx).toMutableList()
         for( i in LikeList ){
 
             when(i.like_type.toString()){
@@ -70,7 +70,6 @@ class LikeViewModel() :ViewModel(){
                 "4" ->{
                     val activity = LikeDao.getActivityList(i.like_type_idx)
                     activityList.addAll(activity)
-                    Log.d("test112", activity.toString())
                 }
                 "5" ->{
                     val rental = LikeDao.getRentalList(i.like_type_idx)
@@ -79,7 +78,6 @@ class LikeViewModel() :ViewModel(){
 
             }
         }
-//        Log.d("test1123", farmList.toList().toString())
         LikeData(LikeList, cropList, postList, farmList, activityList, rentalList)
     }
 

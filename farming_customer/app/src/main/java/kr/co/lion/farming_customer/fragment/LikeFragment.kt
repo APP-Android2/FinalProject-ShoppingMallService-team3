@@ -4,7 +4,6 @@ import android.content.ClipData.Item
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,9 +47,8 @@ import kr.co.lion.farming_customer.viewmodel.LikeViewModel
 class LikeFragment : Fragment() {
     // ViewModel 생성자에 Context 객체를 명시적으로 전달합니다.
     // 세션에서 회원 시퀀스 번호 가져오기..
-    val sharedPreferences =
-        context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-    var userIdx: String? = sharedPreferences?.getString("loginUserIdx", "")
+    val sharedPreferences = mainActivity.getSharedPreferences("AutoLogin", Context.MODE_PRIVATE)
+    val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
 
     lateinit var fragmentLikeBinding: FragmentLikeBinding
     lateinit var mainActivity: MainActivity
@@ -82,7 +80,7 @@ class LikeFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         lifecycleScope.launch {
-            val data = likeViewModel.getLikeListAndLikeTypeList("1")
+            val data = likeViewModel.getLikeListAndLikeTypeList(userIdx)
             selectedType = "CROP"
             LikeList = data.LikeList!!
             cropList = (data.cropList as MutableList<CropModel>?)!!
