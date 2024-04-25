@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment
 
+import android.content.ClipData.Item
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +9,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +30,7 @@ import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
+import kr.co.lion.farming_customer.activity.tradeCrop.TradeSearchActivity
 import kr.co.lion.farming_customer.dao.like.LikeDao
 import kr.co.lion.farming_customer.databinding.FragmentLikeBinding
 import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
@@ -35,10 +39,10 @@ import kr.co.lion.farming_customer.databinding.RowLikePostBinding
 import kr.co.lion.farming_customer.databinding.RowLikeRentalBinding
 import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.CropModel
-import kr.co.lion.farming_customer.model.FarmModel
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.model.LikeModel
 import kr.co.lion.farming_customer.model.CommunityPostModel
-import kr.co.lion.farming_customer.model.RentalModel
+import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 import kr.co.lion.farming_customer.viewmodel.LikeViewModel
 
 class LikeFragment : Fragment() {
@@ -46,7 +50,7 @@ class LikeFragment : Fragment() {
     // 세션에서 회원 시퀀스 번호 가져오기..
     val sharedPreferences =
         context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-    var userIdx: String? = sharedPreferences?.getString("user_idx", "")
+    var userIdx: String? = sharedPreferences?.getString("loginUserIdx", "")
 
     lateinit var fragmentLikeBinding: FragmentLikeBinding
     lateinit var mainActivity: MainActivity
@@ -57,11 +61,11 @@ class LikeFragment : Fragment() {
     lateinit var deco2: GridSpaceItemDecoration
 
     lateinit var LikeList: List<LikeModel>
-    lateinit var cropList: List<CropModel>
-    lateinit var postList: List<CommunityPostModel>
-    lateinit var farmList: List<FarmModel>
-    lateinit var activityList: List<ActivityModel>
-    lateinit var rentalList: List<RentalModel>
+    lateinit var cropList: MutableList<CropModel>
+    lateinit var postList: MutableList<CommunityPostModel>
+    lateinit var farmList: MutableList<FarmModel>
+    lateinit var activityList: MutableList<ActivityModel>
+    lateinit var rentalList: MutableList<RentalModel>
     var selectedType = ""
 
 
@@ -81,22 +85,14 @@ class LikeFragment : Fragment() {
             val data = likeViewModel.getLikeListAndLikeTypeList("1")
             selectedType = "CROP"
             LikeList = data.LikeList!!
-            cropList = data.cropList!!
-            postList = data.postList!!
-            farmList = data.farmList!!
-            activityList = data.activityList!!
-            rentalList = data.rentalList!!
-            Log.d("test1124", "전체데이터아다아아아아아------" + data.toString())
-            Log.d("test1124", "농산품이다아ㅏㅇ" + cropList.toString())
-            Log.d("test1124", "주말농장이가아아" + farmList.toString())
-            Log.d("test1124", "체험활동이가아아" + activityList.toString())
+            cropList = (data.cropList as MutableList<CropModel>?)!!
+            postList = (data.postList as MutableList<CommunityPostModel>?)!!
+            farmList = (data.farmList as MutableList<FarmModel>?)!!
+            activityList = (data.activityList as MutableList<ActivityModel>?)!!
+            rentalList = (data.rentalList as MutableList<RentalModel>?)!!
 
             settingUI()
-
             settingToggleButton()
-
-
-
         }
         deco = MaterialDividerItemDecoration(mainActivity, MaterialDividerItemDecoration.VERTICAL)
         deco2 = GridSpaceItemDecoration(2, 40, -10, -10, -10)
@@ -121,7 +117,6 @@ class LikeFragment : Fragment() {
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "CROP"
                             settingRecyclerViewLikeCrop()
-//                            recyclerViewLike.adapter?.notifyDataSetChanged()
                         }
 
                         R.id.buttonLikePost -> {
@@ -130,7 +125,6 @@ class LikeFragment : Fragment() {
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "POST"
                             settingRecyclerViewLikePost()
-
                         }
 
                         R.id.buttonLikeFarm -> {
@@ -139,7 +133,6 @@ class LikeFragment : Fragment() {
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "FARM"
                             settingRecyclerViewLikeFarmAndActivity()
-//                            recyclerViewLike.adapter?.notifyDataSetChanged()
                         }
 
                         R.id.buttonLikeActivity -> {
@@ -148,8 +141,6 @@ class LikeFragment : Fragment() {
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "ACTIVITY"
                             settingRecyclerViewLikeFarmAndActivity()
-
-//                            recyclerViewLike.adapter?.notifyDataSetChanged()
                         }
 
                         R.id.buttonLikeRental -> {
@@ -158,9 +149,6 @@ class LikeFragment : Fragment() {
                             recyclerViewRental.visibility = View.VISIBLE
                             selectedType = "RENTAL"
                             settingRecyclerViewLikeRental()
-
-//                            recyclerViewRental.adapter?.notifyDataSetChanged()
-
                         }
                     }
 
@@ -188,12 +176,13 @@ class LikeFragment : Fragment() {
     fun settingRecyclerViewLikePost() {
         fragmentLikeBinding.apply {
             recyclerViewPost.apply {
-                removeItemDecoration(deco)
-                if (itemDecorationCount == 0) {
-                    addItemDecoration(deco2)
-                }
+                removeItemDecoration(deco2)
+
                 adapter = LikePostRecyclerViewAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
+                if(recyclerViewPost.itemDecorationCount == 0){
+                    addItemDecoration(deco)
+                }
             }
         }
     }
@@ -257,16 +246,11 @@ class LikeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            Log.d("test77", cropList.size.toString())
             return cropList.size
         }
 
         override fun onBindViewHolder(holder: LikeCropViewHolder, position: Int) {
             holder.rowLikeCropBinding.apply {
-                if (cropList.isEmpty()) {
-                    root.visibility = View.GONE
-                    return
-                }
                 textViewLikeCropName.text = cropList[position].crop_title
                 textViewLikeCropPrice.text =
                     cropList[position].crop_option_detail[0]["crop_option_price"]
@@ -274,7 +258,6 @@ class LikeFragment : Fragment() {
                     cropList[position].crop_like_cnt.toString()
                 ratingBarLikeCrop.rating = cropList[position].crop_like_cnt.toFloat()
                 CoroutineScope(Dispatchers.Main).launch {
-
                     if (cropList[position].crop_images != null) {
                         LikeDao.gettingImage(
                             mainActivity,
@@ -287,34 +270,33 @@ class LikeFragment : Fragment() {
                     }
                 }
             }
+
+            // 아이템 클릭 이벤트
+            holder.rowLikeCropBinding.root.setOnClickListener {
+                val intent = Intent(mainActivity, FarmingLifeActivity::class.java)
+                intent.putExtra(
+                    "fragmentName",
+                    FarmingLifeFragmnetName.FARMING_LIFE_FARM_DETAIL_FARMGNET
+                )
+                startActivity(intent)
+
+            }
+
             // 하트 클릭 리스너
             holder.rowLikeCropBinding.apply {
                 likeViewModel!!.apply {
                     constraintLikeCropCancel.setOnClickListener {
-                        if (isLike.value!!) {
-                            isLike.value = false
-                            imageViewHeartCrop.setImageResource(R.drawable.heart_04)
-                            textViewLikeCropCnt.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.brown_01
-                                )
-                            )
+                       CoroutineScope(Dispatchers.Main).launch {
+                           LikeDao.LikeListDelete( LikeList[position].like_idx, 2)
+                       }
+                        cropList.removeAt(position)
+                        fragmentLikeBinding.recyclerViewLike.adapter?.notifyDataSetChanged()
 
-                        } else {
-                            isLike.value = true
-                            imageViewHeartCrop.setImageResource(R.drawable.heart_01)
-                            textViewLikeCropCnt.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.white
-                                )
-                            )
-                        }
                     }
                 }
             }
         }
+
     }
 
     // 게시판 recyclerView의 Adapter
@@ -353,17 +335,14 @@ class LikeFragment : Fragment() {
 
         override fun onBindViewHolder(holder: LikePostViewHolder, position: Int) {
             holder.rowLikePostBinding.apply {
-//                Log.d("test11", postList.toString())
-                if (postList.isEmpty()) {
-                    root.visibility = View.GONE
-                    return
-                }
+                imageViewLikePost.isSelected = true
                 textViewLikePostLabel.text = postList[position].postType
                 textViewLikePostTitle.text = postList[position].postTitle.substring(10)
                 textViewLikePostContent.text = postList[position].postContent.substring(20)
                 textViewLikePostViewCnt.text = postList[position].postViewCnt.toString()
                 textViewLikePostCommentCnt.text = postList[position].postCommentCnt.toString()
                 textViewLikePostDate.text = postList[position].postRegDt
+                textViewLikePostCnt.text = postList[position].postLikeCnt.toString()
                 CoroutineScope(Dispatchers.Main).launch {
                     if (postList[position].postImages != null) {
                         LikeDao.gettingImage(
@@ -388,25 +367,13 @@ class LikeFragment : Fragment() {
             holder.rowLikePostBinding.apply {
                 likeViewModel!!.apply {
                     constraintLike.setOnClickListener {
-                        if (isLike.value!!) {
-                            isLike.value = false
-                            imageView.setImageResource(R.drawable.heart_04)
-                            textViewLikePostCnt.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.brown_01
-                                )
-                            )
+                        constraintLike.setOnClickListener {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                LikeDao.LikeListDelete( postList[position].postIdx, 2)
+                            }
+                            postList.removeAt(position)
+                            fragmentLikeBinding.recyclerViewLike.adapter?.notifyDataSetChanged()
 
-                        } else {
-                            isLike.value = true
-                            imageView.setImageResource(R.drawable.heart_01)
-                            textViewLikePostCnt.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.white
-                                )
-                            )
                         }
                     }
                 }
@@ -469,32 +436,51 @@ class LikeFragment : Fragment() {
                     size = activityList.size
                 }
             }
-//            Log.d("test77", size.toString())
             return size
         }
 
         override fun onBindViewHolder(holder: LikeFarmAndAcitivityViewHolder, position: Int) {
             holder.rowLikeFarmActivityBinding.apply {
-                if (farmList.isEmpty() || activityList.isEmpty()) {
-                    root.visibility = View.GONE
-                    return
-                }
-
                 when (selectedType) {
                     "FARM" -> {
+                        textViewLikeFarmAndActivityCnt.text = farmList[position].farm_like_cnt.toString()
+                        textViewLikeFarmAndActivityPrice.text = farmList[position].farm_option_detail["price_area"].toString()
+                        ratingBarLikeFarmAndActivity.rating = farmList[position].farm_star
                         textViewLikeFarmAndActivityName.text = farmList[position].farm_title
                         textViewLikeFarmAndActivityLocation.text = farmList[position].farm_address
-//                        textViewLikeFarmAndActivityPrice.text =
-//                            farmList[position].farm_option_detail.["price_area"]
-//                        Log.d("test11", farmList[0].toString())
+                        CoroutineScope(Dispatchers.Main).launch {
+                            if (farmList[position].farm_images != null) {
+                                LikeDao.gettingImage(
+                                    mainActivity,
+                                    farmList[position].farm_images[0],
+                                    imageViewLikeFarmAndActivity,
+                                    "FARM"
+                                )
+                            } else {
+                                holder.rowLikeFarmActivityBinding.imageViewLikeFarmAndActivity.setImageResource(R.color.white)
+                            }
+                        }
                     }
 
                     "ACTIVITY" -> {
+                        textViewLikeFarmAndActivityCnt.text = activityList[position].activity_like_cnt.toString()
+                        textViewLikeFarmAndActivityPrice.text = activityList[position].activity_option_detail[0]["option_price"].toString()
+                        ratingBarLikeFarmAndActivity.rating = activityList[position].activity_star
                         textViewLikeFarmAndActivityName.text = activityList[position].activity_title
                         textViewLikeFarmAndActivityLocation.text =
                             activityList[position].activity_address
-//                        textViewLikeFarmAndActivityPrice.text =
-//                            activityList[position].activity_option_detail[0]["option_price"].toString()
+                        CoroutineScope(Dispatchers.Main).launch {
+                            if (activityList[position].activity_images != null) {
+                                LikeDao.gettingImage(
+                                    mainActivity,
+                                    activityList[position].activity_images[0],
+                                    imageViewLikeFarmAndActivity,
+                                    "ACTIVITY"
+                                )
+                            } else {
+                                holder.rowLikeFarmActivityBinding.imageViewLikeFarmAndActivity.setImageResource(R.color.white)
+                            }
+                        }
                     }
                 }
                 // 아이템 클릭 이벤트
@@ -512,33 +498,26 @@ class LikeFragment : Fragment() {
                 holder.rowLikeFarmActivityBinding.apply {
                     likeViewModel!!.apply {
                         constraintLikeFarmAndActivityCancel.setOnClickListener {
-                            if (isLike.value!!) {
-                                isLike.value = false
-                                imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_04)
-                                textViewLikeFarmAndActivityCnt.setTextColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.brown_01
-                                    )
-                                )
-
-                            } else {
-                                isLike.value = true
-                                imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_01)
-                                textViewLikeFarmAndActivityCnt.setTextColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.white
-                                    )
-                                )
+                            constraintLikeFarmAndActivityCancel.setOnClickListener {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    when(selectedType){
+                                        "FARM" -> {
+                                            LikeDao.LikeListDelete( farmList[position].farm_idx, 2)
+                                            farmList.removeAt(position)
+                                        }
+                                        "ACTIVITY" ->{
+                                            LikeDao.LikeListDelete( activityList[position].activity_idx, 2)
+                                            activityList.removeAt(position)
+                                        }
+                                    }
+                                    fragmentLikeBinding.recyclerViewLike.adapter?.notifyDataSetChanged()
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
-
     }
 
     // 농기구 recyclerView의 Adapter
@@ -566,14 +545,6 @@ class LikeFragment : Fragment() {
             val likeRentalViewHolder = LikeRentalViewHolder(rowLikeRentalBinding)
             return likeRentalViewHolder
         }
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeRentalViewHolder {
-//            val rowLikeRentalBinding = DataBindingUtil.inflate<RowLikeRentalBinding>(layoutInflater,R.layout.row_like_rental,parent,false)
-//            val likeViewModel = LikeViewModel()
-//            rowLikeRentalBinding.likeViewModel = likeViewModel
-//            rowLikeRentalBinding.lifecycleOwner = this@LikeFragment
-//            val likeRentalViewHolder = LikeRentalViewHolder(rowLikeRentalBinding)
-//            return likeRentalViewHolder
-//        }
 
         override fun getItemCount(): Int {
             return rentalList.size
@@ -581,10 +552,6 @@ class LikeFragment : Fragment() {
 
         override fun onBindViewHolder(holder: LikeRentalViewHolder, position: Int) {
             holder.rowLikeRentalBinding.apply {
-                if (rentalList.isEmpty()) {
-                    root.visibility = View.GONE
-                    return
-                }
                 textViewLikeRentalName.text = rentalList[position].rental_name
                 textViewLikeRentalPhoneNumber.text = rentalList[position].rental_phone
                 textViewLikeRentalAddress.text = rentalList[position].rental_address
@@ -599,25 +566,12 @@ class LikeFragment : Fragment() {
             holder.rowLikeRentalBinding.apply {
                 likeViewModel!!.apply {
                     constraintLikeRentalHeart.setOnClickListener {
-                        if (isLike.value!!) {
-                            isLike.value = false
-                            imageViewHeart.setImageResource(R.drawable.heart_04)
-                            textViewLikeRentalCnt.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.brown_01
-                                )
-                            )
-
-                        } else {
-                            isLike.value = true
-                            imageViewHeart.setImageResource(R.drawable.heart_01)
-                            textViewLikeRentalCnt.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.white
-                                )
-                            )
+                        constraintLikeRentalHeart.setOnClickListener {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                LikeDao.LikeListDelete(rentalList[position].rental_idx.toInt(), 2)
+                                rentalList.removeAt(position)
+                                fragmentLikeBinding.recyclerViewLike.adapter?.notifyDataSetChanged()
+                            }
                         }
                     }
                 }

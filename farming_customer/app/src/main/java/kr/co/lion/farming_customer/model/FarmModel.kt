@@ -18,6 +18,7 @@ data class FarmModel(val farm_idx : Int = 0,
                      val farm_images	: List<String> = emptyList(),
                      val farm_reg_dt : String = "",
                      val farm_mod_dt : String = "",
-                     val farm_status : Int = 0,)
+                     val farm_status : Int = 0,
+                     val farm_star : Int =0)
 
 

@@ -6,18 +6,24 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kr.co.lion.farming_customer.LikeType
 import kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
+import kr.co.lion.farming_customer.PostStatus
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.dao.like.LikeDao
 import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.CropModel
-import kr.co.lion.farming_customer.model.FarmModel
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.model.LikeModel
 import kr.co.lion.farming_customer.model.CommunityPostModel
-import kr.co.lion.farming_customer.model.RentalModel
+import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 
 class LikeViewModel() :ViewModel(){
     val textViewLikePostLabel = MutableLiveData<String>()
@@ -135,6 +141,8 @@ class LikeViewModel() :ViewModel(){
             return group.checkedButtonId
         }
     }
+
+
 
 
 }
