@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.loginRegister
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -159,19 +160,15 @@ class LoginFragment : Fragment() {
                             show()
                         }
                     } else {
-                        // 자동 로그인 부분 (연결 필요)
-//                        val sharedPreferences = loginActivity.getSharedPreferences("AutoLogin", Context.MODE_PRIVATE)
-//                        val editor = sharedPreferences.edit()
-//                        editor.putInt("loginUserIdx", loginUserModel.user_idx)
-//                        editor.putString("loginUserNickName", loginUserModel.user_nickname)
-//                        editor.apply()
+                        //자동 로그인 부분 (연결 필요)
+                        val sharedPreferences = loginActivity.getSharedPreferences("AutoLogin", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putInt("loginUserIdx", loginUserModel.user_idx)
+                        editor.putString("loginUserNickName", loginUserModel.user_nickname)
+                        editor.apply()
 
                         // ContentActivity를 실행한다.
                         val intent = Intent(loginActivity, MainActivity::class.java)
-
-                        // 로그인한 사용자의 정보를 전달해준다.
-//                        intent.putExtra("loginUserIdx", loginUserModel.user_idx)
-//                        intent.putExtra("loginUserNickName", loginUserModel.user_nickname)
 
                         startActivity(intent)
                         // LoginActivity를 종료한다.

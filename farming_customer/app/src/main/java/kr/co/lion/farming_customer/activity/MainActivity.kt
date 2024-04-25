@@ -10,8 +10,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
@@ -23,6 +27,7 @@ import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
 import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeTabDetailFragment
+import kr.co.lion.farming_customer.model.user.UserModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -30,13 +35,10 @@ class MainActivity : AppCompatActivity() {
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
     var newFragment: Fragment? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-
         installSplashScreen()
-
         setContentView(activityMainBinding.root)
 
         settingBottomNavigation()

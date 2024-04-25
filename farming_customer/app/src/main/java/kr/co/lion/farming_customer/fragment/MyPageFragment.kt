@@ -19,6 +19,7 @@ import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.activity.point.PointActivity
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
 import kr.co.lion.farming_customer.databinding.FragmentMyPageBinding
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.MyPageViewModel
 
 class MyPageFragment : Fragment() {
