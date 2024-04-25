@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.lion.farming_customer.databinding.RowFarmingLifeToolsDetailToolNameBinding
 
-class ToolsNameRVAdapter : RecyclerView.Adapter<ToolsNameRVAdapter.NameViewHolder>() {
+class ToolsNameRVAdapter(rentalList: MutableList<String>) : RecyclerView.Adapter<ToolsNameRVAdapter.NameViewHolder>() {
+    val rentalList = rentalList
     inner class NameViewHolder(val rowBinding: RowFarmingLifeToolsDetailToolNameBinding) : RecyclerView.ViewHolder(rowBinding.root) {
         init {
             rowBinding.root.layoutParams = ViewGroup.LayoutParams(
@@ -23,10 +24,10 @@ class ToolsNameRVAdapter : RecyclerView.Adapter<ToolsNameRVAdapter.NameViewHolde
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return rentalList.size
     }
 
     override fun onBindViewHolder(holder: NameViewHolder, position: Int) {
-        holder.rowBinding.rowFarmingLifeToolsName.text = "농기구 이름 $position"
+        holder.rowBinding.rowFarmingLifeToolsName.text = rentalList[position]
     }
 }

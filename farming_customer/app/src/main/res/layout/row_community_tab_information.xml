@@ -7,7 +7,7 @@
     <data>
         <variable
             name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel" />
     </data>
 
     <LinearLayout
@@ -47,6 +47,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/grey_02"
+                        android:scaleType="fitXY"
                         app:srcCompat="@drawable/ic_launcher_foreground" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -77,6 +78,8 @@
                         android:id="@+id/textViewCommunityListTitleInformation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="@{communityViewModel.textViewCommunityListTitleInformation}"
                         android:textColor="@color/brown_01"
@@ -86,6 +89,9 @@
                         android:id="@+id/textViewCommunityListContentInformation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:minLines="2"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="7dp"
                         android:fontFamily="@font/pretendard_regular"

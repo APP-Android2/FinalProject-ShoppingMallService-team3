@@ -1,6 +1,8 @@
 package kr.co.lion.farming_customer.fragment.review
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +12,27 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.ReviewState
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
+import kr.co.lion.farming_customer.dao.myPageReview.MyPageReviewDao
 import kr.co.lion.farming_customer.databinding.FragmentReviewTabFarmBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryFarmBinding
 import kr.co.lion.farming_customer.databinding.RowReviewHistoryImageFarmBinding
+import kr.co.lion.farming_customer.model.myPageReview.ReviewModel
 import kr.co.lion.farming_customer.viewmodel.review.MyPageReviewViewModel
 
 class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
     lateinit var fragmentReviewTabFarmBinding: FragmentReviewTabFarmBinding
     lateinit var reviewActivity: ReviewActivity
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
+
+    var farmReviewList = mutableListOf<ReviewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -33,15 +43,10 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
 
         reviewActivity = activity as ReviewActivity
 
-        settingWrittenFarmReviewCount()
         settingRecyclerViewReviewTabFarm()
+        gettingFarmReviewData()
 
         return fragmentReviewTabFarmBinding.root
-    }
-
-    // 쓴 주말농장 리뷰 개수
-    fun settingWrittenFarmReviewCount() {
-        fragmentReviewTabFarmBinding.myPageReviewViewModel?.textViewReviewTabFarmCount?.value = "내가 쓴 리뷰 총 90개"
     }
 
     // 리뷰 주말농장 탭 리사이클러뷰 설정
@@ -53,6 +58,18 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
                 val deco = MaterialDividerItemDecoration(reviewActivity, MaterialDividerItemDecoration.VERTICAL)
                 addItemDecoration(deco)
             }
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun gettingFarmReviewData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            farmReviewList = MyPageReviewDao.gettingFarmReviewList()
+
+            fragmentReviewTabFarmBinding.recyclerViewReviewTabFarm.adapter?.notifyDataSetChanged()
+
+            val reviewCount = farmReviewList.size
+            fragmentReviewTabFarmBinding.myPageReviewViewModel?.textViewReviewTabFarmCount?.value = "내가 쓴 리뷰 총 ${reviewCount}개"
         }
     }
 
@@ -79,24 +96,22 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
 
             val reviewTabFarmViewHolder = ReviewTabFarmViewHolder(rowReviewHistoryFarmBinding)
 
-            // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
-            rowReviewHistoryFarmBinding.recyclerViewReviewImageFarm.apply {
-                adapter = ReviewImageFarmRecyclerViewAdapter()
-                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
-            }
-
             return reviewTabFarmViewHolder
         }
 
         override fun getItemCount(): Int {
-            return 100
+            return farmReviewList.size
         }
 
         override fun onBindViewHolder(holder: ReviewTabFarmViewHolder, position: Int) {
-            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmDate?.value = "2024.04.02"
-            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmName?.value = "파밍이네 주말농장"
-            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmText?.value = "리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다.리뷰내용입니다."
-            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmLabel?.value = "파밍이네 감자 10kg"
+            val farmImageList = farmReviewList[position].review_images
+
+            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmDate?.value = farmReviewList[position].review_reg_dt
+            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmName?.value = farmReviewList[position].review_title
+            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmText?.value = farmReviewList[position].review_content
+            holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmLabel?.value = farmReviewList[position].review_option
+            holder.rowReviewHistoryFarmBinding.ratingBarRowReviewHistoryFarm.rating =
+                farmReviewList[position].review_rate.toFloat()
 
             holder.rowReviewHistoryFarmBinding.buttonReviewTabFarmDelete.setOnClickListener {
                 val dialog = DialogYesNo(
@@ -105,10 +120,17 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
                 )
                 dialog.show(this@ReviewTabFarmFragment?.parentFragmentManager!!, "DialogYesNo")
             }
+
+            // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
+            holder.rowReviewHistoryFarmBinding.recyclerViewReviewImageFarm.apply {
+                adapter = ReviewImageFarmRecyclerViewAdapter(farmImageList)
+                layoutManager = LinearLayoutManager(reviewActivity, LinearLayoutManager.HORIZONTAL, false)
+            }
         }
 
         // 리뷰 주말농장 탭 이미지 리사이클러뷰 설정
-        inner class ReviewImageFarmRecyclerViewAdapter : RecyclerView.Adapter<ReviewImageFarmRecyclerViewAdapter.ReviewImageFarmViewHolder>() {
+        inner class ReviewImageFarmRecyclerViewAdapter(farmImageList: MutableList<String>) : RecyclerView.Adapter<ReviewImageFarmRecyclerViewAdapter.ReviewImageFarmViewHolder>() {
+            var farmImages = farmImageList
             inner class ReviewImageFarmViewHolder(rowReviewHistoryImageFarmBinding: RowReviewHistoryImageFarmBinding) : RecyclerView.ViewHolder(rowReviewHistoryImageFarmBinding.root) {
                 val rowReviewHistoryImageFarmBinding: RowReviewHistoryImageFarmBinding
 
@@ -134,17 +156,23 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
             }
 
             override fun getItemCount(): Int {
-                return 4
+                return farmImages.size
             }
 
             override fun onBindViewHolder(holder: ReviewImageFarmViewHolder, position: Int) {
-                holder.rowReviewHistoryImageFarmBinding.imageViewRowReviewTabFarm.setImageResource(R.drawable.ic_launcher_background)
+                CoroutineScope(Dispatchers.Main).launch {
+                    MyPageReviewDao.gettingCropReviewPostImage(requireContext(), farmImages[position], holder.rowReviewHistoryImageFarmBinding.imageViewRowReviewTabFarm)
+                }
             }
         }
     }
 
     override fun onYesButtonClick(id: Int) {
-        fragmentReviewTabFarmBinding.recyclerViewReviewTabFarm.adapter!!.notifyItemRemoved(id)
+        CoroutineScope(Dispatchers.Main).launch {
+            // 글 상태를 삭제 상태로 변경한다.
+            MyPageReviewDao.updateReviewState(farmReviewList[id].review_idx, ReviewState.REVIEW_STATE_REMOVE)
+            gettingFarmReviewData()
+        }
     }
 
     override fun onYesButtonClick(activity: AppCompatActivity) {

@@ -1,6 +1,8 @@
 package kr.co.lion.farming_customer.fragment.tradeCrop
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.CartCropStatus
 import kr.co.lion.farming_customer.CartFragmentName
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
@@ -23,9 +26,11 @@ import kr.co.lion.farming_customer.Tools
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.payment.PaymentActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
+import kr.co.lion.farming_customer.dao.cart.CartDao
 import kr.co.lion.farming_customer.dao.crop.CropDao
 import kr.co.lion.farming_customer.databinding.FragmentBottomSheetTradeCropBinding
 import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.model.cart.CartModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.BottomSheetTradeCropViewModel
 import java.text.DecimalFormat
 
@@ -49,6 +54,10 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
 
     // 결제화면에 필요한 기본 가격 데이터로 인해 기본 가격 데이터만 담을 프로퍼티를 선언해준다.
     var optionPrice = ""
+
+    // 농산품 가격
+    var realOriginalPrice = ""
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -177,6 +186,7 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                     totalResultToString += "원"
                     // 변경된 총가격
                     bottomSheetTradeCropViewModel?.totalPrice?.value = totalResultToString
+                    realOriginalPrice = totalResultToString
                 }
             }
 
@@ -223,7 +233,7 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                     totalResultToString += "원"
                     // 변경된 총가격
                     bottomSheetTradeCropViewModel?.totalPrice?.value = totalResultToString
-
+                    realOriginalPrice = totalResultToString
                 }
             }
 
@@ -289,15 +299,53 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
     override fun onYesButtonClick(activity: AppCompatActivity) {
         val intent = Intent(requireContext(), CartActivity::class.java)
 
-        intent.putExtra("CartFragmentName",CartFragmentName.CART_TAB_CROP_FRAGMENT)
-        // 농산품 번호
-        intent.putExtra("crop_idx",crop_idx)
-        // 옵션명
-        intent.putExtra("optionName",binding.textViewBottomTradeOptionName.text.toString())
-        // 현재 옵션 개수
-        var currentCnt = bottomSheetTradeCropViewModel.optionCounts.value!!
-        intent.putExtra("optionCnt",currentCnt)
-        startActivity(intent)
+
+//        intent.putExtra("CartFragmentName",CartFragmentName.CART_TAB_CROP_FRAGMENT)
+//        // 농산물 타입임을 넘김
+//        intent.putExtra("CartItemType", OrderProductType.ORDER_PRODUCT_TYPE_CROP.number)
+//        // 농산품 번호
+//        intent.putExtra("crop_idx",crop_idx)
+//        // 옵션명
+//        intent.putExtra("optionName",binding.textViewBottomTradeOptionName.text.toString())
+//        // 현재 옵션 개수
+        val currentCnt = bottomSheetTradeCropViewModel.optionCounts.value!!
+//
+//        intent.putExtra("optionCnt",currentCnt)
+        CoroutineScope(Dispatchers.Main).launch {
+            var sequence = CartDao.getCartCropSequence()
+            // 시퀀스 번호 업데이트
+            sequence += 1
+            CartDao.updateCartCropSequence(sequence)
+
+//            // 농작물 이름
+//            cartModel?.cart_crop_name = cropData!!.crop_title
+//            // 농작물 가격
+//            cartModel?.cart_price = realOriginalPrice
+//            // 유저 아이디, 자동 로그인 때 담아두었던 sharedPreferences 사용
+            val sharedPreferences = requireActivity().getSharedPreferences("AutoLogin", MODE_PRIVATE)
+            val savedIndex = sharedPreferences.getInt("loginUserIdx", -1)
+//            // 카트 상태 (농작물, 체험활동, 액티비티)
+//            cartModel?.cart_status = OrderProductType.ORDER_PRODUCT_TYPE_CROP.number
+//            // 옵션 명
+//            cartModel?.cart_crop_option = binding.textViewBottomTradeOptionName.text.toString()
+            // 카트모델 저장
+
+            val cartModel = CartModel(
+                cart_idx = sequence,
+                cart_count = currentCnt,
+                cart_crop_name = cropData!!.crop_title,
+                cart_crop_option = binding.textViewBottomTradeOptionName.text.toString(),
+                cart_price = realOriginalPrice,
+                cart_status = CartCropStatus.CART_CROP_STATUS_NORMAL.number,
+                cart_user_idx = savedIndex,
+                cart_image_file_name = cropData!!.crop_images[0],
+                cart_crop_delivery_fee = cropData!!.delivery_fee
+            )
+            Log.d("test1234", "cart_image_file_name: ${cartModel.cart_image_file_name}")
+            CartDao.insertCartCropData(cartModel)
+            startActivity(intent)
+        }
+
     }
     override fun onYesButtonClick(id: Int) {
 

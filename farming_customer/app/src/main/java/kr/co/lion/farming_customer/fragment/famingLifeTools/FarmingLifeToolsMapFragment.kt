@@ -6,6 +6,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,9 +22,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.dao.farmingLifeTools.RentalDao
 import kr.co.lion.farming_customer.databinding.FragmentFarmingLifeToolsMapBinding
 import kr.co.lion.farming_customer.fragment.famingLifeTools.adapter.FarmingLifeMapVPAdapter
+import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 
 @Suppress("DEPRECATION")
 class FarmingLifeToolsMapFragment() : Fragment() {
@@ -49,6 +55,7 @@ class FarmingLifeToolsMapFragment() : Fragment() {
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
 
+    var rentalList = mutableListOf<RentalModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,13 +67,34 @@ class FarmingLifeToolsMapFragment() : Fragment() {
         requestPermissions(permissionList, 0)
 
         settingGoogleMap()
-        settingMapAdapter()
+
 
         return binding.root
     }
 
-    fun settingMapAdapter() {
-        mapVPAdapter = FarmingLifeMapVPAdapter(requireContext())
+    private fun settingRentalData(location1: Location) {
+        CoroutineScope(Dispatchers.Main).launch {
+            rentalList = RentalDao.gettingRentalListByLocation(location1)
+            settingMapAdapter(rentalList)
+            settingViewPagerChange()
+        }
+    }
+
+    private fun settingViewPagerChange() {
+        binding.farmingLifeToolsMapVp.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val location = Location("rental")
+                location.latitude = rentalList[position].rental_longitude!!
+                location.longitude = rentalList[position].rental_latitude!!
+                setMyLocation(location)
+            }
+        })
+    }
+
+    fun settingMapAdapter(rentalList: MutableList<RentalModel>) {
+        mapVPAdapter = FarmingLifeMapVPAdapter(requireContext(), rentalList)
         binding.farmingLifeToolsMapVp.adapter = mapVPAdapter
         binding.farmingLifeToolsMapVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
     }
@@ -101,8 +129,10 @@ class FarmingLifeToolsMapFragment() : Fragment() {
                 // 현재 위치를 지도에 표시한다.
                 if(location1 != null){
                     setMyLocation(location1)
+                    settingRentalData(location1)
                 } else if(location2 != null){
                     setMyLocation(location2)
+                    settingRentalData(location2)
                 }
 
                 // 현재 위치를 측정한다.

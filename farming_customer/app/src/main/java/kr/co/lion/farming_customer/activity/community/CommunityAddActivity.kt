@@ -1,29 +1,21 @@
-package kr.co.lion.farming_customer.activity
+package kr.co.lion.farming_customer.activity.community
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.transition.MaterialSharedAxis
 import kr.co.lion.farming_customer.CommunityAddFragmentName
-import kr.co.lion.farming_customer.CommunitySearchFragmentName
+import kr.co.lion.farming_customer.CommunityFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.databinding.ActivityCommunityAddBinding
-import kr.co.lion.farming_customer.databinding.ActivityCommunitySearchBinding
-import kr.co.lion.farming_customer.databinding.RowCommunityTabAllBinding
+import kr.co.lion.farming_customer.databinding.ActivityCommunityBinding
 import kr.co.lion.farming_customer.fragment.community.CommunityAddFragment
-import kr.co.lion.farming_customer.fragment.community.CommunitySearchFragment
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
+import kr.co.lion.farming_customer.fragment.community.CommunityReadFragment
 
-class CommunitySearchActivity : AppCompatActivity() {
-    lateinit var activityCommunitySearchBinding: ActivityCommunitySearchBinding
+class CommunityAddActivity : AppCompatActivity() {
+    lateinit var activityCommunityAddBinding: ActivityCommunityAddBinding
 
     // 프래그먼트 객체를 담을 변수
     var oldFragment: Fragment? = null
@@ -31,13 +23,13 @@ class CommunitySearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityCommunitySearchBinding = ActivityCommunitySearchBinding.inflate(layoutInflater)
-        setContentView(activityCommunitySearchBinding.root)
+        activityCommunityAddBinding = ActivityCommunityAddBinding.inflate(layoutInflater)
+        setContentView(activityCommunityAddBinding.root)
 
-        replaceFragment(CommunitySearchFragmentName.COMMUNITY_SEARCH_FRAGMENT, false, false, null)
+        replaceFragment(CommunityAddFragmentName.COMMUNITY_ADD_FRAGMENT, false, false, null)
     }
 
-    fun replaceFragment(name: CommunitySearchFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunitySearch){
+    fun replaceFragment(name: CommunityAddFragmentName, addToBackStack:Boolean, isAnimate:Boolean, data:Bundle?, container:Int = R.id.containerCommunityAdd){
         SystemClock.sleep(200)
         // Fragment를 교체할 수 있는 객체를 추출한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -48,8 +40,8 @@ class CommunitySearchActivity : AppCompatActivity() {
         // 이름으로 분기한다.
         // Fragment의 객체를 생성하여 변수에 담아준다.
         when(name){
-            CommunitySearchFragmentName.COMMUNITY_SEARCH_FRAGMENT -> {
-                newFragment = CommunitySearchFragment()
+            CommunityAddFragmentName.COMMUNITY_ADD_FRAGMENT -> {
+                newFragment = CommunityAddFragment()
             }
         }
         if(data != null){
@@ -107,7 +99,7 @@ class CommunitySearchActivity : AppCompatActivity() {
     }
 
     // BackStack에서 Fragment를 제거한다.
-    fun removeFragment(name: CommunitySearchFragmentName){
+    fun removeFragment(name: CommunityAddFragmentName){
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)

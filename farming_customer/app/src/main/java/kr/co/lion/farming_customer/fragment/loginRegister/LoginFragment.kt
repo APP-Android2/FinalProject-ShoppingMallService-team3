@@ -171,8 +171,8 @@ class LoginFragment : Fragment() {
                         val intent = Intent(loginActivity, MainActivity::class.java)
 
                         // 로그인한 사용자의 정보를 전달해준다.
-//                        intent.putExtra("loginUserIdx", loginUserModel.user_idx)
-//                        intent.putExtra("loginUserNickName", loginUserModel.user_nickname)
+                        intent.putExtra("loginUserIdx", loginUserModel.user_idx)
+                        intent.putExtra("loginUserNickName", loginUserModel.user_nickname)
 
                         startActivity(intent)
                         // LoginActivity를 종료한다.
