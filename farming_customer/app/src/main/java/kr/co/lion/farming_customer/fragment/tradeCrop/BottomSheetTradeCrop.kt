@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.CartCropStatus
 import kr.co.lion.farming_customer.CartFragmentName
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
@@ -301,9 +302,10 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                 cart_crop_name = cropData!!.crop_title,
                 cart_crop_option = binding.textViewBottomTradeOptionName.text.toString(),
                 cart_price = realOriginalPrice,
-                cart_status = OrderProductType.ORDER_PRODUCT_TYPE_CROP.number,
+                cart_status = CartCropStatus.CART_CROP_STATUS_NORMAL.number,
                 cart_user_idx = savedIndex,
-                cart_image_file_name = cropData!!.crop_images[0]
+                cart_image_file_name = cropData!!.crop_images[0],
+                cart_crop_delivery_fee = cropData!!.delivery_fee
             )
             Log.d("test1234", "cart_image_file_name: ${cartModel.cart_image_file_name}")
             CartDao.insertCartCropData(cartModel)

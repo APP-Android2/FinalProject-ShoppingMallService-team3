@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kr.co.lion.farming_customer.CartCropStatus
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.cart.CartModel
 import kr.co.lion.farming_customer.model.user.UserModel
@@ -68,9 +69,11 @@ class CartDao {
             val cartCropList = mutableListOf<CartModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
-                // user_idx와 같은 모든 사용자 정보를 가져온다
+                // user_idx와 같은 모든 사용자 정보를 가져온다. 이 때, cart_status가 CART_CROP_STATUS_NORMAL인 것만
                 val querySnapshot = Firebase.firestore.collection("CartCropData").
-                whereEqualTo("cart_user_idx", userIdx).get().await()
+                whereEqualTo("cart_user_idx", userIdx).
+                whereEqualTo("cart_status", CartCropStatus.CART_CROP_STATUS_NORMAL.number).
+                get().await()
                 // 가져온 문서의 수 만큼 반복한다.
                 querySnapshot.forEach {
                     // UserModel 객체에 담는다.
@@ -103,6 +106,8 @@ class CartDao {
                         "cart_price" to cartModel.cart_price,
                         "cart_status" to cartModel.cart_status,
                         "cart_user_idx" to cartModel.cart_user_idx,
+                        "cart_image_file_name" to cartModel.cart_image_file_name,
+                        "cart_crop_delivery_fee" to cartModel.cart_crop_delivery_fee
                     )
                 )
             }

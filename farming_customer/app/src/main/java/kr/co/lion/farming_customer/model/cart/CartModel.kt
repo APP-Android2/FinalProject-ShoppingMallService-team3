@@ -16,7 +16,11 @@ data class CartModel (
     // 장바구니 상태
     var cart_status: Int,
     // 이미지 파일 명
-    var cart_image_file_name: String
+    var cart_image_file_name: String,
+    // 배송비
+    var cart_crop_delivery_fee: String
 ) {
-    constructor(): this(0, "", 0, "", "", 0, 0, "")
+    constructor(): this(0, "", 0,
+        "", "", 0, 0, "", "")
+
 }
