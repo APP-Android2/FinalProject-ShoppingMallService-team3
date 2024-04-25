@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
@@ -18,15 +22,18 @@ import kr.co.lion.farming_customer.activity.myPageSetting.MyPageSettingActivity
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.activity.point.PointActivity
 import kr.co.lion.farming_customer.activity.review.ReviewActivity
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.databinding.FragmentMyPageBinding
 import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.MyPageViewModel
+import java.text.DecimalFormat
 
 class MyPageFragment : Fragment() {
     lateinit var fragmentMyPageBinding: FragmentMyPageBinding
     lateinit var mainActivity: MainActivity
     lateinit var myPageViewModel : MyPageViewModel
 
+    var userModel : UserModel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentMyPageBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_my_page, container, false)
         myPageViewModel = MyPageViewModel()
@@ -35,7 +42,7 @@ class MyPageFragment : Fragment() {
 
         mainActivity = activity as MainActivity
 
-        settingCardViewMyPageFirstPoint()
+        settingUserData()
         settingTextViewMyPageFirstReview()
         settingTextViewMyPageFirstCart()
         settingMyPageManagement()
@@ -45,6 +52,18 @@ class MyPageFragment : Fragment() {
 
 
         return fragmentMyPageBinding.root
+    }
+
+    private fun settingUserData() {
+        val sharedPreferences = mainActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingCardViewMyPageFirstPoint()
+        }
+
     }
 
     private fun settingTextViewMyPageFirstCS() {
@@ -68,12 +87,17 @@ class MyPageFragment : Fragment() {
     // 포인트
     fun settingCardViewMyPageFirstPoint() {
         fragmentMyPageBinding.apply {
-
-            myPageViewModel?.textViewMyPageFirstPointNumber?.value = "1,000"
+            myPageViewModel?.apply {
+                textViewMyPageFirstPointNumber.value = DecimalFormat("#,###").format(userModel!!.user_point)+"P"
+                textViewMyPageFirstNickName.value = userModel!!.user_nickname
+            }
 
             cardViewMyPageFirstPoint.setOnClickListener {
                 val pointIntent = Intent(mainActivity, PointActivity::class.java)
                 startActivity(pointIntent)
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                UserDao.gettingUserImage(requireContext(), userModel!!.user_profile_image, imageViewMyPageFirstProfile)
             }
         }
     }

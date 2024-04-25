@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.orderHistory
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,11 +16,13 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentOrderHistoryReservDetailBinding
 import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.OrderHistoryReservDetailViewModel
 
 class OrderHistoryReservDetailFragment : Fragment() {
@@ -32,6 +35,7 @@ class OrderHistoryReservDetailFragment : Fragment() {
     var productType : Int? = null
     var farmModel : FarmModel? = null
     var activityModel : ActivityModel? = null
+    var userModel : UserModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentOrderHistoryReservDetailBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_order_history_reserv_detail, container, false)
@@ -40,11 +44,22 @@ class OrderHistoryReservDetailFragment : Fragment() {
         fragmentOrderHistoryReservDetailBinding.lifecycleOwner = this
         orderHistoryActivity = activity as OrderHistoryActivity
 
-        settingInitData()
+        settingUserData()
         settingToolbar()
         settingEvent()
 
         return fragmentOrderHistoryReservDetailBinding.root
+    }
+
+    private fun settingUserData() {
+        val sharedPreferences = orderHistoryActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingInitData()
+        }
     }
 
     private fun settingInitData() {
@@ -98,8 +113,8 @@ class OrderHistoryReservDetailFragment : Fragment() {
                     textViewReservDetail_price.value = orderModel!!.order_total_price
                 }
                 // 사용자 모델
-                textViewReservDetail_reservName.value = "김파밍"
-                textViewReservDetail_phoneNum.value = "010-1111-1111"
+                textViewReservDetail_reservName.value = userModel!!.user_name
+                textViewReservDetail_phoneNum.value = userModel!!.user_phone
 
                 textViewReservDetail_productPrice.value = orderModel!!.order_total_price
                 textViewReservDetail_productNumber.value = "${orderModel!!.order_option_detail.size}개"
