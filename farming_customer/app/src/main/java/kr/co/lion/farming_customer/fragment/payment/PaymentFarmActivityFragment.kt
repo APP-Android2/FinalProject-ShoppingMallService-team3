@@ -536,11 +536,19 @@ class PaymentFarmActivityFragment : Fragment() {
             if(paymentFarmDataList.isNotEmpty()){
                 // 상품명
                 holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductName?.value = paymentFarmDataList[position].farm_title
+                // 이미지
+                CoroutineScope(Dispatchers.Main).launch {
+                    FarmDao.gettingFarmImage(requireContext(), paymentFarmDataList[position].farm_images[0], holder.rowPaymentProductBinding.imageViewPaymentProduct2)
+                }
             }
             // 체험활동일 경우
             else{
                 // 상품명
                 holder.rowPaymentProductBinding.paymentCropViewModel?.textViewPaymentProductName?.value = paymentActivityDataList[position].activity_title
+                // 이미지
+                CoroutineScope(Dispatchers.Main).launch {
+                    ActivityDao.gettingActivityImage(requireContext(), paymentActivityDataList[position].activity_images[0], holder.rowPaymentProductBinding.imageViewPaymentProduct2)
+                }
             }
 
         }

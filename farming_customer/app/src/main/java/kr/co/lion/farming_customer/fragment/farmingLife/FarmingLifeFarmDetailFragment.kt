@@ -41,7 +41,6 @@ class FarmingLifeFarmDetailFragment(data: Bundle?) : Fragment() {
     var imageList = mutableListOf<String>()
 
     var idx : Int? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -127,7 +126,7 @@ class FarmingLifeFarmDetailFragment(data: Bundle?) : Fragment() {
             }
             // 예약 버튼
             buttonReservation.setOnClickListener {
-                val bottomSheetFarmReservFragment = BottomSheetFarmReservFragment()
+                val bottomSheetFarmReservFragment = BottomSheetFarmReservFragment(idx!!)
                 bottomSheetFarmReservFragment.show(farmingLifeActivity.supportFragmentManager, "BottomSheetFarmReservFragment")
             }
         }

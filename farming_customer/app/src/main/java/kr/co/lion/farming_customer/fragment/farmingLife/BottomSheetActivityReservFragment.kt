@@ -4,51 +4,64 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.CalendarView
 import android.widget.CalendarView.OnDateChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
+import kr.co.lion.farming_customer.OrderProductType
+import kr.co.lion.farming_customer.PaymentFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.activity.payment.PaymentActivity
+import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.databinding.DropdownItemBottomSheetProgramBinding
 import kr.co.lion.farming_customer.databinding.FragmentBottomSheetActivityReservBinding
 import kr.co.lion.farming_customer.databinding.RowBottomSheetActivityReservOptionBinding
 import kr.co.lion.farming_customer.databinding.RowBottomSheetActivityReservSelectedOptionBinding
 import kr.co.lion.farming_customer.model.SelectedOptionModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.BottomSheetActivityReservViewModel
-import kr.co.lion.farming_customer.viewmodel.farmingLife.BottomSheetFarmReservViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.DropdownItemBottmSheetProgramViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowBottomSheetActivityReservOptionViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowBottomSheetActivityReservSelectedOptionViewModel
+import org.checkerframework.checker.units.qual.s
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.Date
 
-class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYesNoInterface {
+class BottomSheetActivityReservFragment(idx: Int) : BottomSheetDialogFragment(), DialogYesNoInterface {
     lateinit var fragmentBottomSheetActivityReservBinding: FragmentBottomSheetActivityReservBinding
     lateinit var farmingLifeActivity : FarmingLifeActivity
     lateinit var bottomSheetActivityReservViewModel: BottomSheetActivityReservViewModel
 
     val selectedOptionList = mutableListOf<SelectedOptionModel>()
     var selectedOption = SelectedOptionModel()
+
+    val activityIdx = idx
+    var activityModel : ActivityModel? = null
+
+    var activity_optionNameList = mutableListOf<String>()
+    var activity_optionPriceList = mutableListOf<String>()
+    var activity_optionTimeList = mutableListOf<MutableList<String>>()
+    var activity_recruit = mutableListOf<String>()
+
+    var option_time_pos = -1
+    var date = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,12 +73,26 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
         fragmentBottomSheetActivityReservBinding.lifecycleOwner = this
         farmingLifeActivity = activity as FarmingLifeActivity
 
+        settingInitData()
         settingEvent()
-        settingData()
-        settingRecyclerView()
+
 
 
         return fragmentBottomSheetActivityReservBinding.root
+    }
+
+    private fun settingInitData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            activityModel = ActivityDao.selectActivityData(activityIdx)
+            activityModel!!.activity_option_detail.forEach {
+                activity_optionNameList.add(it["option_name"] as String)
+                activity_optionPriceList.add(it["option_price"] as String)
+                activity_recruit.add(it["option_recruit"] as String)
+                activity_optionTimeList.add(it["option_time"] as MutableList<String>)
+            }
+            settingData()
+            settingRecyclerView()
+        }
     }
 
     private fun settingRecyclerView() {
@@ -110,7 +137,6 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
     private fun settingEvent() {
         fragmentBottomSheetActivityReservBinding.apply {
             // 날짜 선택
-            var date = ""
             calendarTextLayout.setOnClickListener {
                 calendar.visibility = View.VISIBLE
             }
@@ -118,10 +144,8 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
                 if(date == ""){
                     val dateFormat = SimpleDateFormat("yyyy.MM.dd")
                     bottomSheetActivityReservViewModel!!.textView_selectedDate.value = dateFormat.format(calendarView.date)
-                    selectedOption.date = dateFormat.format(calendarView.date)
                 }else{
                     bottomSheetActivityReservViewModel!!.textView_selectedDate.value = date
-                    selectedOption.date = date
                 }
                 calendar.visibility = View.INVISIBLE
                 textinputOption.visibility = View.VISIBLE
@@ -130,6 +154,7 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
             calendarView.setOnDateChangeListener(object : OnDateChangeListener{
                 override fun onSelectedDayChange(p0: CalendarView, year: Int, month: Int, day: Int) {
                     date = "$year.${month+1}.$day"
+                    bottomSheetActivityReservViewModel!!.textView_selectedDate.value = date
                 }
             })
 
@@ -152,6 +177,29 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
             }
             // 예약하기 버튼
             buttonActivityReservReserv.setOnClickListener {
+                val intent = Intent(requireContext(), PaymentActivity::class.java)
+                intent.putExtra("PaymentFragmentName", PaymentFragmentName.PAYMENT_FARM_ACTIVITY_FRAGMENT)
+
+                val mapList = ArrayList<HashMap<String, Any>>()
+                for(i in 0..<selectedOptionList.size){
+                    var map1 = HashMap<String, Any>()
+                    map1["productType"] = OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number
+                    map1["product_idx"] = activityIdx
+                    map1["totalPrice"] = bottomSheetActivityReservViewModel!!.textView_totalPrice.value.toString()
+                    map1["option"] = mutableMapOf<String, Any>(
+                        "optionName" to selectedOptionList[i].programName,
+                        "optionPrice" to selectedOptionList[i].price,
+                        "optionCnt" to selectedOptionList[i].cnt,
+                        "optionTime" to selectedOptionList[i].time,
+                        "optionTotalPrice" to DecimalFormat("#,###").format(selectedOptionList[i].price.replace(",", "").replace("원", "").toInt() * selectedOptionList[i].cnt) + "원"
+                    )
+                    mapList.add(map1)
+                }
+                val bundle = Bundle()
+                bundle.putSerializable("mapList", mapList)
+                intent.putExtra("paymentData", bundle)
+                startActivity(intent)
+
                 dismiss()
             }
         }
@@ -207,20 +255,21 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return activity_optionTimeList[option_time_pos].size
         }
 
         override fun onBindViewHolder(holder: OptionViewHolder, position: Int) {
             holder.rowBottomSheetActivityReservOptionBinding.apply {
                 rowBottomSheetActivityReservOptionViewModel!!.apply {
-                    textView_time.value = "14 : 20"
-                    textView_cnt.value = "10개"
+
+                    textView_time.value = activity_optionTimeList[option_time_pos][position]
+                    textView_cnt.value = activity_recruit[option_time_pos]
                 }
             }
             // 아아템 클릭 이벤트
             holder.rowBottomSheetActivityReservOptionBinding.apply {
                 root.setOnClickListener {
-                    selectedOption.time = rowBottomSheetActivityReservOptionViewModel!!.textView_time.value!!
+                    selectedOption.time = "${date} ${rowBottomSheetActivityReservOptionViewModel!!.textView_time.value!!}"
                     selectedOption.cnt = 1
 
                     if(bottomSheetActivityReservViewModel.textView_totalPrice.value != null){
@@ -281,14 +330,16 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
         }
 
         override fun getItemCount(): Int {
-            return 5
+            return activity_optionNameList.size
         }
 
         override fun onBindViewHolder(holder: DropdownViewHolder, position: Int) {
             holder.dropdownItemBottomSheetProgramBinding.apply {
                 dropDownItemBottomSheetProgramViewModel!!.apply {
-                    dropDownItem_programName.value ="프로그램 $position"
-                    dropDownItem_price.value = "999,999원"
+                    dropDownItem_programName.value =activity_optionNameList[position]
+                    dropDownItem_price.value = activity_optionPriceList[position]
+                    option_time_pos = position
+                    fragmentBottomSheetActivityReservBinding.recyclerViewOption.adapter?.notifyDataSetChanged()
                 }
             }
             // 아이템 클릭 이벤트
@@ -353,7 +404,7 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
                 buttonMinus.setOnClickListener {
                     rowBottomSheetActivityReservSelectedOptionViewModel!!.apply {
                         textView_cnt.value = (rowBottomSheetActivityReservSelectedOptionViewModel!!.textView_cnt.value!!.toInt() - 1).toString()
-
+                        selectedOptionList[position].cnt --
                         if(textView_cnt.value == "0"){
                             // 갯수가 0이 되면 아이템 삭제
                             selectedOptionList.removeAt(position)
@@ -364,17 +415,19 @@ class BottomSheetActivityReservFragment : BottomSheetDialogFragment(), DialogYes
                         var str_change_money_up = t_dec_up.format(price_int)
                         var price = str_change_money_up + "원"
                         bottomSheetActivityReservViewModel.textView_totalPrice.value = price
+                        selectedOptionList[position].price = t_dec_up.format(rowBottomSheetActivityReservSelectedOptionViewModel!!.textView_price.value!!.replace(",", "").replace("원", "").toInt() * selectedOptionList[position].cnt) + "원"
                     }
                 }
                 buttonPlus.setOnClickListener {
                     rowBottomSheetActivityReservSelectedOptionViewModel!!.apply {
                         textView_cnt.value = (rowBottomSheetActivityReservSelectedOptionViewModel!!.textView_cnt.value!!.toInt() + 1).toString()
-
+                        selectedOptionList[position].cnt ++
                         var price_int = bottomSheetActivityReservViewModel.textView_totalPrice.value!!.replace(",", "").replace("원", "").toInt() + textView_price.value!!.replace(",", "").replace("원", "").toInt()
                         val t_dec_up = DecimalFormat("#,###")
                         var str_change_money_up = t_dec_up.format(price_int)
                         var price = str_change_money_up + "원"
                         bottomSheetActivityReservViewModel.textView_totalPrice.value = price
+                        selectedOptionList[position].price = t_dec_up.format(rowBottomSheetActivityReservSelectedOptionViewModel!!.textView_price.value!!.replace(",", "").replace("원", "").toInt() * selectedOptionList[position].cnt) + "원"
                     }
 
 

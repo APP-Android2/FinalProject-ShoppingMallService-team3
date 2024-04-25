@@ -35,18 +35,11 @@ import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.farmingLife.FarmModel
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.HomeViewModel
-import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 import kr.co.lion.farming_customer.model.CommunityCommentModel
 import kr.co.lion.farming_customer.model.CommunityModel
-import kr.co.lion.farming_customer.model.CropModel
-import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
-import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 
 class HomeFragment : Fragment() {
