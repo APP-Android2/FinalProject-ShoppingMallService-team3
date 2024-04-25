@@ -46,8 +46,7 @@
                         android:id="@+id/imageViewCommunityListInformation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grey_02"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_launcher_foreground" />
                 </com.google.android.material.card.MaterialCardView>
 

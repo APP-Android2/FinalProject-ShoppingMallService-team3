@@ -29,6 +29,7 @@
                     android:layout_height="35dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/home_01"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
