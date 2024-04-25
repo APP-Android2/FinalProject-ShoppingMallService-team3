@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.orderHistory
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -20,11 +21,14 @@ import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.OrderLabelType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.crop.CropDao
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentTapDeliveryDoneBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryCropBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryCropLabeledBinding
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryCropViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -41,14 +45,27 @@ class TapDeliveryDoneFragment : Fragment() {
     var orderList_return  = mutableListOf<OrderModel>()
     var orderList_exchage = mutableListOf<OrderModel>()
 
+    var userModel : UserModel? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentTapDeliveryDoneBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_tap_delivery_done, container, false)
         orderHistoryActivity = activity as OrderHistoryActivity
 
-        settingInitData()
+        settingUserData()
         settingToggleButton()
 
         return fragmentTapDeliveryDoneBinding.root
+    }
+
+    private fun settingUserData() {
+        val sharedPreferences = orderHistoryActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingInitData()
+        }
     }
 
     private fun settingToggleButton() {
@@ -57,6 +74,7 @@ class TapDeliveryDoneFragment : Fragment() {
                 when(checkedId){
                     R.id.toggleButton_all -> {
                         orderList = orderList_all
+
                         fragmentTapDeliveryDoneBinding.recyclerViewDeliveryDone.adapter?.notifyDataSetChanged()
                     }
                     R.id.toggleButton_deliveryDone -> {
@@ -92,7 +110,7 @@ class TapDeliveryDoneFragment : Fragment() {
                     OrderLabelType.ORDER_LABEL_TYPE_EXCHANGE_APPLY,
                     OrderLabelType.ORDER_LABEL_TYPE_EXCHANGE_DONE
                 )
-                orderList_all = OrderDao.gettingOrderListCrop(orderLabelTypes)
+                orderList_all = OrderDao.gettingOrderListCrop(orderLabelTypes, userModel!!.user_idx)
                 orderList_all.forEach {
                     when(it.order_label){
                         OrderLabelType.ORDER_LABEL_TYPE_DELIVERY_DONE.number -> {
@@ -237,6 +255,10 @@ class TapDeliveryDoneFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString("orderNum", orderList[position].order_num)
                 orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_ORDER_DETAIL_FRAGMENT, true, true, bundle)
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                val cropData = CropDao.selectCropData(orderList[position].order_product_idx)
+                CropDao.gettingCropImage(requireContext(), cropData!!.crop_images[0], holder.rowOrderHistoryCropLabeledBinding.imageViewOrderHistoryCropProductImage)
             }
         }
     }

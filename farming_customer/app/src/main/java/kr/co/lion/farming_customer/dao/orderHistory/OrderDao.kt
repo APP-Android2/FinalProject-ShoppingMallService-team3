@@ -140,7 +140,7 @@ class OrderDao {
         }
 
         // 농산물 주문 목록 가져온다.
-        suspend fun gettingOrderListCrop(orderLabelType: OrderLabelType):MutableList<OrderModel>{
+        suspend fun gettingOrderListCrop(orderLabelType: OrderLabelType, user_idx: Int):MutableList<OrderModel>{
             val orderList = mutableListOf<OrderModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
@@ -151,6 +151,7 @@ class OrderDao {
                     .whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number)
                     .whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_CROP.number)
                     .whereEqualTo("order_label", orderLabelType.number)
+                    .whereEqualTo("order_user_idx", user_idx)
                     .orderBy("order_idx", Query.Direction.DESCENDING)
 
                 val queryShapshot = query.get().await()
@@ -168,7 +169,7 @@ class OrderDao {
         }
 
         // 라벨 여러개 가져오기
-        suspend fun gettingOrderListCrop(orderLabelTypes: List<OrderLabelType>): MutableList<OrderModel> {
+        suspend fun gettingOrderListCrop(orderLabelTypes: List<OrderLabelType>, user_idx: Int): MutableList<OrderModel> {
             val orderList = mutableListOf<OrderModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
@@ -178,6 +179,7 @@ class OrderDao {
                 var query = collectionReference
                     .whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number)
                     .whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_CROP.number)
+                    .whereEqualTo("order_user_idx", user_idx)
                     .whereIn("order_label", orderLabelTypes.map { it.number }) // 여러 개의 orderLabelType을 비교합니다.
                     .orderBy("order_idx", Query.Direction.DESCENDING)
 
@@ -196,7 +198,7 @@ class OrderDao {
         }
 
         // 주말농장 주문 목록 전체를 가져온다.
-        suspend fun gettingOrderListFarm(orderLabelType: OrderLabelType):MutableList<OrderModel>{
+        suspend fun gettingOrderListFarm(orderLabelType: OrderLabelType, userIdx: Int):MutableList<OrderModel>{
             val orderList = mutableListOf<OrderModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
@@ -207,6 +209,7 @@ class OrderDao {
                     .whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number)
                     .whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_FARM.number)
                     .whereEqualTo("order_label", orderLabelType.number)
+                    .whereEqualTo("order_user_idx", userIdx)
                 // 체험활동 번호를 기준으로 내림 차순 정렬
                 query = query.orderBy("order_idx", Query.Direction.DESCENDING)
 
@@ -225,7 +228,7 @@ class OrderDao {
         }
 
         // 체험활동 주문 목록 전체를 가져온다.
-        suspend fun gettingOrderListActivity(orderLabelType: OrderLabelType):MutableList<OrderModel>{
+        suspend fun gettingOrderListActivity(orderLabelType: OrderLabelType, userIdx: Int):MutableList<OrderModel>{
             val orderList = mutableListOf<OrderModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
@@ -236,6 +239,7 @@ class OrderDao {
                     .whereEqualTo("order_status", OrderStatus.ORDER_STATUS_NORMAL.number)
                     .whereEqualTo("order_product_type", OrderProductType.ORDER_PRODUCT_TYPE_ACTIVITY.number)
                     .whereEqualTo("order_label", orderLabelType.number)
+                    .whereEqualTo("order_user_idx", userIdx)
                 // 체험활동 번호를 기준으로 내림 차순 정렬
                 query = query.orderBy("order_idx", Query.Direction.DESCENDING)
 

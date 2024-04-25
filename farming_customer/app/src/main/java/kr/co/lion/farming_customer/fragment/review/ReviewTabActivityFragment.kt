@@ -33,8 +33,6 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
 
     var activityReviewList = mutableListOf<ReviewModel>()
 
-    private var reviewIdx = 0
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,7 +52,7 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
         reviewActivity = activity as ReviewActivity
 
         settingRecyclerViewReviewTabActivity()
-        gettingFarmReviewData()
+        gettingActivityReviewData()
 
         return fragmentReviewTabActivityBinding.root
     }
@@ -75,7 +73,7 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun gettingFarmReviewData() {
+    fun gettingActivityReviewData() {
         CoroutineScope(Dispatchers.Main).launch {
             activityReviewList = MyPageReviewDao.gettingActivityReviewList()
 
@@ -131,8 +129,6 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
 
         override fun onBindViewHolder(holder: ReviewTabActivityViewHolder, position: Int) {
             val activityImageList = activityReviewList[position].review_images
-
-            reviewIdx = activityReviewList[position].review_idx
 
             holder.rowReviewHistoryActivityBinding.myPageReviewViewModel?.textViewRowReviewTabActivityDate?.value =
                 activityReviewList[position].review_reg_dt
@@ -220,13 +216,10 @@ class ReviewTabActivityFragment : Fragment(), DialogYesNoInterface {
     }
 
     override fun onYesButtonClick(id: Int) {
-//        fragmentReviewTabActivityBinding.recyclerViewReviewTabActivity.adapter!!.notifyItemRemoved(
-//            id
-//        )
-
         CoroutineScope(Dispatchers.Main).launch {
             // 글 상태를 삭제 상태로 변경한다.
-            MyPageReviewDao.updateReviewState(reviewIdx, ReviewState.REVIEW_STATE_REMOVE)
+            MyPageReviewDao.updateReviewState(activityReviewList[id].review_idx, ReviewState.REVIEW_STATE_REMOVE)
+            gettingActivityReviewData()
         }
     }
 

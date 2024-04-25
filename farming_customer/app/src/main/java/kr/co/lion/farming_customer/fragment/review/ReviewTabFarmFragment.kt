@@ -33,7 +33,6 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
 
     var farmReviewList = mutableListOf<ReviewModel>()
-    private var reviewIdx = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -106,7 +105,6 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
 
         override fun onBindViewHolder(holder: ReviewTabFarmViewHolder, position: Int) {
             val farmImageList = farmReviewList[position].review_images
-            reviewIdx = farmReviewList[position].review_idx
 
             holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmDate?.value = farmReviewList[position].review_reg_dt
             holder.rowReviewHistoryFarmBinding.myPageReviewViewModel?.textViewRowReviewTabFarmName?.value = farmReviewList[position].review_title
@@ -170,12 +168,10 @@ class ReviewTabFarmFragment : Fragment(), DialogYesNoInterface {
     }
 
     override fun onYesButtonClick(id: Int) {
-        fragmentReviewTabFarmBinding.recyclerViewReviewTabFarm.adapter!!.notifyItemRemoved(id)
-
         CoroutineScope(Dispatchers.Main).launch {
             // 글 상태를 삭제 상태로 변경한다.
-            Log.e("reviewIdxddddd", reviewIdx.toString())
-            MyPageReviewDao.updateReviewState(reviewIdx, ReviewState.REVIEW_STATE_REMOVE)
+            MyPageReviewDao.updateReviewState(farmReviewList[id].review_idx, ReviewState.REVIEW_STATE_REMOVE)
+            gettingFarmReviewData()
         }
     }
 

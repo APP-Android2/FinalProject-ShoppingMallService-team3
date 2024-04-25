@@ -1,9 +1,8 @@
 package kr.co.lion.farming_customer.fragment.point
 
-import android.graphics.Point
+import android.content.Context
 import android.icu.text.DecimalFormat
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +18,12 @@ import kr.co.lion.farming_customer.DialogYes
 import kr.co.lion.farming_customer.PointType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.point.PointActivity
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.dao.myPagePoint.myPagePointDao
 import kr.co.lion.farming_customer.databinding.FragmentPointHistoryBinding
 import kr.co.lion.farming_customer.databinding.RowPointHistoryBinding
 import kr.co.lion.farming_customer.model.myPagePoint.PointModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.point.MyPagePointViewModel
 
 class PointHistoryFragment : Fragment() {
@@ -36,6 +37,7 @@ class PointHistoryFragment : Fragment() {
     var pointList_save = mutableListOf<PointModel>()
     var pointList_use = mutableListOf<PointModel>()
     var pointList_extinction = mutableListOf<PointModel>()
+    var userModel : UserModel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         fragmentPointHistoryBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_point_history, container, false)
@@ -45,13 +47,24 @@ class PointHistoryFragment : Fragment() {
 
         pointActivity = activity as PointActivity
 
-        settingInitData()
+        settingUserData()
         settingToolbar()
         settingImageViewPointHistoryCaution()
         settingToggleButton()
 
 
         return fragmentPointHistoryBinding.root
+    }
+
+    private fun settingUserData() {
+        val sharedPreferences = pointActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingInitData()
+        }
     }
 
     private fun settingToggleButton() {
@@ -81,7 +94,7 @@ class PointHistoryFragment : Fragment() {
 
     private fun settingInitData() {
         CoroutineScope(Dispatchers.Main).launch {
-            pointList_all = myPagePointDao.gettingPointList()
+            pointList_all = myPagePointDao.gettingPointList(userModel!!.user_idx)
             var remain_point = 0
             pointList_all.forEach {
                 if(it.point_type == PointType.POINT_TYPE_SAVE.number){

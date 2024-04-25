@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.orderHistory
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,10 +20,13 @@ import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.OrderLabelType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.crop.CropDao
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentTapDeliveryBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryCropBinding
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryCropViewModel
 
 class TapDeliveryFragment : Fragment(), DialogYesNoInterface {
@@ -33,19 +37,33 @@ class TapDeliveryFragment : Fragment(), DialogYesNoInterface {
 
     var orderCheck_pos : Int = -1
 
+    var userModel : UserModel? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentTapDeliveryBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_tap_delivery, container, false)
         orderHistoryActivity = activity as OrderHistoryActivity
 
-        settingInitData()
+        settingUserData()
+
 
         return fragmentTapDeliveryBinding.root
     }
 
+    private fun settingUserData() {
+        val sharedPreferences = orderHistoryActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingInitData()
+        }
+    }
+
     private fun settingInitData() {
         CoroutineScope(Dispatchers.Main).launch {
-            orderList = OrderDao.gettingOrderListCrop(OrderLabelType.ORDER_LABEL_TYPE_DELIVERY)
+            orderList = OrderDao.gettingOrderListCrop(OrderLabelType.ORDER_LABEL_TYPE_DELIVERY, userModel!!.user_idx)
             settingRecyclerView()
         }
     }
@@ -114,6 +132,11 @@ class TapDeliveryFragment : Fragment(), DialogYesNoInterface {
                     yes_text = "수취확인"
                 )
                 dialog.show(orderHistoryActivity.supportFragmentManager, "DialogYesNo")
+            }
+
+            CoroutineScope(Dispatchers.Main).launch {
+                val cropData = CropDao.selectCropData(orderList!![position].order_product_idx)
+                CropDao.gettingCropImage(requireContext(), cropData!!.crop_images[0], holder.rowOrderHistoryCropBinding.imageViewOrderHistoryCropProductImage)
             }
         }
     }

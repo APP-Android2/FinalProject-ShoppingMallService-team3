@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="myPageManagementMainViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.myPageManagement.MyPageManagementMainViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,7 +49,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageViewMyPageManagementMain_Profile"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -55,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="닉네임"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_NickName}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/brown_01"
                     android:textSize="18sp" />
@@ -128,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="TextView"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_UserName}"
                     android:textColor="@color/brown_01"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Id"
@@ -153,7 +159,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="TextView"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_UserId}"
                     android:textColor="@color/brown_01"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Id"
@@ -178,7 +184,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="TextView"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_UserPhoneNumber}"
                     android:textColor="@color/brown_01"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Phone"
@@ -244,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="TextView"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_RecipientName}"
                     android:textColor="@color/brown_01"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Recipient"
@@ -269,7 +275,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="TextView"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_AddressName}"
                     android:textColor="@color/brown_01"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_AddressPhone"
@@ -294,7 +300,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/pretendard_regular"
-                    android:text="TextView"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_AddressPhoneNumber}"
                     android:textColor="@color/brown_01"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_AddressPhone"

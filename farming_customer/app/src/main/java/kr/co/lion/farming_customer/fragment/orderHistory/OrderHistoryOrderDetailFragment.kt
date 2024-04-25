@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.orderHistory
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,11 +15,14 @@ import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.crop.CropDao
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentOrderHistoryOrderDetailBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryOrderDetailBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryOrderDetailOptionBinding
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.OrderHistoryOrderDetailViewModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryOrderDetailOptionViewModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryOrderDetailViewModel
@@ -32,6 +36,8 @@ class OrderHistoryOrderDetailFragment : Fragment() {
     var orderNum : String? = null
     var orderList : MutableList<OrderModel>? = null
 
+    var userModel : UserModel? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         fragmentOrderHistoryOrderDetailBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_order_history_order_detail, container, false)
@@ -40,13 +46,23 @@ class OrderHistoryOrderDetailFragment : Fragment() {
         fragmentOrderHistoryOrderDetailBinding.lifecycleOwner = this
         orderHistoryActivity = activity as OrderHistoryActivity
 
-        settingInitData()
+        settingUserData()
         settingToolbar()
         settingEvent()
 
 
 
         return fragmentOrderHistoryOrderDetailBinding.root
+    }
+
+    private fun settingUserData() {
+        val sharedPreferences = orderHistoryActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingInitData()
+        }
     }
 
     private fun settingInitData() {
@@ -80,8 +96,8 @@ class OrderHistoryOrderDetailFragment : Fragment() {
                 textviewOrderDetail_receivePhoneNum.value = orderList!![0].order_delivery_address["phone"]
                 textviewOrderDetail_request.value= orderList!![0].order_delivery_address["request"]
 
-                textViewOrderDetail_reservName.value = "김파밍" // 유저 데이터 가져와야함
-                textViewOrderDetail_phoneNum.value = "010-12341234" // 유저 데이터 가져와야함
+                textViewOrderDetail_reservName.value = userModel!!.user_name
+                textViewOrderDetail_phoneNum.value = userModel!!.user_phone
 
                 textViewOrderDetail_productPrice.value = "10,000원" // 결제 데이터 가져와야함
                 textViewOrderDetail_deliveryPrice.value = "12,000원(3건)" // 결제 데이터 가져와야함
@@ -139,29 +155,34 @@ class OrderHistoryOrderDetailFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: OrderDetailViewHolder, position: Int) {
-            holder.rowOrderHistoryOrderDetailBinding.apply {
-                rowOrderHistoryOrderDetailViewModel!!.apply {
-                    textviewOrderHistoryOrderDetail_productName.value = "파밍이네 감자" // 상품 데이터 가져와야함
-                    textviewOrderHistoryOrderDetail_option.value = "${orderList!![position].order_option_detail[0]["option_name"]}...외 ${orderList!![position].order_option_detail.size-1}개"
-                    textviewOrderHistoryOrderDetail_price.value = orderList!![position].order_total_price
-                }
-                recyclerViewOptionDetail.apply {
-                    this.adapter = OrderDetailOptionRecyclerViewAdapter(orderList!![position].order_option_detail)
-                    this.layoutManager = LinearLayoutManager(orderHistoryActivity)
-                }
-                imageButton2.setOnClickListener {
-                    if(divider10.visibility != View.VISIBLE){
-                        imageButton2.setImageResource(R.drawable.up)
-                        divider10.visibility = View.VISIBLE
-                        recyclerViewOptionDetail.visibility = View.VISIBLE
-                    }else{
-                        imageButton2.setImageResource(R.drawable.down)
-                        divider10.visibility = View.GONE
-                        recyclerViewOptionDetail.visibility = View.GONE
+            CoroutineScope(Dispatchers.Main).launch {
+                var productModel = CropDao.selectCropData(orderList!![position].order_product_idx)
+
+                holder.rowOrderHistoryOrderDetailBinding.apply {
+                    rowOrderHistoryOrderDetailViewModel!!.apply {
+                        textviewOrderHistoryOrderDetail_productName.value = productModel!!.crop_title
+                        textviewOrderHistoryOrderDetail_option.value = "${orderList!![position].order_option_detail[0]["option_name"]}...외 ${orderList!![position].order_option_detail.size-1}개"
+                        textviewOrderHistoryOrderDetail_price.value = orderList!![position].order_total_price
+                    }
+                    recyclerViewOptionDetail.apply {
+                        this.adapter = OrderDetailOptionRecyclerViewAdapter(orderList!![position].order_option_detail)
+                        this.layoutManager = LinearLayoutManager(orderHistoryActivity)
+                    }
+                    imageButton2.setOnClickListener {
+                        if(divider10.visibility != View.VISIBLE){
+                            imageButton2.setImageResource(R.drawable.up)
+                            divider10.visibility = View.VISIBLE
+                            recyclerViewOptionDetail.visibility = View.VISIBLE
+                        }else{
+                            imageButton2.setImageResource(R.drawable.down)
+                            divider10.visibility = View.GONE
+                            recyclerViewOptionDetail.visibility = View.GONE
+
+                        }
 
                     }
-
                 }
+                CropDao.gettingCropImage(requireContext(), productModel!!.crop_images[0], holder.rowOrderHistoryOrderDetailBinding.imageViewOrderHistoryOrderDetailProductImage)
             }
         }
     }

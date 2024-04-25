@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.fragment.orderHistory
 
+import android.content.Context
 import android.os.Build
 import android.os.Build.VERSION_CODES.M
 import android.os.Bundle
@@ -23,10 +24,13 @@ import kr.co.lion.farming_customer.OrderHistoryFragmentName
 import kr.co.lion.farming_customer.OrderLabelType
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
+import kr.co.lion.farming_customer.dao.crop.CropDao
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentTapPaymentDoneBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryCropBinding
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryCropViewModel
 
 class TapPaymentDoneFragment : Fragment(), DialogYesNoInterface {
@@ -36,20 +40,31 @@ class TapPaymentDoneFragment : Fragment(), DialogYesNoInterface {
     var orderList : MutableList<OrderModel>? = null
 
     var orderCancle_pos : Int = -1
+    var userModel : UserModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentTapPaymentDoneBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_tap_payment_done, container, false)
         orderHistoryActivity = activity as OrderHistoryActivity
 
-        settingInitData()
-
+        settingUserData()
 
         return fragmentTapPaymentDoneBinding.root
     }
 
+    private fun settingUserData() {
+        val sharedPreferences = orderHistoryActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingInitData()
+        }
+    }
+
     private fun settingInitData() {
         CoroutineScope(Dispatchers.Main).launch {
-            orderList = OrderDao.gettingOrderListCrop(OrderLabelType.ORDER_LABEL_TYPE_PAY_DONE)
+            orderList = OrderDao.gettingOrderListCrop(OrderLabelType.ORDER_LABEL_TYPE_PAY_DONE, userModel!!.user_idx)
             settingRecyclerView()
         }
 
@@ -119,6 +134,10 @@ class TapPaymentDoneFragment : Fragment(), DialogYesNoInterface {
                     yes_text = "신청"
                 )
                 dialog.show(orderHistoryActivity.supportFragmentManager, "DialogYesNo")
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                val cropData = CropDao.selectCropData(orderList!![position].order_product_idx)
+                CropDao.gettingCropImage(requireContext(), cropData!!.crop_images[0], holder.rowOrderHistoryCropBinding.imageViewOrderHistoryCropProductImage)
             }
         }
     }

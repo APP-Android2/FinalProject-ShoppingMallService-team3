@@ -11,19 +11,29 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.DialogYesNo
 import kr.co.lion.farming_customer.DialogYesNoInterface
+import kr.co.lion.farming_customer.OrderProductType
+import kr.co.lion.farming_customer.PaymentFragmentName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
+import kr.co.lion.farming_customer.activity.payment.PaymentActivity
+import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
 import kr.co.lion.farming_customer.databinding.FragmentBottomSheetFarmReservBinding
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.BottomSheetFarmReservViewModel
 
-class BottomSheetFarmReservFragment : BottomSheetDialogFragment(), DialogYesNoInterface {
+class BottomSheetFarmReservFragment(idx: Int) : BottomSheetDialogFragment(), DialogYesNoInterface {
     lateinit var fragmentBottomSheetDialogFragment: FragmentBottomSheetFarmReservBinding
     lateinit var farmingLifeActivity : FarmingLifeActivity
     lateinit var bottomSheetFarmReservViewModel: BottomSheetFarmReservViewModel
 
+    val farmIdx = idx
+    var farmModel : FarmModel? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -34,10 +44,17 @@ class BottomSheetFarmReservFragment : BottomSheetDialogFragment(), DialogYesNoIn
         fragmentBottomSheetDialogFragment.lifecycleOwner = this
         farmingLifeActivity = activity as FarmingLifeActivity
 
-        settingData()
+        settingInitData()
         settingEvent()
 
         return fragmentBottomSheetDialogFragment.root
+    }
+
+    private fun settingInitData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            farmModel = FarmDao.selectFarmData(farmIdx)
+            settingData()
+        }
     }
 
     private fun settingEvent() {
@@ -54,6 +71,26 @@ class BottomSheetFarmReservFragment : BottomSheetDialogFragment(), DialogYesNoIn
             }
             // 예약하기 버튼
             buttonReservReserv.setOnClickListener {
+                val intent = Intent(requireContext(), PaymentActivity::class.java)
+                intent.putExtra("PaymentFragmentName", PaymentFragmentName.PAYMENT_FARM_ACTIVITY_FRAGMENT)
+
+                val mapList = ArrayList<HashMap<String, Any>>()
+                var map1 = HashMap<String, Any>()
+                map1["productType"] = OrderProductType.ORDER_PRODUCT_TYPE_FARM.number
+                map1["product_idx"] = farmIdx
+                map1["totalPrice"] = farmModel!!.farm_option_detail["price_area"] as String
+                map1["option"] = mutableMapOf<String, Any>(
+                    "optionName" to "이용기간\n${farmModel!!.farm_use_date_start}~${farmModel!!.farm_use_date_end}",
+                    "optionCnt" to 1,
+                    "optionPrice" to farmModel!!.farm_option_detail["price_area"] as String
+                )
+                mapList.add(map1)
+                val bundle = Bundle()
+                bundle.putSerializable("mapList", mapList)
+                intent.putExtra("paymentData", bundle)
+                startActivity(intent)
+
+
                 dismiss()
             }
         }
@@ -61,9 +98,9 @@ class BottomSheetFarmReservFragment : BottomSheetDialogFragment(), DialogYesNoIn
 
     private fun settingData() {
         bottomSheetFarmReservViewModel!!.apply {
-            textViewReserv_farmName.value = "파밍이네 주말농장"
-            textViewReserv_remainArea.value = "10구획"
-            textViewReserv_price.value = "10,000원"
+            textViewReserv_farmName.value = farmModel!!.farm_title
+            textViewReserv_remainArea.value = farmModel!!.farm_option_detail["remain_area"]
+            textViewReserv_price.value = farmModel!!.farm_option_detail["price_area"]
         }
     }
 
