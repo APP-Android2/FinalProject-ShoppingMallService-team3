@@ -3,6 +3,7 @@ package kr.co.lion.farming_customer.activity.payment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
@@ -30,16 +31,20 @@ class PaymentActivity : AppCompatActivity() {
     var newFragment: Fragment? = null
     var oldFragment: Fragment? = null
 
+    // 농산품 번호, 옵션명, 옵션개수를 담을 MapList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         activityPaymentBinding = ActivityPaymentBinding.inflate(layoutInflater)
 
         val fragmentName = intent.getSerializableExtra("PaymentFragmentName")
-        val bundle = Bundle()
-        val crop_idx = intent.getIntExtra("crop_idx",0)
-        bundle.putInt("crop_idx",crop_idx)
-        replaceFragment(fragmentName as PaymentFragmentName,false,false,bundle)
+
+        val bundle = intent.getBundleExtra("paymentData")
+        var mapList = bundle?.getSerializable("mapList") as? ArrayList<HashMap<String,Any>>
+
+        val bundle2 = Bundle()
+        bundle2.putSerializable("mapList",mapList)
+        replaceFragment(fragmentName as PaymentFragmentName,false,false, bundle2)
 
         setContentView(activityPaymentBinding.root)
     }
