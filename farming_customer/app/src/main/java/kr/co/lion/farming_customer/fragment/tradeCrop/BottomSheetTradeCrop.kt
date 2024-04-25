@@ -22,6 +22,7 @@ import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.OrderProductType
 import kr.co.lion.farming_customer.PaymentFragmentName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.Tools
 import kr.co.lion.farming_customer.activity.cart.CartActivity
 import kr.co.lion.farming_customer.activity.payment.PaymentActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeDetailActivity
@@ -51,8 +52,12 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
     // 농산품 번호를 담을 프로퍼티
     var crop_idx = 0
 
+    // 결제화면에 필요한 기본 가격 데이터로 인해 기본 가격 데이터만 담을 프로퍼티를 선언해준다.
+    var optionPrice = ""
+
     // 농산품 가격
     var realOriginalPrice = ""
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -93,6 +98,8 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                 textViewBottomTradeOptionName.setOnItemClickListener { parent, view, position, id ->
                     // 기본가격
                     selectedCropPrice.value = dropDownPriceList[position]
+                    optionPrice = dropDownPriceList[position]
+
                     // 총 가격
                     // 총 가격은 기본가격 + 배송비이기 때문에 두개의 가격을 toInt로 변경하여 계산해야한다.
                     // 배송비에 ,와 원 을 지워준다.
@@ -257,6 +264,33 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                         "PaymentFragmentName",
                         PaymentFragmentName.PAYMENT_CROP_FRAGMENT
                     )
+
+                    // 현재 옵션 개수
+                    var currentCnt = bottomSheetTradeCropViewModel?.optionCounts?.value!!
+                    // 맵 생성
+                    var mapList = ArrayList<HashMap<String,Any>>()
+                    var map1 = HashMap<String,Any>()
+                    // 농산품 번호
+                    map1["product_idx"] = crop_idx
+                    // 옵션
+                    map1["option"] = mutableMapOf(
+                        // 옵션명
+                        "optionName" to binding.textViewBottomTradeOptionName.text.toString(),
+                        // 현재 옵션 개수
+                        "optionCnt" to currentCnt,
+                        // 옵션 기본 가격
+                        "optionPrice" to optionPrice
+                    )
+                    // 상품 타입
+                    map1["productType"] = OrderProductType.ORDER_PRODUCT_TYPE_CROP.number
+                    // 총 금액
+                    map1["totalPrice"] = binding.bottomSheetTradeCropViewModel?.totalPrice?.value.toString()
+                    mapList.add(map1)
+                    val bundle = Bundle()
+                    bundle.putSerializable("mapList",mapList)
+
+                    intent.putExtra("paymentData",bundle)
+
                     startActivity(intent)
                 }
             }

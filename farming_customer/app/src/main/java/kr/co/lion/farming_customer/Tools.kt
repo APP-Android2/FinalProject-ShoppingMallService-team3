@@ -446,3 +446,16 @@ enum class PointType(var str : String, var number : Int){
     POINT_TYPE_USE("사용", 2),
     POINT_TYPE_EXTINCTION("소멸", 3)
 }
+
+// 결제 상태
+enum class PaymentStatus(var str:String, var num:Int){
+    PAYMENT_STATUS_NORMAL("정상",1),
+}
+
+// 결제 타입
+enum class PaymentType(var str:String, var num:Int){
+    PAYMENT_TYPE_CREDIT_OR_CHECKCARD("신용/체크카드",1),
+    PAYMENT_TYPE_KAKAO_PAY("카카오페이",2),
+    PAYMENT_TYPE_NAVER_PAY("네이버페이",3),
+    PAYMENT_TYPE_TOSS_PAY("토스페이",4)
+}
