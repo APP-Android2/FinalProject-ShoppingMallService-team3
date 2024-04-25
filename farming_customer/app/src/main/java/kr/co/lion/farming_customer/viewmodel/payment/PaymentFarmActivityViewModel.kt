@@ -17,6 +17,29 @@ class PaymentFarmActivityViewModel: ViewModel() {
     // 결제버튼
     val buttonPaymentFarmActivityPayDone = MutableLiveData<Boolean>()
 
+    // 모든 상품의 총 가격을 더한 가격
+    val textViewPaymentFarmActivityProductPrice2 = MutableLiveData<String>()
+
+    // 사용 가능한 포인트
+    val textViewPaymentFarmActivityAvailablePoint = MutableLiveData<String>()
+
+    // 사용할 포인트
+    val textFieldPaymentFarmActivityUsePoint = MutableLiveData<String>()
+
+    // 총 할인 받은 포인트
+    val textViewPaymentFarmActivityUsePoint2 = MutableLiveData<String>()
+
+    // 총 결제 금액
+    val textViewPaymentFarmActivityTotalPayPrice2 = MutableLiveData<String>()
+
+    // 예약인
+    val textFieldReservationName = MutableLiveData<String>()
+
+    // 수령인 연락처
+    val textFieldReservationPhoneNumber = MutableLiveData<String>()
+
+
+
     fun setCheckAll(checked:Boolean){
         checkBoxPaymentFarmActivityPrivacy1.value = checked
         checkBoxPaymentFarmActivityPrivacy2.value = checked

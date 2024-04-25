@@ -137,7 +137,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="TextView"
+                        android:text="@={paymentCropViewModel.textViewPaymentReceiver2}"
                         android:textColor="@color/brown_01"
                         android:textSize="14sp"
                         app:layout_constraintStart_toEndOf="@id/textViewPaymentRequest"
@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="TextView"
+                        android:text="@={paymentCropViewModel.textViewPaymentReceiverAddress}"
                         android:textColor="@color/brown_01"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/textViewPaymentReceiver2"
@@ -161,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="TextView"
+                        android:text="@={paymentCropViewModel.textViewPaymentReceiverPhoneNumber}"
                         android:textColor="@color/brown_01"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/textViewPaymentReceiverAddress"
@@ -173,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="TextView"
+                        android:text="@={paymentCropViewModel.textViewPaymentReceiverRequest}"
                         android:textColor="@color/brown_01"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/textViewPaymentReceiverPhoneNumber"
@@ -212,7 +212,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
                         android:fontFamily="@font/pretendard_regular"
-                        android:text="사용가능 : 0P"
+                        android:text="@={paymentCropViewModel.textViewPaymentCropAvailablePoint}"
                         android:textColor="@color/brown_01"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCropPoint"
@@ -238,6 +238,7 @@
                             android:orientation="horizontal">
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutPaymentCropUsePoint"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
@@ -248,8 +249,12 @@
                                 app:boxCornerRadiusTopEnd="10dp"
                                 app:boxCornerRadiusTopStart="10dp"
                                 app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                                app:boxStrokeErrorColor="@color/orange_01"
+                                app:cursorErrorColor="@color/orange_01"
                                 app:endIconMode="clear_text"
                                 app:endIconTint="@color/brown_01"
+                                app:errorIconTint="@color/orange_01"
+                                app:errorTextColor="@color/orange_01"
                                 app:expandedHintEnabled="false">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -260,7 +265,7 @@
                                     android:inputType="number"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
-                                    android:text="10,000"
+                                    android:text="@={paymentCropViewModel.textFieldPaymentCropUsePoint}"
                                     android:textColor="@color/brown_01"
                                     android:textSize="12sp" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -276,7 +281,7 @@
                             <Button
                                 android:id="@+id/buttonPaymentCropUseAllPoint"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:fontFamily="@font/pretendard_bold"
                                 android:insetBottom="0dp"
                                 android:text="전체 사용"
@@ -322,16 +327,18 @@
                         app:layout_constraintTop_toBottomOf="@id/textViewPaymentCropPayMethod">
 
                         <RadioGroup
-                            android:id="@+id/radioGroup"
+                            android:id="@+id/radioGroupPaymentType"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            >
 
                             <RadioButton
                                 android:id="@+id/radioButtonPaymentCropCreditOrCheckCard"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:background="@drawable/checkbox_selector"
-                                android:button="@android:color/transparent" />
+                                android:button="@android:color/transparent"
+                                />
 
                             <RadioButton
                                 android:id="@+id/radioButtonPaymentCropKakaoPay"
@@ -448,7 +455,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
-                        android:text="100,000원"
+                        android:text="@={paymentCropViewModel.textViewPaymentCropProductPrice2}"
+                        android:textColor="@color/brown_01"
                         app:layout_constraintBottom_toBottomOf="@id/textViewPaymentCropProductPrice"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/textViewPaymentCropProductPrice" />
@@ -468,7 +476,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
-                        android:text="-10,000P"
+                        android:text="@={paymentCropViewModel.textViewPaymentCropUsePoint2}"
+                        android:textColor="@color/brown_01"
                         app:layout_constraintBottom_toBottomOf="@id/textViewPaymentCropUsePoint"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/textViewPaymentCropUsePoint" />
@@ -500,7 +509,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
-                        android:text="90,000원"
+                        android:text="@={paymentCropViewModel.textViewPaymentCropTotalPayPrice2}"
+                        android:textColor="@color/brown_01"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@id/textViewPaymentCropTotalPayPrice"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -608,7 +618,7 @@
                         android:background="@drawable/back_round"
                         android:fontFamily="@font/pretendard_regular"
                         android:padding="10dp"
-                        android:text="TextView"
+                        android:text="개인정보 수집 및 이용에 대한 내용입니다"
                         android:textColor="@color/brown_01"
                         android:textSize="12sp"
                         android:visibility="gone"
@@ -650,7 +660,7 @@
                         android:background="@drawable/back_round"
                         android:fontFamily="@font/pretendard_regular"
                         android:padding="10dp"
-                        android:text="TextView"
+                        android:text="개인정보 제 3자 제공에 대한 내용입니다"
                         android:textColor="@color/brown_01"
                         android:textSize="12sp"
                         android:visibility="gone"

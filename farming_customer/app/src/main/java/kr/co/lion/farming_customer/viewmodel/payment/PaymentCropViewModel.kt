@@ -1,8 +1,13 @@
 package kr.co.lion.farming_customer.viewmodel.payment
 
+import android.widget.RadioGroup
+import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.checkbox.MaterialCheckBox
+import kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
 
 class PaymentCropViewModel:ViewModel() {
     // 필수동의들
@@ -16,12 +21,52 @@ class PaymentCropViewModel:ViewModel() {
     // 결제버튼
     val buttonPaymentCropPayDone = MutableLiveData<Boolean>()
 
+    // 상품 이름
+    val textViewPaymentProductName = MutableLiveData<String>()
+
+    // 옵션명
+    val textViewPaymentProductOption = MutableLiveData<String>()
+
+    // 옵션 개수
+    val textViewPaymentProductCnt = MutableLiveData<String>()
+
+    // 총 가격
+    val textViewPaymentProductPrice = MutableLiveData<String>()
+
+    // 모든 상품의 총 가격을 더한 가격
+    val textViewPaymentCropProductPrice2 = MutableLiveData<String>()
+
+    // 사용 가능한 포인트
+    val textViewPaymentCropAvailablePoint = MutableLiveData<String>()
+
+    // 사용할 포인트
+    val textFieldPaymentCropUsePoint = MutableLiveData<String>()
+
+    // 총 할인 받은 포인트
+    val textViewPaymentCropUsePoint2 = MutableLiveData<String>()
+
+    // 총 결제 금액
+    val textViewPaymentCropTotalPayPrice2 = MutableLiveData<String>()
+
+    // 수령인
+    val textViewPaymentReceiver2 = MutableLiveData<String>()
+
+    // 수령 주소
+    val textViewPaymentReceiverAddress = MutableLiveData<String>()
+
+    // 수령인 연락처
+    val textViewPaymentReceiverPhoneNumber = MutableLiveData<String>()
+
+    // 배달 요청사항
+    val textViewPaymentReceiverRequest = MutableLiveData<String>()
+    // 결제 수단
+    val radioGroupPaymentType = MutableLiveData<Int>()
+
     fun setCheckAll(checked:Boolean){
         checkBoxPaymentCropPrivacy1.value = checked
         checkBoxPaymentCropPrivacy2.value = checked
         buttonPaymentCropPayDone.value = checked
     }
-
 
     fun onCheckBoxAllChanged(){
         setCheckAll(checkBoxPaymentCropAllAgree.value!!)
@@ -51,6 +96,7 @@ class PaymentCropViewModel:ViewModel() {
             checkBoxPaymentCropAllAgree.value = true
             checkBoxPaymentCropAllAgreeState.value = MaterialCheckBox.STATE_CHECKED
             buttonPaymentCropPayDone.value = true
+
         }
         // 일부만 체크되어 있다면..
         else{

@@ -34,8 +34,6 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
     lateinit var myPageReviewViewModel: MyPageReviewViewModel
 
     var cropReviewList = mutableListOf<ReviewModel>()
-    private var reviewIdx = 0
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -111,8 +109,6 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
         override fun onBindViewHolder(holder: ReviewTabCropViewHolder, position: Int) {
             val cropImageList = cropReviewList[position].review_images
 
-            reviewIdx = cropReviewList[position].review_idx
-
             holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropDate?.value = cropReviewList[position].review_reg_dt
             holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropName?.value = cropReviewList[position].review_title
             holder.rowReviewHistoryCropBinding.myPageReviewViewModel?.textViewRowReviewTabCropText?.value = cropReviewList[position].review_content
@@ -171,15 +167,13 @@ class ReviewTabCropFragment : Fragment(), DialogYesNoInterface {
                 }
             }
         }
-
     }
 
     override fun onYesButtonClick(id: Int) {
-        fragmentReviewTabCropBinding.recyclerViewReviewTabCrop.adapter!!.notifyItemRemoved(id)
-
         CoroutineScope(Dispatchers.Main).launch {
             // 글 상태를 삭제 상태로 변경한다.
-            MyPageReviewDao.updateReviewState(reviewIdx, ReviewState.REVIEW_STATE_REMOVE)
+            MyPageReviewDao.updateReviewState(cropReviewList[id].review_idx, ReviewState.REVIEW_STATE_REMOVE)
+            gettingCropReviewData()
         }
     }
 
