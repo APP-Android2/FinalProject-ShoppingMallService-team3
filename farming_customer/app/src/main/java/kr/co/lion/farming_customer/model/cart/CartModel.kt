@@ -14,7 +14,9 @@ data class CartModel (
     // 개수
     var cart_count: Int,
     // 장바구니 상태
-    var cart_status: Int
+    var cart_status: Int,
+    // 이미지 파일 명
+    var cart_image_file_name: String
 ) {
-    constructor(): this(0, "", 0, "", "", 0, 0)
+    constructor(): this(0, "", 0, "", "", 0, 0, "")
 }

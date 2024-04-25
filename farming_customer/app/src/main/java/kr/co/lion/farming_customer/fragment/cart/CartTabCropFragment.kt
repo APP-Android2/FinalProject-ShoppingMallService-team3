@@ -114,6 +114,10 @@ class CartTabCropFragment : Fragment(), DialogYesNoInterface {
             holder.rowCartCropBinding.myPageCartViewModel?.textViewRowCartTabCropOption?.value = items[position].cart_crop_option
             holder.rowCartCropBinding.myPageCartViewModel?.textViewRowCartTabCropPrice?.value = items[position].cart_price
             holder.rowCartCropBinding.myPageCartViewModel?.checkBoxRowCartTabCrop?.value = checkBoxList[position]
+            CoroutineScope(Dispatchers.Main).launch {
+                CartDao.gettingContentImage(cartActivity, items[position].cart_image_file_name,
+                    holder.rowCartCropBinding.imageViewRowCartTabCrop)
+            }
 
             holder.rowCartCropBinding.checkBoxRowCartTabCrop.setOnCheckedChangeListener { buttonView, isChecked ->
                 checkBoxList[position] = isChecked

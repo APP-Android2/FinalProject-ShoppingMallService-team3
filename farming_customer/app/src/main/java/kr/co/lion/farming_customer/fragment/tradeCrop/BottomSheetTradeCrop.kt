@@ -4,6 +4,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -301,8 +302,10 @@ class BottomSheetTradeCrop : BottomSheetDialogFragment(), DialogYesNoInterface {
                 cart_crop_option = binding.textViewBottomTradeOptionName.text.toString(),
                 cart_price = realOriginalPrice,
                 cart_status = OrderProductType.ORDER_PRODUCT_TYPE_CROP.number,
-                cart_user_idx = savedIndex
+                cart_user_idx = savedIndex,
+                cart_image_file_name = cropData!!.crop_images[0]
             )
+            Log.d("test1234", "cart_image_file_name: ${cartModel.cart_image_file_name}")
             CartDao.insertCartCropData(cartModel)
             startActivity(intent)
         }

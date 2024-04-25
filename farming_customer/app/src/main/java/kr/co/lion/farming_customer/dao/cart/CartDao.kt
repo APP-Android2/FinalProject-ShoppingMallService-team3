@@ -1,7 +1,12 @@
 package kr.co.lion.farming_customer.dao.cart
 
+import android.content.Context
+import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -103,5 +108,29 @@ class CartDao {
             }
             job1.join()
         }
+
+        // 이미지 데이터를 받아오는 메서드
+        suspend fun gettingContentImage(context: Context, imageFileName:String, imageView: ImageView){
+            val job1 = CoroutineScope(Dispatchers.IO).launch {
+                // 이미지에 접근할 수 있는 객체를 가져온다.
+                val storageRef = Firebase.storage.reference.child(imageFileName)
+                // 이미지의 주소를 가지고 있는 Uri 객체를 받아온다.
+                val imageUri = storageRef.downloadUrl.await()
+                // 이미지 데이터를 받아와 이미지 뷰에 보여준다.
+                val job2 = CoroutineScope(Dispatchers.Main).launch {
+                    Glide.with(context).load(imageUri).into(imageView)
+                    // 이미지 뷰가 나타나게 한다.
+                    imageView.visibility = View.VISIBLE
+                }
+                job2.join()
+            }
+            job1.join()
+
+            // 이미지는 용량이 매우 클 수 있다. 즉 이미지 데이터를 내려받는데 시간이 오래걸릴 수도 있다.
+            // 이에, 이미지 데이터를 받아와 보여주는 코루틴을 작업이 끝날 때 까지 대기 하지 않는다.
+            // 그 이유는 데이터를 받아오는데 걸리는 오랜 시간 동안 화면에 아무것도 나타나지 않을 수 있기 때문이다.
+            // 따라서 이 메서드는 제일 마지막에 호출해야 한다.(다른 것들을 모두 보여준 후에...)
+        }
+
     }
 }
