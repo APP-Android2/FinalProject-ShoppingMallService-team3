@@ -1,5 +1,6 @@
 package kr.co.lion.farming_customer.viewmodel
 
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -11,7 +12,7 @@ import kr.co.lion.farming_customer.LikeType
 import kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.dao.like.LikeDao
-import kr.co.lion.farming_customer.model.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.FarmModel
 import kr.co.lion.farming_customer.model.LikeModel
@@ -19,6 +20,12 @@ import kr.co.lion.farming_customer.model.CommunityPostModel
 import kr.co.lion.farming_customer.model.RentalModel
 
 class LikeViewModel() :ViewModel(){
+    val textViewLikePostLabel = MutableLiveData<String>()
+    val textViewLikePostTitle = MutableLiveData<String>()
+    val textViewLikePostContent = MutableLiveData<String>()
+    val textViewLikePostViewCnt = MutableLiveData<String>()
+    val textViewLikePostCommentCnt = MutableLiveData<String>()
+    val textViewLikePostDate = MutableLiveData<String>()
     data class LikeData(
         val LikeList: List<LikeModel>?,
         val cropList: List<CropModel>?,
@@ -29,7 +36,7 @@ class LikeViewModel() :ViewModel(){
     )
 
     // 농산물 좋아요 리스트
-    suspend fun getLikeListAndLikeTypeList(userIdx: String, type: String): LikeData = withContext(Dispatchers.IO) {
+    suspend fun getLikeListAndLikeTypeList(userIdx: String): LikeData = withContext(Dispatchers.IO) {
         var LikeList = mutableListOf<LikeModel>()
         var cropList = mutableListOf<CropModel>()
         var postList = mutableListOf<CommunityPostModel>()
@@ -37,60 +44,36 @@ class LikeViewModel() :ViewModel(){
         var activityList = mutableListOf<ActivityModel>()
         var rentalList = mutableListOf<RentalModel>()
 
+        LikeList = LikeDao.getLikeList(userIdx.toInt()).toMutableList()
+        for( i in LikeList ){
 
-        when (type) {
-            "CROP" -> {
-                LikeList = LikeDao.getCropLikeList(userIdx.toInt()).toMutableList()
-                val likeTypeIndices = LikeList.map { it.like_type_idx }
-
-                for (likeTypeIdx in likeTypeIndices) {
-                    val crop = LikeDao.getCropList(likeTypeIdx)
+            when(i.like_type.toString()){
+                "1" ->{
+                    val crop = LikeDao.getCropList(i.like_type_idx)
                     cropList.addAll(crop)
+
                 }
-            }
-
-            "POST" -> {
-                LikeList = LikeDao.getPostLikeList(userIdx.toInt()).toMutableList()
-                val likeTypeIndices = LikeList.map { it.like_type_idx }
-
-                for (likeTypeIdx in likeTypeIndices) {
-                    val post = LikeDao.getPostList(likeTypeIdx)
+                "2" ->{
+                    val post = LikeDao.getPostList(i.like_type_idx)
                     postList.addAll(post)
                 }
-            }
-
-            "FARM" -> {
-                LikeList = LikeDao.getFarmLikeList(userIdx.toInt()).toMutableList()
-                val likeTypeIndices = LikeList.map { it.like_type_idx }
-
-                for (likeTypeIdx in likeTypeIndices) {
-                    val farm = LikeDao.getFarmList(likeTypeIdx)
+                "3" ->{
+                    val farm = LikeDao.getFarmList(i.like_type_idx)
                     farmList.addAll(farm)
                 }
-            }
-
-            "ACTIVITY" -> {
-                LikeList = LikeDao.getActivityLikeList(userIdx.toInt()).toMutableList()
-                val likeTypeIndices = LikeList.map { it.like_type_idx }
-
-                for (likeTypeIdx in likeTypeIndices) {
-                    val activity = LikeDao.getActivityList(likeTypeIdx)
+                "4" ->{
+                    val activity = LikeDao.getActivityList(i.like_type_idx)
                     activityList.addAll(activity)
+                    Log.d("test112", activity.toString())
                 }
-            }
-
-            "RENTAL" -> {
-                LikeList = LikeDao.getRentalLikeList(userIdx.toInt()).toMutableList()
-                val likeTypeIndices = LikeList.map { it.like_type_idx }
-
-                for (likeTypeIdx in likeTypeIndices) {
-                    val rental = LikeDao.getRentalList(likeTypeIdx)
+                "5" ->{
+                    val rental = LikeDao.getRentalList(i.like_type_idx)
                     rentalList.addAll(rental)
                 }
+
             }
         }
-
-
+//        Log.d("test1123", farmList.toList().toString())
         LikeData(LikeList, cropList, postList, farmList, activityList, rentalList)
     }
 

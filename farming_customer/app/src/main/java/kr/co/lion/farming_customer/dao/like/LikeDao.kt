@@ -7,13 +7,14 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import kr.co.lion.farming_customer.model.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.FarmModel
 import kr.co.lion.farming_customer.model.LikeModel
@@ -25,12 +26,11 @@ class LikeDao {
     companion object {
 
         //      농산품 좋아요 리스트
-        suspend fun getCropLikeList(userIdx:Int): List<LikeModel>{
+        suspend fun getLikeList(userIdx:Int): List<LikeModel>{
             return withContext(Dispatchers.IO) {
                 val likeListRef = Firebase.firestore.collection("LikeData")
                 val query = likeListRef.whereEqualTo("like_status", 1)
                     .whereEqualTo("like_user_idx", userIdx)
-                    .whereEqualTo("like_type", 1)
                     .orderBy("like_idx", Query.Direction.ASCENDING)
                 val querySnapshot = query.get().await()
                 querySnapshot.map { it.toObject(LikeModel::class.java) }
@@ -49,18 +49,17 @@ class LikeDao {
 
 
 
-        //      게시판 좋아요 리스트
-        suspend fun getPostLikeList(userIdx:Int): List<LikeModel>{
-            return withContext(Dispatchers.IO) {
-                val likeListRef = Firebase.firestore.collection("LikeData")
-                val query = likeListRef.whereEqualTo("like_status", 1)
-                    .whereEqualTo("like_user_idx", userIdx)
-                    .whereEqualTo("like_type", 2)
-                    .orderBy("like_idx", Query.Direction.ASCENDING)
-                val querySnapshot = query.get().await()
-                querySnapshot.map { it.toObject(LikeModel::class.java) }
-            }
-        }
+//        //      게시판 좋아요 리스트
+//        suspend fun getLikeList(userIdx:Int): List<LikeModel>{
+//            return withContext(Dispatchers.IO) {
+//                val likeListRef = Firebase.firestore.collection("LikeData")
+//                val query = likeListRef.whereEqualTo("like_status", 1)
+//                    .whereEqualTo("like_user_idx", userIdx)
+//                    .orderBy("like_idx", Query.Direction.ASCENDING)
+//                val querySnapshot = query.get().await()
+//                querySnapshot.map { it.toObject(LikeModel::class.java) }
+//            }
+//        }
 
         //      좋아요 클릭한 게시판 데이터 가져오기
         suspend fun getPostList(like_type_idx:Int): List<CommunityPostModel>{
@@ -73,18 +72,18 @@ class LikeDao {
             }
         }
 
-        //      주말농장 좋아요 리스트
-        suspend fun getFarmLikeList(userIdx:Int): List<LikeModel>{
-            return withContext(Dispatchers.IO) {
-                val likeListRef = Firebase.firestore.collection("LikeData")
-                val query = likeListRef.whereEqualTo("like_status", 1)
-                    .whereEqualTo("like_user_idx", userIdx)
-                    .whereEqualTo("like_type", 3)
-                    .orderBy("like_idx", Query.Direction.ASCENDING)
-                val querySnapshot = query.get().await()
-                querySnapshot.map { it.toObject(LikeModel::class.java) }
-            }
-        }
+//        //      주말농장 좋아요 리스트
+//        suspend fun getFarmLikeList(userIdx:Int): List<LikeModel>{
+//            return withContext(Dispatchers.IO) {
+//                val likeListRef = Firebase.firestore.collection("LikeData")
+//                val query = likeListRef.whereEqualTo("like_status", 1)
+//                    .whereEqualTo("like_user_idx", userIdx)
+//                    .whereEqualTo("like_type", 3)
+//                    .orderBy("like_idx", Query.Direction.ASCENDING)
+//                val querySnapshot = query.get().await()
+//                querySnapshot.map { it.toObject(LikeModel::class.java) }
+//            }
+//        }
 
         //      좋아요 클릭한 주말농장 데이터 가져오기
         suspend fun getFarmList(like_type_idx:Int): List<FarmModel> {
@@ -96,18 +95,18 @@ class LikeDao {
             }
         }
 
-        //      체험활동 좋아요 리스트
-        suspend fun getActivityLikeList(userIdx:Int): List<LikeModel>{
-            return withContext(Dispatchers.IO) {
-                val likeListRef = Firebase.firestore.collection("LikeData")
-                val query = likeListRef.whereEqualTo("like_status", 1)
-                    .whereEqualTo("like_user_idx", userIdx)
-                    .whereEqualTo("like_type", 4)
-                    .orderBy("like_idx", Query.Direction.ASCENDING)
-                val querySnapshot = query.get().await()
-                querySnapshot.map { it.toObject(LikeModel::class.java) }
-            }
-        }
+//        //      체험활동 좋아요 리스트
+//        suspend fun getActivityLikeList(userIdx:Int): List<LikeModel>{
+//            return withContext(Dispatchers.IO) {
+//                val likeListRef = Firebase.firestore.collection("LikeData")
+//                val query = likeListRef.whereEqualTo("like_status", 1)
+//                    .whereEqualTo("like_user_idx", userIdx)
+//                    .whereEqualTo("like_type", 4)
+//                    .orderBy("like_idx", Query.Direction.ASCENDING)
+//                val querySnapshot = query.get().await()
+//                querySnapshot.map { it.toObject(LikeModel::class.java) }
+//            }
+//        }
 
         //      좋아요 클릭한 체험활동 데이터 가져오기
         suspend fun getActivityList(like_type_idx:Int): List<ActivityModel> {
@@ -119,18 +118,18 @@ class LikeDao {
             }
         }
 
-        //      농기구 좋아요 리스트
-        suspend fun getRentalLikeList(userIdx:Int): List<LikeModel>{
-            return withContext(Dispatchers.IO) {
-                val likeListRef = Firebase.firestore.collection("LikeData")
-                val query = likeListRef.whereEqualTo("like_status", 1)
-                    .whereEqualTo("like_user_idx", userIdx)
-                    .whereEqualTo("like_type", 5)
-                    .orderBy("like_idx", Query.Direction.ASCENDING)
-                val querySnapshot = query.get().await()
-                querySnapshot.map { it.toObject(LikeModel::class.java) }
-            }
-        }
+//        //      농기구 좋아요 리스트
+//        suspend fun getRentalLikeList(userIdx:Int): List<LikeModel>{
+//            return withContext(Dispatchers.IO) {
+//                val likeListRef = Firebase.firestore.collection("LikeData")
+//                val query = likeListRef.whereEqualTo("like_status", 1)
+//                    .whereEqualTo("like_user_idx", userIdx)
+//                    .whereEqualTo("like_type", 5)
+//                    .orderBy("like_idx", Query.Direction.ASCENDING)
+//                val querySnapshot = query.get().await()
+//                querySnapshot.map { it.toObject(LikeModel::class.java) }
+//            }
+//        }
 
         //      좋아요 클릭한 체험활동 데이터 가져오기
         suspend fun getRentalList(like_type_idx:Int): List<RentalModel> {
@@ -143,10 +142,17 @@ class LikeDao {
         }
 
         // 이미지 데이터를 받아오는 메서드
-        suspend fun gettingCommunityPostImage(context: Context, imageFileName:String, imageView: ImageView){
+        suspend fun gettingImage(context: Context, imageFileName:String, imageView: ImageView, type: String){
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 이미지에 접근할 수 있는 객체를 가져온다.
-                val storageRef = Firebase.storage.reference.child("image/community/$imageFileName")
+                var storageRef : StorageReference
+
+                if( type == "POST"){
+                    storageRef = Firebase.storage.reference.child("image/community/$imageFileName")
+                } else {
+                    storageRef = Firebase.storage.reference.child(imageFileName)
+                }
+
                 // 이미지의 주소를 가지고 있는 Uri 객체를 받아온다.
                 val imageUri = storageRef.downloadUrl.await()
                 // 이미지 데이터를 받아와 이미지 뷰에 보여준다.

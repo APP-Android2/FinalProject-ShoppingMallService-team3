@@ -33,7 +33,7 @@ import kr.co.lion.farming_customer.databinding.RowLikeCropBinding
 import kr.co.lion.farming_customer.databinding.RowLikeFarmActivityBinding
 import kr.co.lion.farming_customer.databinding.RowLikePostBinding
 import kr.co.lion.farming_customer.databinding.RowLikeRentalBinding
-import kr.co.lion.farming_customer.model.ActivityModel
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.FarmModel
 import kr.co.lion.farming_customer.model.LikeModel
@@ -78,7 +78,7 @@ class LikeFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         lifecycleScope.launch {
-            val data = likeViewModel.getLikeListAndLikeTypeList("1", "CROP")
+            val data = likeViewModel.getLikeListAndLikeTypeList("1")
             selectedType = "CROP"
             LikeList = data.LikeList!!
             cropList = data.cropList!!
@@ -86,17 +86,18 @@ class LikeFragment : Fragment() {
             farmList = data.farmList!!
             activityList = data.activityList!!
             rentalList = data.rentalList!!
-
-
-//            val Data = likeViewModel.getLikeListAndLikeTypeList(userIdx.toString(), 1)
-//            cropLikeList = Data.LikeList!!
-//            cropList = Data.cropList!!
-            // 여기서 likeList와 cropList를 사용할 수 있습니다.
+            Log.d("test1124", "전체데이터아다아아아아아------" + data.toString())
+            Log.d("test1124", "농산품이다아ㅏㅇ" + cropList.toString())
+            Log.d("test1124", "주말농장이가아아" + farmList.toString())
+            Log.d("test1124", "체험활동이가아아" + activityList.toString())
 
             settingUI()
-            settingToggleButton()
-        }
 
+            settingToggleButton()
+
+
+
+        }
         deco = MaterialDividerItemDecoration(mainActivity, MaterialDividerItemDecoration.VERTICAL)
         deco2 = GridSpaceItemDecoration(2, 40, -10, -10, -10)
 
@@ -119,8 +120,8 @@ class LikeFragment : Fragment() {
                             recyclerViewPost.visibility = View.GONE
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "CROP"
-                            loadLikeData(selectedType)
                             settingRecyclerViewLikeCrop()
+//                            recyclerViewLike.adapter?.notifyDataSetChanged()
                         }
 
                         R.id.buttonLikePost -> {
@@ -128,8 +129,8 @@ class LikeFragment : Fragment() {
                             recyclerViewPost.visibility = View.VISIBLE
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "POST"
-                            loadLikeData(selectedType)
                             settingRecyclerViewLikePost()
+
                         }
 
                         R.id.buttonLikeFarm -> {
@@ -137,8 +138,8 @@ class LikeFragment : Fragment() {
                             recyclerViewPost.visibility = View.GONE
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "FARM"
-                            loadLikeData(selectedType)
                             settingRecyclerViewLikeFarmAndActivity()
+//                            recyclerViewLike.adapter?.notifyDataSetChanged()
                         }
 
                         R.id.buttonLikeActivity -> {
@@ -146,8 +147,9 @@ class LikeFragment : Fragment() {
                             recyclerViewPost.visibility = View.GONE
                             recyclerViewRental.visibility = View.GONE
                             selectedType = "ACTIVITY"
-                            loadLikeData(selectedType)
                             settingRecyclerViewLikeFarmAndActivity()
+
+//                            recyclerViewLike.adapter?.notifyDataSetChanged()
                         }
 
                         R.id.buttonLikeRental -> {
@@ -155,68 +157,15 @@ class LikeFragment : Fragment() {
                             recyclerViewPost.visibility = View.GONE
                             recyclerViewRental.visibility = View.VISIBLE
                             selectedType = "RENTAL"
-                            loadLikeData(selectedType)
                             settingRecyclerViewLikeRental()
+
+//                            recyclerViewRental.adapter?.notifyDataSetChanged()
+
                         }
                     }
 
-//                    // 각 리사이클러뷰 어댑터 직접 생성 및 설정
-//                    when (selectedType) {
-//                        "CROP" -> {
-//                            val cropAdapter = LikeCropRecyclerViewAdapter() // CropListAdapter 생성
-//                            recyclerViewLike.adapter = cropAdapter // recyclerViewLike 어댑터 설정
-//                        }
-//                        "POST" -> {
-//                            val postAdapter = LikePostRecyclerViewAdapter() // PostListAdapter 생성
-//                            recyclerViewPost.adapter = postAdapter // recyclerViewPost 어댑터 설정
-//                        }
-//                        "FARM", "ACTIVITY" -> {
-//                            val farmActivityAdapter = LikeFarmAndActivityRecyclerViewAdapter() // FarmActivityListAdapter 생성
-//                            recyclerViewLike.adapter = farmActivityAdapter // recyclerViewLike 어댑터 설정
-//                        }
-//                        "RENTAL" -> {
-//                            val rentalAdapter = LikeRentalRecyclerViewAdapter() // 매개변수 없이 RentalListAdapter 생성
-//                            recyclerViewRental.adapter = rentalAdapter // recyclerViewRental 어댑터 설정
-//                        }
-//                    }
-
                 }
             }
-        }
-    }
-
-
-
-    private fun loadLikeData(selectedType: String) {
-        lifecycleScope.launch {
-            val data = likeViewModel.getLikeListAndLikeTypeList("1", selectedType)
-            LikeList = data.LikeList!!
-            when(selectedType){
-                "CROP" -> {
-                    cropList = data.cropList!!
-                    likeViewModel.settingLikeType(LikeType.CROP)
-                }
-                "POST" -> {
-                    postList = data.postList!!
-                    likeViewModel.settingLikeType(LikeType.POST)
-                }
-                "FARM" -> {
-                    farmList = data.farmList!!
-                    likeViewModel.settingLikeType(LikeType.FARM)
-                }
-                "ACTIVITY" -> {
-                    activityList = data.activityList!!
-                    likeViewModel.settingLikeType(LikeType.ACTIVITY)
-                }
-                "RENTAL" -> {
-                    rentalList = data.rentalList!!
-                    likeViewModel.settingLikeType(LikeType.RENTAL)
-                }
-
-
-            }
-//            Log.d("test11", farmList.toString())
-
         }
     }
 
@@ -231,7 +180,6 @@ class LikeFragment : Fragment() {
                 }
                 adapter = LikeCropRecyclerViewAdapter()
                 layoutManager = GridLayoutManager(mainActivity, 2)
-                (adapter as LikeCropRecyclerViewAdapter).notifyDataSetChanged()
             }
         }
     }
@@ -246,7 +194,6 @@ class LikeFragment : Fragment() {
                 }
                 adapter = LikePostRecyclerViewAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
-                (adapter as LikePostRecyclerViewAdapter).notifyDataSetChanged()
             }
         }
     }
@@ -296,7 +243,12 @@ class LikeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeCropViewHolder {
-            val rowLikeCropBinding = DataBindingUtil.inflate<RowLikeCropBinding>(layoutInflater,R.layout.row_like_crop,parent,false)
+            val rowLikeCropBinding = DataBindingUtil.inflate<RowLikeCropBinding>(
+                layoutInflater,
+                R.layout.row_like_crop,
+                parent,
+                false
+            )
             val likeViewModel = LikeViewModel()
             rowLikeCropBinding.likeViewModel = likeViewModel
             rowLikeCropBinding.lifecycleOwner = this@LikeFragment
@@ -305,7 +257,8 @@ class LikeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return LikeList.size
+            Log.d("test77", cropList.size.toString())
+            return cropList.size
         }
 
         override fun onBindViewHolder(holder: LikeCropViewHolder, position: Int) {
@@ -320,24 +273,43 @@ class LikeFragment : Fragment() {
                 textViewLikeCropCnt.text =
                     cropList[position].crop_like_cnt.toString()
                 ratingBarLikeCrop.rating = cropList[position].crop_like_cnt.toFloat()
-                context?.let {
-                    Glide.with(it).load(cropList[position].crop_images[0])
-                        .into(imageViewLikeCrop)
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    if (cropList[position].crop_images != null) {
+                        LikeDao.gettingImage(
+                            mainActivity,
+                            cropList[position].crop_images[0],
+                            imageViewLikeCrop,
+                            "CROP"
+                        )
+                    } else {
+                        holder.rowLikeCropBinding.imageViewLikeCrop.setImageResource(R.color.white)
+                    }
                 }
             }
             // 하트 클릭 리스너
             holder.rowLikeCropBinding.apply {
                 likeViewModel!!.apply {
                     constraintLikeCropCancel.setOnClickListener {
-                        if(isLike.value!!){
+                        if (isLike.value!!) {
                             isLike.value = false
                             imageViewHeartCrop.setImageResource(R.drawable.heart_04)
-                            textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+                            textViewLikeCropCnt.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.brown_01
+                                )
+                            )
 
-                        }else{
+                        } else {
                             isLike.value = true
                             imageViewHeartCrop.setImageResource(R.drawable.heart_01)
-                            textViewLikeCropCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                            textViewLikeCropCnt.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.white
+                                )
+                            )
                         }
                     }
                 }
@@ -362,7 +334,12 @@ class LikeFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikePostViewHolder {
-            val rowLikePostBinding = DataBindingUtil.inflate<RowLikePostBinding>(layoutInflater,R.layout.row_like_post,parent,false)
+            val rowLikePostBinding = DataBindingUtil.inflate<RowLikePostBinding>(
+                layoutInflater,
+                R.layout.row_like_post,
+                parent,
+                false
+            )
             val likeViewModel = LikeViewModel()
             rowLikePostBinding.likeViewModel = likeViewModel
             rowLikePostBinding.lifecycleOwner = this@LikeFragment
@@ -371,7 +348,7 @@ class LikeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return LikeList.size
+            return postList.size
         }
 
         override fun onBindViewHolder(holder: LikePostViewHolder, position: Int) {
@@ -389,7 +366,12 @@ class LikeFragment : Fragment() {
                 textViewLikePostDate.text = postList[position].postRegDt
                 CoroutineScope(Dispatchers.Main).launch {
                     if (postList[position].postImages != null) {
-                        LikeDao.gettingCommunityPostImage(mainActivity, postList[position].postImages!![0], imageViewLikePost)
+                        LikeDao.gettingImage(
+                            mainActivity,
+                            postList[position].postImages[0],
+                            imageViewLikePost,
+                            "POST"
+                        )
                     } else {
                         holder.rowLikePostBinding.imageViewLikePost.setImageResource(R.color.white)
                     }
@@ -406,15 +388,25 @@ class LikeFragment : Fragment() {
             holder.rowLikePostBinding.apply {
                 likeViewModel!!.apply {
                     constraintLike.setOnClickListener {
-                        if(isLike.value!!){
+                        if (isLike.value!!) {
                             isLike.value = false
                             imageView.setImageResource(R.drawable.heart_04)
-                            textViewLikePostCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+                            textViewLikePostCnt.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.brown_01
+                                )
+                            )
 
-                        }else{
+                        } else {
                             isLike.value = true
                             imageView.setImageResource(R.drawable.heart_01)
-                            textViewLikePostCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                            textViewLikePostCnt.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.white
+                                )
+                            )
                         }
                     }
                 }
@@ -438,46 +430,71 @@ class LikeFragment : Fragment() {
             }
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeFarmAndAcitivityViewHolder {
-            val rowLikeFarmActivityBinding = RowLikeFarmActivityBinding.inflate(layoutInflater)
-            val likeFarmAndActivityViewHolder =
-                LikeFarmAndAcitivityViewHolder(rowLikeFarmActivityBinding)
-            return likeFarmAndActivityViewHolder
-        }
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikeFarmAndAcitivityViewHolder {
-//            val rowLikeFarmActivityBinding = DataBindingUtil.inflate<RowLikeFarmActivityBinding>(layoutInflater,R.layout.row_like_farm_activity,parent,false)
-//            val likeViewModel = LikeViewModel()
-//            rowLikeFarmActivityBinding.likeViewModel = likeViewModel
-//            rowLikeFarmActivityBinding.lifecycleOwner = this@LikeFragment
+//        override fun onCreateViewHolder(
+//            parent: ViewGroup,
+//            viewType: Int
+//        ): LikeFarmAndAcitivityViewHolder {
+//            val rowLikeFarmActivityBinding = RowLikeFarmActivityBinding.inflate(layoutInflater)
 //            val likeFarmAndActivityViewHolder = LikeFarmAndAcitivityViewHolder(rowLikeFarmActivityBinding)
 //            return likeFarmAndActivityViewHolder
 //        }
 
+
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): LikeFarmAndAcitivityViewHolder {
+            val rowLikeFarmActivityBinding = DataBindingUtil.inflate<RowLikeFarmActivityBinding>(
+                layoutInflater,
+                R.layout.row_like_farm_activity,
+                parent,
+                false
+            )
+            val likeViewModel = LikeViewModel()
+            rowLikeFarmActivityBinding.likeViewModel = likeViewModel
+            rowLikeFarmActivityBinding.lifecycleOwner = this@LikeFragment
+            val likeFarmAndActivityViewHolder =
+                LikeFarmAndAcitivityViewHolder(rowLikeFarmActivityBinding)
+            return likeFarmAndActivityViewHolder
+        }
+
         override fun getItemCount(): Int {
-            return LikeList.size
+            var size = 0
+            when (selectedType) {
+                "FARM" -> {
+                    size = farmList.size
+                }
+
+                "ACTIVITY" -> {
+                    size = activityList.size
+                }
+            }
+//            Log.d("test77", size.toString())
+            return size
         }
 
         override fun onBindViewHolder(holder: LikeFarmAndAcitivityViewHolder, position: Int) {
             holder.rowLikeFarmActivityBinding.apply {
-                Log.d("test11", farmList.toString())
                 if (farmList.isEmpty() || activityList.isEmpty()) {
                     root.visibility = View.GONE
                     return
                 }
+
                 when (selectedType) {
                     "FARM" -> {
                         textViewLikeFarmAndActivityName.text = farmList[position].farm_title
                         textViewLikeFarmAndActivityLocation.text = farmList[position].farm_address
 //                        textViewLikeFarmAndActivityPrice.text =
 //                            farmList[position].farm_option_detail.["price_area"]
+//                        Log.d("test11", farmList[0].toString())
                     }
 
                     "ACTIVITY" -> {
                         textViewLikeFarmAndActivityName.text = activityList[position].activity_title
                         textViewLikeFarmAndActivityLocation.text =
                             activityList[position].activity_address
-                        textViewLikeFarmAndActivityPrice.text =
-                            activityList[position].activity_option_detail[0]["option_price"]
+//                        textViewLikeFarmAndActivityPrice.text =
+//                            activityList[position].activity_option_detail[0]["option_price"].toString()
                     }
                 }
                 // 아이템 클릭 이벤트
@@ -489,30 +506,44 @@ class LikeFragment : Fragment() {
                     )
                     startActivity(intent)
 
-            }
+                }
 
-            // 하트 클릭 리스너
-            holder.rowLikeFarmActivityBinding.apply {
-                likeViewModel!!.apply {
-                    constraintLikeFarmAndActivityCancel.setOnClickListener {
-                        if(isLike.value!!){
-                            isLike.value = false
-                            imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_04)
-                            textViewLikeFarmAndActivityCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+                // 하트 클릭 리스너
+                holder.rowLikeFarmActivityBinding.apply {
+                    likeViewModel!!.apply {
+                        constraintLikeFarmAndActivityCancel.setOnClickListener {
+                            if (isLike.value!!) {
+                                isLike.value = false
+                                imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_04)
+                                textViewLikeFarmAndActivityCnt.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.brown_01
+                                    )
+                                )
 
-                        }else{
-                            isLike.value = true
-                            imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_01)
-                            textViewLikeFarmAndActivityCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                            } else {
+                                isLike.value = true
+                                imageViewHeartFarmAndActivity.setImageResource(R.drawable.heart_01)
+                                textViewLikeFarmAndActivityCnt.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.white
+                                    )
+                                )
+                            }
                         }
                     }
                 }
             }
         }
+
+
     }
 
     // 농기구 recyclerView의 Adapter
     inner class LikeRentalRecyclerViewAdapter :
+
         RecyclerView.Adapter<LikeRentalRecyclerViewAdapter.LikeRentalViewHolder>() {
         inner class LikeRentalViewHolder(rowLikeRentalBinding: RowLikeRentalBinding) :
             RecyclerView.ViewHolder(rowLikeRentalBinding.root) {
@@ -545,12 +576,12 @@ class LikeFragment : Fragment() {
 //        }
 
         override fun getItemCount(): Int {
-            return LikeList.size
+            return rentalList.size
         }
 
         override fun onBindViewHolder(holder: LikeRentalViewHolder, position: Int) {
             holder.rowLikeRentalBinding.apply {
-                if (rentalList.isEmpty() ) {
+                if (rentalList.isEmpty()) {
                     root.visibility = View.GONE
                     return
                 }
@@ -568,15 +599,25 @@ class LikeFragment : Fragment() {
             holder.rowLikeRentalBinding.apply {
                 likeViewModel!!.apply {
                     constraintLikeRentalHeart.setOnClickListener {
-                        if(isLike.value!!){
+                        if (isLike.value!!) {
                             isLike.value = false
                             imageViewHeart.setImageResource(R.drawable.heart_04)
-                            textViewLikeRentalCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.brown_01))
+                            textViewLikeRentalCnt.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.brown_01
+                                )
+                            )
 
-                        }else{
+                        } else {
                             isLike.value = true
                             imageViewHeart.setImageResource(R.drawable.heart_01)
-                            textViewLikeRentalCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                            textViewLikeRentalCnt.setTextColor(
+                                ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.white
+                                )
+                            )
                         }
                     }
                 }
