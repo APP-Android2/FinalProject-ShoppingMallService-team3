@@ -1,14 +1,86 @@
 package kr.co.lion.farming_customer.viewmodel
 
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import kr.co.lion.farming_customer.LikeType
 import kr.co.lion.farming_customer.MaterialButtonToggleGroupWithRadius
+import kr.co.lion.farming_customer.PostStatus
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.dao.like.LikeDao
+import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
+import kr.co.lion.farming_customer.model.CropModel
+import kr.co.lion.farming_customer.model.farmingLife.FarmModel
+import kr.co.lion.farming_customer.model.LikeModel
+import kr.co.lion.farming_customer.model.CommunityPostModel
+import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 
-class LikeViewModel {
+class LikeViewModel() :ViewModel(){
+    val textViewLikePostLabel = MutableLiveData<String>()
+    val textViewLikePostTitle = MutableLiveData<String>()
+    val textViewLikePostContent = MutableLiveData<String>()
+    val textViewLikePostViewCnt = MutableLiveData<String>()
+    val textViewLikePostCommentCnt = MutableLiveData<String>()
+    val textViewLikePostDate = MutableLiveData<String>()
+    data class LikeData(
+        val LikeList: List<LikeModel>?,
+        val cropList: List<CropModel>?,
+        val postList: List<CommunityPostModel>?,
+        val farmList: List<FarmModel>?,
+        val activityList: List<ActivityModel>?,
+        val rentalList: List<RentalModel>?,
+    )
+
+    // 농산물 좋아요 리스트
+    suspend fun getLikeListAndLikeTypeList(userIdx: Int): LikeData = withContext(Dispatchers.IO) {
+        var LikeList = mutableListOf<LikeModel>()
+        var cropList = mutableListOf<CropModel>()
+        var postList = mutableListOf<CommunityPostModel>()
+        var farmList = mutableListOf<FarmModel>()
+        var activityList = mutableListOf<ActivityModel>()
+        var rentalList = mutableListOf<RentalModel>()
+
+        LikeList = LikeDao.getLikeList(userIdx).toMutableList()
+        for( i in LikeList ){
+
+            when(i.like_type.toString()){
+                "1" ->{
+                    val crop = LikeDao.getCropList(i.like_type_idx)
+                    cropList.addAll(crop)
+
+                }
+                "2" ->{
+                    val post = LikeDao.getPostList(i.like_type_idx)
+                    postList.addAll(post)
+                }
+                "3" ->{
+                    val farm = LikeDao.getFarmList(i.like_type_idx)
+                    farmList.addAll(farm)
+                }
+                "4" ->{
+                    val activity = LikeDao.getActivityList(i.like_type_idx)
+                    activityList.addAll(activity)
+                }
+                "5" ->{
+                    val rental = LikeDao.getRentalList(i.like_type_idx)
+                    rentalList.addAll(rental)
+                }
+
+            }
+        }
+        LikeData(LikeList, cropList, postList, farmList, activityList, rentalList)
+    }
+
     // 좋아요 타입
     val toggleLikeType = MutableLiveData<Int>()
     val isLike = MutableLiveData<Boolean>()
@@ -67,4 +139,8 @@ class LikeViewModel {
             return group.checkedButtonId
         }
     }
+
+
+
+
 }
