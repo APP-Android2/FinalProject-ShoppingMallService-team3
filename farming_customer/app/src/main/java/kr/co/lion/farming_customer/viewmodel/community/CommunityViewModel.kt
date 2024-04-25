@@ -1,27 +1,9 @@
-package kr.co.lion.farming_customer.viewmodel
+package kr.co.lion.farming_customer.viewmodel.community
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class CommunityViewModel: ViewModel() {
-    // 커뮤니티 글 상세조회 읽는 화면 툴바 게시판 유형
-    val textViewCommunityReadToolbarTitle = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 읽는 화면 좋아요 개수
-    val textViewCommunityReadLikeCnt = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 읽는 화면 댓글 개수
-    val textViewCommunityReadCommentCnt = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 작성자
-    val textViewCommunityReadWriter = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 작성 날짜
-    val textViewCommunityReadDate = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 제목
-    val textViewCommunityReadSubject = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 내용
-    val textViewCommunityReadContent = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 댓글 작성자
-    val textViewRowCommunityReadCommentWriter = MutableLiveData<String>()
-    // 커뮤니티 글 상세조회 댓글 내용
-    val textViewRowCommunityReadCommentContent = MutableLiveData<String>()
 
     // 커뮤니티 글 리스트 검색 라벨
     val textViewCommunityListLabelSearch = MutableLiveData<String>()
@@ -100,13 +82,4 @@ class CommunityViewModel: ViewModel() {
     // 커뮤니티 글 리스트 구인구직 탭 좋아요수
     val textViewCommunityListLikeCntJob = MutableLiveData<String>()
 
-    // 커뮤니티 글 작성 제목
-    val textViewCommunityAddSubject = MutableLiveData<String>()
-    // 커뮤니티 글 작성 내용
-    val textViewCommunityAddContent = MutableLiveData<String>()
-
-    // 커뮤니티 글 수정 제목
-    val textViewCommunityModifySubject = MutableLiveData<String>()
-    // 커뮤니티 글 수정 내용
-    val textViewCommunityModifyContent = MutableLiveData<String>()
 }

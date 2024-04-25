@@ -226,7 +226,9 @@ class TapDeliveryDoneFragment : Fragment() {
                 // 리뷰 작성
                 buttonRowOrderHistoryCropProductOutSide.setOnClickListener {
                     val bundle = Bundle()
-                    bundle.putParcelable("orderItem", orderList[position])
+                    bundle.putInt("orderIdx", orderList[position].order_idx)
+                    bundle.putInt("orderProductIdx", orderList[position].order_product_idx)
+                    bundle.putInt("orderProductType", orderList[position].order_product_type)
                     orderHistoryActivity.replaceFragment(OrderHistoryFragmentName.ORDER_HISTORY_WRITE_REVIEW_FRAGMENT, true, true, bundle)
                 }
             }

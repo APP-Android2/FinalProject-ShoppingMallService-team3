@@ -58,7 +58,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0") // 농기구 구글맵
     implementation("com.google.android.gms:play-services-location:21.1.0") // 농기구 구글맵
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
@@ -68,5 +69,18 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Retrofit2
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.opencsv:opencsv:5.9")
+
+    // splash
+    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
+
 
 }

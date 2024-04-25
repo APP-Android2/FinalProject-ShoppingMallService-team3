@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="communityViewModel"
-            type="kr.co.lion.farming_customer.viewmodel.CommunityViewModel" />
+            name="communityAddModifyViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.community.CommunityAddModifyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,7 +124,7 @@
                             android:hint="게시판 유형"
                             android:inputType="none"
                             android:popupBackground="@drawable/dropdown_box_border"
-                            android:text=""
+                            android:text="@={communityAddModifyViewModel.communityPostModifyType}"
                             android:textColor="@color/brown_01"
                             android:textSize="12sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -152,7 +152,7 @@
                             android:gravity="top"
                             android:hint="글 제목 (최대 30자)"
                             android:maxLength="30"
-                            android:text="@={communityViewModel.textViewCommunityModifySubject}"
+                            android:text="@={communityAddModifyViewModel.textViewCommunityModifySubject}"
                             android:textColor="@color/brown_01"
                             android:textColorHint="@color/grey_01"
                             android:textSize="12sp" />
@@ -183,7 +183,7 @@
                             android:lines="10"
                             android:maxLength="2000"
                             android:maxLines="30"
-                            android:text="@={communityViewModel.textViewCommunityModifyContent}"
+                            android:text="@={communityAddModifyViewModel.textViewCommunityModifyContent}"
                             android:textColor="@color/brown_01"
                             android:textColorHint="@color/grey_01"
                             android:textSize="12sp" />
