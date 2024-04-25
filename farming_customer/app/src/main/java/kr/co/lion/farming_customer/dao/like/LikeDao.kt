@@ -23,8 +23,6 @@ import kr.co.lion.farming_customer.model.CommunityPostModel
 import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 
 class LikeDao {
-
-
     companion object {
         //      농산품 좋아요 리스트
         suspend fun getLikeList(userIdx:Int): List<LikeModel>{

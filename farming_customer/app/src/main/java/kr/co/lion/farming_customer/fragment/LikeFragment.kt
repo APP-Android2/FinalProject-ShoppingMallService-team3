@@ -25,8 +25,8 @@ import kr.co.lion.farming_customer.FarmingLifeFragmnetName
 import kr.co.lion.farming_customer.GridSpaceItemDecoration
 import kr.co.lion.farming_customer.LikeType
 import kr.co.lion.farming_customer.R
-import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.MainActivity
+import kr.co.lion.farming_customer.activity.community.CommunityActivity
 import kr.co.lion.farming_customer.activity.farmingLife.FarmingLifeActivity
 import kr.co.lion.farming_customer.activity.farmingLifeTools.FarmingLifeToolsDetailActivity
 import kr.co.lion.farming_customer.activity.tradeCrop.TradeSearchActivity
@@ -45,11 +45,6 @@ import kr.co.lion.farming_customer.model.farminLifeTools.RentalModel
 import kr.co.lion.farming_customer.viewmodel.LikeViewModel
 
 class LikeFragment : Fragment() {
-    // ViewModel 생성자에 Context 객체를 명시적으로 전달합니다.
-    // 세션에서 회원 시퀀스 번호 가져오기..
-    val sharedPreferences = mainActivity.getSharedPreferences("AutoLogin", Context.MODE_PRIVATE)
-    val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
-
     lateinit var fragmentLikeBinding: FragmentLikeBinding
     lateinit var mainActivity: MainActivity
 
@@ -78,6 +73,11 @@ class LikeFragment : Fragment() {
         fragmentLikeBinding.likeViewModel = likeViewModel
         fragmentLikeBinding.lifecycleOwner = this
         mainActivity = activity as MainActivity
+
+        // ViewModel 생성자에 Context 객체를 명시적으로 전달합니다.
+        // 세션에서 회원 시퀀스 번호 가져오기..
+        val sharedPreferences = mainActivity.getSharedPreferences("AutoLogin", Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
 
         lifecycleScope.launch {
             val data = likeViewModel.getLikeListAndLikeTypeList(userIdx)
