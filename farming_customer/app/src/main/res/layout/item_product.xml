@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="tradeViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewFilledStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="layout/item_product_1"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imageViewCropImage"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewCropName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@={tradeViewModel.textViewCropName}"
+                android:textColor="@color/brown_01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewCropImage" />
+
+            <TextView
+                android:id="@+id/textViewCropLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@={tradeViewModel.textViewCropLocation}"
+                android:textColor="@color/grey_01"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCropName" />
+
+            <com.willy.ratingbar.BaseRatingBar
+                android:id="@+id/RatingBarTrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewCropImage"
+                app:srb_drawableEmpty="@drawable/star_02"
+                app:srb_drawableFilled="@drawable/star_01"
+                app:srb_isIndicator="true"
+                app:srb_minimumStars="0"
+                app:srb_numStars="5"
+                app:srb_rating="2"
+                app:srb_starHeight="12dp"
+                app:srb_starPadding="2dp"
+                app:srb_starWidth="12dp"
+                app:srb_stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/textViewTradePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@={tradeViewModel.textViewTradePrice}"
+                android:textColor="@color/brown_01"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/RatingBarTrade" />
+
+            <ImageButton
+                android:id="@+id/imageButtonProductLike"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageViewCropImage"
+                app:srcCompat="@drawable/heart_04" />
+
+            <TextView
+                android:id="@+id/textViewTradeLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@={tradeViewModel.textViewTradeLike}"
+                android:textColor="@color/brown_01"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toBottomOf="@id/imageButtonProductLike"
+                app:layout_constraintEnd_toEndOf="@id/imageButtonProductLike"
+                app:layout_constraintStart_toStartOf="@+id/imageButtonProductLike"
+                app:layout_constraintTop_toTopOf="@id/imageButtonProductLike" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="rowBottomSheetActivityReservSelectedOptionViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.farmingLife.RowBottomSheetActivityReservSelectedOptionViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingVertical="10dp">
+
+        <TextView
+            android:id="@+id/textView_programName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@={rowBottomSheetActivityReservSelectedOptionViewModel.textView_programName}"
+            android:textColor="@color/brown_01"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@={rowBottomSheetActivityReservSelectedOptionViewModel.textView_date}"
+            android:textColor="@color/brown_01"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_programName" />
+
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@={rowBottomSheetActivityReservSelectedOptionViewModel.textView_time}"
+            android:textColor="@color/brown_01"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/textView_date"
+            app:layout_constraintTop_toTopOf="@id/textView_date" />
+
+        <TextView
+            android:id="@+id/textView_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@={rowBottomSheetActivityReservSelectedOptionViewModel.textView_price}"
+            android:textColor="@color/brown_01"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_date" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_minus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/button_reserv_minus"
+            android:elevation="0dp"
+            android:text="-"
+            android:textColor="@color/grey_02"
+            app:layout_constraintBottom_toBottomOf="@id/button_plus"
+            app:layout_constraintEnd_toStartOf="@id/textView_cnt"
+            app:layout_constraintTop_toTopOf="@id/button_plus" />
+
+        <TextView
+            android:id="@+id/textView_cnt"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:background="@drawable/box_stroke_grey_02"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="@={rowBottomSheetActivityReservSelectedOptionViewModel.textView_cnt}"
+            android:textColor="@color/brown_01"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/button_plus"
+            app:layout_constraintEnd_toStartOf="@id/button_plus"
+            app:layout_constraintTop_toTopOf="@id/button_plus" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_plus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/button_reserv_plus"
+            android:elevation="0dp"
+            android:text="+"
+            android:textColor="@color/grey_02"
+            app:layout_constraintBottom_toBottomOf="@id/textView_price"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

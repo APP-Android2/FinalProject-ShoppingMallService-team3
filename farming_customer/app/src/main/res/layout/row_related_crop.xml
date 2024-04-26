@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="tradeViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel" />
+    </data>
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            style="?attr/materialCardViewFilledStyle"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:strokeColor="@color/grey_02">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageViewLikeCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                <com.willy.ratingbar.BaseRatingBar
+                    android:id="@+id/ratingBarLikeCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewLikeCrop"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewLikeCrop"
+                    app:srb_drawableEmpty="@drawable/star_02"
+                    app:srb_drawableFilled="@drawable/star_01"
+                    app:srb_isIndicator="true"
+                    app:srb_minimumStars="0"
+                    app:srb_numStars="5"
+                    app:srb_rating="3"
+                    app:srb_starHeight="15dp"
+                    app:srb_starPadding="2dp"
+                    app:srb_starWidth="15dp"
+                    app:srb_stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/textViewLikeCropName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@={tradeViewModel.textViewLikeCropName}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewLikeCrop"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingBarLikeCrop" />
+
+                <TextView
+                    android:id="@+id/textViewLikeCropPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="@={tradeViewModel.textViewLikeCropPrice}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewLikeCrop"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLikeCropName" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLikeCropCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toEndOf="@id/imageViewLikeCrop"
+                    app:layout_constraintTop_toTopOf="@id/imageViewLikeCrop">
+
+                    <ImageView
+                        android:id="@+id/imageViewHeartCrop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/heart_02" />
+
+                    <TextView
+                        android:id="@+id/textViewLikeCropCnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="@={tradeViewModel.textViewLikeCropCnt}"
+                        android:textColor="@color/brown_01"
+                        android:textSize="8sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imageViewHeartCrop"
+                        app:layout_constraintEnd_toEndOf="@id/imageViewHeartCrop"
+                        app:layout_constraintStart_toStartOf="@id/imageViewHeartCrop"
+                        app:layout_constraintTop_toTopOf="@id/imageViewHeartCrop" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </GridLayout>
+</layout>

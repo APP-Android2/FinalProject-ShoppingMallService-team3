@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="findIdViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.loginRegister.FindIdViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout12"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="20dp"
+            android:hint="이름"
+            android:textColorHint="@color/green_main"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/brown_01"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldFindIdName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_pre_semibold"
+                android:text="@={findIdViewModel.userName}"
+                android:hint="이름을 입력해 주세요."
+                android:inputType="text|textPersonName"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/brown_01"
+                android:textColorHint="@color/grey_01"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout13"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="휴대폰"
+            android:textColorHint="@color/green_main"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/brown_01"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFindIdAuthorize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldFindIdPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_pre_semibold"
+                android:hint="숫자로만 입력해 주세요."
+                android:text="@={findIdViewModel.userPhoneNumber}"
+                android:inputType="number"
+                android:maxLength="11"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/brown_01"
+                android:textColorHint="@color/grey_01"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonFindIdAuthorize"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="본인인증"
+            android:textSize="12sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout12" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="10dp"
+            android:hint="인증코드"
+            android:textColorHint="@color/green_main"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/brown_01"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFieldFindIdCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_pre_semibold"
+                android:hint="인증 코드를 입력해 주세요."
+                android:inputType="number"
+                android:maxLength="6"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/brown_01"
+                android:textColorHint="@color/grey_01"
+                android:textSize="12sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonFindId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="아이디 찾기"
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

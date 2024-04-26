@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="myPageManagementMainViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.myPageManagement.MyPageManagementMainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:transitionGroup="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarMyPageManagementMain"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="내 정보 관리"
+                android:textColor="@color/brown_01"
+                android:textSize="20dp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewMyPageManagementMain_Profile"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/profile" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_NickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_NickName}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/brown_01"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/buttonMyPageManagementMain_ProfileModify"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/edit_grey" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_UserInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="회원정보"
+                    android:textColor="@color/brown_01"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/buttonMyPageManagementMain_UserInfoDetail"
+                    android:layout_width="7dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/next"
+                    android:tint="@color/grey_01"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:dividerColor="@color/grey_02" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="이름"
+                    android:textColor="@color/grey_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_UserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_UserName}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Id"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_Id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="아이디"
+                    android:textColor="@color/grey_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_Name" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_UserId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_UserId}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Id"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_UserName" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_Phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="휴대폰"
+                    android:textColor="@color/grey_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_Id" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_UserPhoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_UserPhoneNumber}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Phone"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_UserId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_BasicDeliveryAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="기본 배송지"
+                    android:textColor="@color/brown_01"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/buttonMyPageManagementMain_BasicDeliveryAddressDetail"
+                    android:layout_width="7dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/next"
+                    android:tint="@color/grey_01"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider"
+                app:dividerColor="@color/grey_02" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_Recipient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="수령인"
+                    android:textColor="@color/grey_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_RecipientName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_RecipientName}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_Recipient"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_Address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="주소"
+                    android:textColor="@color/grey_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_Recipient" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_AddressName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_AddressName}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_AddressPhone"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_RecipientName" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_AddressPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="휴대폰"
+                    android:textColor="@color/grey_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_Address" />
+
+                <TextView
+                    android:id="@+id/textViewMyPageManagementMain_AddressPhoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@{myPageManagementMainViewModel.textViewMyPageManagementMain_AddressPhoneNumber}"
+                    android:textColor="@color/brown_01"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/textViewMyPageManagementMain_AddressPhone"
+                    app:layout_constraintTop_toBottomOf="@id/textViewMyPageManagementMain_AddressName" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

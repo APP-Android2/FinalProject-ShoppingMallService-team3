@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="bottomSheetTradeCropViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.tradeCrop.BottomSheetTradeCropViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_sheet_stroke"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="20dp"
+        tools:context=".fragment.farmingLife.BottomSheetFarmReservFragment">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="60dp"
+            android:layout_height="4dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/bottom_sheet_top_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewPaymentCrop_crop"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputBottomTradeOptionName"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColorHint="@color/grey_01"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/text_input_search_layout_stroke_color_selector"
+                app:endIconMode="dropdown_menu"
+                app:endIconTint="@android:color/transparent"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintViewPager"
+                app:startIconDrawable="@drawable/bottom_triangle"
+                app:startIconTint="@color/brown_01"
+                tools:layout_constraintEnd_toEndOf="parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/textViewBottomTradeOptionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="0dp"
+                    android:fontFamily="@font/font_pre_semibold"
+                    android:hint="농산물"
+                    android:inputType="none"
+                    android:paddingVertical="5dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:popupBackground="@drawable/dropdown_box_border_bottom_sheet"
+                    android:text=""
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <Button
+            android:id="@+id/buttonPaymentCrop_cart"
+            style="@style/buttonStyle_OrderHistory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="장바구니"
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toStartOf="@id/buttonPaymentCrop_reserv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCrop_totalPrice" />
+
+        <Button
+            android:id="@+id/buttonPaymentCrop_reserv"
+            style="@style/buttonStyle_OrderHistory_filled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="구매하기"
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/buttonPaymentCrop_cart"
+            app:layout_constraintTop_toTopOf="@id/buttonPaymentCrop_cart" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="선택한 농작물"
+            android:textColor="@color/brown_01"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardViewPaymentCrop_crop" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="옵션명"
+            android:textColor="@color/brown_01"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <TextView
+            android:id="@+id/textViewPaymentCrop_selectedCropPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@={bottomSheetTradeCropViewModel.selectedCropPrice}"
+            android:textColor="@color/brown_01"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/toggleButton"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCrop_selectedCropPrice"
+            tools:background="@color/grey_01" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14"
+            app:singleSelection="false">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/toggleButtonMinus"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="@drawable/button_state_selector"
+                android:fontFamily="@font/pretendard_regular"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dip"
+                android:minHeight="0dip"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/grey_02"
+                android:textSize="14sp"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/grey_03"
+                app:strokeColor="@color/grey_02"
+                tools:rippleColor="@color/green_main" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/textPaymentCrop_optionCounts"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                android:text="@{bottomSheetTradeCropViewModel.optionCounts.toString()}"
+                app:strokeColor="@color/grey_02"
+                tools:strokeColor="@color/grey_02" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/toggleButtonPlus"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/pretendard_regular"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dip"
+                android:minHeight="0dip"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                android:text="+"
+                android:textAlignment="center"
+                android:textColor="@color/grey_02"
+                android:textSize="14sp"
+                app:backgroundTint="@drawable/button_state_selector"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/grey_03"
+                app:strokeColor="@color/grey_02" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="배송비"
+            android:textColor="@color/grey_01"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCrop_fee"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewPaymentCrop_fee" />
+
+        <TextView
+            android:id="@+id/textViewPaymentCrop_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@{bottomSheetTradeCropViewModel.fee}"
+            android:textColor="@color/grey_01"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="총 금액"
+            android:textColor="@color/grey_01"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentCrop_totalPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewPaymentCrop_totalPrice" />
+
+        <TextView
+            android:id="@+id/textViewPaymentCrop_totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@{bottomSheetTradeCropViewModel.totalPrice}"
+            android:textColor="@color/brown_01"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPaymentCrop_fee" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

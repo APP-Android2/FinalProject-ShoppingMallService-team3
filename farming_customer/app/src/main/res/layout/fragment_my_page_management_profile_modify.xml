@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="myPageManagementProfileModifyViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.myPageManagement.MyPageManagementProfileModifyViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:transitionGroup="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarMyPageManagementProfileModify"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="프로필 수정"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintBottom_toTopOf="@+id/buttonMyPageManagementProfileModify_Done"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/buttonMyPageManagementProfileModify_ModifyProfileImage"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutCheckNickName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/white"
+                    android:hint="닉네임"
+                    android:textColorHint="@color/btn_bg_stroke_color_selector"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                    app:boxStrokeErrorColor="@color/orange_01"
+                    app:cursorErrorColor="@color/orange_01"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/brown_01"
+                    app:errorIconTint="@color/orange_01"
+                    app:errorTextColor="@color/orange_01"
+                    app:expandedHintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonMyPageManagementProfileModify_ModifyProfileImage">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldMyPageManagementProfileModify_ModifyUserNickName"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:hint="닉네임을 입력해주세요"
+                        android:inputType="text"
+                        android:paddingLeft="109dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="109dp"
+                        android:paddingBottom="10dp"
+                        android:text="@={myPageManagementProfileModifyViewModel.textFieldMyPageManagementProfileModify_ModifyUserNickName}"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/buttonMyPageManagementProfileModify_ModifyProfileImage2"
+                    android:layout_width="34.26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/camera_gray"
+                    app:layout_constraintBottom_toBottomOf="@id/buttonMyPageManagementProfileModify_ModifyProfileImage"
+                    app:layout_constraintEnd_toEndOf="@id/buttonMyPageManagementProfileModify_ModifyProfileImage" />
+
+                <Button
+                    android:id="@+id/buttonMyPageManagementProfileModify_CheckUserNickName"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="@{myPageManagementProfileModifyViewModel.buttonMyPageManagementProfileModifyCheckUserNickName}"
+                    android:textSize="12sp"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textInputLayoutCheckNickName" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/buttonMyPageManagementProfileModify_Done"
+                style="@style/isEnabledButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="확인"
+                android:textSize="16sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</layout>

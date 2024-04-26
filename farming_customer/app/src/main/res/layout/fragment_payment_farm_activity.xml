@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="paymentFarmActivityViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.payment.PaymentFarmActivityViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarPaymentFarmActivity"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="결제하기"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPaymentProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <View
+                    android:id="@+id/divider112"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityReservation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="예약자 정보"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@color/white"
+                        android:hint="이름"
+                        android:textColorHint="@color/green_main"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/brown_01"
+                        app:expandedHintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityReservation">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldReservationName"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="이름을 입력해 주세요"
+                            android:inputType="text"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp"
+                            android:text="@={paymentFarmActivityViewModel.textFieldReservationName}"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@color/white"
+                        android:hint="휴대폰"
+                        android:textColorHint="@color/green_main"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/brown_01"
+                        app:expandedHintEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInputLayout18"
+                        tools:boxStrokeColor="@color/btn_bg_stroke_color_selector">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/textFieldReservationPhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:hint="숫자로만 입력해 주세요"
+                            android:inputType="number"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/brown_01"
+                            android:textSize="12sp"
+                            android:text="@={paymentFarmActivityViewModel.textFieldReservationPhoneNumber}"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider113"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="포인트"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityAvailablePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@={paymentFarmActivityViewModel.textViewPaymentFarmActivityAvailablePoint}"
+                        android:textColor="@color/brown_01"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentFarmActivityPoint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentFarmActivityPoint" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPoint">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutPaymentFarmActivityUsePoint"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:hint="사용 가능한 포인트"
+                                android:textColorHint="@color/btn_bg_stroke_color_selector"
+                                app:boxCornerRadiusBottomEnd="10dp"
+                                app:boxCornerRadiusBottomStart="10dp"
+                                app:boxCornerRadiusTopEnd="10dp"
+                                app:boxCornerRadiusTopStart="10dp"
+                                app:boxStrokeColor="@color/btn_bg_stroke_color_selector"
+                                app:endIconMode="clear_text"
+                                app:endIconTint="@color/brown_01"
+                                app:expandedHintEnabled="false">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textFieldPaymentFarmActivityUsePoint"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="43dp"
+                                    android:fontFamily="@font/pretendard_semibold"
+                                    android:inputType="number"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="@={paymentFarmActivityViewModel.textFieldPaymentFarmActivityUsePoint}"
+                                    android:textColor="@color/brown_01"
+                                    android:textSize="12sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/buttonPaymentFarmActivityUseAllPoint"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:insetBottom="0dp"
+                                android:text="전체 사용"
+                                android:textSize="12sp"
+                                app:cornerRadius="10dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider114"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPayMethod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="결제 수단"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPayMethod">
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentFarmActivityCreditOrCheckCard"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentFarmActivityKakaoPay"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentFarmActivityNaverPay"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonPaymentFarmActivityTossPay"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/checkbox_selector"
+                                android:button="@android:color/transparent" />
+                        </RadioGroup>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textViewPaymentFarmActivityCreditOrCheckCard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="신용/체크카드"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPaymentFarmActivityKakaoPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="카카오페이"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPaymentFarmActivityNaverPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="11dp"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="네이버페이"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPaymentFarmActivityTossPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/pretendard_regular"
+                                android:text="토스페이"
+                                android:textColor="@color/brown_01"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider115"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPayPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="결제 금액"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityProductPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="상품 금액"
+                        android:textColor="@color/brown_01"
+                        app:layout_constraintStart_toStartOf="@id/textViewPaymentFarmActivityPayPrice"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPayPrice" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityProductPrice2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@={paymentFarmActivityViewModel.textViewPaymentFarmActivityProductPrice2}"
+                        app:layout_constraintBottom_toBottomOf="@id/textViewPaymentFarmActivityProductPrice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textViewPaymentFarmActivityProductPrice" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityUsePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="포인트"
+                        android:textColor="@color/brown_01"
+                        app:layout_constraintStart_toStartOf="@id/textViewPaymentFarmActivityPayPrice"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityProductPrice" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityUsePoint2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@={paymentFarmActivityViewModel.textViewPaymentFarmActivityUsePoint2}"
+                        app:layout_constraintBottom_toBottomOf="@id/textViewPaymentFarmActivityUsePoint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textViewPaymentFarmActivityUsePoint" />
+
+                    <View
+                        android:id="@+id/divider13"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/dotted_line_horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityUsePoint" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityTotalPayPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="총 결제 금액"
+                        android:textColor="@color/brown_01"
+                        app:layout_constraintStart_toStartOf="@+id/textViewPaymentFarmActivityPayPrice"
+                        app:layout_constraintTop_toBottomOf="@id/divider13" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityTotalPayPrice2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@={paymentFarmActivityViewModel.textViewPaymentFarmActivityTotalPayPrice2}"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/textViewPaymentFarmActivityTotalPayPrice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textViewPaymentFarmActivityTotalPayPrice" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider116"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey_03" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkBoxPaymentFarmActivityAllAgree"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/checkbox_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="@={paymentFarmActivityViewModel.checkBoxPaymentFarmActivityAllAgree}"
+                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxAllChanged()}"
+                        app:checkedState="@{paymentFarmActivityViewModel.checkBoxPaymentFarmActivityAllAgreeState}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkBoxPaymentFarmActivityPrivacy1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/checkbox_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="@={paymentFarmActivityViewModel.checkBoxPaymentFarmActivityPrivacy1}"
+                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxChanged()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentFarmActivityAllAgree" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkBoxPaymentFarmActivityPrivacy2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/checkbox_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="@={paymentFarmActivityViewModel.checkBoxPaymentFarmActivityPrivacy2}"
+                        android:onClickListener="@{(view) -> paymentFarmActivityViewModel.onCheckBoxChanged()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPrivacyDetailContent1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityAllAgree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="필수 약관 전체 동의"
+                        android:textColor="@color/brown_01"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPaymentFarmActivityAllAgree"
+                        app:layout_constraintStart_toEndOf="@+id/checkBoxPaymentFarmActivityAllAgree"
+                        app:layout_constraintTop_toTopOf="@+id/checkBoxPaymentFarmActivityAllAgree" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacy1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="[필수] 개인정보 수집 및 이용"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPaymentFarmActivityPrivacy1"
+                        app:layout_constraintStart_toEndOf="@+id/checkBoxPaymentFarmActivityPrivacy1"
+                        app:layout_constraintTop_toTopOf="@+id/checkBoxPaymentFarmActivityPrivacy1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacyDetail1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="보기"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentFarmActivityPrivacy1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentFarmActivityPrivacy1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacy2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="[필수] 개인정보 제 3자 제공"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPaymentFarmActivityPrivacy2"
+                        app:layout_constraintStart_toEndOf="@+id/checkBoxPaymentFarmActivityPrivacy2"
+                        app:layout_constraintTop_toTopOf="@+id/checkBoxPaymentFarmActivityPrivacy2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacyDetailContent1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/back_round"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:padding="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewPaymentFarmActivityPrivacyDetail1"
+                        app:layout_constraintStart_toStartOf="@+id/checkBoxPaymentFarmActivityPrivacy1"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentFarmActivityPrivacy1" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacyDetailContent2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/back_round"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:padding="10dp"
+                        android:text="TextView"
+                        android:textColor="@color/brown_01"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewPaymentFarmActivityPrivacyDetail2"
+                        app:layout_constraintStart_toStartOf="@+id/checkBoxPaymentFarmActivityPrivacy2"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewPaymentFarmActivityPrivacy2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityPrivacyDetail2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="보기"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentFarmActivityPrivacy2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentFarmActivityPrivacy2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityRules"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="이용규칙"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityPrivacyDetailContent2" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityDot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text=" , "
+                        android:textColor="@color/grey_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentFarmActivityRules"
+                        app:layout_constraintStart_toEndOf="@+id/textViewPaymentFarmActivityRules"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentFarmActivityRules" />
+
+                    <TextView
+                        android:id="@+id/textViewPaymentFarmActivityCancelAndRefundRules"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="취소 및 환불 규칙"
+                        android:textColor="@color/orange_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentFarmActivityRules"
+                        app:layout_constraintStart_toEndOf="@+id/textViewPaymentFarmActivityDot"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentFarmActivityRules" />
+
+                    <TextView
+                        android:id="@+id/textView42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="에 동의하실 경우 결제버튼을 클릭해주세요."
+                        android:textColor="@color/grey_01"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewPaymentFarmActivityRules"
+                        app:layout_constraintStart_toEndOf="@+id/textViewPaymentFarmActivityCancelAndRefundRules"
+                        app:layout_constraintTop_toTopOf="@+id/textViewPaymentFarmActivityRules" />
+
+                    <TextView
+                        android:id="@+id/buttonPaymentFarmActivityPayDone"
+                        style="@style/isEnabledButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:enabled="@{paymentFarmActivityViewModel.buttonPaymentFarmActivityPayDone}"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:gravity="center"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:text="결제"
+                        android:textSize="16sp"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewPaymentFarmActivityDot" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

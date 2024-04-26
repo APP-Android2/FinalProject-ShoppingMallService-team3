@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="likeViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.LikeViewModel" />
+    </data>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            style="?attr/materialCardViewFilledStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:strokeColor="@color/grey_02">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageViewLikeFarmAndActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@color/grey_02"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                <com.willy.ratingbar.BaseRatingBar
+                    android:id="@+id/ratingBarLikeFarmAndActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewLikeFarmAndActivity"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewLikeFarmAndActivity"
+                    app:srb_drawableEmpty="@drawable/star_02"
+                    app:srb_drawableFilled="@drawable/star_01"
+                    app:srb_isIndicator="true"
+                    app:srb_numStars="5"
+                    app:srb_rating="3"
+                    app:srb_starHeight="15dp"
+                    app:srb_starPadding="2dp"
+                    app:srb_starWidth="15dp" />
+
+                <TextView
+                    android:id="@+id/textViewLikeFarmAndActivityName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="TextView"
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewLikeFarmAndActivity"
+                    app:layout_constraintTop_toBottomOf="@id/ratingBarLikeFarmAndActivity" />
+
+                <TextView
+                    android:id="@+id/textViewLikeFarmAndActivityLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="TextView"
+                    android:textColor="@color/brown_01"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewLikeFarmAndActivity"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLikeFarmAndActivityName" />
+
+                <TextView
+                    android:id="@+id/textViewLikeFarmAndActivityPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="TextView"
+                    android:textColor="@color/brown_01"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewLikeFarmAndActivity"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLikeFarmAndActivityLocation" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLikeFarmAndActivityCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toEndOf="@id/imageViewLikeFarmAndActivity"
+                    app:layout_constraintTop_toTopOf="@id/imageViewLikeFarmAndActivity">
+
+
+                    <ImageView
+                        android:id="@+id/imageViewHeartFarmAndActivity"
+                        android:layout_width="30dp"
+                        android:layout_height="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/heart_01" />
+
+                    <TextView
+                        android:id="@+id/textViewLikeFarmAndActivityCnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="@={likeViewModel.textView_likeFarmActivityCnt}"
+                        android:textColor="@color/white"
+                        android:textSize="8sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </GridLayout>
+
+</layout>

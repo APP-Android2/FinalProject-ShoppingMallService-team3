@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".fragment.review.ReviewHistoryFragment">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarReview"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="리뷰내역"
+                android:textColor="@color/brown_01"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="22dp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutReviewHistory"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_tab_indicator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarReview"
+            app:tabIndicatorFullWidth="true"
+            app:tabSelectedTextColor="@color/brown_01"
+            app:tabTextAppearance="@style/MySelectedTabTextAppearance"
+            app:tabTextColor="@color/grey_02">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemReviewHistoryCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="농산물" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemReviewHistoryFarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주말농장" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemReviewHistoryActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체험활동" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/containerReviewHistoryTab"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tabLayoutReviewHistory"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayoutReviewHistory" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
