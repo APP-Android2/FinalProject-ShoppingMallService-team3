@@ -96,7 +96,10 @@ class TradeFragment : Fragment() {
             val sharedPreferences = mainActivity.getSharedPreferences("AutoLogin",
                 Context.MODE_PRIVATE)
             val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
-            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            if(userIdx != -1){
+                userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            }
+
             //uploadCropData()
 
             // 인기 농작물 데이터 가져오기

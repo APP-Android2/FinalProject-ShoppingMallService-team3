@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), DialogYesNoInterface {
     }
 
     // 네비게이션 세팅
-    private fun settingBottomNavigation() {
+    fun settingBottomNavigation() {
         activityMainBinding.apply {
             bottomNavigation.apply {
                 // 초기화면 홈으로 세팅
