@@ -51,6 +51,7 @@
                         android:id="@+id/imageViewMyPageManagementUserInfoModify_Profile"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/profile"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

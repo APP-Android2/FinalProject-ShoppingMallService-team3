@@ -1,7 +1,7 @@
 package kr.co.lion.farming_customer.fragment.orderHistory
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,11 +19,12 @@ import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.activity.orderHistory.OrderHistoryActivity
 import kr.co.lion.farming_customer.dao.farmingLife.ActivityDao
 import kr.co.lion.farming_customer.dao.farmingLife.FarmDao
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.dao.orderHistory.OrderDao
 import kr.co.lion.farming_customer.databinding.FragmentTapReservDoneBinding
-import kr.co.lion.farming_customer.databinding.RowOrderHistoryCropLabeledBinding
 import kr.co.lion.farming_customer.databinding.RowOrderHistoryFarmBinding
 import kr.co.lion.farming_customer.model.orderHistory.OrderModel
+import kr.co.lion.farming_customer.model.user.UserModel
 import kr.co.lion.farming_customer.viewmodel.orderHistory.RowOrderHistoryFarmViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -34,22 +35,40 @@ class TapReservDoneFragment : Fragment() {
 
     var orderType : Int? = null
     var orderList = mutableListOf<OrderModel>()
+    var userModel : UserModel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentTapReservDoneBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_tap_reserv_done, container, false)
         orderHistoryActivity = activity as OrderHistoryActivity
 
-        settingInitData()
+        settingUserData()
 
         return fragmentTapReservDoneBinding.root
+    }
+
+    private fun settingUserData() {
+        val sharedPreferences = orderHistoryActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            settingInitData()
+        }
     }
 
     private fun settingInitData() {
         CoroutineScope(Dispatchers.Main).launch {
             orderType = arguments?.getInt("orderType")
             if(orderType == OrderProductType.ORDER_PRODUCT_TYPE_FARM.number){
-                orderList = OrderDao.gettingOrderListFarm(OrderLabelType.ORDER_LABEL_TYPE_RESERV_DONE)
+                orderList = OrderDao.gettingOrderListFarm(
+                    OrderLabelType.ORDER_LABEL_TYPE_RESERV_DONE,
+                    userModel!!.user_idx
+                )
             }else{
-                orderList = OrderDao.gettingOrderListActivity(OrderLabelType.ORDER_LABEL_TYPE_RESERV_DONE)
+                orderList = OrderDao.gettingOrderListActivity(
+                    OrderLabelType.ORDER_LABEL_TYPE_RESERV_DONE,
+                    userModel!!.user_idx
+                )
             }
             settingRecyclerView()
         }

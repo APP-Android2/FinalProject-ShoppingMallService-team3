@@ -266,16 +266,17 @@ class PaymentCropFragment : Fragment() {
                         val currentDate = LocalDate.now()
                         // OrderData를 저장한다.
                         // 상품의 개수만큼 반복한다.
+                        var orderNum = ""
                         mapList.forEach {
                             val sequence = OrderDao.getOrderSequence()
                             OrderDao.updateOrderSequence(sequence + 1)
                             var order_idx = sequence + 1
                             val format = SimpleDateFormat("yyMMDD")
                             var order_product_type = OrderProductType.ORDER_PRODUCT_TYPE_CROP.number
-                            var order_num =
-                                format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(
-                                    1000
-                                )).toString()
+                            orderNum = format.format(System.currentTimeMillis()) + order_product_type.toString() + (SecureRandom().nextInt(
+                                1000
+                            )).toString()
+                            var order_num = orderNum
                             var order_user_idx = userData?.user_idx!!
                             var order_seller_idx = sequence + 1
                             var order_product_idx = it["product_idx"] as Int
@@ -333,10 +334,7 @@ class PaymentCropFragment : Fragment() {
                         PaymentDao.updatePaymentSequence(sequence + 1)
                         var payment_idx = sequence + 1
                         val format = SimpleDateFormat("yyMMDD")
-                        var payment_order_num =
-                            format.format(System.currentTimeMillis()) + OrderProductType.ORDER_PRODUCT_TYPE_CROP.number.toString() + (SecureRandom().nextInt(
-                                1000
-                            )).toString()
+                        var payment_order_num = orderNum
                         var payment_total_price = paymentCropViewModel?.textViewPaymentCropProductPrice2?.value
                         var payment_total_discount = paymentCropViewModel?.textViewPaymentCropUsePoint2?.value
                         var payment_final_price = paymentCropViewModel?.textViewPaymentCropTotalPayPrice2?.value

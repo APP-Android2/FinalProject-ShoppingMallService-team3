@@ -67,6 +67,7 @@
                                 android:id="@+id/imageViewRowCartTabActivity"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
                                 app:srcCompat="@drawable/ic_launcher_background" />
                         </com.google.android.material.card.MaterialCardView>
 

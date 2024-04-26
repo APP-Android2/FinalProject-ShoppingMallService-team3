@@ -57,8 +57,7 @@
                             android:id="@+id/imageViewOrderHistoryFarm_productImage"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@color/grey_02"
-                            android:scaleType="fitXY" />
+                            android:scaleType="centerCrop" />
                     </com.google.android.material.card.MaterialCardView>
 
 

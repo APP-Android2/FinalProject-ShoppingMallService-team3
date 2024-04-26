@@ -396,7 +396,6 @@ enum class InquiryState(var str:String, var number:Int) {
     INQUIRY_STATE_NORMAL("정상", 0),
     INQUIRY_STATE_REMOVE("삭제", 1)
 }
-
 enum class InquiryType(var str: String, var number:Int) {
     TYPE_CROP("농작물", 0),
     TYPE_FARM("주말농장", 1),

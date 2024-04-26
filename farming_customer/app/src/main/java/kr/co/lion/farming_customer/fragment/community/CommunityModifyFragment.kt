@@ -279,8 +279,7 @@ class CommunityModifyFragment : Fragment(), DialogYesNoInterface {
             } else {
                 communityModel.postType = PostType.TYPE_JOB.str
             }
-            communityModel.postContent =
-                communityAddModifyViewModel.textViewCommunityModifyContent.value!!
+            communityModel.postContent = communityAddModifyViewModel.textViewCommunityModifyContent.value!!
             communityModel.postLikeCnt = 0
             communityModel.postCommentCnt = 0
             communityModel.postImages = mutableListOf<String>()

@@ -7,10 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kr.co.lion.farming_customer.ActivityStatus
 import kr.co.lion.farming_customer.PointStatus
-import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
-import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.model.myPagePoint.PointModel
 
 class myPagePointDao {
@@ -64,14 +61,16 @@ class myPagePointDao {
         }
 
         // 포인트 목록을 가져온다.
-        suspend fun gettingPointList():MutableList<PointModel>{
+        suspend fun gettingPointList(userIdx: Int):MutableList<PointModel>{
             val pointList = mutableListOf<PointModel>()
 
             val job1 = CoroutineScope(Dispatchers.IO).launch {
                 // 컬렉션에 접근할 수 있는 객체를 가져온다.
                 val collectionReference = Firebase.firestore.collection("PointData")
                 // 체험활동 상태가 정상 상태
-                var query = collectionReference.whereEqualTo("point_status", PointStatus.POINT_STATE_NORMAL.number)
+                var query = collectionReference
+                    .whereEqualTo("point_status", PointStatus.POINT_STATE_NORMAL.number)
+                    .whereEqualTo("point_user_idx", userIdx)
                 // 체험활동 번호를 기준으로 내림 차순 정렬
                 query = query.orderBy("point_idx", Query.Direction.DESCENDING)
 

@@ -47,6 +47,7 @@
                         android:id="@+id/myPostImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_launcher_foreground" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -88,6 +89,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="7dp"
+                        android:minLines="2"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:fontFamily="@font/pretendard_regular"
                         android:text="@{myPageMyPostViewModel.myPostContentTextView}"
                         android:textColor="@color/brown_01"

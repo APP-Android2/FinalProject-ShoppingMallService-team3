@@ -1,11 +1,14 @@
 package kr.co.lion.farming_customer.fragment.myPageManagement
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,24 +18,40 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kr.co.lion.farming_customer.MyPageManagementName
 import kr.co.lion.farming_customer.R
 import kr.co.lion.farming_customer.Tools
 import kr.co.lion.farming_customer.activity.myPageManagement.MyPageManagementActivity
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.databinding.FragmentMyPageManagementProfileModifyBinding
+import kr.co.lion.farming_customer.model.user.UserModel
+import kr.co.lion.farming_customer.viewmodel.myPageManagement.MyPageManagementProfileModifyViewModel
 
 class MyPageManagementProfileModifyFragment : Fragment() {
 
     lateinit var fragmentMyPageManagementProfileModifyBinding: FragmentMyPageManagementProfileModifyBinding
     lateinit var myPageManagementActivity: MyPageManagementActivity
     lateinit var albumLauncher: ActivityResultLauncher<Intent>
+    lateinit var myPageManagementProfileModifyViewModel : MyPageManagementProfileModifyViewModel
+
+    var isDuplicated = true
+    var isImageChanged = false
+    var userModel : UserModel? = null
+    var imgUrl : Uri? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
         fragmentMyPageManagementProfileModifyBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_my_page_management_profile_modify,container,false)
+        myPageManagementProfileModifyViewModel = MyPageManagementProfileModifyViewModel()
+        fragmentMyPageManagementProfileModifyBinding.myPageManagementProfileModifyViewModel = myPageManagementProfileModifyViewModel
+        fragmentMyPageManagementProfileModifyBinding.lifecycleOwner = this
         myPageManagementActivity = activity as MyPageManagementActivity
 
+        settingUserData()
         settingToolbar()
         modifyNickName()
         settingAlbumLauncher()
@@ -40,6 +59,62 @@ class MyPageManagementProfileModifyFragment : Fragment() {
 
 
         return fragmentMyPageManagementProfileModifyBinding.root
+    }
+
+    private fun settingUserData() {
+        val sharedPreferences = myPageManagementActivity.getSharedPreferences("AutoLogin",
+            Context.MODE_PRIVATE)
+        val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+        CoroutineScope(Dispatchers.Main).launch {
+            userModel = UserDao.gettingUserInfoByUserIdx(userIdx)
+            UserDao.gettingUserImage(requireContext(), userModel!!.user_profile_image, fragmentMyPageManagementProfileModifyBinding.buttonMyPageManagementProfileModifyModifyProfileImage)
+            settingEvent()
+            fragmentMyPageManagementProfileModifyBinding.myPageManagementProfileModifyViewModel!!.buttonMyPageManagementProfileModifyCheckUserNickName?.value = "중복확인"
+            fragmentMyPageManagementProfileModifyBinding.myPageManagementProfileModifyViewModel!!.textFieldMyPageManagementProfileModify_ModifyUserNickName.value = userModel!!.user_nickname
+        }
+
+    }
+
+    private fun settingEvent() {
+        fragmentMyPageManagementProfileModifyBinding.apply {
+            // 닉네임 중복확인
+            buttonMyPageManagementProfileModifyCheckUserNickName.setOnClickListener {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val nickname = myPageManagementProfileModifyViewModel!!.textFieldMyPageManagementProfileModify_ModifyUserNickName.value
+                    if(nickname != null){
+                        if(UserDao.checkUserNickNameExist(nickname)){
+                            // 사용 가능
+                            isDuplicated = false
+                            myPageManagementProfileModifyViewModel!!.buttonMyPageManagementProfileModifyCheckUserNickName.value = "사용가능"
+                            it.isEnabled = false
+                        }else{
+                            // 사용 불가
+                            textInputLayoutCheckNickName.error = "이미 존재하는 닉네임입니다."
+                            isDuplicated = true
+                        }
+                    }
+                }
+            }
+            // 프로필 수정
+            buttonMyPageManagementProfileModifyDone.setOnClickListener {
+                if(!isDuplicated || isImageChanged){
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val nickname = myPageManagementProfileModifyViewModel!!.textFieldMyPageManagementProfileModify_ModifyUserNickName.value
+                        if (nickname != null) {
+                            userModel!!.user_nickname = nickname
+                            if(imgUrl != null){
+                                var imgString = UserDao.uploadImage(requireContext(),userModel!!.user_idx, imgUrl!!)
+                                userModel!!.user_profile_image = "image/user/" + imgString
+                                UserDao.updateUserData(userModel!!)
+                            }else{
+                                UserDao.updateUserData(userModel!!)
+                            }
+                            myPageManagementActivity.removeFragment(MyPageManagementName.MY_PAGE_MANAGEMENT_PROFILE_MODIFY)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // 툴바 설정
@@ -58,7 +133,9 @@ class MyPageManagementProfileModifyFragment : Fragment() {
     fun modifyNickName(){
         fragmentMyPageManagementProfileModifyBinding.apply {
             textFieldMyPageManagementProfileModifyModifyUserNickName.addTextChangedListener {
-
+                isDuplicated = true
+                myPageManagementProfileModifyViewModel!!.buttonMyPageManagementProfileModifyCheckUserNickName.value = "중복확인"
+                buttonMyPageManagementProfileModifyCheckUserNickName.isEnabled = true
                 if(it!!.isEmpty()){
                     textInputLayoutCheckNickName.error = "닉네임을 작성해주세요"
                     // 완료버튼 비활성화
@@ -70,9 +147,6 @@ class MyPageManagementProfileModifyFragment : Fragment() {
 
                     // 완료버튼 활성화
                     buttonMyPageManagementProfileModifyDone.isEnabled = true
-                    buttonMyPageManagementProfileModifyDone.setOnClickListener {
-                        myPageManagementActivity.removeFragment(MyPageManagementName.MY_PAGE_MANAGEMENT_PROFILE_MODIFY)
-                    }
                 }
             }
         }
@@ -97,6 +171,8 @@ class MyPageManagementProfileModifyFragment : Fragment() {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
                 // 선택한 이미지의 경로 데이터를 관리하는 Uri 객체 리스트를 추출한다.
                 val uriclip = it.data?.data
+                imgUrl = it.data?.data
+                isImageChanged = true
                 if (uriclip != null) {
                     // 안드로이드 Q(10) 이상이라면
                     val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

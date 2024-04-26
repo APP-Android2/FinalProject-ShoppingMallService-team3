@@ -1,17 +1,27 @@
 package kr.co.lion.farming_customer.activity
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kr.co.lion.farming_customer.DialogYesNo
+import kr.co.lion.farming_customer.DialogYesNoInterface
 import kr.co.lion.farming_customer.MainFragmentName
 import kr.co.lion.farming_customer.R
+import kr.co.lion.farming_customer.activity.loginRegister.LoginActivity
+import kr.co.lion.farming_customer.dao.loginRegister.UserDao
 import kr.co.lion.farming_customer.databinding.ActivityMainBinding
 import kr.co.lion.farming_customer.fragment.HomeFragment
 import kr.co.lion.farming_customer.fragment.LikeFragment
@@ -23,8 +33,9 @@ import kr.co.lion.farming_customer.fragment.farmingLife.TapFarmFragment
 import kr.co.lion.farming_customer.fragment.famingLifeTools.FarmingLifeToolsFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeFragment
 import kr.co.lion.farming_customer.fragment.tradeCrop.TradeTabDetailFragment
+import kr.co.lion.farming_customer.model.user.UserModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DialogYesNoInterface {
     lateinit var activityMainBinding: ActivityMainBinding
 
     // 프래그먼트 객체를 담을 변수
@@ -34,9 +45,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-
         installSplashScreen()
-
         setContentView(activityMainBinding.root)
 
         settingBottomNavigation()
@@ -45,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 네비게이션 세팅
-    private fun settingBottomNavigation() {
+    fun settingBottomNavigation() {
         activityMainBinding.apply {
             bottomNavigation.apply {
                 // 초기화면 홈으로 세팅
@@ -68,13 +77,18 @@ class MainActivity : AppCompatActivity() {
                             replaceFragment(MainFragmentName.LIKE_FRAGMENT, false, false, null)
                         }
                         R.id.menuItemBottonNavigation_MyPage -> {
-                            // 사용자가 로그인 한 상태인 경우
-                            replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
-
-                            // 사용자가 로그인 하지 않은 상태인 경우
-//                            val dialog = DialogYesNo("로그인이 필요합니다.", "마이페이지는 로그인 후 이용 가능합니다.", this@MainActivity)
-//                            dialog.show(this@MainActivity.supportFragmentManager, "DialogYesNo")
-
+                            val sharedPreferences = this@MainActivity.getSharedPreferences("AutoLogin",
+                                Context.MODE_PRIVATE)
+                            val userIdx = sharedPreferences.getInt("loginUserIdx", -1)
+                            if(userIdx == -1){
+                                // 사용자가 로그인 하지 않은 상태인 경우
+                                val dialog = DialogYesNo(this@MainActivity,"로그인이 필요한 기능입니다.", "로그인 하시겠습니까?", this@MainActivity, yes_text = "로그인")
+                                dialog.show(this@MainActivity.supportFragmentManager, "DialogYesNo")
+                                return@setOnItemSelectedListener false
+                            }else{
+                                // 사용자가 로그인 한 상태인 경우
+                                replaceFragment(MainFragmentName.MY_PAGE_FRAGMENT, false, false, null)
+                            }
                         }
                     }
                     true
@@ -184,5 +198,14 @@ class MainActivity : AppCompatActivity() {
         // 지정한 이름으로 있는 Fragment를 BackStack에서 제거한다.
         SystemClock.sleep(200)
         supportFragmentManager.popBackStack(name.str, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+    override fun onYesButtonClick(id: Int) {
+
+    }
+
+    override fun onYesButtonClick(activity: AppCompatActivity) {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

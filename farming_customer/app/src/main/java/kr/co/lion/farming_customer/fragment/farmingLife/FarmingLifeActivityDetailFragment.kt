@@ -27,7 +27,7 @@ import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.FarmingLifeActivityDetailViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowFarmingLifeReviewViewModel
 
-class FarmingLifeActivityDetailFragment(idx: Bundle?) : Fragment() {
+class FarmingLifeActivityDetailFragment(data: Bundle?) : Fragment() {
     lateinit var fragmentFarmingLifeActivityDetailBinding: FragmentFarmingLifeActivityDetailBinding
     lateinit var farmingLifeActivity: FarmingLifeActivity
 
@@ -130,7 +130,7 @@ class FarmingLifeActivityDetailFragment(idx: Bundle?) : Fragment() {
             }
             // 예약하기 버튼
             buttonReservation.setOnClickListener {
-                val bottomSheetActivityReservFragment = BottomSheetActivityReservFragment()
+                val bottomSheetActivityReservFragment = BottomSheetActivityReservFragment(idx!!)
                 bottomSheetActivityReservFragment.show(farmingLifeActivity.supportFragmentManager, "BottomSheetActivityReservFragment")
             }
         }

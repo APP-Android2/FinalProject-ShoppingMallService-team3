@@ -3,6 +3,7 @@ package kr.co.lion.farming_customer.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -35,18 +35,11 @@ import kr.co.lion.farming_customer.databinding.RowGridItemBinding
 import kr.co.lion.farming_customer.model.CropModel
 import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
 import kr.co.lion.farming_customer.model.farmingLife.FarmModel
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
-import kr.co.lion.farming_customer.viewmodel.HomeViewModel
-import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
-import kr.co.lion.farming_customer.viewmodel.CommunityViewModel
 import kr.co.lion.farming_customer.viewmodel.HomeViewModel
 import kr.co.lion.farming_customer.viewmodel.farmingLife.RowGridItemViewModel
 import kr.co.lion.farming_customer.viewmodel.community.CommunityViewModel
 import kr.co.lion.farming_customer.model.CommunityCommentModel
 import kr.co.lion.farming_customer.model.CommunityModel
-import kr.co.lion.farming_customer.model.CropModel
-import kr.co.lion.farming_customer.model.farmingLife.ActivityModel
-import kr.co.lion.farming_customer.model.farmingLife.FarmModel
 import kr.co.lion.farming_customer.viewmodel.tradeCrop.TradeViewModel
 
 class HomeFragment : Fragment() {
@@ -105,7 +98,6 @@ class HomeFragment : Fragment() {
             fragmentHomeBinding.viewPagerFarm.adapter?.notifyDataSetChanged()
             fragmentHomeBinding.viewPagerCrop.adapter?.notifyDataSetChanged()
             fragmentHomeBinding.recyclerViewBoard.adapter?.notifyDataSetChanged()
-
         }
     }
 

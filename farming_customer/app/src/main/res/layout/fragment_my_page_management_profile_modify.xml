@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="myPageManagementProfileModifyViewModel"
+            type="kr.co.lion.farming_customer.viewmodel.myPageManagement.MyPageManagementProfileModifyViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,7 +53,7 @@
                     android:id="@+id/buttonMyPageManagementProfileModify_ModifyProfileImage"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    android:src="@color/grey_02"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -87,7 +93,7 @@
                         android:paddingTop="10dp"
                         android:paddingRight="109dp"
                         android:paddingBottom="10dp"
-                        android:text="닉네임123"
+                        android:text="@={myPageManagementProfileModifyViewModel.textFieldMyPageManagementProfileModify_ModifyUserNickName}"
                         android:textColor="@color/brown_01"
                         android:textSize="12sp" />
 
@@ -112,7 +118,7 @@
                     android:fontFamily="@font/pretendard_bold"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="중복확인"
+                    android:text="@{myPageManagementProfileModifyViewModel.buttonMyPageManagementProfileModifyCheckUserNickName}"
                     android:textSize="12sp"
                     app:cornerRadius="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -128,7 +134,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/pretendard_bold"
                 android:gravity="center"
                 android:insetTop="0dp"
@@ -140,6 +146,7 @@
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
